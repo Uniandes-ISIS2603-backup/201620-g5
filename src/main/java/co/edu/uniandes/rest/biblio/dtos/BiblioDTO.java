@@ -3,20 +3,22 @@
  * Objeto de transferencia de datos de Ciudades.
  * Los DTO especifican los mensajes que se envían entre el cliente y el servidor.
  */
-package co.edu.uniandes.rest.cities.dtos;
+package co.edu.uniandes.rest.biblio.dtos;
 
 /**
  * Objeto de transferencia de datos de Ciudades.
  * @author Asistente
  */
-public class CityDTO {
+public class BiblioDTO {
     private Long id;
+    private Long idAdmin;
     private String name;
+    private String zona;
 
     /**
      * Constructor por defecto
      */
-    public CityDTO() {
+    public BiblioDTO() {
 	}
 
     /**
@@ -24,10 +26,12 @@ public class CityDTO {
      * @param id identificador de la ciudad
      * @param name nombre de la ciudad
      */
-    public CityDTO(Long id, String name) {
+    public BiblioDTO(Long id, Long idAdmin, String name, String zona) {
 		super();
 		this.id = id;
+                this.idAdmin = idAdmin;
 		this.name = name;
+                this.zona = zona;
 	}
 
 	/**
@@ -42,6 +46,20 @@ public class CityDTO {
      */
     public void setId(Long id) {
         this.id = id;
+    }
+    
+    	/**
+     * @return the id
+     */
+    public Long getIdAdmin() {
+        return idAdmin;
+    }
+
+    /**
+     * @param id the id to set
+     */
+    public void setIdAdmin(Long idAdmin) {
+        this.idAdmin = idAdmin;
     }
 
     /**
@@ -59,10 +77,24 @@ public class CityDTO {
     }
     
     /**
+     * @return the name
+     */
+    public String getZona() {
+        return zona;
+    }
+
+    /**
+     * @param name the name to set
+     */
+    public void setZona(String zona) {
+        this.zona = zona;
+    }
+    
+    /**
      * Convierte el objeto a una cadena
      */
     @Override
     public String toString() {
-    	return "{ id : " + getId() + ", name : \"" + getName() + "\" }" ;  
+    	return "{ id : " + getId() + ", idAdmin : \"" + getIdAdmin() + ", nombre : \"" + getName() + ", zona : \"" + getZona() + "\" }" ;  
     }
 }

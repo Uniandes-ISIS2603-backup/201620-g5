@@ -1,23 +1,23 @@
-package co.edu.uniandes.rest.cities.mappers;
+package co.edu.uniandes.rest.biblio.mappers;
 
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
 
-import co.edu.uniandes.rest.cities.exceptions.CityLogicException;
+import co.edu.uniandes.rest.biblio.exceptions.BiblioLogicException;
 
 /**
  * Convertidor de Excepciones CityLogicException a mensajes REST.
  */
 @Provider
-public class CityLogicExceptionMapper implements ExceptionMapper<CityLogicException> {
+public class BiblioLogicExceptionMapper implements ExceptionMapper<BiblioLogicException> {
 
 	/**
 	 * Generador de una respuesta a partir de una excepción
 	 * @param ex excecpión a convertir a una respuesta REST
 	 */
 	@Override
-	public Response toResponse(CityLogicException ex) {
+	public Response toResponse(BiblioLogicException ex) {
 		// retorna una respuesta
 		return Response
 				.status(Response.Status.NOT_FOUND)	// estado HTTP 404
