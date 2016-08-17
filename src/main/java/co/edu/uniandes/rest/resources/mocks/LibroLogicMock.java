@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import co.edu.uniandes.rest.resources.exceptions.BibliotecaLogicException;
+
 /**
  *
  * @author s.rojas19
@@ -18,44 +19,126 @@ import co.edu.uniandes.rest.resources.exceptions.BibliotecaLogicException;
 public class LibroLogicMock {
 
     // objeto para presentar logs de las operaciones
-	private final static Logger logger = Logger.getLogger(CityLogicMock.class.getName());
-	
-	// listado de libros
+    private final static Logger logger = Logger.getLogger(CityLogicMock.class.getName());
+
+    // listado de libros
     private static ArrayList<LibroDTO> libros;
-    
+
+    /**
+     * Constructor. Inicia un mock de Libros, con 3 ejemplares.
+     */
     public LibroLogicMock() {
-        if(libros == null){
+        if (libros == null) {
             libros = new ArrayList<>();
-            libros.add(new LibroDTO(1L, 553213113L, "Moby Dick", 10, true));
-            libros.add(new LibroDTO(2L, 743273567L, "The Great Gatsby", 10, false));
-            libros.add(new LibroDTO(3L, 451524934L, "1984", 10, false));
+            libros.add(new LibroDTO(1L, 553213113L, "Moby Dick", 10L, true));
+            libros.add(new LibroDTO(2L, 743273567L, "The Great Gatsby", 10L, false));
+            libros.add(new LibroDTO(3L, 451524934L, "1984", 10L, false));
         }
         // indica que se muestren todos los mensajes
-    	logger.setLevel(Level.INFO);
-    	
-    	// muestra información 
-    	logger.info("Inicializa la lista de videos");
-    	logger.info("libros" + libros );
+        logger.setLevel(Level.INFO);
+
+        // muestra información 
+        logger.info("Inicializa la lista de videos");
+        logger.info("libros" + libros);
     }
 
-    public List<LibroDTO> getLibros() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    /**
+     * Devuelve la lista de libros en la estructura de  datos.
+     * @return Lista de libros
+     * @throws BibliotecaLogicException Si no existe la lista de libros.
+     */
+    public List<LibroDTO> getLibros() throws BibliotecaLogicException {
+        if (libros == null) {
+            logger.severe("Error interno: lista de libros no existe.");
+            throw new BibliotecaLogicException("Error interno: lista de libros no existe.");
+        }
+
+        logger.info("retornando todas las ciudades");
+        return libros;
     }
 
-    public LibroDTO getLibro(long id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    /**
+     * Devuelve el libro que tenga el id dado por parametro
+     * @param id id del libro solicitado
+     * @return libro con id dado por parametro
+     * @throws BibliotecaLogicException Si lista de libros no existe, o si no se encuentra el libro.
+     */
+    public LibroDTO getLibro(Long id) throws BibliotecaLogicException {
+        if (libros == null) {
+            logger.severe("Error interno: lista de libros no existe.");
+            throw new BibliotecaLogicException("Error interno: lista de libros no existe.");
+        }
+        logger.info("buscando libro");
+        for (LibroDTO l : libros) {
+            if (l.getId().equals(id)) {
+                logger.info("libro encontrado");
+                return l;
+            }
+        }
+        logger.severe("No se encontró el libro");
+        throw new BibliotecaLogicException("Libro no encontrado");
     }
 
-    public LibroDTO createLibro(LibroDTO libro) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    /**
+     * Agrega un libro a la estructura de datos
+     * @param libro Libro a agregar al registro
+     * @return libro que entra por parametro
+     * @throws BibliotecaLogicException Si ya existe un libro con ese id
+     */
+    public LibroDTO createLibro(LibroDTO libro) throws BibliotecaLogicException {
+        logger.info("recibiendo solicitud de agregar ciudad " + libro);
+        if (libro.getId() != null) {
+            for (LibroDTO l : libros) {
+                // si existe un video con ese id
+                if (l.getId().equals(libro.getId())) {
+                    logger.severe("Ya existe un libro con ese id");
+                    throw new BibliotecaLogicException("Ya existe un libro con ese id");
+                }
+            }
+        }
+        // agrega la ciudad
+        logger.info("agregando libro" + libro);
+        libros.add(libro);
+        return libro;
     }
 
-    public LibroDTO updateLibro(long id, LibroDTO libro) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    /**
+     * Actualiza un libro en el registro con los parametros deseados
+     * @param id id del libro a actualizar
+     * @param libro Objeto LibroDTO con parametros a cambiar.
+     * @return Libro actualizado.
+     * @throws BibliotecaLogicException Si el libro no se encuentra.
+     */
+    public LibroDTO updateLibro(Long id, LibroDTO libro) throws BibliotecaLogicException {
+        try {
+            LibroDTO l = getLibro(id);
+            if (libro.getIsbn() != null)
+                l.setIsbn(libro.getIsbn());
+            if (libro.getNumEjemplares() != null)
+                l.setNumEjemplares(libro.getNumEjemplares());
+            if (libro.getTitulo() != null)
+                l.setTitulo(libro.getTitulo());
+            logger.info("Libro actualizado");
+            return l;
+        } catch (BibliotecaLogicException ex) {
+            logger.severe("No se econtro el libro con id " + id);
+            throw new BibliotecaLogicException("No se encontro el libro con id" + id);
+        }
     }
 
-    public void deleteLibro(long id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    /**
+     * Borra un libro en el registro.
+     * @param id id del libro a borrar
+     * @throws BibliotecaLogicException Si no es posible borrar el libro.
+     */
+    public void deleteLibro(Long id) throws BibliotecaLogicException {
+        try {
+            libros.remove(getLibro(id));
+        } catch (BibliotecaLogicException ex) {
+            Logger.getLogger(LibroLogicMock.class.getName()).log(Level.SEVERE, null, ex);
+            logger.severe("No fue posible elminiar el libro con id " + id);
+	throw new BibliotecaLogicException("No fue posible elminiar el libro con id " + id);
+        }
     }
-    
+
 }

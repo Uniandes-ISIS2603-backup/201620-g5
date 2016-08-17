@@ -20,6 +20,7 @@ import co.edu.uniandes.rest.resources.dtos.LibroDTO;
 import co.edu.uniandes.rest.resources.exceptions.BibliotecaLogicException;
 
 /**
+ * Clase que implementa el recurso REST correspondiente a "libros".
  *
  * @author s.rojas19
  */
@@ -27,33 +28,70 @@ import co.edu.uniandes.rest.resources.exceptions.BibliotecaLogicException;
 @Produces("application/json")
 public class LibroResource {
 
+    /**
+     * Mock del modelo de datos para la clase Libro
+     */
     LibroLogicMock libroLogic = new LibroLogicMock();
 
+    /**
+     * Obtiene el listado de libros.
+     *
+     * @return lista de libros
+     * @throws BibliotecaLogicException retornada por logica.
+     */
     @GET
     public List<LibroDTO> getLibros() throws BibliotecaLogicException {
         return libroLogic.getLibros();
     }
 
+    /**
+     * Obtiene el libro con id por parametro
+     *
+     * @param id id del libro a retornar
+     * @return Libro con id dado por parametro
+     * @throws BibliotecaLogicException Si no se encuentra el libro.
+     */
     @GET
     @Path("{id: \\d+}")
-    public LibroDTO getLibro(@PathParam("id") long id) throws BibliotecaLogicException {
+    public LibroDTO getLibro(@PathParam("id") Long id) throws BibliotecaLogicException {
         return libroLogic.getLibro(id);
     }
 
+    /**
+     * Crea un libro
+     *
+     * @param libro libro a agregar
+     * @return libtro agregado
+     * @throws BibliotecaLogicException Si no es posible adicionar el libro
+     */
     @POST
-    public LibroDTO createLibro(LibroDTO libro) throws BibliotecaLogicException{
+    public LibroDTO createLibro(LibroDTO libro) throws BibliotecaLogicException {
         return libroLogic.createLibro(libro);
     }
-    
+
+    /**
+     * Actualiza un libro
+     *
+     * @param id id del libro a actualizar
+     * @param libro objeto con atributos a cambiar del libro
+     * @return libro actualizado
+     * @throws BibliotecaLogicException Si no es posible actualizar el libro
+     */
     @PUT
     @Path("{id: \\d+}")
-    public LibroDTO updateLibro(@PathParam("id") long id, LibroDTO libro) throws BibliotecaLogicException{
+    public LibroDTO updateLibro(@PathParam("id") Long id, LibroDTO libro) throws BibliotecaLogicException {
         return libroLogic.updateLibro(id, libro);
     }
-    
+
+    /**
+     * Elimina un libro
+     *
+     * @param id id del libro a eliminar
+     * @throws BibliotecaLogicException Si no es posible eliminar el libro.
+     */
     @DELETE
     @Path("{id: \\d+}")
-    public void deleteLibro(@PathParam("id") long id){
+    public void deleteLibro(@PathParam("id") Long id) throws BibliotecaLogicException {
         libroLogic.deleteLibro(id);
     }
 
