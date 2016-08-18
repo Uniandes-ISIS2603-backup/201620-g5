@@ -10,16 +10,17 @@ package co.edu.uniandes.rest.resources.dtos;
  * Objeto de transferencia de datos de Ciudades.
  * @author Asistente
  */
-public class BiblioDTO {
-    private Long id;
-    private Long idAdmin;
-    private String name;
-    private String zona;
+public class ReservaDTO {
+    private int id;
+    private int idUsuario;
+    private int idBiblioteca;
+    private boolean estaA;
+    private int idRecurso;
 
     /**
      * Constructor por defecto
      */
-    public BiblioDTO() {
+    public ReservaDTO() {
 	}
 
     /**
@@ -27,75 +28,57 @@ public class BiblioDTO {
      * @param id identificador de la ciudad
      * @param name nombre de la ciudad
      */
-    public BiblioDTO(Long id, Long idAdmin, String name, String zona) {
+    public ReservaDTO(int id, int idUsuario, int idBiblioteca, boolean estaA, int idRecurso) {
 		super();
 		this.id = id;
-                this.idAdmin = idAdmin;
-		this.name = name;
-                this.zona = zona;
+                this.idUsuario = idUsuario;
+		this.idBiblioteca = idBiblioteca;
+                this.estaA = estaA;
+                this.idRecurso=idRecurso;
 	}
 
-	/**
-     * @return the id
-     */
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    /**
-     * @param id the id to set
-     */
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
-    
-    	/**
-     * @return the id
-     */
-    public Long getIdAdmin() {
-        return idAdmin;
+
+    public int getIdUsuario() {
+        return idUsuario;
     }
 
-    /**
-     * @param id the id to set
-     */
-    public void setIdAdmin(Long idAdmin) {
-        this.idAdmin = idAdmin;
+    public void setIdUsuario(int idUsuario) {
+        this.idUsuario = idUsuario;
     }
 
-    /**
-     * @return the name
-     */
-    public String getName() {
-        return name;
+    public int getIdBiblioteca() {
+        return idBiblioteca;
     }
 
-    /**
-     * @param name the name to set
-     */
-    public void setName(String name) {
-        this.name = name;
-    }
-    
-    /**
-     * @return the name
-     */
-    public String getZona() {
-        return zona;
+    public void setIdBiblioteca(int idBiblioteca) {
+        this.idBiblioteca = idBiblioteca;
     }
 
-    /**
-     * @param name the name to set
-     */
-    public void setZona(String zona) {
-        this.zona = zona;
+    public boolean isEstaA() {
+        return estaA;
     }
-    
-    /**
-     * Convierte el objeto a una cadena
-     */
+
+    public void setEstaA(boolean estaA) {
+        this.estaA = estaA;
+    }
+
+    public int getIdRecurso() {
+        return idRecurso;
+    }
+
+    public void setIdRecurso(int idRecurso) {
+        this.idRecurso = idRecurso;
+    }
+	
     @Override
     public String toString() {
-    	return "{ id : " + getId() + ", idAdmin : \"" + getIdAdmin() + ", nombre : \"" + getName() + ", zona : \"" + getZona() + "\" }" ;  
+    	return "{ id : " + getId() + ", idUsuario : \"" + getIdUsuario()+ ", idBiblioteca : \"" + getIdBiblioteca()+ ", Esta Activo : \"" + isEstaA()+ ",idRecurso : \"" + getIdRecurso()+"\" }" ;  
     }
 }

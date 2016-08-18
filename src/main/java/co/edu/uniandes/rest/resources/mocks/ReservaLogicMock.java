@@ -12,42 +12,41 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import co.edu.uniandes.rest.resources.dtos.BiblioDTO;
+import co.edu.uniandes.rest.resources.dtos.ReservaDTO;
 import co.edu.uniandes.rest.resources.exceptions.BiblioLogicException;
 
 /*
  * CityLogicMock
  * Mock del recurso Ciudades (Mock del servicio REST)
  */
-public class BiblioLogicMock {
+public class ReservaLogicMock {
 
     // objeto para presentar logs de las operaciones
-    private final static Logger logger = Logger.getLogger(BiblioLogicMock.class.getName());
+    private final static Logger logger = Logger.getLogger(ReservaLogicMock.class.getName());
 
     // listado de ciudades
-    private static ArrayList<BiblioDTO> cities;
+    private static ArrayList<ReservaDTO> reservas;
 
     /**
      * Constructor. Crea los datos de ejemplo.
      */
-    public BiblioLogicMock() {
+    public ReservaLogicMock() {
 
-        if (cities == null) {
-            cities = new ArrayList<>();
-            cities.add(new BiblioDTO(1L, 1L, "Biblioteca 1", "Norte"));
-            cities.add(new BiblioDTO(2L, 1L, "Biblioteca 2", "Sur"));
-            cities.add(new BiblioDTO(3L, 1L, "Biblioteca 3", "Occidente"));
-            cities.add(new BiblioDTO(4L, 1L, "Biblioteca 4", "Oriente"));
-            cities.add(new BiblioDTO(5L, 1L, "Biblioteca 5", "Norte"));
-            cities.add(new BiblioDTO(6L, 1L, "Biblioteca 6", "Sur"));
-            cities.add(new BiblioDTO(7L, 1L, "Biblioteca 7", "Oriente"));
+        if (reservas == null) {
+            reservas = new ArrayList<>();
+            reservas.add(new ReservaDTO(1, 1,1, true,1));
+            reservas.add(new ReservaDTO(2, 2,2, true,2));
+            reservas.add(new ReservaDTO(3, 3,3, true,3));
+            reservas.add(new ReservaDTO(4, 4,4, true,4));
+            
         }
 
         // indica que se muestren todos los mensajes
         logger.setLevel(Level.INFO);
 
         // muestra información 
-        logger.info("Inicializa la lista de ciudades");
-        logger.info("ciudades" + cities);
+        logger.info("Inicializa la lista de reservas");
+        logger.info("Reservas" + reservas);
     }
 
     /**
@@ -56,14 +55,14 @@ public class BiblioLogicMock {
      * @return lista de ciudades
      * @throws BiblioLogicException cuando no existe la lista en memoria
      */
-    public List<BiblioDTO> getCities() throws BiblioLogicException {
-        if (cities == null) {
+    public List<ReservaDTO> getReservas() throws BiblioLogicException {
+        if (reservas == null) {
             logger.severe("Error interno: lista de ciudades no existe.");
             throw new BiblioLogicException("Error interno: lista de ciudades no existe.");
         }
 
         logger.info("retornando todas las ciudades");
-        return cities;
+        return reservas;
     }
 
     /**
@@ -74,17 +73,17 @@ public class BiblioLogicMock {
      * suministrado
      * @return ciudad agregada
      */
-    public BiblioDTO createCity(BiblioDTO newCity) throws BiblioLogicException {
-        logger.info("recibiendo solicitud de agregar ciudad " + newCity);
+    public ReservaDTO createReserva(ReservaDTO newReserva) throws BiblioLogicException {
+        logger.info("recibiendo solicitud de agregar ciudad " + newReserva);
 
         // la nueva ciudad tiene id ?
-        if (newCity.getId() != null) {
+        if (newReserva.getId()!= 0) {
             // busca la ciudad con el id suministrado
-            for (BiblioDTO city : cities) {
+            for (ReservaDTO reserva : reservas) {
                 // si existe una ciudad con ese id
-                if (Objects.equals(city.getId(), newCity.getId())) {
-                    logger.severe("Ya existe una ciudad con ese id");
-                    throw new BiblioLogicException("Ya existe una ciudad con ese id");
+                if (Objects.equals(reserva.getId(), newReserva.getId())) {
+                    logger.severe("Ya existe una reserva con ese id");
+                    throw new BiblioLogicException("Ya existe una reserva con ese id");
                 }
             }
 
@@ -93,61 +92,63 @@ public class BiblioLogicMock {
 
             // genera un id para la ciudad
             logger.info("Generando id paa la nueva ciudad");
-            long newId = 1;
-            for (BiblioDTO city : cities) {
-                if (newId <= city.getId()) {
-                    newId = city.getId() + 1;
+            int newId = 1;
+            for (ReservaDTO reserva : reservas) {
+                if (newId <= reserva.getId()) {
+                    newId = reserva.getId() + 1;
                 }
             }
-            newCity.setId(newId);
+            newReserva.setId(newId);
         }
 
         // agrega la ciudad
-        logger.info("agregando ciudad " + newCity);
-        cities.add(newCity);
-        return newCity;
+        logger.info("agregando ciudad " + newReserva);
+        reservas.add(newReserva);
+        return newReserva;
     }
 
-    public BiblioDTO getCity(long id) throws BiblioLogicException {
-        BiblioDTO b = null;
-        for (int i = 0; i < cities.size() && b == null; i++) {
-            BiblioDTO biblio = cities.get(i);
-            if (biblio.getId() == id) {
-                b = biblio;
+    public ReservaDTO getReserva(long id) throws BiblioLogicException {
+        ReservaDTO reservaE = null;
+        for (int i = 0; i < reservas.size() && reservas == null; i++) {
+           ReservaDTO resActual = reservas.get(i);
+            if (resActual.getId() == id) {
+                reservaE = resActual;
             } 
         }
-        if(b== null)
+        if(reservaE== null)
         {
-            logger.severe("No existe una biblioteca con ese id");
-                throw new BiblioLogicException("No existe una biblioteca con ese id");
+            logger.severe("No existe una reserva con ese id");
+                throw new BiblioLogicException("No existe una reserva con ese id");
         }
-        return b;
+        return reservaE;
     }
 
-    public BiblioDTO updateCity(long id, BiblioDTO b) throws BiblioLogicException {
-        BiblioDTO c = getCity(id);
-        if (c != null) {
-            c.setIdAdmin(b.getIdAdmin());
-            c.setName(b.getName());
-            c.setZona(b.getZona());
-            return c;
+    public ReservaDTO updateReserva(long id, ReservaDTO reserva) throws BiblioLogicException {
+        ReservaDTO reservaE = getReserva(id);
+        if (reservaE != null) {
+            reservaE.setId(reserva.getId());
+            reservaE.setIdBiblioteca(reserva.getIdBiblioteca());
+            reservaE.setIdRecurso(reserva.getIdRecurso());
+            reservaE.setIdUsuario(reserva.getIdUsuario());
+            reservaE.setEstaA(reserva.isEstaA());
+            return reservaE;
         } else {
             logger.severe("No existe una biblioteca con ese id");
             throw new BiblioLogicException("No existe una biblioteca con ese id");
         }
     }
 
-    public void deleteCity(long id) throws BiblioLogicException {
-        if (id > 0 && id <= cities.size()) {
-            for (BiblioDTO b : cities) {
-                if (id == b.getId()) {
-                    logger.info("Eliminando ciudad con el id especfificado: id = " + b.getId());
-                    cities.remove(b);
+    public void deleteReserva(long id) throws BiblioLogicException {
+        if (id > 0 && id <= reservas.size()) {
+            for (ReservaDTO reserva : reservas) {
+                if (id == reserva.getId()) {
+                    logger.info("Eliminando ciudad con el id especfificado: id = " + reserva.getId());
+                    reservas.remove(reserva);
                 }
             }
         } else {
-            logger.severe("No existe una ciudad con ese id");
+            logger.severe("No existe una reserva con ese id");
         }
-        throw new BiblioLogicException("No existe una ciudad con ese id");
+        throw new BiblioLogicException("No existe una reserva con ese id");
     }
 }

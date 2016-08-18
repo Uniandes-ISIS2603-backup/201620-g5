@@ -6,8 +6,10 @@
 package co.edu.uniandes.rest.resources.resources;
 
 import co.edu.uniandes.rest.resources.dtos.BiblioDTO;
+import co.edu.uniandes.rest.resources.dtos.ReservaDTO;
 import co.edu.uniandes.rest.resources.exceptions.BiblioLogicException;
 import co.edu.uniandes.rest.resources.mocks.BiblioLogicMock;
+import co.edu.uniandes.rest.resources.mocks.ReservaLogicMock;
 
 import java.util.List;
 import javax.ws.rs.Consumes;
@@ -30,11 +32,11 @@ import javax.ws.rs.Produces;
  *
  * @author Asistente
  */
-@Path("bibliotecas")
+@Path("reservas")
 @Produces("application/json")
-public class BiblioResource {
+public class ReservaResource {
 
-    BiblioLogicMock cityLogic = new BiblioLogicMock();
+    ReservaLogicMock ReservaLogic = new ReservaLogicMock();
 
     /**
      * Obtiene el listado de ciudades.
@@ -43,8 +45,8 @@ public class BiblioResource {
      * @throws BiblioLogicException excepción retornada por la lógica
      */
     @GET
-    public List<BiblioDTO> getCities() throws BiblioLogicException {
-        return cityLogic.getCities();
+    public List<ReservaDTO> getReservas() throws BiblioLogicException {
+        return ReservaLogic.getReservas();
     }
    
     /**
@@ -56,25 +58,25 @@ public class BiblioResource {
      * suministrado
      */
     @POST
-    public BiblioDTO createCity(BiblioDTO city) throws BiblioLogicException {
-        return cityLogic.createCity(city);
+    public ReservaDTO createCity(ReservaDTO reserva) throws BiblioLogicException {
+        return ReservaLogic.createReserva(reserva);
     }
 
     @GET
     @Path("{id: \\d+}")
-    public BiblioDTO getCity(@PathParam("id")int id) throws BiblioLogicException {
-        return cityLogic.getCity(id);
+    public ReservaDTO getCity(@PathParam("id")int id) throws BiblioLogicException {
+        return ReservaLogic.getReserva(id);
     }
     
     @PUT
     @Path("{id: \\d+}")
-    public BiblioDTO updateCity(@PathParam("id")int id, BiblioDTO b)throws BiblioLogicException{
-        return cityLogic.updateCity(id, b);
+    public ReservaDTO updateCity(@PathParam("id")int id, ReservaDTO reserva)throws BiblioLogicException{
+        return ReservaLogic.updateReserva(id, reserva);
     }
     
     @DELETE
     @Path("{id: \\d+}")
     public void deleteCity(@PathParam("id") int id)throws BiblioLogicException{
-        cityLogic.deleteCity(id);
+        ReservaLogic.deleteReserva(id);
     }
 }
