@@ -3,7 +3,8 @@
  * Objeto de transferencia de datos de Ciudades.
  * Los DTO especifican los mensajes que se envían entre el cliente y el servidor.
  */
-package co.edu.uniandes.rest.biblio.dtos;
+package co.edu.uniandes.rest.resources.dtos;
+
 
 /**
  * Objeto de transferencia de datos de Ciudades.

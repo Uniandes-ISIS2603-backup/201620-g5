@@ -1,4 +1,4 @@
-package co.edu.uniandes.rest.biblio.exceptions;
+package co.edu.uniandes.rest.resources.exceptions;
 
 /**
  * Representa las excepciones de la lógica de CityLogic 
