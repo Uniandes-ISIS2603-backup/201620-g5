@@ -1,0 +1,30 @@
+
+<div class="col-md-6 well">
+    <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="ctrl.closeAlert($index)" dismiss-on-timeout="5000">{{alert.msg}} </alert>
+    <form novalidate name="form" id="biblioteca-form" role="form" ng-submit="form.$valid && ctrl.saveRecord(currentRecord.id)">
+        
+        <div ng-messages="form.$error">
+            <div ng-message="required">Llene los espacios especificados:</div>
+        </div>
+   
+        <fieldset>
+            <input id="id" class="form-control" type="hidden" ng-model="currentRecord.id"/>
+            <div class="form-group col-md-12" ng-class="{'has-success': form.name.$valid && form.name.$dirty, 'has-error': form.name.$invalid && (form.name.$dirty || form.$submitted)}" >
+                <label for="name" class="col-md-2 control-label">Nombre</label>
+                <div class="col-md-10">
+                    <input id="name" name="name" class="form-control" type="text" ng-model="currentRecord.name" ng-init="currentRecord.name" required />
+                </div>
+                <label for="idAdmin" class="col-md-2 control-label">IdAdmin</label>
+                <div class="col-md-10">
+                    <input id="idAdmin" name="idAdmin" class="form-control" type="number" ng-model="currentRecord.idAdmin" ng-init="currentRecord.idAdmin" required />
+                </div>
+                <label for="zona" class="col-md-2 control-label">Zona</label>
+                <div class="col-md-10">
+                    <input id="zona" name="zona" class="form-control" type="text" ng-model="currentRecord.zona" ng-init="currentRecord.zona" required />
+                </div>
+            </div>
+            <button type="button" ui-sref='bibliotecasList'>Cancelar</button>
+            <button type="submit" >Guardar</button>    
+        </fieldset>
+    </form>
+</div>
