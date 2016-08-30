@@ -86,17 +86,32 @@ public class LibroLogicMock {
      * @throws BibliotecaLogicException Si ya existe un libro con ese id
      */
     public LibroDTO createLibro(LibroDTO libro) throws BibliotecaLogicException {
-        logger.info("recibiendo solicitud de agregar ciudad " + libro);
-        if (libro.getId() != null) {
-            for (LibroDTO l : libros) {
-                // si existe un video con ese id
-                if (l.getId().equals(libro.getId())) {
-                    logger.severe("Ya existe un libro con ese id");
-                    throw new BibliotecaLogicException("Ya existe un libro con ese id");
-                }
-            }
-        }
-        // agrega la ciudad
+        logger.info("recibiendo solicitud de agregar libro " + libro);
+    	
+    	// el nuevo video tiene id ?
+    	if ( libro.getId() != null ) {
+	    	// busca el video con el id suministrado
+	        for (LibroDTO l : libros) {
+	        	// si existe un video con ese id
+	            if (l.getId().equals(libro.getId())){
+	            	logger.severe("Ya existe un libro con ese id");
+                        throw new BibliotecaLogicException("Ya existe un libro con ese id");
+                    }
+	        }
+	        
+    	} else {
+
+    		// genera un id para la ciudad
+    		logger.info("Generando id para el nuevo libro");
+    		long id = 1;
+	        for (LibroDTO l : libros) {
+	            if (id <= l.getId()){
+	                id =  l.getId() + 1;
+	            }
+	        }
+	        libro.setId(id);
+    	}
+    	
         logger.info("agregando libro" + libro);
         libros.add(libro);
         return libro;

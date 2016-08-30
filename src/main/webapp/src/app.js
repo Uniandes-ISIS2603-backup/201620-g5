@@ -3,6 +3,21 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-var recursos= [BiblioResourse, CityResourse, LibroResource,UsuarioResource, ReservaResource, videoResource];
+(function (ng) {
 
+    var mod = ng.module("mainApp", [
+        "ui.router",
+        "librosModule",
+        "ngMessages"
+    ]);
 
+    mod.config(['$logProvider', function ($logProvider) {
+            $logProvider.debugEnabled(true);
+        }]);
+
+    mod.config(['$urlRouterProvider', function ($urlRouterProvider) {
+            $urlRouterProvider.otherwise('/librosList');
+        }]);
+
+  
+})(window.angular);
