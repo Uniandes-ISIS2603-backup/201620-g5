@@ -4,6 +4,7 @@
         "ui.router",
         "bibliotecasModule",
         "librosModule",
+        "videosModule",
         "ngMessages"
     ]);
 
@@ -14,6 +15,9 @@
     mod.config(['$urlRouterProvider', function ($urlRouterProvider) {
             $urlRouterProvider.otherwise('/bibliotecasList');
             $urlRouterProvider.otherwise('/librosList');
+            $urlRouterProvider.otherwise('/videosList');
+
+            
         }]);
 
   

@@ -12,7 +12,7 @@ import java.util.Date;
  */
 public class VideoDTO {
     private Long id;
-    private String title;
+    private String titulo;
     private String director;
 
    
@@ -44,7 +44,7 @@ public class VideoDTO {
     public VideoDTO(Long id, String title, String director, Long duracion, Long año_publicacion, String genero,  Long numEjemplares, String sinopsis, String esOnline) {
 		super();
 		this.id = id;
-		this.title = title;
+		this.titulo = title;
                 this.director = director;
                 this.duracion = duracion;
                 this.año_publicacion = año_publicacion;
@@ -82,15 +82,15 @@ public class VideoDTO {
     /**
      * @return the title
      */
-    public String getTitle() {
-        return title;
+    public String getTitulo() {
+        return titulo;
     }
 
     /**
-     * @param title the title to set
+     * @param titulo the title to set
      */
-    public void setTitle(String title) {
-        this.title = title;
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
     }
     
     /**
@@ -174,7 +174,7 @@ public class VideoDTO {
      * @param sinopsis the sinopsis to set
      */
     public void setSinopsis(String title) {
-        this.title = title;
+        this.titulo = title;
     }
     
     
@@ -198,6 +198,6 @@ public class VideoDTO {
      */
     @Override
     public String toString() {
-    	return "{ id : " + getId() + ", title : \"" + getTitle() + ", director : \"" + getDirector()+", duracion : \"" + getDuracion()+", año de publicacion : \"" + getAñoPublicacion()+", genero : \"" + getGenero() +", Número de ejemplares : \"" + getNumEjemplares()+", Sinopsis : \"" + getSinopsis() +", Es online : \"" + getEsOnline()+ "\" }" ;  
+    	return "{ id : " + getId() + ", title : \"" + getTitulo() + ", director : \"" + getDirector()+", duracion : \"" + getDuracion()+", año de publicacion : \"" + getAñoPublicacion()+", genero : \"" + getGenero() +", Número de ejemplares : \"" + getNumEjemplares()+", Sinopsis : \"" + getSinopsis() +", Es online : \"" + getEsOnline()+ "\" }" ;  
     }
 }

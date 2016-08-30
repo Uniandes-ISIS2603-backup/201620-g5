@@ -141,7 +141,7 @@ public class VideoLogicMock {
 	            if (Objects.equals(video.getId(), idVideo)){
                          // actualiza el video
                         logger.info("actualizando video " + idVideo );
-	            	video.setTitle(newVideo.getTitle());
+	            	video.setTitulo(newVideo.getTitulo());
                         video.setId(newVideo.getId());
                         video.setAñoPublicacion(newVideo.getAñoPublicacion());
                         video.setDirector(newVideo.getDirector());

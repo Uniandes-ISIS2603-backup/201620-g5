@@ -21,6 +21,8 @@
         <script src="src/modules/bibliotecas/bibliotecas.ctrl.js" type="text/javascript"></script>
         <script src="src/modules/libros/libros.mod.js" type="text/javascript"></script>
         <script src="src/modules/libros/libros.ctrl.js" type="text/javascript"></script>
+        <script src="src/modules/videos/videos.mod.js" type="text/javascript"></script>
+        <script src="src/modules/videos/videos.ctrl.js" type="text/javascript"></script>
 
 
     </head>
@@ -50,6 +52,14 @@
                     <ul class="dropdown-menu">
                         <li><a ui-sref="usuarioCreate">Crear usuario</a></li>    
                          <li><a ui-sref="usuariosList">Lista De usuario</a></li>       
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown">Videos
+                        <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a ui-sref="videoCreate">Crear Video</a></li>    
+                         <li><a ui-sref="videosList">Lista De Videos</a></li>       
                     </ul>
                 </li>
             </ul>

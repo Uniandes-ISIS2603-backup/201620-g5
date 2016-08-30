@@ -1,0 +1,63 @@
+    <div class="col-md-6 well">
+    <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="ctrl.closeAlert($index)" dismiss-on-timeout="5000">{{alert.msg}} </alert>
+    <form novalidate name="form" id="video-form" role="form" ng-submit="form.$valid && ctrl.saveVideo(currentVideo.id)">
+        
+        <div ng-messages="form.$error">
+            <div ng-message="required">Fill the required fields!</div>
+        </div>
+   
+        <fieldset>
+            <input id="id" class="form-control" type="hidden" ng-model="currentVideo.id"/>
+            <div class="form-group col-md-12" ng-class="{'has-success': form.titulo.$valid && form.titulo.$dirty, 'has-error': form.titulo.$invalid && (form.titulo.$dirty || form.$submitted)}" >
+                <label for="titulo" class="col-md-2 control-label">Titulo</label>
+                <div class="col-md-10">
+                    <input id="titulo" name="titulo" class="form-control" type="text" ng-model="currentVideo.titulo" ng-init="currentVideo.titulo" required />
+                </div>
+                
+                <label for="id" class="col-md-2 control-label">Id</label>
+                <div class="col-md-10">
+                    <input id="id" name="id" class="form-control" type="number" ng-model="currentVideo.id" ng-init="currentVideo.id" required />
+                </div>
+                
+                <label for="numEjemplares" class="col-md-2 control-label"># Ejemplares</label>
+                <div class="col-md-10">
+                    <input id="numEjemplares" name="numEjemplares" class="form-control" type="number" ng-model="currentVideo.numEjemplares" ng-init="currentVideo.numEjemplares" required />
+                </div>
+                
+                <label for="director" class="col-md-2 control-label">Director</label>
+                <div class="col-md-10">
+                    <input id="director" name="director" class="form-control" type="text" ng-model="currentVideo.director" ng-init="currentVideo.director" required />
+                </div>
+                
+                <label for="genero" class="col-md-2 control-label">Genero</label>
+                <div class="col-md-10">
+                    <input id="genero" name="genero" class="form-control" type="text" ng-model="currentVideo.genero" ng-init="currentVideo.genero" required />
+                </div>
+                
+                <label for="año_publicacion" class="col-md-2 control-label">Año de publicación</label>
+                <div class="col-md-10">
+                    <input id="año_publicacion" name="año_publicacion" class="form-control" type="number" ng-model="currentVideo.año_publicacion" ng-init="currentVideo.año_publicacion" required />
+                </div>
+                
+                <label for="sinopsis" class="col-md-2 control-label">Sinopsis</label>
+                <div class="col-md-10">
+                    <input id="sinopsis" name="sinopsis" class="form-control" type="text" ng-model="currentVideo.sinopsis" ng-init="currentVideo.sinopsis" required />
+                </div>
+                
+                <label for="duracion" class="col-md-2 control-label">Duración</label>
+                <div class="col-md-10">
+                    <input id="duracion" name="duracion" class="form-control" type="number" ng-model="currentVideo.duracion" ng-init="currentVideo.duracion" required />
+                </div>
+                
+                
+                <label for="online" class="col-md-2 control-label"># ¿Online?</label>
+                <div class="col-md-10">
+                    <input id="online" name="online" class="form-control" type="checkbox" ng-model="currentVideo.online" ng-init="currentVideo.online" required />
+                </div>
+                
+            </div>
+            <button type="button" ui-sref='videosList'>Cancelar</button>
+            <button type="submit" >Guardar</button>    
+        </fieldset>
+    </form>
+</div>
