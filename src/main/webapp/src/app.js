@@ -5,6 +5,7 @@
         "bibliotecasModule",
         "librosModule",
         "videosModule",
+        "reservasModule",
         "ngMessages"
     ]);
 
@@ -16,6 +17,7 @@
             $urlRouterProvider.otherwise('/bibliotecasList');
             $urlRouterProvider.otherwise('/librosList');
             $urlRouterProvider.otherwise('/videosList');
+            $urlRouterProvider.otherwise('/reservasList')
 
             
         }]);
