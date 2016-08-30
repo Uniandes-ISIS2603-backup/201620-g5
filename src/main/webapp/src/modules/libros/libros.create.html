@@ -1,0 +1,35 @@
+
+<div class="col-md-6 well">
+    <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="ctrl.closeAlert($index)" dismiss-on-timeout="5000">{{alert.msg}} </alert>
+    <form novalidate name="form" id="libro-form" role="form" ng-submit="form.$valid && ctrl.saveLibro(currentLibro.id)">
+        
+        <div ng-messages="form.$error">
+            <div ng-message="required">Fill the required fields!</div>
+        </div>
+   
+        <fieldset>
+            <input id="id" class="form-control" type="hidden" ng-model="currentLibro.id"/>
+            <div class="form-group col-md-12" ng-class="{'has-success': form.titulo.$valid && form.titulo.$dirty, 'has-error': form.titulo.$invalid && (form.titulo.$dirty || form.$submitted)}" >
+                <label for="titulo" class="col-md-2 control-label">Titulo</label>
+                <div class="col-md-10">
+                    <input id="titulo" name="titulo" class="form-control" type="text" ng-model="currentLibro.titulo" ng-init="currentLibro.titulo" required />
+                </div>
+                <label for="isbn" class="col-md-2 control-label">ISBN</label>
+                <div class="col-md-10">
+                    <input id="isbn" name="isbn" class="form-control" type="number" ng-model="currentLibro.isbn" ng-init="currentLibro.isbn" required />
+                </div>
+                <label for="numEjemplares" class="col-md-2 control-label"># Ejemplares</label>
+                <div class="col-md-10">
+                    <input id="numEjemplares" name="numEjemplares" class="form-control" type="number" ng-model="currentLibro.numEjemplares" ng-init="currentLibro.numEjemplares" required />
+                </div>
+                <label for="online" class="col-md-2 control-label"># ¿Online?</label>
+                <div class="col-md-10">
+                    <input id="online" name="online" class="form-control" type="checkbox" ng-model="currentLibro.online" ng-init="currentLibro.online" required />
+                </div>
+            </div>
+            <button type="button" ui-sref='librosList'>Cancelar</button>
+            <button type="submit" >Guardar</button>    
+        </fieldset>
+    </form>
+</div>
+

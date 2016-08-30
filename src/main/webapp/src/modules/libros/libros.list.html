@@ -1,0 +1,26 @@
+<div class="container-fluid" >
+    <table class="table table-striped" class="col-md-4">
+        <thead>
+            <tr>
+                <th>Libro</th>
+                <th>ISBN</th>
+                <th># Ejemplares</th>
+                <th>Online</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="libro in libros">
+                <td id="{{$index}}-titulo">{{libro.titulo}}</td>
+                <td id="{{$index}}-isbn">{{libro.isbn}}</td>
+                <td id="{{$index}}-numEjemplares">{{libro.numEjemplares}}</td>
+                <td id="{{$index}}-online">{{libro.online}}</td>
+                <td>
+                    <button id="{{$index}}-edit-btn" class="btn btn-default btn-sm" ui-sref="libroEdit({libroId: libro.id})"><span class="glyphicon glyphicon-edit"></span> Editar</button>
+                    <button id="{{$index}}-delete-btn" class="btn btn-default btn-sm" ng-click="ctrl.deleteLibro({libroId: libro.id})"><span class="glyphicon glyphicon-minus"></span> Eliminar</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
