@@ -1,0 +1,34 @@
+<div class="col-md-6 well">
+    <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="ctrl.closeAlert($index)" dismiss-on-timeout="5000">{{alert.msg}} </alert>
+    <form novalidate name="form" id="city-form" role="form" ng-submit="form.$valid && ctrl.saveRecord(currentRecord.id)">
+        
+        <div ng-messages="form.$error">
+            <div ng-message="required">Fill the required fields!</div>
+        </div>
+   
+        <fieldset>
+            <input id="id" class="form-control" type="hidden" ng-model="currentRecord.id"/>
+            <div class="form-group col-md-12" ng-class="{'has-success': form.name.$valid && form.name.$dirty && form.lastname.$valid && form.lastname.$dirty && form.password.$valid && form.password.$dirty, 'has-error': form.name.$invalid && (form.name.$dirty || form.$submitted)}" >
+                <label for="name" class="col-md-2 control-label">Nombre</label>
+                <div class="col-md-10">
+                    <input id="name" name="name" class="form-control" type="text" ng-model="currentRecord.name" ng-init="currentRecord.name" required />
+                </div>
+                <label for="lastname" class="col-md-2 control-label">Apellido</label>
+                <div class="col-md-10">
+                    <input id="lastname" name="lastname" class="form-control" type="text" ng-model="currentRecord.lastname" ng-init="currentRecord.lastname" required />
+                </div>
+                <label for="password" class="col-md-2 control-label">Contraseña</label>
+                <div class="col-md-10">
+                    <input id="password" name="password" class="form-control" type="password" ng-model="currentRecord.password" ng-init="currentRecord.password" required />
+                </div>
+                <label for="direction" class="col-md-2 control-label">Direccion</label>
+                <div class="col-md-10">
+                    <input id="direction" name="direction" class="form-control" type="text" ng-model="currentRecord.direction" ng-init="currentRecord.direction" required />
+                </div>
+                
+            </div>
+            <button type="button" ui-sref='usuariosList'>Cancel</button>
+            <button type="submit" >Save</button>    
+        </fieldset>
+    </form>
+</div>
