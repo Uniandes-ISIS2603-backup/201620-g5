@@ -1,10 +1,8 @@
     <div class="container-fluid" >
-    <table class="table table-striped" class="col-md-4">
+    <table class="table table-striped col-md-4">
         <thead>
             <tr>
                 <th>Video</th>
-                <th>Titulo</th>
-                <th>Id</th>
                 <th># Ejemplares</th>
                 <th>Director</th>
                 <th>Genero</th>
@@ -17,17 +15,16 @@
         <tbody>
             <tr ng-repeat="video in videos">
                 <td id="{{$index}}-titulo">{{video.titulo}}</td>
-                <td id="{{$index}}-id">{{video.id}}</td>
                 <td id="{{$index}}-numEjemplares">{{video.numEjemplares}}</td>
                 <td id="{{$index}}-director">{{video.director}}</td>
                 <td id="{{$index}}-genero">{{video.genero}}</td>
-                <td id="{{$index}}-año_publicacion">{{video.año_publicacion}}</td>
+                <td id="{{$index}}-anio_publicacion">{{video.anio_publicacion}}</td>
                 <td id="{{$index}}-sinopsis">{{video.sinopsis}}</td>
                 <td id="{{$index}}-duracion">{{video.duracion}}</td>
-                <td id="{{$index}}-online">{{video.online}}</td>
+                <td id="{{$index}}-esOnline">{{video.esOnline}}</td>
                 <td>
-                    <button id="{{$index}}-edit-btn" class="btn btn-default btn-sm" ui-sref="videoEdit({videoId video.id})"><span class="glyphicon glyphicon-edit"></span> Editar</button>
-                    <button id="{{$index}}-delete-btn" class="btn btn-default btn-sm" ng-click="ctrl.deleteVideo({videoId video.id})"><span class="glyphicon glyphicon-minus"></span> Eliminar</button>
+                    <button id="{{$index}}-edit-btn" class="btn btn-default btn-sm" data-ui-sref="videoEdit({videoId: video.id})"><span class="glyphicon glyphicon-edit"></span> Editar</button>
+                    <button id="{{$index}}-delete-btn" class="btn btn-default btn-sm" ng-click="ctrl.deleteVideo({videoId: video.id})"><span class="glyphicon glyphicon-minus"></span> Eliminar</button>
                 </td>
             </tr>
         </tbody>

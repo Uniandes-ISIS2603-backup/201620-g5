@@ -13,12 +13,7 @@
                 <div class="col-md-10">
                     <input id="titulo" name="titulo" class="form-control" type="text" ng-model="currentVideo.titulo" ng-init="currentVideo.titulo" required />
                 </div>
-                
-                <label for="id" class="col-md-2 control-label">Id</label>
-                <div class="col-md-10">
-                    <input id="id" name="id" class="form-control" type="number" ng-model="currentVideo.id" ng-init="currentVideo.id" required />
-                </div>
-                
+               
                 <label for="numEjemplares" class="col-md-2 control-label"># Ejemplares</label>
                 <div class="col-md-10">
                     <input id="numEjemplares" name="numEjemplares" class="form-control" type="number" ng-model="currentVideo.numEjemplares" ng-init="currentVideo.numEjemplares" required />
@@ -34,9 +29,9 @@
                     <input id="genero" name="genero" class="form-control" type="text" ng-model="currentVideo.genero" ng-init="currentVideo.genero" required />
                 </div>
                 
-                <label for="año_publicacion" class="col-md-2 control-label">Año de publicación</label>
+                <label for="anio_publicacion" class="col-md-2 control-label">Año publicación</label>
                 <div class="col-md-10">
-                    <input id="año_publicacion" name="año_publicacion" class="form-control" type="number" ng-model="currentVideo.año_publicacion" ng-init="currentVideo.año_publicacion" required />
+                    <input id="anio_publicacion" name="anio_publicacion" class="form-control" type="number" ng-model="currentVideo.anio_publicacion" ng-init="currentVideo.anio_publicacion" required />
                 </div>
                 
                 <label for="sinopsis" class="col-md-2 control-label">Sinopsis</label>
@@ -50,14 +45,14 @@
                 </div>
                 
                 
-                <label for="online" class="col-md-2 control-label"># ¿Online?</label>
+                <label for="esOnline" class="col-md-2 control-label">¿Online?</label>
                 <div class="col-md-10">
-                    <input id="online" name="online" class="form-control" type="checkbox" ng-model="currentVideo.online" ng-init="currentVideo.online" required />
+                    <input id="esOnline" name="esOnline" class="form-control" type="checkbox" ng-model="currentVideo.esOnline" ng-init="currentVideo.esOnline" novalidate />
                 </div>
                 
             </div>
-            <button type="button" ui-sref='videosList'>Cancelar</button>
-            <button type="submit" >Guardar</button>    
+            <button type="button" data-ui-sref='videosList'>Cancelar</button>
+            <button type="submit" >Agregar</button>    
         </fieldset>
     </form>
 </div>

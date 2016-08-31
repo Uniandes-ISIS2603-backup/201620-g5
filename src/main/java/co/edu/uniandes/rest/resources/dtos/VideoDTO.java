@@ -17,7 +17,7 @@ public class VideoDTO {
 
    
     private String genero;
-    private Long año_publicacion;
+    private Long anio_publicacion;
     private Long numEjemplares;
     private boolean esOnline;
     private String sinopsis;
@@ -32,37 +32,27 @@ public class VideoDTO {
     /**
      * Constructor con parámetros.
      * @param id identificador del video
-     * @param title título del video
+     * @param titulo título del video
      * @param director
      * @param duracion
-     * @param año_publicacion
+     * @param anio_publicacion
      * @param genero
      * @param numEjemplares
      * @param sinopsis
      * @param esOnline
      */
-    public VideoDTO(Long id, String title, String director, Long duracion, Long año_publicacion, String genero,  Long numEjemplares, String sinopsis, String esOnline) {
+    public VideoDTO(Long id, String titulo, String director, Long duracion, Long anio_publicacion, String genero,  Long numEjemplares, String sinopsis, boolean esOnline) {
 		super();
 		this.id = id;
-		this.titulo = title;
+		this.titulo = titulo;
                 this.director = director;
                 this.duracion = duracion;
-                this.año_publicacion = año_publicacion;
+                this.anio_publicacion = anio_publicacion;
                 this.genero = genero;
                 this.numEjemplares = numEjemplares;
                 this.sinopsis = sinopsis;
-                if(esOnline.equalsIgnoreCase("Si") || esOnline.equalsIgnoreCase("Sí"))
-                {
-                    this.esOnline = true;
-                }
-                else if (esOnline.equalsIgnoreCase("No"))
-                {
-                    this.esOnline = false;
-                }
-                else
-                {
-                    this.esOnline = false;
-                }
+                this.esOnline = esOnline;
+
 	}
 
 	/**
@@ -124,15 +114,15 @@ public class VideoDTO {
     /**
      * @return the publication date
      */
-    public Long getAñoPublicacion() {
-        return año_publicacion;
+    public Long getAnioPublicacion() {
+        return anio_publicacion;
     }
 
     /**
      * @param date the publication date to set
      */
-    public void setAñoPublicacion(Long date) {
-        this.año_publicacion = date;
+    public void setAnioPublicacion(Long date) {
+        this.anio_publicacion = date;
     }
     
     /**
@@ -173,8 +163,8 @@ public class VideoDTO {
     /**
      * @param sinopsis the sinopsis to set
      */
-    public void setSinopsis(String title) {
-        this.titulo = title;
+    public void setSinopsis(String sinopsis) {
+        this.sinopsis = sinopsis;
     }
     
     
@@ -198,6 +188,6 @@ public class VideoDTO {
      */
     @Override
     public String toString() {
-    	return "{ id : " + getId() + ", title : \"" + getTitulo() + ", director : \"" + getDirector()+", duracion : \"" + getDuracion()+", año de publicacion : \"" + getAñoPublicacion()+", genero : \"" + getGenero() +", Número de ejemplares : \"" + getNumEjemplares()+", Sinopsis : \"" + getSinopsis() +", Es online : \"" + getEsOnline()+ "\" }" ;  
+    	return "{ id : " + getId() + ", titulo : \"" + getTitulo() + ", director : \"" + getDirector()+", duracion : \"" + getDuracion()+", año de publicacion : \"" + getAnioPublicacion()+", genero : \"" + getGenero() +", Número de ejemplares : \"" + getNumEjemplares()+", Sinopsis : \"" + getSinopsis() +", Es online : \"" + getEsOnline()+ "\" }" ;  
     }
 }

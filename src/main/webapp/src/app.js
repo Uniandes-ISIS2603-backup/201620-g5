@@ -16,10 +16,7 @@
             $urlRouterProvider.otherwise('/bibliotecasList');
             $urlRouterProvider.otherwise('/librosList');
             $urlRouterProvider.otherwise('/videosList');
-
-            
         }]);
-
   
 })(window.angular);
 
