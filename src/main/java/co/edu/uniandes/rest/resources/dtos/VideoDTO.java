@@ -52,7 +52,6 @@ public class VideoDTO {
                 this.numEjemplares = numEjemplares;
                 this.sinopsis = sinopsis;
                 this.esOnline = esOnline;
-
 	}
 
 	/**
