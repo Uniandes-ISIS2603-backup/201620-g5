@@ -35,9 +35,9 @@ public class VideoLogicMock {
 
     	if (videos == null) {
             videos = new ArrayList<>();
-            videos.add(new VideoDTO(1L, "The Revenant", "Alejandro G. Iñarritu",152L, 2015L, "Accion", 2L , "Oso contra hombre","No" ));
-            videos.add(new VideoDTO(2L, "Mermaids: The Body Found", "Sid Bennet", 27L, 2012L,"Documental", 20L, "Sirenas", "Si" ));
-            videos.add(new VideoDTO(3L, "The Wolf of Wall Street","Martin Scorsese",180L, 2013L , "Pelicula Biográfica", 5L, "Dinero y locura", "No"  ));
+            videos.add(new VideoDTO(1L, "The Revenant", "Alejandro G. Iñarritu",152L, 2015L, "Accion", 2L , "Oso contra hombre",false));
+            videos.add(new VideoDTO(2L, "Mermaids: The Body Found", "Sid Bennet", 27L, 2012L,"Documental", 20L, "Sirenas", true ));
+            videos.add(new VideoDTO(3L, "The Wolf of Wall Street","Martin Scorsese",180L, 2013L , "Pelicula Biográfica", 5L, "Dinero y locura", false  ));
         }
         
     	// indica que se muestren todos los mensajes
@@ -143,7 +143,7 @@ public class VideoLogicMock {
                         logger.info("actualizando video " + idVideo );
 	            	video.setTitulo(newVideo.getTitulo());
                         video.setId(newVideo.getId());
-                        video.setAñoPublicacion(newVideo.getAñoPublicacion());
+                        video.setAnioPublicacion(newVideo.getAnioPublicacion());
                         video.setDirector(newVideo.getDirector());
                         video.setDuration(newVideo.getDuracion());
                         video.setGenero(newVideo.getGenero());
