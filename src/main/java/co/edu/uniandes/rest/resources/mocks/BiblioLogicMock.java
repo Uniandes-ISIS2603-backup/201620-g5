@@ -1,7 +1,7 @@
 package co.edu.uniandes.rest.resources.mocks;
 
 /**
- * Mock del recurso Ciudades (Mock del servicio REST)
+ * Mock del recurso Bibliotecas (Mock del servicio REST)
  *
  * @author Asistente
  */
@@ -16,14 +16,14 @@ import co.edu.uniandes.rest.resources.exceptions.BiblioLogicException;
 
 /*
  * CityLogicMock
- * Mock del recurso Ciudades (Mock del servicio REST)
+ * Mock del recurso Bibliotecas (Mock del servicio REST)
  */
 public class BiblioLogicMock {
 
     // objeto para presentar logs de las operaciones
     private final static Logger logger = Logger.getLogger(BiblioLogicMock.class.getName());
 
-    // listado de ciudades
+    // listado de bibliotecas
     private static ArrayList<BiblioDTO> cities;
 
     /**
@@ -46,53 +46,53 @@ public class BiblioLogicMock {
         logger.setLevel(Level.INFO);
 
         // muestra información 
-        logger.info("Inicializa la lista de ciudades");
-        logger.info("ciudades" + cities);
+        logger.info("Inicializa la lista de bibliotecas");
+        logger.info("Bibliotecas: " + cities);
     }
 
     /**
      * Obtiene el listado de personas.
      *
-     * @return lista de ciudades
+     * @return lista de bibliotecas
      * @throws BiblioLogicException cuando no existe la lista en memoria
      */
     public List<BiblioDTO> getCities() throws BiblioLogicException {
         if (cities == null) {
-            logger.severe("Error interno: lista de ciudades no existe.");
-            throw new BiblioLogicException("Error interno: lista de ciudades no existe.");
+            logger.severe("Error interno: lista de bibliotecas no existe.");
+            throw new BiblioLogicException("Error interno: lista de bibliotecas no existe.");
         }
 
-        logger.info("retornando todas las ciudades");
+        logger.info("retornando todas las bibliotecas");
         return cities;
     }
 
     /**
-     * Agrega una ciudad a la lista.
+     * Agrega una biblioteca a la lista.
      *
-     * @param newCity ciudad a adicionar
-     * @throws BiblioLogicException cuando ya existe una ciudad con el id
+     * @param newCity biblioteca a adicionar
+     * @throws BiblioLogicException cuando ya existe una biblioteca con el id
      * suministrado
-     * @return ciudad agregada
+     * @return biblioteca agregada
      */
     public BiblioDTO createCity(BiblioDTO newCity) throws BiblioLogicException {
-        logger.info("recibiendo solicitud de agregar ciudad " + newCity);
+        logger.info("recibiendo solicitud de agregar biblioteca " + newCity);
 
-        // la nueva ciudad tiene id ?
+        // la nueva biblioteca tiene id ?
         if (newCity.getId() != null) {
-            // busca la ciudad con el id suministrado
+            // busca la biblioteca con el id suministrado
             for (BiblioDTO city : cities) {
-                // si existe una ciudad con ese id
+                // si existe una biblioteca con ese id
                 if (Objects.equals(city.getId(), newCity.getId())) {
-                    logger.severe("Ya existe una ciudad con ese id");
-                    throw new BiblioLogicException("Ya existe una ciudad con ese id");
+                    logger.severe("Ya existe una biblioteca con ese id");
+                    throw new BiblioLogicException("Ya existe una biblioteca con ese id");
                 }
             }
 
-            // la nueva ciudad no tiene id ? 
+            // la nueva biblioteca no tiene id ? 
         } else {
 
-            // genera un id para la ciudad
-            logger.info("Generando id paa la nueva ciudad");
+            // genera un id para la biblioteca
+            logger.info("Generando id para la nueva biblioteca");
             long newId = 1;
             for (BiblioDTO city : cities) {
                 if (newId <= city.getId()) {
@@ -102,8 +102,8 @@ public class BiblioLogicMock {
             newCity.setId(newId);
         }
 
-        // agrega la ciudad
-        logger.info("agregando ciudad " + newCity);
+        // agrega la biblioteca
+        logger.info("agregando biblioteca: " + newCity);
         cities.add(newCity);
         return newCity;
     }
@@ -138,16 +138,20 @@ public class BiblioLogicMock {
     }
 
     public void deleteCity(long id) throws BiblioLogicException {
-        if (id > 0 && id <= cities.size()) {
-            for (BiblioDTO b : cities) {
-                if (id == b.getId()) {
-                    logger.info("Eliminando ciudad con el id especfificado: id = " + b.getId());
-                    cities.remove(b);
-                }
+        logger.info("recibiendo solicitud de eliminar biblioteca " + id);
+        BiblioDTO b = null;
+        for (int i = 0; i < cities.size() && b == null; i++) {
+            BiblioDTO biblio = cities.get(i);
+            if (id == biblio.getId()) {
+                b = biblio;
+                logger.info("Eliminando biblioteca con el id especfificado: id = " + b.getId());
+                cities.remove(b);
             }
-        } else {
-            logger.severe("No existe una ciudad con ese id");
         }
-        throw new BiblioLogicException("No existe una ciudad con ese id");
+        if(b== null)
+        {
+            logger.severe("No existe una biblioteca con ese id");
+            throw new BiblioLogicException("No existe una biblioteca con ese id");
+        }
     }
 }

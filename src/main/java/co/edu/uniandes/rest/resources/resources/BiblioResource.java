@@ -37,9 +37,9 @@ public class BiblioResource {
     BiblioLogicMock cityLogic = new BiblioLogicMock();
 
     /**
-     * Obtiene el listado de ciudades.
+     * Obtiene el listado de bibliotecas.
      *
-     * @return lista de ciudades
+     * @return lista de bibliotecas
      * @throws BiblioLogicException excepción retornada por la lógica
      */
     @GET
@@ -48,11 +48,11 @@ public class BiblioResource {
     }
    
     /**
-     * Agrega una ciudad
+     * Agrega una biblioteca
      *
-     * @param city ciudad a agregar
-     * @return datos de la ciudad a agregar
-     * @throws BiblioLogicException cuando ya existe una ciudad con el id
+     * @param city biblioteca a agregar
+     * @return datos de la biblioteca a agregar
+     * @throws BiblioLogicException cuando ya existe una biblioteca con el id
      * suministrado
      */
     @POST

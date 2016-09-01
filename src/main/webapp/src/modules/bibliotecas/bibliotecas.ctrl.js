@@ -4,10 +4,10 @@
     mod.controller("bibliotecasCtrl", ['$scope', '$state', '$stateParams', '$http', 'bibliotecasContext', function ($scope, $state, $stateParams, $http, context) {
 
             // inicialmente el listado de bibliotecas está vacio
-            $scope.records = {};
+            $scope.bibliotecas = {};
             // carga las bibliotecas
             $http.get(context).then(function(response){
-                $scope.records = response.data;    
+                $scope.bibliotecas = response.data;    
             }, responseError);
 
             // el controlador recibió un bibliotecaId ??
@@ -21,14 +21,14 @@
                     .then(function (response) {
                         // $http.get es una promesa
                         // cuando llegue el dato, actualice currentRecord
-                        $scope.currentRecord = response.data;
+                        $scope.currentBiblioteca = response.data;
                     }, responseError);
 
             // el controlador no recibió un cityId
             } else
             {
                 // el registro actual debe estar vacio
-                $scope.currentRecord = {
+                $scope.currentBiblioteca = {
                     id: undefined /*Tipo Long. El valor se asigna en el backend*/,
                     idAdmin: undefined /*Tipo Long. El valor se asigna en el backend*/,
                     name: '' /*Tipo String*/,
@@ -39,14 +39,14 @@
             }
 
 
-            this.saveRecord = function (id) {
-                currentRecord = $scope.currentRecord;
+            this.saveBiblioteca = function (id) {
+                currentBiblioteca = $scope.currentBiblioteca;
                 
                 // si el id es null, es un registro nuevo, entonces lo crea
                 if (id == null) {
 
                     // ejecuta POST en el recurso REST
-                    return $http.post(context, currentRecord)
+                    return $http.post(context, currentBiblioteca)
                         .then(function () {
                             // $http.post es una promesa
                             // cuando termine bien, cambie de estado
@@ -57,16 +57,22 @@
                 } else {
                     
                     // ejecuta PUT en el recurso REST
-                    return $http.put(context + "/" + currentRecord.id, currentRecord)
+                    return $http.put(context + "/" + currentBiblioteca.id, currentBiblioteca)
                         .then(function () {
                             // $http.put es una promesa
                             // cuando termine bien, cambie de estado
-                            $state.go('citiesList');
+                            $state.go('bibliotecasList');
                         }, responseError);
                 };
             };
 
-
+            this.deleteBiblioteca = function( biblioteca) {
+                return $http.delete(context + "/" + biblioteca.bibliotecaId)
+                    .then(function () {
+                        // cuando termine bien, cambie de estado
+                        $state.reload();
+                    }, responseError);
+            };
 
             // -----------------------------------------------------------------
             // Funciones para manejra los mensajes en la aplicación

@@ -1,5 +1,5 @@
 (function (ng) {
-    var mod = ng.module("bibliotecasModule", ["ngMessages"]);
+    var mod = ng.module("bibliotecasModule", ["ngMessages" , "ui.router"]);
     mod.constant("bibliotecasContext", "api/bibliotecas");
     mod.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
             var basePath = 'src/modules/bibliotecas/';
