@@ -2,6 +2,7 @@
 
     var mod = ng.module("mainApp", [
         "ui.router",
+        //"usuariosModule",
         "bibliotecasModule",
         "librosModule",
         "videosModule",
@@ -18,6 +19,7 @@
             $urlRouterProvider.otherwise('/librosList');
             $urlRouterProvider.otherwise('/videosList');
            $urlRouterProvider.otherwise('/reservasList');
+           $urlRouterProvider.otherwise('/usuariosList');
 
         }]);
   

@@ -22,10 +22,11 @@
 
                 $scope.currentUsuario = {
                     id: undefined,
-                    name: '',
-                    username: '',
-                    password: '',
-                    address: '',
+                    nombre: '',
+                    apellido: '',
+                    login: '',
+                    contrasenha: '',
+                    direccion: '',
                 };
               
                 $scope.alerts = [];

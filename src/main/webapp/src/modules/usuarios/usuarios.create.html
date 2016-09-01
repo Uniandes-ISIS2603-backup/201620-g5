@@ -1,29 +1,33 @@
 <div class="col-md-6 well">
     <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="ctrl.closeAlert($index)" dismiss-on-timeout="5000">{{alert.msg}} </alert>
-    <form novalidate name="form" id="city-form" role="form" ng-submit="form.$valid && ctrl.saveRecord(currentRecord.id)">
+    <form novalidate name="form" id="usuario-form" role="form" ng-submit="form.$valid && ctrl.saveUsuario(currentUsuario.id)">
         
         <div ng-messages="form.$error">
             <div ng-message="required">Fill the required fields!</div>
         </div>
    
         <fieldset>
-            <input id="id" class="form-control" type="hidden" ng-model="currentRecord.id"/>
-            <div class="form-group col-md-12" ng-class="{'has-success': form.name.$valid && form.name.$dirty && form.lastname.$valid && form.lastname.$dirty && form.password.$valid && form.password.$dirty, 'has-error': form.name.$invalid && (form.name.$dirty || form.$submitted)}" >
-                <label for="name" class="col-md-2 control-label">Nombre</label>
+            <input id="id" class="form-control" type="hidden" ng-model="currentUsuario.id"/>
+            <div class="form-group col-md-12" ng-class="{'has-success': form.name.$valid && form.name.$dirty, 'has-error': form.name.$invalid && (form.name.$dirty || form.$submitted)}" >
+                <label for="nombre" class="col-md-2 control-label">Nombre</label>
                 <div class="col-md-10">
-                    <input id="name" name="name" class="form-control" type="text" ng-model="currentRecord.name" ng-init="currentRecord.name" required />
+                    <input id="nombre" name="nombre" class="form-control" type="text" ng-model="currentUsuario.nombre" ng-init="currentUsuario.nombre" required />
                 </div>
-                <label for="lastname" class="col-md-2 control-label">Apellido</label>
+                <label for="apellido" class="col-md-2 control-label">Apellido</label>
                 <div class="col-md-10">
-                    <input id="lastname" name="lastname" class="form-control" type="text" ng-model="currentRecord.lastname" ng-init="currentRecord.lastname" required />
+                    <input id="apellido" name="apellido" class="form-control" type="text" ng-model="currentUsuario.apellido" ng-init="currentUsuario.apellido" required />
                 </div>
-                <label for="password" class="col-md-2 control-label">Contraseña</label>
+                <label for="name" class="col-md-2 control-label">Login</label>
                 <div class="col-md-10">
-                    <input id="password" name="password" class="form-control" type="password" ng-model="currentRecord.password" ng-init="currentRecord.password" required />
+                    <input id="login" name="login" class="form-control" type="text" ng-model="currentUsuario.login" ng-init="currentUsuario.login" required />
                 </div>
-                <label for="direction" class="col-md-2 control-label">Direccion</label>
+                <label for="contrasenha" class="col-md-2 control-label">Contraseña</label>
                 <div class="col-md-10">
-                    <input id="direction" name="direction" class="form-control" type="text" ng-model="currentRecord.direction" ng-init="currentRecord.direction" required />
+                    <input id="contrasenha" name="contrasenha" class="form-control" type="password" ng-model="currentUsuario.contrasenha" ng-init="currentUsuario.contrasenha" required />
+                </div>
+                <label for="direccion" class="col-md-2 control-label">Direccion</label>
+                <div class="col-md-10">
+                    <input id="direction" name="direccion" class="form-control" type="text" ng-model="currentUsuario.direccion" ng-init="currentUsuario.direccion" required />
                 </div>
                 
             </div>
