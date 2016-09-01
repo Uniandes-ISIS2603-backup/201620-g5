@@ -2,7 +2,7 @@
 
     var mod = ng.module("mainApp", [
         "ui.router",
-        //"usuariosModule",
+        "usuariosModule",
         "bibliotecasModule",
         "librosModule",
         "videosModule",
