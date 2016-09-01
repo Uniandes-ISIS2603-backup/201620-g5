@@ -14,7 +14,7 @@
                         templateUrl: basePath + 'usuarios.list.html'
                     }
                 }
-            }).state('usuariosCreate', {
+            }).state('usuarioCreate', {
                 url: '/usuarios/create',
                 views: {
                     'mainView': {
@@ -24,10 +24,10 @@
                     }
                 }
 
-            }).state('usuariosEdit', {
-                url: '/usuarios/:usuariosId',
+            }).state('usuarioEdit', {
+                url: '/usuarios/:usuarioId',
                 param: {
-                    usuariosId: null
+                    usuarioId: null
                 },
                 views: {
                     'mainView': {
@@ -38,4 +38,4 @@
                 }
             });
         }]);
-    })(window.angular);
+})(window.angular);
