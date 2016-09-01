@@ -2,25 +2,23 @@
     <table class="table table-striped col-md-4">
         <thead>
             <tr>
+                <th> Id </th>
                 <th>Video</th>
                 <th># Ejemplares</th>
                 <th>Director</th>
                 <th>Genero</th>
-                <th>Año de publicación</th>
                 <th>Sinopsis</th>
-                <th>Duracion</th>
                 <th>Online</th>
             </tr>
         </thead>
         <tbody>
             <tr ng-repeat="video in videos">
+                <td id="{{$index}}-id">{{video.id}}</td>
                 <td id="{{$index}}-titulo">{{video.titulo}}</td>
                 <td id="{{$index}}-numEjemplares">{{video.numEjemplares}}</td>
                 <td id="{{$index}}-director">{{video.director}}</td>
                 <td id="{{$index}}-genero">{{video.genero}}</td>
-                <td id="{{$index}}-anio_publicacion">{{video.anio_publicacion}}</td>
                 <td id="{{$index}}-sinopsis">{{video.sinopsis}}</td>
-                <td id="{{$index}}-duracion">{{video.duracion}}</td>
                 <td id="{{$index}}-esOnline">{{video.esOnline}}</td>
                 <td>
                     <button id="{{$index}}-edit-btn" class="btn btn-default btn-sm" data-ui-sref="videoEdit({videoId: video.id})"><span class="glyphicon glyphicon-edit"></span> Editar</button>
