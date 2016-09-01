@@ -58,25 +58,25 @@ public class ReservaResource {
      * suministrado
      */
     @POST
-    public ReservaDTO createCity(ReservaDTO reserva) throws BiblioLogicException {
+    public ReservaDTO createReserva(ReservaDTO reserva) throws BiblioLogicException {
         return ReservaLogic.createReserva(reserva);
     }
 
     @GET
     @Path("{id: \\d+}")
-    public ReservaDTO getCity(@PathParam("id")int id) throws BiblioLogicException {
+    public ReservaDTO getReserva(@PathParam("id")int id) throws BiblioLogicException {
         return ReservaLogic.getReserva(id);
     }
     
     @PUT
     @Path("{id: \\d+}")
-    public ReservaDTO updateCity(@PathParam("id")int id, ReservaDTO reserva)throws BiblioLogicException{
+    public ReservaDTO updateReserva(@PathParam("id")int id, ReservaDTO reserva)throws BiblioLogicException{
         return ReservaLogic.updateReserva(id, reserva);
     }
     
     @DELETE
     @Path("{id: \\d+}")
-    public void deleteCity(@PathParam("id") int id)throws BiblioLogicException{
+    public void deleteReserva(@PathParam("id") int id)throws BiblioLogicException{
         ReservaLogic.deleteReserva(id);
     }
 }

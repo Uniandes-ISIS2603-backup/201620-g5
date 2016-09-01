@@ -1,7 +1,7 @@
 
 <div class="col-md-6 well">
     <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="ctrl.closeAlert($index)" dismiss-on-timeout="5000">{{alert.msg}} </alert>
-    <form novalidate name="form" id="reserva-form" role="form" ng-submit="form.$valid && ctrl.saveRecord(currentReserva.id)">
+    <form novalidate name="form" id="reserva-form" role="form" ng-submit="form.$valid && ctrl.saveReserva(currentReserva.id)">
         
         <div ng-messages="form.$error">
             <div ng-message="required">Llene los espacios especificados:</div>
@@ -10,10 +10,6 @@
         <fieldset>
             <input id="id" class="form-control" type="hidden" ng-model="currentReserva.id"/>
             <div class="form-group col-md-12" ng-class="{'has-success': form.id.$valid && form.id.$dirty, 'has-error': form.id.$invalid && (form.id.$dirty || form.$submitted)}" >
-                <label for="id" class="col-md-2 control-label">Id</label>
-                <div class="col-md-10">
-                    <input id="id" name="Id" class="form-control" type="number" ng-model="currentReserva.id" ng-init="currentReserva.id" required />
-                </div>
                 <label for="idUsuario" class="col-md-2 control-label">IdUsuario</label>
                 <div class="col-md-10">
                     <input id="idUsuario" name="idUsuario" class="form-control" type="number" ng-model="currentReserva.idUsuario" ng-init="currentReserva.idUsuario" required />
@@ -24,14 +20,14 @@
                 </div>
                 <label for="idRecurso" class="col-md-2 control-label">IdRecurso</label>
                 <div class="col-md-10">
-                    <input id="idRecurso" name="idRecurso" class="form-control" type="number" ng-model="currentReserva.idRecurso" ng-init="currentReserva.idReserva" required />
+                    <input id="idRecurso" name="idRecurso" class="form-control" type="number" ng-model="currentReserva.idRecurso" ng-init="currentReserva.idRecurso" required />
                 </div>
-                <label for="estaActiva" class="col-md-2 control-label">EstaActiva?</label>
+                <label for="estaA" class="col-md-2 control-label">Está Activa?</label>
                 <div class="col-md-10">
-                    <input id="estaActiva" name="estaActiva" class="form-control" type="checkbox" ng-model="currentReserva.estaActiva" ng-init="currentVideo.estaActiva" required />
+                    <input id="estaA" name="estaA" class="form-control" type="checkbox" ng-model="currentReserva.estaA" ng-init="currentVideo.estaA" novalidate />
                 </div>
             </div>
-            <button type="button" ui-sref='bibliotecasList'>Cancelar</button>
+            <button type="button" ui-sref='reservasList'>Cancelar</button>
             <button type="submit" >Guardar</button>    
         </fieldset>
     </form>

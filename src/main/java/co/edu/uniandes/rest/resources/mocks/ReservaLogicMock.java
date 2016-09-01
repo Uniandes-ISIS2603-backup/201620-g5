@@ -109,7 +109,7 @@ public class ReservaLogicMock {
 
     public ReservaDTO getReserva(long id) throws BiblioLogicException {
         ReservaDTO reservaE = null;
-        for (int i = 0; i < reservas.size() && reservas == null; i++) {
+        for (int i = 0; i < reservas.size(); i++) {
            ReservaDTO resActual = reservas.get(i);
             if (resActual.getId() == id) {
                 reservaE = resActual;
@@ -139,16 +139,15 @@ public class ReservaLogicMock {
     }
 
     public void deleteReserva(long id) throws BiblioLogicException {
-        if (id > 0 && id <= reservas.size()) {
             for (ReservaDTO reserva : reservas) {
                 if (id == reserva.getId()) {
-                    logger.info("Eliminando ciudad con el id especfificado: id = " + reserva.getId());
+                    logger.info("Eliminando reserva con el id especfificado: id = " + reserva.getId());
                     reservas.remove(reserva);
+                    return;
                 }
             }
-        } else {
-            logger.severe("No existe una reserva con ese id");
-        }
+        logger.severe("No existe un video con ese id");
+
         throw new BiblioLogicException("No existe una reserva con ese id");
     }
 }

@@ -22,7 +22,7 @@
                         $scope.currentReserva = response.data;
                     }, responseError);
 
-            // el controlador no recibió un videoId
+            // el controlador no recibió una reservaId
             } else
             {
                 // el registro actual debe estar vacio

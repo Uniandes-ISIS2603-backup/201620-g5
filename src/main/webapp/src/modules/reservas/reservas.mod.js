@@ -1,5 +1,5 @@
 (function (ng) {
-    var mod = ng.module("ReservasModule", ["ngMessages"]);
+    var mod = ng.module("reservasModule", ["ngMessages", "ui.router"]);
     mod.constant("reservasContext", "api/reservas");
     mod.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
             var basePath = 'src/modules/reservas/';
@@ -14,7 +14,7 @@
                         templateUrl: basePath + 'reservas.list.html'
                     }
                 }
-            }).state('resevasCreate', {
+            }).state('reservaCreate', {
                 url: '/reservas/create',
                 views: {
                     'mainView': {
@@ -24,10 +24,10 @@
                     }
                 }
 
-            }).state('reservasEdit', {
+            }).state('reservaEdit', {
                 url: '/reservas/:reservaId',
                 param: {
-                    bibliotecaId: null
+                    reservaId: null
                 },
                 views: {
                     'mainView': {

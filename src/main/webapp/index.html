@@ -23,11 +23,13 @@
         <script src="src/modules/libros/libros.ctrl.js" type="text/javascript"></script>
         <script src="src/modules/videos/videos.mod.js" type="text/javascript"></script>
         <script src="src/modules/videos/videos.ctrl.js" type="text/javascript"></script>
+      <script src="src/modules/reservas/reservas.mod.js" type="text/javascript"></script>
+      <script src="src/modules/reservas/reservas.ctrl.js" type="text/javascript"></script>
 
 
     </head>
     <body style="padding-top: 20px;">
-        <div class="container-fluid" class="col-md-12">   
+        <div class="container-fluid col-md-12">   
             <h3>Bibliotecas</h3>
             <ul class="nav nav-tabs">            
                 <li class="dropdown">
@@ -66,12 +68,12 @@
                     <a class="dropdown-toggle" data-toggle="dropdown">Reservas
                         <span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a ui-sref="reservasCreate">Crear Reserva</a></li>    
+                        <li><a ui-sref="reservaCreate">Crear Reserva</a></li>    
                          <li><a ui-sref="reservasList">Lista De Reservas</a></li>       
                     </ul>
                 </li>
             </ul>
-            <div ui-view="mainView">
+            <div data-ui-view="mainView">
             </div>
         </div>
     </body>

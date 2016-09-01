@@ -17,12 +17,8 @@
             $urlRouterProvider.otherwise('/bibliotecasList');
             $urlRouterProvider.otherwise('/librosList');
             $urlRouterProvider.otherwise('/videosList');
-<<<<<<< HEAD
-            $urlRouterProvider.otherwise('/reservasList')
+           $urlRouterProvider.otherwise('/reservasList');
 
-            
-=======
->>>>>>> 1a27cb80becb2da3c469c1a4cce5f6756a425bc5
         }]);
   
 })(window.angular);
