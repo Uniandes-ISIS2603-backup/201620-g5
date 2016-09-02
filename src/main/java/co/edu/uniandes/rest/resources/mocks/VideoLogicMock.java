@@ -145,7 +145,7 @@ public class VideoLogicMock {
                         video.setId(newVideo.getId());
                         video.setAnioPublicacion(newVideo.getAnioPublicacion());
                         video.setDirector(newVideo.getDirector());
-                        video.setDuration(newVideo.getDuracion());
+                        video.setDuracion(newVideo.getDuracion());
                         video.setGenero(newVideo.getGenero());
                         video.setNumEjemplares(newVideo.getNumEjemplares());
                         video.setSinopsis(newVideo.getSinopsis());

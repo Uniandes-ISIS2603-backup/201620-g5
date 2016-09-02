@@ -106,7 +106,7 @@ public class VideoDTO {
     /**
      * @param duracion the duration to set in minutes
      */
-    public void setDuration(Long duracion) {
+    public void setDuracion(Long duracion) {
         this.duracion = duracion;
     }
     
