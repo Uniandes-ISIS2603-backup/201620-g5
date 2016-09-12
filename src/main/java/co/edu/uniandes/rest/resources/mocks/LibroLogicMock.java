@@ -19,7 +19,7 @@ import co.edu.uniandes.rest.resources.exceptions.BibliotecaLogicException;
 public class LibroLogicMock {
 
     // objeto para presentar logs de las operaciones
-    private final static Logger logger = Logger.getLogger(CityLogicMock.class.getName());
+    private final static Logger logger = Logger.getLogger(RecursoLogicMock.class.getName());
 
     // listado de libros
     private static ArrayList<LibroDTO> libros;

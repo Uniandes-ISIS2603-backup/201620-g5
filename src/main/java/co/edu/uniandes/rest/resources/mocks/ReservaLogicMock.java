@@ -3,7 +3,7 @@ package co.edu.uniandes.rest.resources.mocks;
 /**
  * Mock del recurso Ciudades (Mock del servicio REST)
  *
- * @author Asistente
+ * @author sf.munera10
  */
 import java.util.ArrayList;
 import java.util.List;

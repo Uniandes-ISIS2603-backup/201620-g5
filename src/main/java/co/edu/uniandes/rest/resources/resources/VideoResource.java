@@ -26,7 +26,7 @@ import javax.ws.rs.Produces;
  * este recurso tiene la ruta "videos". Al ejecutar la aplicación, el recurse
  * será accesibe a través de la ruta "/api/cities"
  *
- * @author Asistente
+ * @author sf.munera10
  */
 @Path("videos")
 @Produces("application/json")

@@ -1,30 +1,30 @@
 /*
- * CityDTO
- * Objeto de transferencia de datos de Ciudades.
+ * RecursoDTO
+ * Objeto de transferencia de datos de Recursos.
  * Los DTO especifican los mensajes que se envían entre el cliente y el servidor.
  */
 package co.edu.uniandes.rest.resources.dtos;
 
 /**
- * Objeto de transferencia de datos de Ciudades.
- * @author Asistente
+ * Objeto de transferencia de datos de Recursos.
+ * @author sf.munera10
  */
-public class CityDTO {
+public class RecursoDTO {
     private Long id;
     private String name;
 
     /**
      * Constructor por defecto
      */
-    public CityDTO() {
+    public RecursoDTO() {
 	}
 
     /**
      * Constructor con parámetros.
-     * @param id identificador de la ciudad
-     * @param name nombre de la ciudad
+     * @param id identificador de la recurso
+     * @param name nombre de la recurso
      */
-    public CityDTO(Long id, String name) {
+    public RecursoDTO(Long id, String name) {
 		super();
 		this.id = id;
 		this.name = name;

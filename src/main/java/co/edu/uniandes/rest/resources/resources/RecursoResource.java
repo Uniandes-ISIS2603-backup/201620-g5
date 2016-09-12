@@ -1,16 +1,16 @@
 /*
- * CityResource.java
+ * RecursoResource.java
  * Clase que representa el recurso "/cities"
  * Implementa varios métodos para manipular las ciudades
  */
 package co.edu.uniandes.rest.resources.resources;
 
-import co.edu.uniandes.rest.resources.dtos.CityDTO;
+import co.edu.uniandes.rest.resources.dtos.RecursoDTO;
+import co.edu.uniandes.rest.resources.exceptions.BiblioLogicException;
 import co.edu.uniandes.rest.resources.exceptions.BibliotecaLogicException;
-import co.edu.uniandes.rest.resources.mocks.CityLogicMock;
+import co.edu.uniandes.rest.resources.mocks.RecursoLogicMock;
 
 import java.util.List;
-
 
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -24,13 +24,13 @@ import javax.ws.rs.Produces;
  * este recurso tiene la ruta "cities". Al ejecutar la aplicación, el recurse
  * será accesibe a través de la ruta "/api/cities"
  *
- * @author Asistente
+ * @author sf.munera10
  */
-@Path("cities")
+@Path("recursos")
 @Produces("application/json")
-public class CityResource {
+public class RecursoResource {
 
-    CityLogicMock cityLogic = new CityLogicMock();
+    RecursoLogicMock recursoLogic = new RecursoLogicMock();
 
     /**
      * Obtiene el listado de ciudades.
@@ -39,11 +39,10 @@ public class CityResource {
      * @throws BibliotecaLogicException excepción retornada por la lógica
      */
     @GET
-    public List<CityDTO> getCities() throws BibliotecaLogicException {
-        return cityLogic.getCities();
+    public List<RecursoDTO> getRecursos() throws BibliotecaLogicException {
+        return recursoLogic.getRecursos();
     }
 
-   
     /**
      * Agrega una ciudad
      *
@@ -53,9 +52,7 @@ public class CityResource {
      * suministrado
      */
     @POST
-    public CityDTO createCity(CityDTO city) throws BibliotecaLogicException {
-        return cityLogic.createCity(city);
+    public RecursoDTO createRecurso(RecursoDTO city) throws BibliotecaLogicException, BiblioLogicException {
+        return recursoLogic.createRecurso(city);
     }
-
-  
 }

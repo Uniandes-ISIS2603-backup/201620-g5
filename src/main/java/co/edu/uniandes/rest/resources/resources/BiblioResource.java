@@ -28,7 +28,7 @@ import javax.ws.rs.Produces;
  * este recurso tiene la ruta "cities". Al ejecutar la aplicación, el recurse
  * será accesibe a través de la ruta "/api/cities"
  *
- * @author Asistente
+ * @author sf.munera10
  */
 @Path("bibliotecas")
 @Produces("application/json")

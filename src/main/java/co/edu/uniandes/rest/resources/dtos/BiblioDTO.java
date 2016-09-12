@@ -8,7 +8,7 @@ package co.edu.uniandes.rest.resources.dtos;
 
 /**
  * Objeto de transferencia de datos de Ciudades.
- * @author Asistente
+ * @author sf.munera10
  */
 public class BiblioDTO {
     private Long id;
