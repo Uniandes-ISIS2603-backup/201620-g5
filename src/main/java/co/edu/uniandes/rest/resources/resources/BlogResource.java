@@ -50,13 +50,11 @@ public class BlogResource
     public BlogDTO createLibro(BlogDTO blog) throws BibliotecaLogicException {
         return BlogLogic.createBlog(blog);
     }
-   /*
     @PUT
     @Path("{id: \\d+}")
-    public BlogDTO updateBlog(@PathParam("id") Long id, String texto, String fecha) throws BibliotecaLogicException {
+    public BlogDTO updateBlog(@PathParam("id") Long id, String texto) throws BibliotecaLogicException {
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy");
         
         return BlogLogic.updateBlog(id, texto, fecha);
     }
-    */
 }
