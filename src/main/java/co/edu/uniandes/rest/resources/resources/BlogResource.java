@@ -9,6 +9,8 @@ import co.edu.uniandes.rest.resources.dtos.BlogDTO;
 import co.edu.uniandes.rest.resources.exceptions.BiblioLogicException;
 import co.edu.uniandes.rest.resources.exceptions.BibliotecaLogicException;
 import co.edu.uniandes.rest.resources.mocks.BlogLogicMock;
+import co.edu.uniandes.rest.resources.mocks.PrestamoLogicMock;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import javax.ws.rs.GET;
@@ -48,10 +50,13 @@ public class BlogResource
     public BlogDTO createLibro(BlogDTO blog) throws BibliotecaLogicException {
         return BlogLogic.createBlog(blog);
     }
-   
+   /*
     @PUT
     @Path("{id: \\d+}")
-    public BlogDTO updateBlog(@PathParam("id") Long id, String texto, Date fecha) throws BibliotecaLogicException {
+    public BlogDTO updateBlog(@PathParam("id") Long id, String texto, String fecha) throws BibliotecaLogicException {
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy");
+        
         return BlogLogic.updateBlog(id, texto, fecha);
     }
+    */
 }

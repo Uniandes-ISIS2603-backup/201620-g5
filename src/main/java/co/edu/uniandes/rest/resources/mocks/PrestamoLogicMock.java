@@ -178,7 +178,7 @@ public class PrestamoLogicMock {
         MultaLogicMock multaLogic = new MultaLogicMock();
         Date fecha = new Date();
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy");
-        List<MultaDTO> multas = multaLogic.getMultasUsuario(idUsuario);
+        List<MultaDTO> multas = multaLogic.getMultas();
         PrestamoDTO prestamo = null;
         for (int i = 0; i < prestamos.size() && prestamo == null; i++) {
             PrestamoDTO p = prestamos.get(i);

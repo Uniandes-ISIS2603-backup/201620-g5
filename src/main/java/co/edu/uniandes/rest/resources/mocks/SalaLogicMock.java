@@ -5,6 +5,7 @@ package co.edu.uniandes.rest.resources.mocks;
  *
  * @author sf.munera10
  */
+import co.edu.uniandes.rest.resources.dtos.BiblioDTO;
 import co.edu.uniandes.rest.resources.dtos.RecursoDTO;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,26 +35,26 @@ public class SalaLogicMock {
     public SalaLogicMock() throws BiblioLogicException {
         if (salas == null) {
             salas = new ArrayList<>();
-            salas.add(new SalaDTO(1L,1L, 1L, false, "Sala 1", 6));
-            salas.add(new SalaDTO(2L,2L, 1L, false, "Sala 2", 6));
+            salas.add(new SalaDTO(1L, 1L, 1L, false, "Sala 1", 6));
+            salas.add(new SalaDTO(2L, 2L, 1L, false, "Sala 2", 6));
 
-            salas.add(new SalaDTO(3L,1L, 2L, false, "Sala 1", 6));
-            salas.add(new SalaDTO(4L,2L, 2L, false, "Sala 2", 6));
+            salas.add(new SalaDTO(3L, 1L, 2L, false, "Sala 1", 6));
+            salas.add(new SalaDTO(4L, 2L, 2L, false, "Sala 2", 6));
 
-            salas.add(new SalaDTO(5L,1L, 3L, false, "Sala 1", 6));
-            salas.add(new SalaDTO(6L,2L, 3L, false, "Sala 2", 6));
+            salas.add(new SalaDTO(5L, 1L, 3L, false, "Sala 1", 6));
+            salas.add(new SalaDTO(6L, 2L, 3L, false, "Sala 2", 6));
 
-            salas.add(new SalaDTO(7L,1L, 4L, false, "Sala 1", 6));
-            salas.add(new SalaDTO(8L,2L, 4L, false, "Sala 2", 6));
+            salas.add(new SalaDTO(7L, 1L, 4L, false, "Sala 1", 6));
+            salas.add(new SalaDTO(8L, 2L, 4L, false, "Sala 2", 6));
 
-            salas.add(new SalaDTO(9L,1L, 5L, false, "Sala 1", 6));
-            salas.add(new SalaDTO(10L,2L, 5L, false, "Sala 2", 6));
+            salas.add(new SalaDTO(9L, 1L, 5L, false, "Sala 1", 6));
+            salas.add(new SalaDTO(10L, 2L, 5L, false, "Sala 2", 6));
 
-            salas.add(new SalaDTO(11L,1L, 6L, false, "Sala 1", 6));
-            salas.add(new SalaDTO(12L,2L, 6L, false, "Sala 2", 6));
+            salas.add(new SalaDTO(11L, 1L, 6L, false, "Sala 1", 6));
+            salas.add(new SalaDTO(12L, 2L, 6L, false, "Sala 2", 6));
 
-            salas.add(new SalaDTO(13L,1L, 7L, false, "Sala 1", 6));
-            salas.add(new SalaDTO(14L,2L, 7L, false, "Sala 2", 6));
+            salas.add(new SalaDTO(13L, 1L, 7L, false, "Sala 1", 6));
+            salas.add(new SalaDTO(14L, 2L, 7L, false, "Sala 2", 6));
         }
 
         // indica que se muestren todos los mensajes
@@ -115,6 +116,8 @@ public class SalaLogicMock {
      * @return sala agregada
      */
     public SalaDTO createSala(SalaDTO newSala, long idBiblioteca) throws BiblioLogicException, BibliotecaLogicException {
+        BiblioLogicMock biblioLogic = new BiblioLogicMock();
+        BiblioDTO biblioteca = biblioLogic.getCity(idBiblioteca);
         logger.info("recibiendo solicitud de agregar sala " + newSala);
         // la nueva sala tiene id ?
         if (newSala.getId() != null) {
@@ -129,8 +132,7 @@ public class SalaLogicMock {
 
             // la nueva sala no tiene id ? 
         }
-        if(newSala.getIdRecurso() != null)
-        {
+        if (newSala.getIdRecurso() != null) {
             for (SalaDTO sala : salas) {
                 // si existe una sala con ese id
                 if (Objects.equals(sala.getIdRecurso(), newSala.getIdRecurso())) {
@@ -139,7 +141,10 @@ public class SalaLogicMock {
                 }
             }
         }
-        else {
+        if (biblioteca == null) {
+            logger.severe("La biblioteca a la que se le quiere crear sala no existe");
+            throw new BiblioLogicException("La biblioteca a la que se le quiere crear sala no existe");
+        } else {
 
             // genera un id para la sala
             logger.info("Generando id para la nueva sala");
@@ -151,9 +156,8 @@ public class SalaLogicMock {
                 if (newId <= sala.getId()) {
                     newId = sala.getId() + 1;
                 }
-                if(newId2 <= sala.getIdRecurso())
-                {
-                    newId2 = sala.getIdRecurso()+1;
+                if (newId2 <= sala.getIdRecurso()) {
+                    newId2 = sala.getIdRecurso() + 1;
                 }
             }
             newSala.setId(newId);
@@ -162,9 +166,9 @@ public class SalaLogicMock {
         }
 
         // agrega la sala 
-        logger.info("agregando sala: " + newSala);
         RecursoLogicMock recursoLogic = new RecursoLogicMock();
         List<RecursoDTO> recursos = recursoLogic.getRecursos();
+        logger.info("agregando sala: " + newSala);
         salas.add(newSala);
         RecursoDTO r = new RecursoDTO(newSala.getIdRecurso(), newSala.getNombre());
         recursos.add(r);
