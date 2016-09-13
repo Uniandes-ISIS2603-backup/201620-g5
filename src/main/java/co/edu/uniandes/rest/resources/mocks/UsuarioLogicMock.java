@@ -137,9 +137,8 @@ public class UsuarioLogicMock {
     public UsuarioDTO updateUsuario(Long idUsuario, UsuarioDTO newUsuario) throws Exception
     {
         logger.info("recibiendo solicitud de actualizar video " + idUsuario);
-    
-	        for (UsuarioDTO usuario : usuarios) 
-                {
+   
+   			UsuarioDTO usuario = getUsuario(idUsuario);
 	        	// si existe un usuario con ese id
 	            if (Objects.equals(usuario.getId(), idUsuario)){
                          // actualiza el usuario
@@ -152,7 +151,6 @@ public class UsuarioLogicMock {
                         usuario.setId(newUsuario.getId());
                         
                         return newUsuario;
-	            }
 	        }
 	        
                  logger.severe("No existe un Usuario con ese id");
@@ -166,20 +164,13 @@ public class UsuarioLogicMock {
      */
     public void deleteUsuario(Long pId) throws Exception
     {
-        logger.info("recibiendo solicitud de eliminar usuario " + pId);
-     
-	        for (UsuarioDTO usuario : usuarios) 
-                {
-	            if (Objects.equals(usuario.getId(), pId))
-                    {
-                        logger.info("eliminando usuario " + pId);
-                        usuarios.remove(usuario);
-                        return;
-	            }
-	        }
-               
-        logger.severe("No existe un usuario con ese id");
-	throw new Exception("No existe un usuario con ese id");
+    	try {
+            usuarios.remove(getUsuario(id));
+        } catch (BibliotecaLogicException ex) {
+            Logger.getLogger(UsuarioLogicMock.class.getName()).log(Level.SEVERE, null, ex);
+            logger.severe("No fue posible elminiar el usuario con id " + id);
+  throw new BibliotecaLogicException("No fue posible elminiar el usuario con id " + id);
+        }
     }
     
 }
