@@ -11,11 +11,12 @@ package co.edu.uniandes.rest.resources.dtos;
  * @author sf.munera10
  */
 public class ReservaDTO {
-    private int id;
-    private int idUsuario;
-    private int idBiblioteca;
+    private Long id;
+    private Long idUsuario;
+    private Long idBiblioteca;
     private boolean estaA;
-    private int idRecurso;
+    private Long idRecurso;
+    private RecursoDTO recurso;
 
     /**
      * Constructor por defecto
@@ -28,7 +29,7 @@ public class ReservaDTO {
      * @param id identificador de la ciudad
      * @param name nombre de la ciudad
      */
-    public ReservaDTO(int id, int idUsuario, int idBiblioteca, boolean estaA, int idRecurso) {
+    public ReservaDTO(Long id, Long idUsuario, Long idBiblioteca, boolean estaA, Long idRecurso) {
 		super();
 		this.id = id;
                 this.idUsuario = idUsuario;
@@ -37,27 +38,27 @@ public class ReservaDTO {
                 this.idRecurso=idRecurso;
 	}
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public int getIdUsuario() {
+    public Long getIdUsuario() {
         return idUsuario;
     }
 
-    public void setIdUsuario(int idUsuario) {
+    public void setIdUsuario(Long idUsuario) {
         this.idUsuario = idUsuario;
     }
 
-    public int getIdBiblioteca() {
+    public Long getIdBiblioteca() {
         return idBiblioteca;
     }
 
-    public void setIdBiblioteca(int idBiblioteca) {
+    public void setIdBiblioteca(Long idBiblioteca) {
         this.idBiblioteca = idBiblioteca;
     }
 
@@ -69,11 +70,11 @@ public class ReservaDTO {
         this.estaA = estaA;
     }
 
-    public int getIdRecurso() {
+    public Long getIdRecurso() {
         return idRecurso;
     }
 
-    public void setIdRecurso(int idRecurso) {
+    public void setIdRecurso(Long idRecurso) {
         this.idRecurso = idRecurso;
     }
 	

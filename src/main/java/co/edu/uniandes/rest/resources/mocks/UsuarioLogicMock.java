@@ -7,6 +7,7 @@ package co.edu.uniandes.rest.resources.mocks;
 
 
 import co.edu.uniandes.rest.resources.dtos.UsuarioDTO;
+import co.edu.uniandes.rest.resources.exceptions.BibliotecaLogicException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -165,11 +166,11 @@ public class UsuarioLogicMock {
     public void deleteUsuario(Long pId) throws Exception
     {
     	try {
-            usuarios.remove(getUsuario(id));
+            usuarios.remove(getUsuario(pId));
         } catch (BibliotecaLogicException ex) {
             Logger.getLogger(UsuarioLogicMock.class.getName()).log(Level.SEVERE, null, ex);
-            logger.severe("No fue posible elminiar el usuario con id " + id);
-  throw new BibliotecaLogicException("No fue posible elminiar el usuario con id " + id);
+            logger.severe("No fue posible elminiar el usuario con id " + pId);
+  throw new BibliotecaLogicException("No fue posible elminiar el usuario con id " + pId);
         }
     }
     

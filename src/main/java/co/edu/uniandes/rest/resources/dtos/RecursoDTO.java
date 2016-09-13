@@ -12,6 +12,8 @@ package co.edu.uniandes.rest.resources.dtos;
 public class RecursoDTO {
     private Long id;
     private String name;
+    private boolean estaReservado;
+    private boolean estaPrestado;
 
     /**
      * Constructor por defecto
@@ -28,6 +30,8 @@ public class RecursoDTO {
 		super();
 		this.id = id;
 		this.name = name;
+                estaPrestado=false;
+                estaReservado=false;
 	}
 
 	/**
@@ -56,6 +60,22 @@ public class RecursoDTO {
      */
     public void setName(String name) {
         this.name = name;
+    }
+
+    public boolean isEstaReservado() {
+        return estaReservado;
+    }
+
+    public void setEstaReservado(boolean estaReservado) {
+        this.estaReservado = estaReservado;
+    }
+
+    public boolean isEstaPrestado() {
+        return estaPrestado;
+    }
+
+    public void setEstaPrestado(boolean estaPrestado) {
+        this.estaPrestado = estaPrestado;
     }
     
     /**

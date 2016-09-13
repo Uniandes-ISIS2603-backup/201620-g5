@@ -64,7 +64,7 @@ public class ReservaResource {
 
     @GET
     @Path("{id: \\d+}")
-    public ReservaDTO getReserva(@PathParam("id")int id) throws BiblioLogicException {
+    public ReservaDTO getReserva(@PathParam("id")Long id) throws BiblioLogicException {
         return ReservaLogic.getReserva(id);
     }
     

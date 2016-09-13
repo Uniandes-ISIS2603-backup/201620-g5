@@ -26,6 +26,8 @@ public class ReservaLogicMock {
 
     // listado de ciudades
     private static ArrayList<ReservaDTO> reservas;
+    
+    private static RecursoLogicMock recursos;
 
     /**
      * Constructor. Crea los datos de ejemplo.
@@ -34,10 +36,10 @@ public class ReservaLogicMock {
 
         if (reservas == null) {
             reservas = new ArrayList<>();
-            reservas.add(new ReservaDTO(1, 1,1, true,1));
-            reservas.add(new ReservaDTO(2, 2,2, true,2));
-            reservas.add(new ReservaDTO(3, 3,3, true,3));
-            reservas.add(new ReservaDTO(4, 4,4, true,4));
+            reservas.add(new ReservaDTO(1L, 1L,1L, true,1L));
+            reservas.add(new ReservaDTO(2L, 2L,2L, true,2L));
+            reservas.add(new ReservaDTO(3L, 3L,3L, true,3L));
+            reservas.add(new ReservaDTO(4L, 4L,4L, true,4L));
             
         }
 
@@ -92,13 +94,15 @@ public class ReservaLogicMock {
 
             // genera un id para la ciudad
             logger.info("Generando id paa la nueva ciudad");
-            int newId = 1;
+           Long newId = 1L;
             for (ReservaDTO reserva : reservas) {
                 if (newId <= reserva.getId()) {
-                    newId = reserva.getId() + 1;
+                    newId = reserva.getId()+1 ;
                 }
             }
+            
             newReserva.setId(newId);
+            recursos.getRecurso(newReserva.getIdRecurso()).setEstaPrestado(true);
         }
 
         // agrega la ciudad
@@ -107,7 +111,7 @@ public class ReservaLogicMock {
         return newReserva;
     }
 
-    public ReservaDTO getReserva(long id) throws BiblioLogicException {
+    public ReservaDTO getReserva(Long id) throws BiblioLogicException {
         ReservaDTO reservaE = null;
         for (int i = 0; i < reservas.size(); i++) {
            ReservaDTO resActual = reservas.get(i);
