@@ -108,14 +108,13 @@ public class BlogLogicMock {
      * @return
      * @throws Exception
      */
-    public BlogDTO updateBlog(Long pId, String pTexto, Date pFecha) throws BibliotecaLogicException
+    public BlogDTO updateBlog(Long pId, String pTexto) throws BibliotecaLogicException
     {
     
     try
     {
         BlogDTO blog = getBlog(pId);
         blog.setTexto(pTexto);
-        blog.setFecha(pFecha);
         logger.info("Libro actualizado");
         return blog;
         } 
