@@ -24,9 +24,9 @@ import javax.ws.rs.Produces;
  *
  * Note que la aplicación (definida en RestConfig.java) define la ruta "/api" y
  * este recurso tiene la ruta "videos". Al ejecutar la aplicación, el recurse
- * será accesibe a través de la ruta "/api/cities"
+ * será accesibe a través de la ruta "/api/videos"
  *
- * @author sf.munera10
+ * @author ce.gonzalez13
  */
 @Path("videos")
 @Produces("application/json")

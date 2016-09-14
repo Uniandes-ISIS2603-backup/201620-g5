@@ -15,11 +15,14 @@
         }]);
 
     mod.config(['$urlRouterProvider', function ($urlRouterProvider) {
-            $urlRouterProvider.otherwise('/bibliotecasList');
-            $urlRouterProvider.otherwise('/librosList');
-            $urlRouterProvider.otherwise('/videosList');
+           $urlRouterProvider.otherwise('/bibliotecasList');
+           $urlRouterProvider.otherwise('/librosList');
+           $urlRouterProvider.otherwise('/videosList');
            $urlRouterProvider.otherwise('/reservasList');
            $urlRouterProvider.otherwise('/usuariosList');
+           $urlRouterProvider.otherwise('/');
+
+
 
         }]);
   

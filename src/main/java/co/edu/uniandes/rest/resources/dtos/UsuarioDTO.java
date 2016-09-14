@@ -31,7 +31,7 @@ public class UsuarioDTO {
     
     public UsuarioDTO()
     {
-        
+ 
     }
     
     public UsuarioDTO(String pNombre, String pApellido, String pLogin, Long pId, String pContrasenha, String pDireccion)
@@ -74,7 +74,7 @@ public class UsuarioDTO {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

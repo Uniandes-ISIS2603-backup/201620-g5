@@ -23,10 +23,7 @@
                 $scope.currentUsuario = {
                     id: undefined,
                     nombre: '',
-                    apellido: '',
-                    login: '',
-                    contrasenha: '',
-                    direccion: '',
+                    
                 };
               
                 $scope.alerts = [];

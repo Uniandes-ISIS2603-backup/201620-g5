@@ -12,8 +12,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.ws.rs.GET;
-import javax.ws.rs.PUT;
+
 
 /**
  *
@@ -22,7 +21,7 @@ import javax.ws.rs.PUT;
 public class UsuarioLogicMock {
     
     
-    private final static Logger logger = Logger.getLogger(co.edu.uniandes.rest.resources.mocks.UsuarioLogicMock.class.getName());
+    private final static Logger logger = Logger.getLogger(UsuarioLogicMock.class.getName());
 	
 	// listado de ciudades
     private static ArrayList<UsuarioDTO> usuarios;
@@ -79,7 +78,7 @@ public class UsuarioLogicMock {
         }
         for (UsuarioDTO usuario: usuarios) {
 	        
-	            if (usuario.getId() == pId){
+	            if (usuario.getId()== pId){
 	            	logger.info("retornando la usuario buscada");
                         return usuario;
 	            }

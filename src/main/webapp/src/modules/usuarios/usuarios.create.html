@@ -8,7 +8,7 @@
    
         <fieldset>
             <input id="id" class="form-control" type="hidden" ng-model="currentUsuario.id"/>
-            <div class="form-group col-md-12" ng-class="{'has-success': form.name.$valid && form.name.$dirty, 'has-error': form.name.$invalid && (form.name.$dirty || form.$submitted)}" >
+            <div class="form-group col-md-12" ng-class="{'has-success': form.nombre.$valid && form.nombre.$dirty, 'has-error': form.nombre.$invalid && (form.nombre.$dirty || form.$submitted)}" >
                 <label for="nombre" class="col-md-2 control-label">Nombre</label>
                 <div class="col-md-10">
                     <input id="nombre" name="nombre" class="form-control" type="text" ng-model="currentUsuario.nombre" ng-init="currentUsuario.nombre" required />
@@ -17,7 +17,7 @@
                 <div class="col-md-10">
                     <input id="apellido" name="apellido" class="form-control" type="text" ng-model="currentUsuario.apellido" ng-init="currentUsuario.apellido" required />
                 </div>
-                <label for="name" class="col-md-2 control-label">Login</label>
+                <label for="login" class="col-md-2 control-label">Login</label>
                 <div class="col-md-10">
                     <input id="login" name="login" class="form-control" type="text" ng-model="currentUsuario.login" ng-init="currentUsuario.login" required />
                 </div>
@@ -27,7 +27,7 @@
                 </div>
                 <label for="direccion" class="col-md-2 control-label">Direccion</label>
                 <div class="col-md-10">
-                    <input id="direction" name="direccion" class="form-control" type="text" ng-model="currentUsuario.direccion" ng-init="currentUsuario.direccion" required />
+                    <input id="direccion" name="direccion" class="form-control" type="text" ng-model="currentUsuario.direccion" ng-init="currentUsuario.direccion" required />
                 </div>
                 
             </div>

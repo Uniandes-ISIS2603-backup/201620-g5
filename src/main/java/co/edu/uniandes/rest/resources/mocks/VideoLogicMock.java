@@ -2,7 +2,7 @@ package co.edu.uniandes.rest.resources.mocks;
 
 /**
  * Mock del recurso Videos (Mock del servicio REST)
- * @author sf.munera10
+ * author: ce.gonzalez13
  */
 import java.util.ArrayList;
 import java.util.List;
