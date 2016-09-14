@@ -1,0 +1,27 @@
+<div class="container-fluid" >
+   
+    <table class="table table-striped col-md-4">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nombre</th>
+                <th>Identificador Administrador</th>
+                <th>Zona De Ciudad</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="biblioteca in bibliotecas">
+                <td id="{{$index}}-id">{{biblioteca.id}}</td>
+                <td id="{{$index}}-name">{{biblioteca.name}}</td>
+                <td id="{{$index}}-idAdmin">{{biblioteca.idAdmin}}</td>
+                <td id="{{$index}}-zona">{{biblioteca.zona}}</td>
+                <td>
+                    <button id="{{$index}}-edit-btn" class="btn btn-default btn-sm" data-ui-sref="bibliotecaEdit({bibliotecaId: biblioteca.id})"><span class="glyphicon glyphicon-edit"></span> Editar</button>
+                    <button id="{{$index}}-delete-btn" class="btn btn-default btn-sm" ng-click="ctrl.deleteBiblioteca({bibliotecaId: biblioteca.id})"><span class="glyphicon glyphicon-minus"></span> Eliminar</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
