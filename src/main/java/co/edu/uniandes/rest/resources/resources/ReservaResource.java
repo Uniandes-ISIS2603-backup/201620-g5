@@ -36,7 +36,7 @@ import javax.ws.rs.Produces;
 @Produces("application/json")
 public class ReservaResource {
 
-    ReservaLogicMock ReservaLogic = new ReservaLogicMock();
+    ReservaLogicMock reservaLogic = new ReservaLogicMock();
 
     /**
      * Obtiene el listado de ciudades.
@@ -46,7 +46,7 @@ public class ReservaResource {
      */
     @GET
     public List<ReservaDTO> getReservas() throws BiblioLogicException {
-        return ReservaLogic.getReservas();
+        return reservaLogic.getReservas();
     }
    
     /**
@@ -59,24 +59,36 @@ public class ReservaResource {
      */
     @POST
     public ReservaDTO createReserva(ReservaDTO reserva) throws BiblioLogicException {
-        return ReservaLogic.createReserva(reserva);
+        return reservaLogic.createReserva(reserva);
     }
 
     @GET
     @Path("{id: \\d+}")
     public ReservaDTO getReserva(@PathParam("id")Long id) throws BiblioLogicException {
-        return ReservaLogic.getReserva(id);
+        return reservaLogic.getReserva(id);
     }
     
     @PUT
     @Path("{id: \\d+}")
     public ReservaDTO updateReserva(@PathParam("id")int id, ReservaDTO reserva)throws BiblioLogicException{
-        return ReservaLogic.updateReserva(id, reserva);
+        return reservaLogic.updateReserva(id, reserva);
     }
     
     @DELETE
     @Path("{id: \\d+}")
     public void deleteReserva(@PathParam("id") int id)throws BiblioLogicException{
-        ReservaLogic.deleteReserva(id);
+        reservaLogic.deleteReserva(id);
     }
+    
+    
+    /**
+     * DEBE IR EN LibroResource, solucionar para acceder a reservas desde ahi.
+     * @param id 
+     */
+    @GET
+    @Path("libros/{idLibro: \\d+}/reservas")
+    public List<ReservaDTO> getReservasLibro(@PathParam("idLibro") Long id){
+        return reservaLogic.getReservasLibro(id);
+    }
+
 }

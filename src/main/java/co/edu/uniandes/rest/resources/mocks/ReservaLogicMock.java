@@ -154,4 +154,15 @@ public class ReservaLogicMock {
 
         throw new BiblioLogicException("No existe una reserva con ese id");
     }
+
+    public List<ReservaDTO> getReservasLibro(Long id) {
+        ArrayList<ReservaDTO> resLib;
+        resLib = new ArrayList<>();
+        for (ReservaDTO r : reservas) {
+            if (id.equals(r.getIdRecurso())) {
+                resLib.add(r);
+            }
+        }
+        return resLib;
+    }
 }
