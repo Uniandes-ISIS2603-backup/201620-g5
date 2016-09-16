@@ -25,6 +25,7 @@ import javax.ws.rs.Produces;
  *
  * @author sf.munera10
  */
+@Path("")
 @Produces("application/json")
 public class PrestamoResource {
 
@@ -37,14 +38,15 @@ public class PrestamoResource {
      * @throws BiblioLogicException excepción retornada por la lógica
      */
     @GET
-    public List<PrestamoDTO> getPrestamos() throws BiblioLogicException, ParseException {
+    @Path("prestamos")
+    public ArrayList<PrestamoDTO> getPrestamos() throws BiblioLogicException, ParseException {
         return prestamoLogic.getPrestamos();
     }
 
     
     @GET
     @Path("usuarios/{idUsuario: \\d+}/prestamos")
-    public List<PrestamoDTO> getPrestamosUsuario(@PathParam("idUsuario") Long idUsuario) throws BiblioLogicException, ParseException {
+    public ArrayList<PrestamoDTO> getPrestamosUsuario(@PathParam("idUsuario") Long idUsuario) throws BiblioLogicException, ParseException {
         return prestamoLogic.getPrestamosUsuario(idUsuario);
     }
 
@@ -62,7 +64,7 @@ public class PrestamoResource {
     }
 
     @GET
-    @Path("{id: \\d+}/{idUsuario: \\d+}")
+    @Path("prestamos/{id: \\d+}/{idUsuario: \\d+}")
     public PrestamoDTO getPrestamoDeUsuario(@PathParam("id") int id, @PathParam("idUsuario") Long idUsuario) throws BiblioLogicException, ParseException {
         return prestamoLogic.getPrestamoDeUsuario(id, idUsuario);
     }

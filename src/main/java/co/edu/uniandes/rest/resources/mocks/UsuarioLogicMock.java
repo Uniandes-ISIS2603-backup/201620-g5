@@ -6,7 +6,9 @@
 package co.edu.uniandes.rest.resources.mocks;
 
 
+import co.edu.uniandes.rest.resources.dtos.PrestamoDTO;
 import co.edu.uniandes.rest.resources.dtos.UsuarioDTO;
+import co.edu.uniandes.rest.resources.exceptions.BiblioLogicException;
 import co.edu.uniandes.rest.resources.exceptions.BibliotecaLogicException;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,17 +36,27 @@ public class UsuarioLogicMock {
     public UsuarioLogicMock()
     {
         if ( usuarios == null)
-        {
+        {   try {
+            PrestamoLogicMock prestamos = new PrestamoLogicMock();
             usuarios = new ArrayList<>();
-            usuarios.add(new UsuarioDTO("Stephen", "Hawking", "elLocoStephe", 1L, "1234", "en mi casa"));
-            usuarios.add(new UsuarioDTO("Uribe", "Alvaro", "elDotorUribe", 2L, "4321", "la casa nariño"));
-            usuarios.add(new UsuarioDTO("Chuck", "Norris", " tuDios", 3L, "9874", "En todo lado"));
-           
-        logger.setLevel(Level.INFO);
-
-        // muestra información 
-        logger.info("Inicializa la lista de usuarios");
-        logger.info("usuarios" + usuarios);
+            UsuarioDTO u1 = new UsuarioDTO("Stephen", "Hawking", "elLocoStephe", 1L, "1234", "en mi casa");
+            u1.setPrestamos(prestamos.getPrestamosUsuario(u1.getId()));
+            usuarios.add(u1);
+            UsuarioDTO u2 = new UsuarioDTO("Uribe", "Alvaro", "elDotorUribe", 2L, "4321", "la casa nariño");
+            u2.setPrestamos(prestamos.getPrestamosUsuario(u2.getId()));
+            usuarios.add(u2);
+            UsuarioDTO u3 = new UsuarioDTO("Chuck", "Norris", " tuDios", 3L, "9874", "En todo lado");
+            u3.setPrestamos(prestamos.getPrestamosUsuario(u3.getId()));
+            usuarios.add(u3);
+            
+            logger.setLevel(Level.INFO);
+            
+            // muestra información
+            logger.info("Inicializa la lista de usuarios");
+            logger.info("usuarios" + usuarios);
+            } catch (BiblioLogicException ex) {
+                Logger.getLogger(UsuarioLogicMock.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
     

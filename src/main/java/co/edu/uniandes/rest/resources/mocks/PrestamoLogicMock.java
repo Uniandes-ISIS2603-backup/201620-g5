@@ -78,7 +78,7 @@ public class PrestamoLogicMock {
      * @return lista de prestamos
      * @throws BiblioLogicException cuando no existe la lista en memoria
      */
-    public List<PrestamoDTO> getPrestamos() throws BiblioLogicException {
+    public ArrayList<PrestamoDTO> getPrestamos() throws BiblioLogicException {
         if (prestamos == null) {
             logger.severe("Error interno: lista de prestamos no existe.");
             throw new BiblioLogicException("Error interno: lista de prestamos no existe.");
@@ -88,7 +88,7 @@ public class PrestamoLogicMock {
         return prestamos;
     }
 
-    public List<PrestamoDTO> getPrestamosUsuario(Long idUsuario) throws BiblioLogicException {
+    public ArrayList<PrestamoDTO> getPrestamosUsuario(Long idUsuario) throws BiblioLogicException {
         ArrayList<PrestamoDTO> prestamosUsuario = new ArrayList<>();
         if (prestamos == null) {
             logger.severe("Error interno: lista de prestamos no existe.");
