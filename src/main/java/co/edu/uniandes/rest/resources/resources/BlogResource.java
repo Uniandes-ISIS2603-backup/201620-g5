@@ -54,7 +54,7 @@ public class BlogResource
     @Path("{id: \\d+}")
     public BlogDTO updateBlog(@PathParam("id") Long id, String texto) throws BibliotecaLogicException {
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy");
-        
-        return BlogLogic.updateBlog(id, texto, fecha);
+        return null;
+//        return BlogLogic.updateBlog(id, texto, fecha);
     }
 }

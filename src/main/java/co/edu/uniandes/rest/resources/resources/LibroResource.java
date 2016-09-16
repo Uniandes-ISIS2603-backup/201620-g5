@@ -94,5 +94,4 @@ public class LibroResource {
     public void deleteLibro(@PathParam("id") Long id) throws BibliotecaLogicException {
         libroLogic.deleteLibro(id);
     }
-
 }
