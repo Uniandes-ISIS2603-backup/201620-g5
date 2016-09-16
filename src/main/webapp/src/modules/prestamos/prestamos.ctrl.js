@@ -1,5 +1,5 @@
 (function (ng) {
-    var mod = ng.module("usuariosModule");
+    var mod = ng.module("prestamosModule");
 
     mod.controller("prestamosCtrl", ['$scope', '$state', '$stateParams', '$http','usuariosContext',  
         function ($scope, $state, $stateParams, $http, usuariosContext ) {

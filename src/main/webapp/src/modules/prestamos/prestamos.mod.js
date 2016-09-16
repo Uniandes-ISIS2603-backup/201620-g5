@@ -1,7 +1,5 @@
-(function (ng) {
-    
-    var mod = angular.module('prestamosModule',[]
-    );
+(function () {
+    var mod = angular.module('prestamosModule',[]);
     mod.constant("prestamosContext", "/prestamos");
     mod.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
             var basePath = 'src/modules/prestamos/';

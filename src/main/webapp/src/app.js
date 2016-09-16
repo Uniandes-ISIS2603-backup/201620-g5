@@ -7,6 +7,7 @@
         "librosModule",
         "videosModule",
         "reservasModule",
+        "prestamosModule",
         "ngMessages"
     ]);
 

@@ -4,21 +4,21 @@
         <thead>
             <tr>
                 <th>Id</th>
-                <th>Nombre</th>
-                <th>Identificador Administrador</th>
-                <th>Zona De Ciudad</th>
+                <th>Id Usuario</th>
+                <th>Id Biblioteca</th>
+                <th>Id Recurso</th>
                 <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="biblioteca in bibliotecas">
-                <td id="{{$index}}-id">{{biblioteca.id}}</td>
-                <td id="{{$index}}-name">{{biblioteca.name}}</td>
-                <td id="{{$index}}-idAdmin">{{biblioteca.idAdmin}}</td>
-                <td id="{{$index}}-zona">{{biblioteca.zona}}</td>
+            <tr ng-repeat="prestamo in prestamos">
+                <td id="{{$index}}-id">{{prestamo.id}}</td>
+                <td id="{{$index}}-idUsuario">{{prestamo.idUsuario}}</td>
+                <td id="{{$index}}-idBiblioteca">{{prestamo.idBiblioteca}}</td>
+                <td id="{{$index}}-idRecurso">{{prestamo.idRecurso}}</td>
                 <td>
-                    <button id="{{$index}}-edit-btn" class="btn btn-default btn-sm" data-ui-sref="bibliotecaEdit({bibliotecaId: biblioteca.id})"><span class="glyphicon glyphicon-edit"></span> Editar</button>
-                    <button id="{{$index}}-delete-btn" class="btn btn-default btn-sm" ng-click="ctrl.deleteBiblioteca({bibliotecaId: biblioteca.id})"><span class="glyphicon glyphicon-minus"></span> Eliminar</button>
+                    <button id="{{$index}}-edit-btn" class="btn btn-default btn-sm" data-ui-sref="prestamoEdit({prestamoId: prestamo.id})"><span class="glyphicon glyphicon-edit"></span> Editar</button>
+                    <button id="{{$index}}-delete-btn" class="btn btn-default btn-sm" ng-click="ctrl.deletePrestamo({prestamoId: prestamo.id})"><span class="glyphicon glyphicon-minus"></span> Eliminar</button>
                 </td>
             </tr>
         </tbody>

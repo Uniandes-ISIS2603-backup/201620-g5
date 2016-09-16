@@ -5,19 +5,31 @@
             var basePath = 'src/modules/usuarios/';
             $urlRouterProvider.otherwise("/usuariosList");
      
-            $stateProvider.state('usuariosList', {
-                url: '/usuarios',
-                views: {
+            $stateProvider.state('usuarios',{
+                url:'/usuario',
+                abstract:true,
+                views:{
                     'mainView': {
+                        controller: 'usuariosCtrl',
+                        controllerAs: 'ctrl',
+                        templateUrl: basePath + 'usuarios.html'
+                    }
+                }
+            }).state('usuariosList', {
+                url: '/list',
+                parent:'usuarios',
+                views: {
+                    'usuarioView': {
                         controller: 'usuariosCtrl',
                         controllerAs: 'ctrl',
                         templateUrl: basePath + 'usuarios.list.html'
                     }
                 }
             }).state('usuarioCreate', {
-                url: '/usuarios/create',
+                url: '/create',
+                parent:'usarios',
                 views: {
-                    'mainView': {
+                    'usuarioView': {
                         controller: 'usuariosCtrl',
                         controllerAs: 'ctrl',
                         templateUrl: basePath + 'usuarios.create.html'
@@ -26,14 +38,18 @@
 
             }).state('usuarioEdit', {
                 url: '/usuarios/:usuarioId',
+                parent:'usuarios',
                 param: {
                     usuarioId: null
                 },
                 views: {
-                    'mainView': {
+                    'usuarioView': {
                         controller: 'usuariosCtrl',
                         controllerAs: 'ctrl',
                         templateUrl: basePath + 'usuarios.create.html'
+                    },
+                    'childsView': {
+                        templateUrl: basePath + 'usuarios.instance.html'
                     }
                 }
             });
