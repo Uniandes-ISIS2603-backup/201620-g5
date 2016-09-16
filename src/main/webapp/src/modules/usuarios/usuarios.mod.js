@@ -6,7 +6,7 @@
             $urlRouterProvider.otherwise("/usuariosList");
      
             $stateProvider.state('usuarios',{
-                url:'/usuario',
+                url:'/usuarios',
                 abstract:true,
                 views:{
                     'mainView': {
@@ -37,7 +37,7 @@
                 }
 
             }).state('usuarioEdit', {
-                url: '/usuarios/:usuarioId',
+                url: '/:usuarioId',
                 parent:'usuarios',
                 param: {
                     usuarioId: null

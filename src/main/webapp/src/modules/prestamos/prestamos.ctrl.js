@@ -1,5 +1,5 @@
 (function (ng) {
-    var mod = ng.module("prestamosModule");
+    var mod = ng.module("usuariosModule");
 
     mod.controller("prestamosCtrl", ['$scope', '$state', '$stateParams', '$http','usuariosContext',  
         function ($scope, $state, $stateParams, $http, usuariosContext ) {
@@ -9,7 +9,7 @@
             $scope.prestamosContext = '/prestamos';
             $scope.prestamos = {};
             // carga las prestamos
-            $http.get(prestamosContext + "/" + $stateParams.usuarioId + $scope.prestamosContext).then(function (response) {
+            $http.get(usuariosContext + "/" + $stateParams.usuarioId + $scope.prestamosContext).then(function (response) {
                 $scope.prestamos = response.data;
             }, responseError);
 

@@ -25,7 +25,6 @@ import javax.ws.rs.Produces;
  *
  * @author sf.munera10
  */
-@Path("prestamos")
 @Produces("application/json")
 public class PrestamoResource {
 
@@ -39,15 +38,14 @@ public class PrestamoResource {
      */
     @GET
     public List<PrestamoDTO> getPrestamos() throws BiblioLogicException, ParseException {
-        PrestamoLogicMock PrestamoLogic = new PrestamoLogicMock();
-        return PrestamoLogic.getPrestamos();
+        return prestamoLogic.getPrestamos();
     }
 
-    @Path("{idUsuario: \\d+}")
+    
     @GET
-    public List<PrestamoDTO> getPrestamosUsuario(@PathParam("idUsuario") int idUsuario) throws BiblioLogicException, ParseException {
-        PrestamoLogicMock PrestamoLogic = new PrestamoLogicMock();
-        return PrestamoLogic.getPrestamosUsuario(idUsuario);
+    @Path("usuarios/{idUsuario: \\d+}/prestamos")
+    public List<PrestamoDTO> getPrestamosUsuario(@PathParam("idUsuario") Long idUsuario) throws BiblioLogicException, ParseException {
+        return prestamoLogic.getPrestamosUsuario(idUsuario);
     }
 
     /**
@@ -57,21 +55,21 @@ public class PrestamoResource {
      * @param idUsuario id del usuario para agregarle una multa
      * @return datos de la multa a agregar suministrado
      */
-    @Path("{idUsuario: \\d+}")
     @POST
-    public PrestamoDTO createPrestamo(PrestamoDTO prestamo, @PathParam("idUsuario") int idUsuario) throws ParseException, BiblioLogicException {
+    @Path("usuarios/{idUsuario: \\d+}/prestamos")
+    public PrestamoDTO createPrestamo(PrestamoDTO prestamo, @PathParam("idUsuario") Long idUsuario) throws ParseException, BiblioLogicException {
         return prestamoLogic.createPrestamo(prestamo, idUsuario);
     }
 
     @GET
     @Path("{id: \\d+}/{idUsuario: \\d+}")
-    public PrestamoDTO getPrestamoDeUsuario(@PathParam("id") int id, @PathParam("idUsuario") int idUsuario) throws BiblioLogicException, ParseException {
+    public PrestamoDTO getPrestamoDeUsuario(@PathParam("id") int id, @PathParam("idUsuario") Long idUsuario) throws BiblioLogicException, ParseException {
         return prestamoLogic.getPrestamoDeUsuario(id, idUsuario);
     }
 
     @PUT
     @Path("{id: \\d+}/{idUsuario: \\d+}")
-    public PrestamoDTO updatePrestamo(@PathParam("id") int id, PrestamoDTO m, @PathParam("idUsuario") int idUsuario) throws BiblioLogicException, ParseException {
+    public PrestamoDTO updatePrestamo(@PathParam("id") Long id, PrestamoDTO m, @PathParam("idUsuario") Long idUsuario) throws BiblioLogicException, ParseException {
         return prestamoLogic.updatePrestamoDeUsuario(id, m, idUsuario);
     }
 

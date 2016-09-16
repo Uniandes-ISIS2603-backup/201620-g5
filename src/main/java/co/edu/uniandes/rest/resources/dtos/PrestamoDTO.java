@@ -12,9 +12,19 @@ import java.util.Date;
  * @author sf.munera10
  */
 public class PrestamoDTO {
+    
+    public static final String LIBRO = "Libro";
+    public static final String VIDEO = "Video";
+    public static final String SALA = "Sala";
+
+    
+    
     private Long id;
     private Long idUsuario;
     private Long idBiblioteca;
+    private String tipoRecurso;
+
+    
     private Long idRecurso;
     private double costo;
     private String medioPago;
@@ -28,11 +38,12 @@ public class PrestamoDTO {
     public PrestamoDTO() {
     }
 
-    public PrestamoDTO(Long id, Long idUsuario, Long idBiblioteca, Long idRecurso, double costo, String medioPago, Date fechaInicial, Date fechaFinal, boolean estaActivo) {
+    public PrestamoDTO(Long id, Long idUsuario, Long idBiblioteca,String tipoRecurso, Long idRecurso, double costo, String medioPago, Date fechaInicial, Date fechaFinal, boolean estaActivo) {
         super();
         this.id = id;
         this.idUsuario = idUsuario;
         this.idBiblioteca = idBiblioteca;
+        this.tipoRecurso = tipoRecurso;
         this.idRecurso = idRecurso;
         this.costo = costo;
         this.medioPago = medioPago;
@@ -82,7 +93,13 @@ public class PrestamoDTO {
     public void setIdBiblioteca(Long idBiblioteca) {
         this.idBiblioteca = idBiblioteca;
     }
+public void setTipoRecurso(String tipoRecurso) {
+        this.tipoRecurso = tipoRecurso;
+    }
 
+    public String getTipoRecurso() {
+        return tipoRecurso;
+    }
     /**
      * @return the idRecurso
      */

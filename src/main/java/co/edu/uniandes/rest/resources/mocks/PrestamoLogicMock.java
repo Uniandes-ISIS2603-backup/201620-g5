@@ -51,12 +51,14 @@ public class PrestamoLogicMock {
                 String fecha10 = "30-Nov-2005";
                 String fecha11 = "30-Nov-2006";
                 String fecha12 = "30-Nov-2007";
-                prestamos.add(new PrestamoDTO(1L, 1L, 1L, 1L, 3000, "Efectivo", formatter.parse(fecha1), formatter.parse(fecha2), true));
-                prestamos.add(new PrestamoDTO(2L, 2L, 2L, 2L, 3000, "Tarjeta Credito", formatter.parse(fecha3), formatter.parse(fecha4), true));
-                prestamos.add(new PrestamoDTO(3L, 3L, 3L, 3L, 3000, "Efectivo", formatter.parse(fecha5), formatter.parse(fecha6), true));
-                prestamos.add(new PrestamoDTO(4L, 1L, 1L, 1L, 3000, "Efectivo", formatter.parse(fecha7), formatter.parse(fecha8), true));
-                prestamos.add(new PrestamoDTO(5L, 2L, 2L, 2L, 3000, "Tarjeta Credito", formatter.parse(fecha9), formatter.parse(fecha10), true));
-                prestamos.add(new PrestamoDTO(6L, 3L, 3L, 3L, 3000, "Efectivo", formatter.parse(fecha11), formatter.parse(fecha12), true));
+                prestamos.add(new PrestamoDTO(1L, 1L,1L,PrestamoDTO.LIBRO,  1L, 3000, "Efectivo", formatter.parse(fecha1), formatter.parse(fecha2), true));
+                prestamos.add(new PrestamoDTO(2L, 2L, 2L,PrestamoDTO.VIDEO, 2L, 3000, "Tarjeta Credito", formatter.parse(fecha3), formatter.parse(fecha4), true));
+                prestamos.add(new PrestamoDTO(3L, 3L, 3L,PrestamoDTO.SALA,  3L, 3000, "Efectivo", formatter.parse(fecha5), formatter.parse(fecha6), true));
+                prestamos.add(new PrestamoDTO(4L, 1L, 1L,PrestamoDTO.VIDEO,  1L, 3000, "Efectivo", formatter.parse(fecha7), formatter.parse(fecha8), true));
+                prestamos.add(new PrestamoDTO(5L, 2L, 2L,PrestamoDTO.SALA,  2L, 3000, "Tarjeta Credito", formatter.parse(fecha9), formatter.parse(fecha10), true));
+                prestamos.add(new PrestamoDTO(6L, 3L, 3L,PrestamoDTO.LIBRO, 3L, 3000, "Efectivo", formatter.parse(fecha11), formatter.parse(fecha12), true));
+                
+                
             } catch (ParseException ex) {
                 Logger.getLogger(PrestamoLogicMock.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -86,14 +88,14 @@ public class PrestamoLogicMock {
         return prestamos;
     }
 
-    public List<PrestamoDTO> getPrestamosUsuario(long idUsuario) throws BiblioLogicException {
+    public List<PrestamoDTO> getPrestamosUsuario(Long idUsuario) throws BiblioLogicException {
         ArrayList<PrestamoDTO> prestamosUsuario = new ArrayList<>();
         if (prestamos == null) {
             logger.severe("Error interno: lista de prestamos no existe.");
             throw new BiblioLogicException("Error interno: lista de prestamos no existe.");
         }
         for (PrestamoDTO m : prestamos) {
-            if (Objects.equals(idUsuario, m.getIdUsuario())) {
+            if (idUsuario == m.getIdUsuario()) {
                 prestamosUsuario.add(m);
             }
         }
@@ -109,7 +111,7 @@ public class PrestamoLogicMock {
      * suministrado
      * @return biblioteca agregada
      */
-    public PrestamoDTO createPrestamo(PrestamoDTO newPrestamo, long idUsuario) throws BiblioLogicException {
+    public PrestamoDTO createPrestamo(PrestamoDTO newPrestamo, Long idUsuario) throws BiblioLogicException {
         logger.info("recibiendo solicitud de agregar prestamo " + newPrestamo);
         // agrega el prestamo
         // el nuevo prestamo tiene id ?
@@ -117,7 +119,7 @@ public class PrestamoLogicMock {
             // busca la sala con el id suministrado segun el id de Biblioteca
             for (PrestamoDTO prestamo : prestamos) {
                 // si existe una sala con ese id
-                if (Objects.equals(prestamo.getId(), newPrestamo.getId())) {
+                if (prestamo.getId() == newPrestamo.getId()) {
                     logger.severe("Ya existe un prestamo con ese id");
                     throw new BiblioLogicException("Ya existe un prestamo con ese id");
                 }

@@ -5,6 +5,8 @@
  */
 package co.edu.uniandes.rest.resources.dtos;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 /**

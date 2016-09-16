@@ -1,5 +1,8 @@
 <div class="container-fluid" >
    
+    <div class="row">
+            <button class="btn btn-default" ui-sref="prestamoCreate">Crear nuevo prestamo</button></div>
+        <div class="row">
     <table class="table table-striped col-md-4">
         <thead>
             <tr>
@@ -15,7 +18,14 @@
                 <td id="{{$index}}-id">{{prestamo.id}}</td>
                 <td id="{{$index}}-idUsuario">{{prestamo.idUsuario}}</td>
                 <td id="{{$index}}-idBiblioteca">{{prestamo.idBiblioteca}}</td>
+                <td id="{{$index}}-tipoRecurso">{{prestamo.tipoRecurso}}</td>
                 <td id="{{$index}}-idRecurso">{{prestamo.idRecurso}}</td>
+                <td id="{{$index}}-costo">{{prestamo.costo}}</td>
+                <td id="{{$index}}-medioPago">{{prestamo.medioPago}}</td>
+                <td id="{{$index}}-fechaInicial">{{prestamo.fechaInicial}}</td>
+                <td id="{{$index}}-fechaFinal">{{prestamo.fechaFinal}}</td>
+                <td id="{{$index}}-estaActivo">{{prestamo.estaActivo}}</td>
+                
                 <td>
                     <button id="{{$index}}-edit-btn" class="btn btn-default btn-sm" data-ui-sref="prestamoEdit({prestamoId: prestamo.id})"><span class="glyphicon glyphicon-edit"></span> Editar</button>
                     <button id="{{$index}}-delete-btn" class="btn btn-default btn-sm" ng-click="ctrl.deletePrestamo({prestamoId: prestamo.id})"><span class="glyphicon glyphicon-minus"></span> Eliminar</button>
@@ -24,4 +34,3 @@
         </tbody>
     </table>
 </div>
-
