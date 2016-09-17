@@ -64,7 +64,7 @@ public class PrestamoResource {
     }
 
     @GET
-    @Path("prestamos/{id: \\d+}/{idUsuario: \\d+}")
+    @Path("usuarios/{idUsuario: \\d+}/prestamos/{id: \\d+}")
     public PrestamoDTO getPrestamoDeUsuario(@PathParam("id") int id, @PathParam("idUsuario") Long idUsuario) throws BiblioLogicException, ParseException {
         return prestamoLogic.getPrestamoDeUsuario(id, idUsuario);
     }

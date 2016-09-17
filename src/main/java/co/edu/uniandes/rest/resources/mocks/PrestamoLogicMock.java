@@ -87,6 +87,21 @@ public class PrestamoLogicMock {
         logger.info("retornando todas las prestamos");
         return prestamos;
     }
+    
+    public ArrayList<PrestamoDTO> getPrestamo(Long idPrestamo) throws BiblioLogicException {
+        ArrayList<PrestamoDTO> prestamosP = new ArrayList<>();
+        if (prestamos == null) {
+            logger.severe("Error interno: lista de prestamos no existe.");
+            throw new BiblioLogicException("Error interno: lista de prestamos no existe.");
+        }
+        for (PrestamoDTO m : prestamos) {
+            if (idPrestamo == m.getId()) {
+                prestamosP.add(m);
+            }
+        }
+        logger.info("retornando todos los prestamos");
+        return prestamosP;
+    }
 
     public ArrayList<PrestamoDTO> getPrestamosUsuario(Long idUsuario) throws BiblioLogicException {
         ArrayList<PrestamoDTO> prestamosUsuario = new ArrayList<>();
@@ -103,6 +118,7 @@ public class PrestamoLogicMock {
         return prestamosUsuario;
     }
 
+    
     /**
      * Agrega una prestamo a un usuario y a la lista.
      *

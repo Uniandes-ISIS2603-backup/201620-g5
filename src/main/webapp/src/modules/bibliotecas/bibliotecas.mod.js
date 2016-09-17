@@ -37,18 +37,19 @@
                     }
                 }
             }).state('bibliotecaPrestar', {
-                url: '/bibliotecas/:bibliotecaId',
+               url: '/bibliotecas/:bibliotecaId/prestamos',
                 param: {
-                    bibliotecaId: null
-                },
-                views: {
-                    'mainView': {
-                        controller: 'bibliotecasCtrl',
-                        controllerAs: 'ctrl',
-                        templateUrl: basePath + 'bibliotecas.create.html'
-                    }
-                }
-            });
+                bibliotecaId: null
+               },
+               views: {
+                 'mainView': {
+                    controller: 'bibliotecasCtrl',
+                    controllerAs: 'ctrl',
+                   templateUrl: basePath + 'prestamos.list.html'
+                 }
+             }
+          })
+            ;
         }]);
 })(window.angular);
 
