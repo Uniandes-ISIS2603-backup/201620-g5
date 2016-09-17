@@ -70,19 +70,19 @@ public class PrestamoResource {
     }
 
     @PUT
-    @Path("{id: \\d+}/{idUsuario: \\d+}")
+    @Path("prestamos/{id: \\d+}/{idUsuario: \\d+}")
     public PrestamoDTO updatePrestamo(@PathParam("id") Long id, PrestamoDTO m, @PathParam("idUsuario") Long idUsuario) throws BiblioLogicException, ParseException {
         return prestamoLogic.updatePrestamoDeUsuario(id, m, idUsuario);
     }
 
     @DELETE
-    @Path("{id: \\d+}/{idUsuario: \\d+}")
+    @Path("prestamos/{id: \\d+}/{idUsuario: \\d+}")
     public void deleteMulta(@PathParam("id") int id, @PathParam("idUsuario") int idUsuario) throws BiblioLogicException, ParseException {
         prestamoLogic.deletePrestamoDeUsuario(id, idUsuario);
     }
 
     @GET
-    @Path("{idUsuario: \\d+}/{idRecurso: \\d+}/{fechaEntrega}")
+    @Path("prestamos/{idUsuario: \\d+}/{idRecurso: \\d+}/{fechaEntrega}")
     public PrestamoDTO regresarLibro(@PathParam("idUsuario") int idUsuario,@PathParam("fechaEntrega") String fechaEntrega, @PathParam("idRecurso") int idRecurso) throws ParseException, BiblioLogicException, BibliotecaLogicException {
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy");
         return prestamoLogic.regresarLibro(idRecurso, idUsuario, fechaEntrega);

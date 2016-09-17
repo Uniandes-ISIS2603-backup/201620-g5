@@ -22,7 +22,7 @@ import javax.ws.rs.Produces;
  * @author js.prieto10
  */
 
-@Path("usuarios")
+@Path("")
 @Produces("application/json")
 public class UsuarioResource {
     
@@ -30,12 +30,13 @@ public class UsuarioResource {
     UsuarioLogicMock usuarioLogic = new UsuarioLogicMock();
 
     @GET
+    @Path("usuarios")
     public List<UsuarioDTO> getUsuarios() throws Exception {
         return usuarioLogic.getUsuarios();
     }
     
     @GET
-    @Path("{id: \\d+}")
+    @Path("usuarios/{id: \\d+}")
     public UsuarioDTO getUsuario(@PathParam("id") Long id) throws Exception{
         return usuarioLogic.getUsuario(id);
     }
@@ -43,13 +44,14 @@ public class UsuarioResource {
 
    
     @POST
+    @Path("usuarios")
     public UsuarioDTO createUsuario(UsuarioDTO usuario) throws Exception {
         return usuarioLogic.createUsuario(usuario);
     }
     
 
     @PUT
-    @Path("{id: \\d+}")
+    @Path("usuarios/{id: \\d+}")
     public UsuarioDTO updateUsuario(@PathParam("id") Long id, UsuarioDTO newUsuario) throws Exception 
     {
         return usuarioLogic.updateUsuario(id, newUsuario);
@@ -57,7 +59,7 @@ public class UsuarioResource {
     
 
     @DELETE
-    @Path("{id: \\d+}")
+    @Path("usuarios/{id: \\d+}")
     public void deleteUsuario(@PathParam("id") Long id) throws Exception 
     {
         usuarioLogic.deleteUsuario(id);
