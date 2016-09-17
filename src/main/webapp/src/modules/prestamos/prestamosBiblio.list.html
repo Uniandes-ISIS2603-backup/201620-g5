@@ -33,7 +33,7 @@
                 <td id="{{$index}}-estaActivo">{{prestamo.estaActivo}}</td>
                 
                 <td>
-                    <button id="{{$index}}-edit-btn" class="btn btn-default btn-sm" data-ui-sref="prestamoEdit({prestamoId: prestamo.id})"><span class="glyphicon glyphicon-edit"></span> Editar</button>
+                    <button id="{{$index}}-edit-btn" class="btn btn-default btn-sm" data-ui-sref="prestamoBiblioEdit({prestamoId: prestamo.id})"><span class="glyphicon glyphicon-edit"></span> Editar</button>
                     <button id="{{$index}}-delete-btn" class="btn btn-default btn-sm" ng-click="ctrl.deletePrestamo({prestamoId: prestamo.id})"><span class="glyphicon glyphicon-minus"></span> Eliminar</button>
                 </td>
             </tr>

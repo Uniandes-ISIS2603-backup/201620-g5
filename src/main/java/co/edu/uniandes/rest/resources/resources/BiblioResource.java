@@ -30,7 +30,7 @@ import javax.ws.rs.Produces;
  *
  * @author sf.munera10
  */
-@Path("bibliotecas")
+@Path("")
 @Produces("application/json")
 public class BiblioResource {
 
@@ -43,6 +43,7 @@ public class BiblioResource {
      * @throws BiblioLogicException excepción retornada por la lógica
      */
     @GET
+    @Path("bibliotecas")
     public List<BiblioDTO> getCities() throws BiblioLogicException {
         return cityLogic.getCities();
     }
@@ -56,24 +57,25 @@ public class BiblioResource {
      * suministrado
      */
     @POST
+    @Path("bibliotecas")
     public BiblioDTO createCity(BiblioDTO city) throws BiblioLogicException {
         return cityLogic.createCity(city);
     }
 
     @GET
-    @Path("{id: \\d+}")
+    @Path("bibliotecas/{id: \\d+}")
     public BiblioDTO getCity(@PathParam("id")int id) throws BiblioLogicException {
         return cityLogic.getCity(id);
     }
     
     @PUT
-    @Path("{id: \\d+}")
+    @Path("bibliotecas/{id: \\d+}")
     public BiblioDTO updateCity(@PathParam("id")int id, BiblioDTO b)throws BiblioLogicException{
         return cityLogic.updateCity(id, b);
     }
     
     @DELETE
-    @Path("{id: \\d+}")
+    @Path("bibliotecas/{id: \\d+}")
     public void deleteCity(@PathParam("id") int id)throws BiblioLogicException{
         cityLogic.deleteCity(id);
     }

@@ -5,19 +5,32 @@
             var basePath = 'src/modules/bibliotecas/';
             $urlRouterProvider.otherwise("/bibliotecasList");
      
-            $stateProvider.state('bibliotecasList', {
-                url: '/bibliotecas',
-                views: {
+     
+                $stateProvider.state('bibliotecas',{
+                url:'/bibliotecas',
+                abstract:true,
+                views:{
                     'mainView': {
+                        controller: 'bibliotecasCtrl',
+                        controllerAs: 'ctrl',
+                        templateUrl: basePath + 'bibliotecas.html'
+                    }
+                }
+            }).state('bibliotecasList', {
+                url: '/list',
+                parent: 'bibliotecas',
+                views: {
+                    'bibliotecaView': {
                         controller: 'bibliotecasCtrl',
                         controllerAs: 'ctrl',
                         templateUrl: basePath + 'bibliotecas.list.html'
                     }
                 }
             }).state('bibliotecaCreate', {
-                url: '/bibliotecas/create',
+                parent: 'bibliotecas',
+                url: '/create',
                 views: {
-                    'mainView': {
+                    'bibliotecaView': {
                         controller: 'bibliotecasCtrl',
                         controllerAs: 'ctrl',
                         templateUrl: basePath + 'bibliotecas.create.html'
@@ -25,29 +38,33 @@
                 }
 
             }).state('bibliotecaEdit', {
-                url: '/bibliotecas/:bibliotecaId',
+                parent: 'bibliotecas',
+                url: '/edit/:bibliotecaId',
                 param: {
                     bibliotecaId: null
                 },
                 views: {
-                    'mainView': {
+                    'bibliotecaView': {
                         controller: 'bibliotecasCtrl',
                         controllerAs: 'ctrl',
                         templateUrl: basePath + 'bibliotecas.create.html'
                     }
                 }
             }).state('bibliotecaPrestar', {
-               url: '/bibliotecas/:bibliotecaId/prestamos',
+                parent: 'bibliotecas',
+               url: '/:bibliotecaId',
                 param: {
                 bibliotecaId: null
                },
                views: {
-                 'mainView': {
-                    controller: 'bibliotecasCtrl',
-                    controllerAs: 'ctrl',
-                   templateUrl: basePath + 'prestamos.list.html'
-                 }
-             }
+                 'bibliotecaView': {
+                        
+                    },
+                    'childsView': {
+                        templateUrl: basePath + 'bibliotecas.instance.html'
+                    }
+                }
+             
           })
             ;
         }]);

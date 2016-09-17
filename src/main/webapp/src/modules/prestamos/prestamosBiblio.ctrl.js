@@ -60,7 +60,7 @@
                 } else {
 
                     // ejecuta PUT en el recurso REST
-                    return $http.put(bibliotecaContext + "/" + $stateParams.bibliotecaId + $scope.prestamosContext + "/" + currentPrestamo.id, currentPrestamo)
+                    return $http.put(bibliotecasContext + "/" + $stateParams.bibliotecaId + $scope.prestamosContext + "/" + currentPrestamo.id, currentPrestamo)
                             .then(function () {
                                 // $http.put es una promesa
                                 // cuando termine bien, cambie de estado
@@ -71,7 +71,7 @@
             };
             
              this.deletePrestamo = function (prestamo) {
-                return $http.delete(context + "/" + prestamo.prestamoId)
+                return $http.delete($scope.prestamosContext + "/" + prestamo.prestamoId)
                     .then(function () {
                         // cuando termine bien, cambie de estado
                         $state.reload();

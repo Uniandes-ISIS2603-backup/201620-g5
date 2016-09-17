@@ -17,15 +17,53 @@
                 }
             }).state('prestamoCreate', {
                 url: '/prestamos/create',
-                parent: 'usuarioEdit',
+                parent: 'bibliotecaPrestar',
                 views: {
-                    '}usuarioInstanceView': {
+                    'bibliotecaInstanceView': {
+                        controller: 'prestamosBiblioCtrl',
+                        controllerAs: 'ctrl',
+                        templateUrl: basePath + 'prestamosBiblio.create.html'
+                    }
+                }
+
+            })
+            .state('prestamosBiblioList', {
+                url: '/prestamos',
+                parent: 'bibliotecaPrestar',
+                views: {
+                    'bibliotecaInstanceView': {
+                        controller: 'prestamosBiblioCtrl',
+                        controllerAs: 'ctrl',
+                        templateUrl: basePath + 'prestamosBiblio.list.html'
+                    }
+                }
+
+            }).state('prestamoEdit', {
+                url: '/prestamos/edit/:prestamoId',
+                parent: 'usuarioEdit',
+                param: {
+                    prestamoId: null
+                },
+                views: {
+                    'usuarioInstanceView': {
                         controller: 'prestamosCtrl',
                         controllerAs: 'ctrl',
                         templateUrl: basePath + 'prestamos.create.html'
                     }
                 }
-
+            }).state('prestamoBiblioEdit', {
+                url: '/prestamos/edit/:prestamoId',
+                parent: 'bibliotecaPrestar',
+                param: {
+                    prestamoId: null
+                },
+                views: {
+                    'bibliotecaInstanceView': {
+                        controller: 'prestamosBiblioCtrl',
+                        controllerAs: 'ctrl',
+                        templateUrl: basePath + 'prestamosBiblio.create.html'
+                    }
+                }
             });
         }]);
 })(window.angular);

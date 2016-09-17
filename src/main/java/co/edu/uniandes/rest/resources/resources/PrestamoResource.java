@@ -43,7 +43,7 @@ public class PrestamoResource {
         return prestamoLogic.getPrestamos();
     }
 
-    
+    //servicios rest de bibliotecas.
     @GET
     @Path("usuarios/{idUsuario: \\d+}/prestamos")
     public ArrayList<PrestamoDTO> getPrestamosUsuario(@PathParam("idUsuario") Long idUsuario) throws BiblioLogicException, ParseException {
@@ -57,6 +57,7 @@ public class PrestamoResource {
      * @param idUsuario id del usuario para agregarle una multa
      * @return datos de la multa a agregar suministrado
      */
+
     @POST
     @Path("usuarios/{idUsuario: \\d+}/prestamos")
     public PrestamoDTO createPrestamo(PrestamoDTO prestamo, @PathParam("idUsuario") Long idUsuario) throws ParseException, BiblioLogicException {
@@ -68,7 +69,6 @@ public class PrestamoResource {
     public PrestamoDTO getPrestamoDeUsuario(@PathParam("id") int id, @PathParam("idUsuario") Long idUsuario) throws BiblioLogicException, ParseException {
         return prestamoLogic.getPrestamoDeUsuario(id, idUsuario);
     }
-
     @PUT
     @Path("prestamos/{id: \\d+}/{idUsuario: \\d+}")
     public PrestamoDTO updatePrestamo(@PathParam("id") Long id, PrestamoDTO m, @PathParam("idUsuario") Long idUsuario) throws BiblioLogicException, ParseException {
@@ -80,13 +80,31 @@ public class PrestamoResource {
     public void deleteMulta(@PathParam("id") int id, @PathParam("idUsuario") int idUsuario) throws BiblioLogicException, ParseException {
         prestamoLogic.deletePrestamoDeUsuario(id, idUsuario);
     }
-
+    
+    
+    //Servicios rest utilizados desde biblioteca.
+    
     @GET
-    @Path("prestamos/{idUsuario: \\d+}/{idRecurso: \\d+}/{fechaEntrega}")
-    public PrestamoDTO regresarLibro(@PathParam("idUsuario") int idUsuario,@PathParam("fechaEntrega") String fechaEntrega, @PathParam("idRecurso") int idRecurso) throws ParseException, BiblioLogicException, BibliotecaLogicException {
-        SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy");
-        return prestamoLogic.regresarLibro(idRecurso, idUsuario, fechaEntrega);
+    @Path("bibliotecas/{idBiblioteca: \\d+}/prestamos")
+    public ArrayList<PrestamoDTO> getPrestamosBiblioteca(@PathParam("idBiblioteca") Long idBiblioteca) throws BiblioLogicException, ParseException {
+        return prestamoLogic.getPrestamosBiblioteca(idBiblioteca);
     }
+    @GET
+    @Path("bibliotecas/{idBiblioteca: \\d+}/prestamos/{id: \\d+}")
+    public PrestamoDTO getPrestamoDeBiblioteca(@PathParam("id") int id, @PathParam("idBiblioteca") Long idBiblioteca) throws BiblioLogicException, ParseException {
+        return prestamoLogic.getPrestamoDeBiblioteca(id, idBiblioteca);
+    }
+    
+    @POST
+    @Path("bibliotecas/{idBiblioteca: \\d+}/prestamos")
+    public PrestamoDTO createPrestamoBiblioteca(PrestamoDTO prestamo, @PathParam("idBiblioteca") Long idBiblioteca) throws ParseException, BiblioLogicException {
+        return prestamoLogic.createPrestamoBiblioteca(prestamo, idBiblioteca);
+    }
+
+   
+    
+
+    
     
     /**
      * DEBE IR EN LibroResource, solucionar para acceder a reservas desde ahi.

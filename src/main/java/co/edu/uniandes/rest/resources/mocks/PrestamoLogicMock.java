@@ -251,4 +251,78 @@ public class PrestamoLogicMock {
         }
         return presLib; 
     }
+
+    public ArrayList<PrestamoDTO> getPrestamosBiblioteca(Long idBiblioteca) throws BiblioLogicException {
+        ArrayList<PrestamoDTO> prestamosBiblioteca = new ArrayList<>();
+        if (prestamos == null) {
+            logger.severe("Error interno: lista de prestamos no existe.");
+            throw new BiblioLogicException("Error interno: lista de prestamos no existe.");
+        }
+        for (PrestamoDTO m : prestamos) {
+            if (idBiblioteca == m.getIdBiblioteca()) {
+                prestamosBiblioteca.add(m);
+            }
+        }
+        logger.info("retornando todos los prestamos del usuario con id especificado");
+        return prestamosBiblioteca;
+    }
+
+
+    public PrestamoDTO getPrestamoDeBiblioteca(long id, long idBiblioteca) throws BiblioLogicException {
+        PrestamoDTO m = null;
+        List<PrestamoDTO> prestamosBiblioteca = getPrestamosBiblioteca(idBiblioteca);
+        for (int i = 0; i < prestamosBiblioteca.size() && m == null; i++) {
+            PrestamoDTO prestamo = prestamosBiblioteca.get(i);
+            if (prestamo.getId() == id) {
+                m = prestamo;
+            }
+        }
+        if (m == null) {
+            logger.severe("No existe una prestamo con ese id");
+            throw new BiblioLogicException("No existe una prestamo con ese id");
+        }
+        return m;
+    }
+
+     /**
+     * Agrega una prestamo a un usuario y a la lista.
+     *
+     * @param newPrestamo prestamo a adicionar
+     * @throws BiblioLogicException cuando ya existe una biblioteca con el id
+     * suministrado
+     * @return biblioteca agregada
+     */
+    public PrestamoDTO createPrestamoBiblioteca(PrestamoDTO newPrestamo, Long idBiblioteca) throws BiblioLogicException {
+        logger.info("recibiendo solicitud de agregar prestamo " + newPrestamo);
+        // agrega el prestamo
+        // el nuevo prestamo tiene id ?
+        if (newPrestamo.getId() != null) {
+            // busca la sala con el id suministrado segun el id de Biblioteca
+            for (PrestamoDTO prestamo : prestamos) {
+                // si existe una sala con ese id
+                if (prestamo.getId() == newPrestamo.getId()) {
+                    logger.severe("Ya existe un prestamo con ese id");
+                    throw new BiblioLogicException("Ya existe un prestamo con ese id");
+                }
+            }
+
+            // el nuevo prestamo no tiene id ? 
+        } else {
+
+            // genera un id para la sala
+            logger.info("Generando id para el nuevo prestamo");
+            logger.info("Generando idUsuario para el nuevo prestamo");
+            long newId = 1;
+            for (PrestamoDTO prestamo : prestamos) {
+                if (newId <= prestamo.getId()) {
+                    newId = prestamo.getId() + 1;
+                }
+            }
+            newPrestamo.setId(newId);
+            newPrestamo.setIdBiblioteca(idBiblioteca);
+        }
+        logger.info("agregando prestamo: " + newPrestamo);
+        prestamos.add(newPrestamo);
+        return newPrestamo;
+    }
 }
