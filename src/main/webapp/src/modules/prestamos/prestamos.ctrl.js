@@ -81,7 +81,43 @@
 
 
             // -----------------------------------------------------------------
-            // Funciones para manejra los mensajes en la aplicación
+            // Funciones para manejar las fechas
+
+            $scope.popup = {
+                opened: false
+            };
+            $scope.dateOptions = {
+                dateDisabled: disabled,
+                formatYear: 'yy',
+                maxDate: new Date(2020, 5, 22),
+                minDate: new Date(),
+                startingDay: 1
+            };
+
+            this.today = function () {
+                $scope.dt = new Date();
+            };
+            this.today();
+
+            this.clear = function () {
+                $scope.dt = null;
+            };
+            this.setDate = function (year, month, day) {
+                $scope.dt = new Date(year, month, day);
+            };
+
+            this.open = function () {
+                $scope.popup.opened = true;
+            };
+
+            function disabled(data) {
+                var date = data.date,
+                        mode = data.mode;
+                return mode === 'day' && (date.getDay() === 0 || date.getDay() === 6);
+            }
+
+
+            // Funciones para manejar los mensajes en la aplicación
 
 
             //Alertas

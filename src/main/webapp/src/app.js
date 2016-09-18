@@ -1,7 +1,10 @@
 (function (ng) {
 
     var mod = ng.module("mainApp", [
-        "ui.router",
+        // External dependencies
+        'ui.router',
+        'ui.bootstrap',
+        // Internal modules dependencies
         "usuariosModule",
         "bibliotecasModule",
         "librosModule",
