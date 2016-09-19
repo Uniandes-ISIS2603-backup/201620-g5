@@ -26,8 +26,8 @@
                     }
                 }
             }).state('libroCreate', {
+                parent:'libros',
                 url: '/create',
-                parent:'usarios',
                 views: {
                     'libroView': {
                         controller: 'librosCtrl',
@@ -37,8 +37,8 @@
                 }
 
             }).state('libroEdit', {
-                url: '/:libroId',
                 parent:'libros',
+                url: '/:libroId',
                 param: {
                     libroId: null
                 },

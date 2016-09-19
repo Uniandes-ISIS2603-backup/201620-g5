@@ -6,7 +6,7 @@
 package co.edu.uniandes.rest.resources.resources;
 
 import co.edu.uniandes.rest.resources.dtos.BiblioDTO;
-import co.edu.uniandes.rest.resources.exceptions.BiblioLogicException;
+import co.edu.uniandes.rest.resources.exceptions.BibliotecaLogicException;
 import co.edu.uniandes.rest.resources.mocks.BiblioLogicMock;
 
 import java.util.List;
@@ -44,7 +44,7 @@ public class BiblioResource {
      */
     @GET
     @Path("bibliotecas")
-    public List<BiblioDTO> getCities() throws BiblioLogicException {
+    public List<BiblioDTO> getCities() throws BibliotecaLogicException {
         return cityLogic.getCities();
     }
    
@@ -58,25 +58,25 @@ public class BiblioResource {
      */
     @POST
     @Path("bibliotecas")
-    public BiblioDTO createCity(BiblioDTO city) throws BiblioLogicException {
+    public BiblioDTO createCity(BiblioDTO city) throws BibliotecaLogicException {
         return cityLogic.createCity(city);
     }
 
     @GET
     @Path("bibliotecas/{id: \\d+}")
-    public BiblioDTO getCity(@PathParam("id")int id) throws BiblioLogicException {
+    public BiblioDTO getCity(@PathParam("id")int id) throws BibliotecaLogicException {
         return cityLogic.getCity(id);
     }
     
     @PUT
     @Path("bibliotecas/{id: \\d+}")
-    public BiblioDTO updateCity(@PathParam("id")int id, BiblioDTO b)throws BiblioLogicException{
+    public BiblioDTO updateCity(@PathParam("id")int id, BiblioDTO b)throws BibliotecaLogicException{
         return cityLogic.updateCity(id, b);
     }
     
     @DELETE
     @Path("bibliotecas/{id: \\d+}")
-    public void deleteCity(@PathParam("id") int id)throws BiblioLogicException{
+    public void deleteCity(@PathParam("id") int id)throws BibliotecaLogicException{
         cityLogic.deleteCity(id);
     }
 }

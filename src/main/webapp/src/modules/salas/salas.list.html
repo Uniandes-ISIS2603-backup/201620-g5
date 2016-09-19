@@ -5,20 +5,17 @@
             <tr>
                 <th>Id</th>
                 <th>Nombre</th>
-                <th>Identificador Administrador</th>
-                <th>Zona De Ciudad</th>
                 <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="biblioteca in bibliotecas">
-                <td id="{{$index}}-id">{{biblioteca.id}}</td>
-                <td id="{{$index}}-name">{{biblioteca.name}}</td>
-                <td id="{{$index}}-idAdmin">{{biblioteca.idAdmin}}</td>
-                <td id="{{$index}}-zona">{{biblioteca.zona}}</td>
+            <tr ng-repeat="sala in salas">
+                <td id="{{$index}}-id">{{sala.id}}</td>
+                <td id="{{$index}}-name">{{sala.name}}</td>
+                
                 <td>
-                    <button id="{{$index}}-edit-btn" class="btn btn-default btn-sm" data-ui-sref="bibliotecaEdit({bibliotecaId: biblioteca.id})"><span class="glyphicon glyphicon-edit"></span> Editar</button>
-                    <button id="{{$index}}-delete-btn" class="btn btn-default btn-sm" ng-click="ctrl.deleteBiblioteca({bibliotecaId: biblioteca.id})"><span class="glyphicon glyphicon-minus"></span> Eliminar</button>
+                    <button id="{{$index}}-edit-btn" class="btn btn-default btn-sm" data-ui-sref="salaEdit({salaId: sala.id})"><span class="glyphicon glyphicon-edit"></span> Editar</button>
+                    <button id="{{$index}}-delete-btn" class="btn btn-default btn-sm" ng-click="ctrl.deleteSala({salaId: sala.id})"><span class="glyphicon glyphicon-minus"></span> Eliminar</button>
                 </td>
             </tr>
         </tbody>

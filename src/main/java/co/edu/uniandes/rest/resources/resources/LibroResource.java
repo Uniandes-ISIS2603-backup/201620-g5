@@ -24,7 +24,7 @@ import co.edu.uniandes.rest.resources.exceptions.BibliotecaLogicException;
  *
  * @author s.rojas19
  */
-@Path("libros")
+@Path("")
 @Produces("application/json")
 public class LibroResource {
 
@@ -40,6 +40,7 @@ public class LibroResource {
      * @throws BibliotecaLogicException retornada por logica.
      */
     @GET
+    @Path("libros")
     public List<LibroDTO> getLibros() throws BibliotecaLogicException {
         return libroLogic.getLibros();
     }
@@ -52,7 +53,7 @@ public class LibroResource {
      * @throws BibliotecaLogicException Si no se encuentra el libro.
      */
     @GET
-    @Path("{id: \\d+}")
+    @Path("libros/{id: \\d+}")
     public LibroDTO getLibro(@PathParam("id") Long id) throws BibliotecaLogicException {
         return libroLogic.getLibro(id);
     }
@@ -65,6 +66,7 @@ public class LibroResource {
      * @throws BibliotecaLogicException Si no es posible adicionar el libro
      */
     @POST
+    @Path("libros")
     public LibroDTO createLibro(LibroDTO libro) throws BibliotecaLogicException {
         return libroLogic.createLibro(libro);
     }
@@ -78,7 +80,7 @@ public class LibroResource {
      * @throws BibliotecaLogicException Si no es posible actualizar el libro
      */
     @PUT
-    @Path("{id: \\d+}")
+    @Path("libros/{id: \\d+}")
     public LibroDTO updateLibro(@PathParam("id") Long id, LibroDTO libro) throws BibliotecaLogicException {
         return libroLogic.updateLibro(id, libro);
     }
@@ -90,7 +92,7 @@ public class LibroResource {
      * @throws BibliotecaLogicException Si no es posible eliminar el libro.
      */
     @DELETE
-    @Path("{id: \\d+}")
+    @Path("libros/{id: \\d+}")
     public void deleteLibro(@PathParam("id") Long id) throws BibliotecaLogicException {
         libroLogic.deleteLibro(id);
     }

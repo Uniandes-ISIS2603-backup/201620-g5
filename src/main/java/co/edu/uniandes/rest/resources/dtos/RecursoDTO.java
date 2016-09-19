@@ -83,6 +83,6 @@ public class RecursoDTO {
      */
     @Override
     public String toString() {
-    	return "{ id : " + getId() + ", name : \"" + getName() + "\" }" ;  
+    	return getName() ;  
     }
 }

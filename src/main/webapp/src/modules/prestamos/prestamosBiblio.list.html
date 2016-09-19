@@ -10,7 +10,7 @@
                 <th>Id Usuario</th>
                 <th>Id Biblioteca</th>
                 <th>Tipo de recurso</th>
-                <th>Id del recurso</th>
+                <th>Nombre del recurso</th>
                 <th>Costo</th>
                 <th>Medio de pago</th>
                 <th>Fecha  inicial</th>
@@ -25,7 +25,7 @@
                 <td id="{{$index}}-idUsuario">{{prestamo.idUsuario}}</td>
                 <td id="{{$index}}-idBiblioteca">{{prestamo.idBiblioteca}}</td>
                 <td id="{{$index}}-tipoRecurso">{{prestamo.tipoRecurso}}</td>
-                <td id="{{$index}}-idRecurso">{{prestamo.idRecurso}}</td>
+                <td id="{{$index}}-recurso">{{prestamo.recurso.name}}</td>
                 <td id="{{$index}}-costo">{{prestamo.costo}}</td>
                 <td id="{{$index}}-medioPago">{{prestamo.medioPago}}</td>
                 <td id="{{$index}}-fechaInicial">{{prestamo.fechaInicial}}</td>

@@ -27,7 +27,7 @@ public class BlogLogicMock {
         if (blogs == null)
         {
             blogs = new ArrayList<>();
-            blogs.add(new BlogDTO("Titulo libro", "nombreReseña", 23424L, "Aqui debe ir la reseña", "Juan Sebastian", 34234L));
+            blogs.add(new BlogDTO("Titulo libro", "nombreReseña", 3L, "Aqui debe ir la reseña", "Juan Sebastian", 34234L));
         }
         
         logger.setLevel(Level.INFO);
@@ -42,18 +42,20 @@ public class BlogLogicMock {
     
     public List<BlogDTO> getBlogsLibro(Long pIdLibro) throws BibliotecaLogicException
     {
+        logger.severe("hola"+pIdLibro);
+        ArrayList<BlogDTO> a = new ArrayList<>();
         if (blogs == null)
         {
             logger.severe("Error");
             throw new BibliotecaLogicException("Error interno: lista de blogs no existe.");
         }
-        ArrayList a = new ArrayList();
-        for (int i = 0; i < blogs.size(); i++)
-        {
-            if (blogs.get(i).getIdLibro() == pIdLibro )
-                a.add(blogs.get(i));
+        
+        for (BlogDTO m : blogs) {
+            if (pIdLibro == m.getIdLibro()) {
+                a.add(m);
+            }
         }
-          return a;
+            return a;
     }
     
     public List<BlogDTO> getBlogs() throws BibliotecaLogicException {

@@ -53,7 +53,7 @@ public class VideoLogicMock {
 	 * @return lista de videos
 	 * @throws BibliotecaLogicException cuando no existe la lista en memoria  
 	 */    
-    public List<VideoDTO> getVideos() throws BibliotecaLogicException {
+    public ArrayList<VideoDTO> getVideos() throws BibliotecaLogicException {
     	if (videos == null) {
     		logger.severe("Error interno: lista de videos no existe.");
     		throw new BibliotecaLogicException("Error interno: lista de videos no existe.");    		
@@ -141,7 +141,7 @@ public class VideoLogicMock {
 	            if (Objects.equals(video.getId(), idVideo)){
                          // actualiza el video
                         logger.info("actualizando video " + idVideo );
-	            	video.setTitulo(newVideo.getTitulo());
+	            	video.setName(newVideo.getName());
                         video.setId(newVideo.getId());
                         video.setAnioPublicacion(newVideo.getAnioPublicacion());
                         video.setDirector(newVideo.getDirector());

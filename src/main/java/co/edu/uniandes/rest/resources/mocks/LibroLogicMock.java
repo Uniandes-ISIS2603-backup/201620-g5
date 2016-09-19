@@ -47,7 +47,7 @@ public class LibroLogicMock {
      * @return Lista de libros
      * @throws BibliotecaLogicException Si no existe la lista de libros.
      */
-    public List<LibroDTO> getLibros() throws BibliotecaLogicException {
+    public ArrayList<LibroDTO> getLibros() throws BibliotecaLogicException {
         if (libros == null) {
             logger.severe("Error interno: lista de libros no existe.");
             throw new BibliotecaLogicException("Error interno: lista de libros no existe.");
@@ -131,8 +131,8 @@ public class LibroLogicMock {
                 l.setIsbn(libro.getIsbn());
             if (libro.getNumEjemplares() != null)
                 l.setNumEjemplares(libro.getNumEjemplares());
-            if (libro.getTitulo() != null)
-                l.setTitulo(libro.getTitulo());
+            if (libro.getName() != null)
+                l.setName(libro.getName());
             logger.info("Libro actualizado");
             return l;
         } catch (BibliotecaLogicException ex) {

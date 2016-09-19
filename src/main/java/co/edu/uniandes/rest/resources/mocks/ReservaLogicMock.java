@@ -13,7 +13,7 @@ import java.util.logging.Logger;
 
 import co.edu.uniandes.rest.resources.dtos.BiblioDTO;
 import co.edu.uniandes.rest.resources.dtos.ReservaDTO;
-import co.edu.uniandes.rest.resources.exceptions.BiblioLogicException;
+import co.edu.uniandes.rest.resources.exceptions.BibliotecaLogicException;
 
 /*
  * CityLogicMock
@@ -57,10 +57,10 @@ public class ReservaLogicMock {
      * @return lista de ciudades
      * @throws BiblioLogicException cuando no existe la lista en memoria
      */
-    public List<ReservaDTO> getReservas() throws BiblioLogicException {
+    public List<ReservaDTO> getReservas() throws BibliotecaLogicException  {
         if (reservas == null) {
             logger.severe("Error interno: lista de ciudades no existe.");
-            throw new BiblioLogicException("Error interno: lista de ciudades no existe.");
+            throw new BibliotecaLogicException("Error interno: lista de ciudades no existe.");
         }
 
         logger.info("retornando todas las ciudades");
@@ -75,7 +75,7 @@ public class ReservaLogicMock {
      * suministrado
      * @return ciudad agregada
      */
-    public ReservaDTO createReserva(ReservaDTO newReserva) throws BiblioLogicException {
+    public ReservaDTO createReserva(ReservaDTO newReserva) throws BibliotecaLogicException {
         logger.info("recibiendo solicitud de agregar ciudad " + newReserva);
 
         // la nueva ciudad tiene id ?
@@ -85,7 +85,7 @@ public class ReservaLogicMock {
                 // si existe una ciudad con ese id
                 if (Objects.equals(reserva.getId(), newReserva.getId())) {
                     logger.severe("Ya existe una reserva con ese id");
-                    throw new BiblioLogicException("Ya existe una reserva con ese id");
+                    throw new BibliotecaLogicException("Ya existe una reserva con ese id");
                 }
             }
 
@@ -111,7 +111,7 @@ public class ReservaLogicMock {
         return newReserva;
     }
 
-    public ReservaDTO getReserva(Long id) throws BiblioLogicException {
+    public ReservaDTO getReserva(Long id) throws BibliotecaLogicException {
         ReservaDTO reservaE = null;
         for (int i = 0; i < reservas.size(); i++) {
            ReservaDTO resActual = reservas.get(i);
@@ -122,12 +122,12 @@ public class ReservaLogicMock {
         if(reservaE== null)
         {
             logger.severe("No existe una reserva con ese id");
-                throw new BiblioLogicException("No existe una reserva con ese id");
+                throw new BibliotecaLogicException("No existe una reserva con ese id");
         }
         return reservaE;
     }
 
-    public ReservaDTO updateReserva(long id, ReservaDTO reserva) throws BiblioLogicException {
+    public ReservaDTO updateReserva(long id, ReservaDTO reserva) throws BibliotecaLogicException {
         ReservaDTO reservaE = getReserva(id);
         if (reservaE != null) {
             reservaE.setId(reserva.getId());
@@ -138,11 +138,11 @@ public class ReservaLogicMock {
             return reservaE;
         } else {
             logger.severe("No existe una biblioteca con ese id");
-            throw new BiblioLogicException("No existe una biblioteca con ese id");
+            throw new BibliotecaLogicException("No existe una biblioteca con ese id");
         }
     }
 
-    public void deleteReserva(long id) throws BiblioLogicException {
+    public void deleteReserva(long id) throws BibliotecaLogicException {
             for (ReservaDTO reserva : reservas) {
                 if (id == reserva.getId()) {
                     logger.info("Eliminando reserva con el id especfificado: id = " + reserva.getId());
@@ -152,7 +152,7 @@ public class ReservaLogicMock {
             }
         logger.severe("No existe un video con ese id");
 
-        throw new BiblioLogicException("No existe una reserva con ese id");
+        throw new BibliotecaLogicException("No existe una reserva con ese id");
     }
 
     public List<ReservaDTO> getReservasLibro(Long id) {

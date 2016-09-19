@@ -6,7 +6,6 @@
 package co.edu.uniandes.rest.resources.resources;
 
 import co.edu.uniandes.rest.resources.dtos.SalaDTO;
-import co.edu.uniandes.rest.resources.exceptions.BiblioLogicException;
 import co.edu.uniandes.rest.resources.exceptions.BibliotecaLogicException;
 import co.edu.uniandes.rest.resources.mocks.SalaLogicMock;
 
@@ -41,7 +40,7 @@ public class SalaResource {
      * @throws BiblioLogicException excepción retornada por la lógica
      */
     @GET
-    public List<SalaDTO> getAllSalas() throws BiblioLogicException {
+    public List<SalaDTO> getAllSalas() throws BibliotecaLogicException {
         SalaLogicMock salaLogic = new SalaLogicMock();
         return salaLogic.getAllSalas();
     }
@@ -55,7 +54,7 @@ public class SalaResource {
      */
     @Path("{idBiblioteca: \\d+}")
     @GET
-    public List<SalaDTO> getSalasBiblioteca(@PathParam("idBiblioteca")int idBiblioteca) throws BiblioLogicException {
+    public List<SalaDTO> getSalasBiblioteca(@PathParam("idBiblioteca")int idBiblioteca) throws BibliotecaLogicException {
         SalaLogicMock salaLogic = new SalaLogicMock();
         return salaLogic.getSalasBiblioteca(idBiblioteca);
     }
@@ -71,7 +70,7 @@ public class SalaResource {
      */
     @Path("{idBiblioteca: \\d+}")
     @POST
-    public SalaDTO createSala(SalaDTO sala,@PathParam("idBiblioteca")int idBiblioteca) throws BiblioLogicException, BibliotecaLogicException {
+    public SalaDTO createSala(SalaDTO sala,@PathParam("idBiblioteca")int idBiblioteca) throws BibliotecaLogicException, BibliotecaLogicException {
         SalaLogicMock salaLogic = new SalaLogicMock();
         return salaLogic.createSala(sala, idBiblioteca);
     }
@@ -79,21 +78,21 @@ public class SalaResource {
      
     @GET
     @Path("{id: \\d+}/{idBiblioteca: \\d+}")
-    public SalaDTO getSalaDeBiblioteca(@PathParam("id")int id,@PathParam("idBiblioteca")int idBiblioteca) throws BiblioLogicException {
+    public SalaDTO getSalaDeBiblioteca(@PathParam("id")int id,@PathParam("idBiblioteca")int idBiblioteca) throws BibliotecaLogicException {
         SalaLogicMock salaLogic = new SalaLogicMock();
         return salaLogic.getSalaDeBiblioteca(id, idBiblioteca);
     }
     
     @PUT
     @Path("{id: \\d+}/{idBiblioteca: \\d+}")
-    public SalaDTO updateSala(@PathParam("id")int id, SalaDTO s,@PathParam("idBiblioteca")int idBiblioteca)throws BiblioLogicException{
+    public SalaDTO updateSala(@PathParam("id")int id, SalaDTO s,@PathParam("idBiblioteca")int idBiblioteca)throws BibliotecaLogicException{
         SalaLogicMock salaLogic = new SalaLogicMock();
         return salaLogic.updateSalaDeBiblioteca(id, s, idBiblioteca);
     }
     
     @DELETE
     @Path("{id: \\d+}/{idBiblioteca: \\d+}")
-    public void deleteSala(@PathParam("id") int id,@PathParam("idBiblioteca")int idBiblioteca )throws BiblioLogicException, BibliotecaLogicException{
+    public void deleteSala(@PathParam("id") int id,@PathParam("idBiblioteca")int idBiblioteca )throws BibliotecaLogicException, BibliotecaLogicException{
         SalaLogicMock salaLogic = new SalaLogicMock();
         salaLogic.deleteSalaDeBiblioteca(id, idBiblioteca);
     }

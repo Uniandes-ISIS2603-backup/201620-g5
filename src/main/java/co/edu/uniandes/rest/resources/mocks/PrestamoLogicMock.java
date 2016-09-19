@@ -5,6 +5,7 @@ package co.edu.uniandes.rest.resources.mocks;
  *
  * @author sf.munera10
  */
+import co.edu.uniandes.rest.resources.dtos.LibroDTO;
 import co.edu.uniandes.rest.resources.dtos.MultaDTO;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +14,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import co.edu.uniandes.rest.resources.dtos.PrestamoDTO;
+import co.edu.uniandes.rest.resources.dtos.SalaDTO;
+import co.edu.uniandes.rest.resources.dtos.VideoDTO;
 import co.edu.uniandes.rest.resources.exceptions.BiblioLogicException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -51,12 +54,12 @@ public class PrestamoLogicMock {
                 String fecha10 = "2005-09-30";
                 String fecha11 = "2006-09-30";
                 String fecha12 = "2007-09-30";
-                prestamos.add(new PrestamoDTO(1L, 1L,1L,PrestamoDTO.LIBRO,  "Moby Dick", 3000, "Efectivo", formatter.parse(fecha1), formatter.parse(fecha2), true));
-                prestamos.add(new PrestamoDTO(2L, 2L, 2L,PrestamoDTO.VIDEO, "The Revenant", 3000, "Tarjeta Credito", formatter.parse(fecha3), formatter.parse(fecha4), true));
-                prestamos.add(new PrestamoDTO(3L, 3L, 3L,PrestamoDTO.SALA,  "Sala 1", 3000, "Efectivo", formatter.parse(fecha5), formatter.parse(fecha6), true));
-                prestamos.add(new PrestamoDTO(4L, 1L, 1L,PrestamoDTO.VIDEO,  "The Wolf of Wall Street", 3000, "Efectivo", formatter.parse(fecha7), formatter.parse(fecha8), true));
-                prestamos.add(new PrestamoDTO(5L, 2L, 2L,PrestamoDTO.SALA,  "Sala 2", 3000, "Tarjeta Credito", formatter.parse(fecha9), formatter.parse(fecha10), true));
-                prestamos.add(new PrestamoDTO(6L, 3L, 3L,PrestamoDTO.LIBRO, "The Great Gatsby", 3000, "Efectivo", formatter.parse(fecha11), formatter.parse(fecha12), true));
+                prestamos.add(new PrestamoDTO(1L, 1L,1L,PrestamoDTO.LIBRO, new LibroDTO(1L, 553213113L, "Moby Dick", 10L, true), 3000, "Efectivo", formatter.parse(fecha1), formatter.parse(fecha2), true));
+                prestamos.add(new PrestamoDTO(2L, 2L, 2L,PrestamoDTO.VIDEO, new VideoDTO(1L, "The Revenant", "Alejandro G. Iñarritu",152L, 2015L, "Accion", 2L , "Oso contra hombre",false), 3000, "Tarjeta Credito", formatter.parse(fecha3), formatter.parse(fecha4), true));
+                prestamos.add(new PrestamoDTO(3L, 3L, 3L,PrestamoDTO.SALA,  new SalaDTO(1L, 1L, "Sala 1", 6), 3000, "Efectivo", formatter.parse(fecha5), formatter.parse(fecha6), true));
+                prestamos.add(new PrestamoDTO(4L, 1L, 1L,PrestamoDTO.VIDEO,  new VideoDTO(2L, "Mermaids: The Body Found", "Sid Bennet", 27L, 2012L,"Documental", 20L, "Sirenas", true ), 3000, "Efectivo", formatter.parse(fecha7), formatter.parse(fecha8), true));
+                prestamos.add(new PrestamoDTO(5L, 2L, 2L,PrestamoDTO.SALA,  new SalaDTO(2L, 2L, "Sala 2", 6), 3000, "Tarjeta Credito", formatter.parse(fecha9), formatter.parse(fecha10), true));
+                prestamos.add(new PrestamoDTO(6L, 3L, 3L,PrestamoDTO.LIBRO, new LibroDTO(2L, 743273567L, "The Great Gatsby", 10L, false), 3000, "Efectivo", formatter.parse(fecha11), formatter.parse(fecha12), true));
                 
                 
             } catch (ParseException ex) {
@@ -187,7 +190,7 @@ public class PrestamoLogicMock {
             prestamo.setMedioPago(m.getMedioPago());
             prestamo.setId(id);
             prestamo.setIdBiblioteca(m.getIdBiblioteca());
-            prestamo.setNombreRecurso(m.getNombreRecurso());
+            prestamo.setRecurso(m.getRecurso());
             prestamo.setIdUsuario(idUsuario);
             return prestamo;
         } else {
@@ -196,7 +199,7 @@ public class PrestamoLogicMock {
         }
     }
 
-    public PrestamoDTO regresarLibro(String nombreRecurso, long idUsuario, String fechaEntrega) throws BiblioLogicException, ParseException {
+    public PrestamoDTO regresarLibro(Long idRecurso, long idUsuario, String fechaEntrega) throws BiblioLogicException, ParseException {
         MultaLogicMock multaLogic = new MultaLogicMock();
         Date fecha = new Date();
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy");
@@ -205,19 +208,11 @@ public class PrestamoLogicMock {
         for (int i = 0; i < prestamos.size() && prestamo == null; i++) {
             PrestamoDTO p = prestamos.get(i);
             logger.info("recibiendo informacion para retornar libro...");
-            if (p.getNombreRecurso() == nombreRecurso) {
+            if (p.getRecurso().getId() == idRecurso) {
                 prestamo = p;
-                MultaDTO multa = new MultaDTO(multas.size()+1L, idUsuario, p.getIdBiblioteca(), nombreRecurso, 1500, fecha);
-                prestamo.setCosto(p.getCosto());
-                prestamo.setFechaInicial(p.getFechaInicial());
-                prestamo.setFechaFinal(p.getFechaFinal());
-                prestamo.setEstaActivo(false);
-                prestamo.setMedioPago(p.getMedioPago());
-                prestamo.setId(p.getId());
-                prestamo.setIdBiblioteca(p.getIdBiblioteca());
-                prestamo.setNombreRecurso(nombreRecurso);
-                prestamo.setIdUsuario(idUsuario);
-                if(prestamo.getFechaFinal().before(formatter.parse(fechaEntrega))){
+                MultaDTO multa = new MultaDTO(multas.size()+1L, idUsuario, p.getIdBiblioteca(), idRecurso, 1500, fecha);
+                
+                if(p.getFechaFinal().before(formatter.parse(fechaEntrega))){
                     multaLogic.createMulta(multa, idUsuario);
                 }
             }
@@ -245,7 +240,7 @@ public class PrestamoLogicMock {
         ArrayList<PrestamoDTO> presLib;
         presLib = new ArrayList<>();
         for (PrestamoDTO p : prestamos) {
-            if (id.equals(p.getIdRecurso()) && p.isEstaActivo()) {
+            if (id.equals(p.getRecurso().getId()) && p.isEstaActivo()) {
                 presLib.add(p);
             }
         }
@@ -320,6 +315,7 @@ public class PrestamoLogicMock {
             }
             newPrestamo.setId(newId);
             newPrestamo.setIdBiblioteca(idBiblioteca);
+            newPrestamo.getRecurso().setEstaPrestado(true);
         }
         logger.info("agregando prestamo: " + newPrestamo);
         prestamos.add(newPrestamo);

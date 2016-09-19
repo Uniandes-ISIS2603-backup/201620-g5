@@ -7,7 +7,7 @@ package co.edu.uniandes.rest.resources.resources;
 
 import co.edu.uniandes.rest.resources.dtos.BiblioDTO;
 import co.edu.uniandes.rest.resources.dtos.ReservaDTO;
-import co.edu.uniandes.rest.resources.exceptions.BiblioLogicException;
+import co.edu.uniandes.rest.resources.exceptions.BibliotecaLogicException;
 import co.edu.uniandes.rest.resources.mocks.BiblioLogicMock;
 import co.edu.uniandes.rest.resources.mocks.ReservaLogicMock;
 
@@ -45,7 +45,7 @@ public class ReservaResource {
      * @throws BiblioLogicException excepción retornada por la lógica
      */
     @GET
-    public List<ReservaDTO> getReservas() throws BiblioLogicException {
+    public List<ReservaDTO> getReservas() throws BibliotecaLogicException {
         return reservaLogic.getReservas();
     }
    
@@ -58,25 +58,25 @@ public class ReservaResource {
      * suministrado
      */
     @POST
-    public ReservaDTO createReserva(ReservaDTO reserva) throws BiblioLogicException {
+    public ReservaDTO createReserva(ReservaDTO reserva) throws BibliotecaLogicException {
         return reservaLogic.createReserva(reserva);
     }
 
     @GET
     @Path("{id: \\d+}")
-    public ReservaDTO getReserva(@PathParam("id")Long id) throws BiblioLogicException {
+    public ReservaDTO getReserva(@PathParam("id")Long id) throws BibliotecaLogicException {
         return reservaLogic.getReserva(id);
     }
     
     @PUT
     @Path("{id: \\d+}")
-    public ReservaDTO updateReserva(@PathParam("id")int id, ReservaDTO reserva)throws BiblioLogicException{
+    public ReservaDTO updateReserva(@PathParam("id")int id, ReservaDTO reserva)throws BibliotecaLogicException{
         return reservaLogic.updateReserva(id, reserva);
     }
     
     @DELETE
     @Path("{id: \\d+}")
-    public void deleteReserva(@PathParam("id") int id)throws BiblioLogicException{
+    public void deleteReserva(@PathParam("id") int id)throws BibliotecaLogicException{
         reservaLogic.deleteReserva(id);
     }
     

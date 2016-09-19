@@ -14,7 +14,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import co.edu.uniandes.rest.resources.dtos.SalaDTO;
-import co.edu.uniandes.rest.resources.exceptions.BiblioLogicException;
 import co.edu.uniandes.rest.resources.exceptions.BibliotecaLogicException;
 
 /*
@@ -32,29 +31,29 @@ public class SalaLogicMock {
     /**
      * Constructor. Crea los datos de ejemplo.
      */
-    public SalaLogicMock() throws BiblioLogicException {
+    public SalaLogicMock() throws BibliotecaLogicException {
         if (salas == null) {
             salas = new ArrayList<>();
-            salas.add(new SalaDTO(1L, 1L, 1L, false, "Sala 1", 6));
-            salas.add(new SalaDTO(2L, 2L, 1L, false, "Sala 2", 6));
+            salas.add(new SalaDTO(1L, 1L, "Sala 1", 6));
+            salas.add(new SalaDTO(2L, 3L,"Sala 2", 6));
 
-            salas.add(new SalaDTO(3L, 1L, 2L, false, "Sala 1", 6));
-            salas.add(new SalaDTO(4L, 2L, 2L, false, "Sala 2", 6));
+            salas.add(new SalaDTO(3L, 1L,"Sala 3", 6));
+            salas.add(new SalaDTO(4L, 2L,  "Sala 4", 6));
 
-            salas.add(new SalaDTO(5L, 1L, 3L, false, "Sala 1", 6));
-            salas.add(new SalaDTO(6L, 2L, 3L, false, "Sala 2", 6));
+            salas.add(new SalaDTO(5L, 1L,  "Sala 5", 6));
+            salas.add(new SalaDTO(6L, 2L, "Sala 6", 6));
 
-            salas.add(new SalaDTO(7L, 1L, 4L, false, "Sala 1", 6));
-            salas.add(new SalaDTO(8L, 2L, 4L, false, "Sala 2", 6));
+            salas.add(new SalaDTO(7L, 4L, "Sala 7", 6));
+            salas.add(new SalaDTO(8L, 2L, "Sala 8", 6));
 
-            salas.add(new SalaDTO(9L, 1L, 5L, false, "Sala 1", 6));
-            salas.add(new SalaDTO(10L, 2L, 5L, false, "Sala 2", 6));
+            salas.add(new SalaDTO(9L, 1L,  "Sala 9", 6));
+            salas.add(new SalaDTO(10L, 2L,  "Sala 10", 6));
 
-            salas.add(new SalaDTO(11L, 1L, 6L, false, "Sala 1", 6));
-            salas.add(new SalaDTO(12L, 2L, 6L, false, "Sala 2", 6));
+            salas.add(new SalaDTO(11L, 1L, "Sala 11", 6));
+            salas.add(new SalaDTO(12L, 2L, "Sala 12", 6));
 
-            salas.add(new SalaDTO(13L, 1L, 7L, false, "Sala 1", 6));
-            salas.add(new SalaDTO(14L, 2L, 7L, false, "Sala 2", 6));
+            salas.add(new SalaDTO(13L, 1L, "Sala 13", 6));
+            salas.add(new SalaDTO(14L, 2L, "Sala 14", 6));
         }
 
         // indica que se muestren todos los mensajes
@@ -73,10 +72,10 @@ public class SalaLogicMock {
      * @return lista de salas
      * @throws BiblioLogicException cuando no existe la lista en memoria
      */
-    public List<SalaDTO> getAllSalas() throws BiblioLogicException {
+    public ArrayList<SalaDTO> getAllSalas() throws BibliotecaLogicException {
         if (salas == null) {
             logger.severe("Error interno: lista de salas no existe.");
-            throw new BiblioLogicException("Error interno: lista de salas no existe.");
+            throw new BibliotecaLogicException("Error interno: lista de salas no existe.");
         }
 
         logger.info("retornando todas las salas");
@@ -91,11 +90,11 @@ public class SalaLogicMock {
      * suministrado
      * @return lista de salas de la biblioteca buscada
      */
-    public List<SalaDTO> getSalasBiblioteca(long idBiblioteca) throws BiblioLogicException {
+    public List<SalaDTO> getSalasBiblioteca(long idBiblioteca) throws BibliotecaLogicException {
         ArrayList<SalaDTO> salasBiblioteca = new ArrayList<>();
         if (salas == null) {
             logger.severe("Error interno: lista de salas no existe.");
-            throw new BiblioLogicException("Error interno: lista de salas no existe.");
+            throw new BibliotecaLogicException("Error interno: lista de salas no existe.");
         }
         for (SalaDTO s : salas) {
             if (Objects.equals(idBiblioteca, s.getIdBiblioteca())) {
@@ -115,7 +114,7 @@ public class SalaLogicMock {
      * suministrado
      * @return sala agregada
      */
-    public SalaDTO createSala(SalaDTO newSala, long idBiblioteca) throws BiblioLogicException, BibliotecaLogicException {
+    public SalaDTO createSala(SalaDTO newSala, long idBiblioteca) throws BibliotecaLogicException {
         BiblioLogicMock biblioLogic = new BiblioLogicMock();
         BiblioDTO biblioteca = biblioLogic.getCity(idBiblioteca);
         logger.info("recibiendo solicitud de agregar sala " + newSala);
@@ -126,24 +125,24 @@ public class SalaLogicMock {
                 // si existe una sala con ese id
                 if (Objects.equals(sala.getId(), newSala.getId())) {
                     logger.severe("Ya existe una sala con ese id");
-                    throw new BiblioLogicException("Ya existe una sala con ese id");
+                    throw new BibliotecaLogicException("Ya existe una sala con ese id");
                 }
             }
 
             // la nueva sala no tiene id ? 
         }
-        if (newSala.getIdRecurso() != null) {
+        if (newSala.getId() != null) {
             for (SalaDTO sala : salas) {
                 // si existe una sala con ese id
-                if (Objects.equals(sala.getIdRecurso(), newSala.getIdRecurso())) {
+                if (Objects.equals(sala.getId(), newSala.getId())) {
                     logger.severe("Ya existe un recurso con ese id");
-                    throw new BiblioLogicException("Ya existe un recurso con ese id");
+                    throw new BibliotecaLogicException("Ya existe un recurso con ese id");
                 }
             }
         }
         if (biblioteca == null) {
             logger.severe("La biblioteca a la que se le quiere crear sala no existe");
-            throw new BiblioLogicException("La biblioteca a la que se le quiere crear sala no existe");
+            throw new BibliotecaLogicException("La biblioteca a la que se le quiere crear sala no existe");
         } else {
 
             // genera un id para la sala
@@ -156,13 +155,13 @@ public class SalaLogicMock {
                 if (newId <= sala.getId()) {
                     newId = sala.getId() + 1;
                 }
-                if (newId2 <= sala.getIdRecurso()) {
-                    newId2 = sala.getIdRecurso() + 1;
+                if (newId2 <= sala.getId()) {
+                    newId2 = sala.getId() + 1;
                 }
             }
             newSala.setId(newId);
             newSala.setIdBiblioteca(idBiblioteca);
-            newSala.setIdRecurso(newId2);
+            newSala.setId(newId2);
         }
 
         // agrega la sala 
@@ -170,12 +169,12 @@ public class SalaLogicMock {
         List<RecursoDTO> recursos = recursoLogic.getRecursos();
         logger.info("agregando sala: " + newSala);
         salas.add(newSala);
-        RecursoDTO r = new RecursoDTO(newSala.getIdRecurso(), newSala.getNombre());
+        RecursoDTO r = new RecursoDTO(newSala.getId(), newSala.getName());
         recursos.add(r);
         return newSala;
     }
 
-    public SalaDTO getSalaDeBiblioteca(long id, long idBiblioteca) throws BiblioLogicException {
+    public SalaDTO getSalaDeBiblioteca(long id, long idBiblioteca) throws BibliotecaLogicException {
         SalaDTO s = null;
         List<SalaDTO> salasBiblioteca = getSalasBiblioteca(idBiblioteca);
         for (int i = 0; i < salasBiblioteca.size() && s == null; i++) {
@@ -186,37 +185,36 @@ public class SalaLogicMock {
         }
         if (s == null) {
             logger.severe("No existe una sala con ese id");
-            throw new BiblioLogicException("No existe una sala con ese id");
+            throw new BibliotecaLogicException("No existe una sala con ese id");
         }
         return s;
     }
 
-    public SalaDTO updateSalaDeBiblioteca(long id, SalaDTO s, long idBiblioteca) throws BiblioLogicException {
+    public SalaDTO updateSalaDeBiblioteca(long id, SalaDTO s, long idBiblioteca) throws BibliotecaLogicException {
         SalaDTO sala = getSalaDeBiblioteca(id, idBiblioteca);
         if (sala != null) {
-            sala.setEstaOcupada(s.isEstaOcupada());
-            sala.setNombre(s.getNombre());
+            sala.setName(s.getName());
             sala.setCapacidad(s.getCapacidad());
             return sala;
         } else {
             logger.severe("No existe una sala con ese id");
-            throw new BiblioLogicException("No existe una sala con ese id");
+            throw new BibliotecaLogicException("No existe una sala con ese id");
         }
     }
 
-    public void deleteSalaDeBiblioteca(long id, long idBiblioteca) throws BiblioLogicException, BibliotecaLogicException {
+    public void deleteSalaDeBiblioteca(long id, long idBiblioteca) throws BibliotecaLogicException, BibliotecaLogicException {
         logger.info("recibiendo solicitud de eliminar sala " + id);
         SalaDTO sala = getSalaDeBiblioteca(id, idBiblioteca);
         if (sala != null) {
             logger.info("Eliminando sala con el id especfificado: id = " + sala.getId());
             RecursoLogicMock recursoLogic = new RecursoLogicMock();
             List<RecursoDTO> recursos = recursoLogic.getRecursos();
-            RecursoDTO r = recursoLogic.getRecurso(sala.getIdRecurso());
+            RecursoDTO r = recursoLogic.getRecurso(sala.getId());
             salas.remove(sala);
             recursos.remove(r);
         } else {
             logger.severe("No existe una sala con ese id");
-            throw new BiblioLogicException("No existe una sala con ese id");
+            throw new BibliotecaLogicException("No existe una sala con ese id");
         }
     }
 }

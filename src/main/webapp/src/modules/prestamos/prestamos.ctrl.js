@@ -1,8 +1,8 @@
 (function (ng) {
     var mod = ng.module("usuariosModule");
 
-    mod.controller("prestamosCtrl", ['$scope', '$state', '$stateParams', '$http','usuariosContext','videosContext','librosContext','salasContext',  
-        function ($scope, $state, $stateParams, $http, usuariosContext, videosContext, librosContext, salasContext ) {
+    mod.controller("prestamosCtrl", ['$scope', '$state', '$stateParams', '$http','usuariosContext',  
+        function ($scope, $state, $stateParams, $http, usuariosContext ) {
 
             // inicialmente el listado de prestamos
             //  está vacio
@@ -39,15 +39,6 @@
 
                 $scope.alerts = [];
             }
-            $http.get(videosContext).then(function (response) {
-                $scope.videos = response.data;
-            });
-            $http.get(librosContext).then(function (response) {
-                $scope.libros = response.data;
-            });
-            $http.get(salasContext).then(function (response) {
-                $scope.salas = response.data;
-            });
             
             this.savePrestamo = function (id) {
                 currentPrestamo = $scope.currentPrestamo;

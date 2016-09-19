@@ -10,9 +10,7 @@ import java.util.Date;
 /**
  * Objeto de transferencia de datos de videos.
  */
-public class VideoDTO {
-    private Long id;
-    private String titulo;
+public class VideoDTO extends RecursoDTO{
     private String director;
 
    
@@ -42,9 +40,7 @@ public class VideoDTO {
      * @param esOnline
      */
     public VideoDTO(Long id, String titulo, String director, Long duracion, Long anio_publicacion, String genero,  Long numEjemplares, String sinopsis, boolean esOnline) {
-		super();
-		this.id = id;
-		this.titulo = titulo;
+		super(id, titulo);
                 this.director = director;
                 this.duracion = duracion;
                 this.anio_publicacion = anio_publicacion;
@@ -54,34 +50,6 @@ public class VideoDTO {
                 this.esOnline = esOnline;
 	}
 
-	/**
-     * @return the id
-     */
-    public Long getId() {
-        return id;
-    }
-
-    /**
-     * @param id the id to set
-     */
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    /**
-     * @return the title
-     */
-    public String getTitulo() {
-        return titulo;
-    }
-
-    /**
-     * @param titulo the title to set
-     */
-    public void setTitulo(String titulo) {
-        this.titulo = titulo;
-    }
-    
     /**
      * @return the director
      */
@@ -187,6 +155,6 @@ public class VideoDTO {
      */
     @Override
     public String toString() {
-    	return "{ id : " + getId() + ", titulo : \"" + getTitulo() + ", director : \"" + getDirector()+", duracion : \"" + getDuracion()+", año de publicacion : \"" + getAnioPublicacion()+", genero : \"" + getGenero() +", Número de ejemplares : \"" + getNumEjemplares()+", Sinopsis : \"" + getSinopsis() +", Es online : \"" + getEsOnline()+ "\" }" ;  
+    	return "{ id : " + getId() + ", titulo : \"" + getName() + ", director : \"" + getDirector()+", duracion : \"" + getDuracion()+", año de publicacion : \"" + getAnioPublicacion()+", genero : \"" + getGenero() +", Número de ejemplares : \"" + getNumEjemplares()+", Sinopsis : \"" + getSinopsis() +", Es online : \"" + getEsOnline()+ "\" }" ;  
     }
 }

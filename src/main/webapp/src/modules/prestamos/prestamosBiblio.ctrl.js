@@ -1,8 +1,8 @@
 (function (ng) {
     var mod = ng.module("bibliotecasModule");
 
-    mod.controller("prestamosBiblioCtrl", ['$scope', '$state', '$stateParams', '$http','bibliotecasContext',  
-        function ($scope, $state, $stateParams, $http, bibliotecasContext ) {
+    mod.controller("prestamosBiblioCtrl", ['$scope', '$state', '$stateParams', '$http','bibliotecasContext', 'usuariosContext', 'videosContext','librosContext','salasContext',
+        function ($scope, $state, $stateParams, $http, bibliotecasContext, usuariosContext, videosContext, librosContext, salasContext ) {
 
             // inicialmente el listado de prestamos
             //  está vacio
@@ -39,12 +39,23 @@
 
                 $scope.alerts = [];
             }
-
+            $http.get(videosContext).then(function (response) {
+                $scope.videos = response.data;
+            });
+            $http.get(librosContext).then(function (response) {
+                $scope.libros = response.data;
+            });
+            $http.get(salasContext).then(function (response) {
+                $scope.salas = response.data;
+            });
+            
+            $http.get(usuariosContext).then(function (response) {
+                $scope.usuarios = response.data;
+            });
            
             
             this.savePrestamo = function (id) {
                 currentPrestamo = $scope.currentPrestamo;
-
                 // si el id es null, es un registro nuevo, entonces lo crea
                 if (id == null) {
 

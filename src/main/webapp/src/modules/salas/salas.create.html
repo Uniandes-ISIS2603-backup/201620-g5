@@ -1,7 +1,7 @@
 
 <div class="col-md-6 well">
     <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="ctrl.closeAlert($index)" dismiss-on-timeout="5000">{{alert.msg}} </alert>
-    <form novalidate name="form" id="biblioteca-form" role="form" ng-submit="form.$valid && ctrl.saveBiblioteca(currentBiblioteca.id)">
+    <form novalidate name="form" id="sala-form" role="form" ng-submit="form.$valid && ctrl.saveSala(currentSala.id)">
         
         <div ng-messages="form.$error">
             <div ng-message="required">Llene los espacios especificados:</div>

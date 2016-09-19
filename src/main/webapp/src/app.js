@@ -3,7 +3,6 @@
     var mod = ng.module("mainApp", [
         // External dependencies
         'ui.router',
-        'ui.bootstrap',
         // Internal modules dependencies
         "usuariosModule",
         "bibliotecasModule",
@@ -12,6 +11,8 @@
         "reservasModule",
         "prestamosModule",
         "salasModule",
+
+        "blogsModule",
         "ngMessages"
     ]);
 

@@ -50,9 +50,9 @@ public class BlogResource
     
     @GET
     @Path("libros/(idLibro: \\d+)/blogs")
-    public List<BlogDTO> getBlogsLibro(@PathParam("idLibro") Long isbn) throws BibliotecaLogicException
+    public List<BlogDTO> getBlogsLibro(@PathParam("idLibro") Long id) throws BibliotecaLogicException
     {
-        return BlogLogic.getBlogsLibro(isbn);
+        return BlogLogic.getBlogsLibro(id);
     }
     
     @POST

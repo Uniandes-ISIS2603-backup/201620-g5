@@ -6,6 +6,7 @@ package co.edu.uniandes.rest.resources.mocks;
  * @author sf.munera10
  */
 import co.edu.uniandes.rest.resources.dtos.BiblioDTO;
+import co.edu.uniandes.rest.resources.dtos.LibroDTO;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -14,7 +15,7 @@ import java.util.logging.Logger;
 
 import co.edu.uniandes.rest.resources.dtos.RecursoDTO;
 import co.edu.uniandes.rest.resources.dtos.SalaDTO;
-import co.edu.uniandes.rest.resources.exceptions.BiblioLogicException;
+import co.edu.uniandes.rest.resources.dtos.VideoDTO;
 import co.edu.uniandes.rest.resources.exceptions.BibliotecaLogicException;
 
 /*
@@ -34,30 +35,39 @@ public class RecursoLogicMock {
      */
     public RecursoLogicMock() {
 
-        if (recursos == null) {
-            recursos = new ArrayList<>();
-            recursos.add(new RecursoDTO(1L, "Sala 1"));
-            recursos.add(new RecursoDTO(2L, "Sala 2"));
-            recursos.add(new RecursoDTO(3L, "Sala 1"));
-            recursos.add(new RecursoDTO(4L, "Sala 2"));
-            recursos.add(new RecursoDTO(5L, "Sala 1"));
-            recursos.add(new RecursoDTO(6L, "Sala 2"));
-            recursos.add(new RecursoDTO(7L, "Sala 1"));
-            recursos.add(new RecursoDTO(8L, "Sala 2"));
-            recursos.add(new RecursoDTO(9L, "Sala 1"));
-            recursos.add(new RecursoDTO(10L, "Sala 2"));
-            recursos.add(new RecursoDTO(11L, "Sala 1"));
-            recursos.add(new RecursoDTO(12L, "Sala 2"));
-            recursos.add(new RecursoDTO(13L, "Sala 1"));
-            recursos.add(new RecursoDTO(14L, "Sala 2"));
+        try {
+            LibroLogicMock libros = new LibroLogicMock();
+            ArrayList<LibroDTO> listaLibros = libros.getLibros();
+            VideoLogicMock videos = new VideoLogicMock();
+            ArrayList<VideoDTO> listaVideos = videos.getVideos();
+            SalaLogicMock salas = new SalaLogicMock();
+            ArrayList<SalaDTO> listaSalas = salas.getAllSalas();
+            if (recursos == null) {
+                recursos = new ArrayList<>();
+                for(int i = 0; i < listaLibros.size(); i++)
+                {
+                    recursos.add(listaLibros.get(i));
+                }
+                for(int i = 0; i < listaVideos.size(); i++)
+                {
+                    recursos.add(listaVideos.get(i));
+                }
+                for(int i = 0; i < listaSalas.size(); i++)
+                {
+                    recursos.add(listaSalas.get(i));
+                }
+                
+            }
+            
+            // indica que se muestren todos los mensajes
+            logger.setLevel(Level.INFO);
+            
+            // muestra información
+            logger.info("Inicializa la lista de Recursos");
+            logger.info("Recursos" + recursos);
+        } catch (BibliotecaLogicException ex) {
+            Logger.getLogger(RecursoLogicMock.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-        // indica que se muestren todos los mensajes
-        logger.setLevel(Level.INFO);
-
-        // muestra información 
-        logger.info("Inicializa la lista de Recursos");
-        logger.info("Recursos" + recursos);
     }
 
     /**
@@ -84,7 +94,7 @@ public class RecursoLogicMock {
      * suministrado
      * @return ciudad agregada
      */
-    public RecursoDTO createRecurso(RecursoDTO newCity) throws BibliotecaLogicException, BiblioLogicException {
+    public RecursoDTO createRecurso(RecursoDTO newCity) throws BibliotecaLogicException {
         logger.info("recibiendo solicitud de agregar recurso " + newCity);
         // la nueva ciudad tiene id ?
         if (newCity.getId() != null) {
@@ -118,7 +128,7 @@ public class RecursoLogicMock {
         return newCity;
     }
     
-     public RecursoDTO getRecurso(long id) throws BiblioLogicException {
+     public RecursoDTO getRecurso(long id) throws BibliotecaLogicException {
         RecursoDTO b = null;
         for (int i = 0; i < recursos.size() && b == null; i++) {
             RecursoDTO r = recursos.get(i);
@@ -129,7 +139,7 @@ public class RecursoLogicMock {
         if(b== null)
         {
             logger.severe("No existe un recurso con ese id");
-                throw new BiblioLogicException("No existe un recurso con ese id");
+                throw new BibliotecaLogicException("No existe un recurso con ese id");
         }
         return b;
     }
