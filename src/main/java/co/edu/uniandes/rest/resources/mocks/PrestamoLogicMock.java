@@ -17,7 +17,7 @@ import co.edu.uniandes.rest.resources.dtos.PrestamoDTO;
 import co.edu.uniandes.rest.resources.dtos.SalaDTO;
 import co.edu.uniandes.rest.resources.dtos.UsuarioDTO;
 import co.edu.uniandes.rest.resources.dtos.VideoDTO;
-import co.edu.uniandes.rest.resources.exceptions.BiblioLogicException;
+import co.edu.uniandes.rest.resources.exceptions.BibliotecaLogicException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -96,21 +96,21 @@ public class PrestamoLogicMock {
      * @return lista de prestamos
      * @throws BiblioLogicException cuando no existe la lista en memoria
      */
-    public ArrayList<PrestamoDTO> getPrestamos() throws BiblioLogicException {
+    public ArrayList<PrestamoDTO> getPrestamos() throws BibliotecaLogicException {
         if (prestamos == null) {
             logger.severe("Error interno: lista de prestamos no existe.");
-            throw new BiblioLogicException("Error interno: lista de prestamos no existe.");
+            throw new BibliotecaLogicException("Error interno: lista de prestamos no existe.");
         }
 
         logger.info("retornando todas las prestamos");
         return prestamos;
     }
     
-    public ArrayList<PrestamoDTO> getPrestamo(Long idPrestamo) throws BiblioLogicException {
+    public ArrayList<PrestamoDTO> getPrestamo(Long idPrestamo) throws BibliotecaLogicException {
         ArrayList<PrestamoDTO> prestamosP = new ArrayList<>();
         if (prestamos == null) {
             logger.severe("Error interno: lista de prestamos no existe.");
-            throw new BiblioLogicException("Error interno: lista de prestamos no existe.");
+            throw new BibliotecaLogicException("Error interno: lista de prestamos no existe.");
         }
         for (PrestamoDTO m : prestamos) {
             if (idPrestamo == m.getId()) {
@@ -121,11 +121,11 @@ public class PrestamoLogicMock {
         return prestamosP;
     }
 
-    public ArrayList<PrestamoDTO> getPrestamosUsuario(Long idUsuario) throws BiblioLogicException {
+    public ArrayList<PrestamoDTO> getPrestamosUsuario(Long idUsuario) throws BibliotecaLogicException {
         ArrayList<PrestamoDTO> prestamosUsuario = new ArrayList<>();
         if (prestamos == null) {
             logger.severe("Error interno: lista de prestamos no existe.");
-            throw new BiblioLogicException("Error interno: lista de prestamos no existe.");
+            throw new BibliotecaLogicException("Error interno: lista de prestamos no existe.");
         }
         for (PrestamoDTO m : prestamos) {
             if (idUsuario == m.getUsuario().getId()) {
@@ -145,7 +145,7 @@ public class PrestamoLogicMock {
      * suministrado
      * @return biblioteca agregada
      */
-    public PrestamoDTO createPrestamo(PrestamoDTO newPrestamo, Long idUsuario) throws BiblioLogicException {
+    public PrestamoDTO createPrestamo(PrestamoDTO newPrestamo, Long idUsuario) throws BibliotecaLogicException {
         logger.info("recibiendo solicitud de agregar prestamo " + newPrestamo);
         // agrega el prestamo
         // el nuevo prestamo tiene id ?
@@ -155,7 +155,7 @@ public class PrestamoLogicMock {
                 // si existe una sala con ese id
                 if (prestamo.getId() == newPrestamo.getId()) {
                     logger.severe("Ya existe un prestamo con ese id");
-                    throw new BiblioLogicException("Ya existe un prestamo con ese id");
+                    throw new BibliotecaLogicException("Ya existe un prestamo con ese id");
                 }
             }
 
@@ -191,7 +191,7 @@ public class PrestamoLogicMock {
         }
 
     }
-    public PrestamoDTO getPrestamoDeUsuario(long id, long idUsuario) throws BiblioLogicException {
+    public PrestamoDTO getPrestamoDeUsuario(long id, long idUsuario) throws BibliotecaLogicException {
         PrestamoDTO m = null;
         List<PrestamoDTO> prestamosUsuario = getPrestamosUsuario(idUsuario);
         for (int i = 0; i < prestamosUsuario.size() && m == null; i++) {
@@ -202,12 +202,12 @@ public class PrestamoLogicMock {
         }
         if (m == null) {
             logger.severe("No existe una prestamo con ese id");
-            throw new BiblioLogicException("No existe una prestamo con ese id");
+            throw new BibliotecaLogicException("No existe una prestamo con ese id");
         }
         return m;
     }
 
-    public PrestamoDTO updatePrestamoDeUsuario(long id, PrestamoDTO m, Long idUsuario) throws BiblioLogicException {
+    public PrestamoDTO updatePrestamoDeUsuario(long id, PrestamoDTO m, Long idUsuario) throws BibliotecaLogicException {
         PrestamoDTO prestamo = getPrestamoDeUsuario(id, idUsuario);
         if (prestamo != null) {
             prestamo.setCosto(m.getCosto());
@@ -223,11 +223,11 @@ public class PrestamoLogicMock {
             return prestamo;
         } else {
             logger.severe("No existe una prestamo con ese id");
-            throw new BiblioLogicException("No existe una prestamo con ese id");
+            throw new BibliotecaLogicException("No existe una prestamo con ese id");
         }
     }
 
-    public PrestamoDTO regresarLibro(Long idRecurso, long idUsuario, String fechaEntrega) throws BiblioLogicException, ParseException {
+    public PrestamoDTO regresarLibro(Long idRecurso, long idUsuario, String fechaEntrega) throws BibliotecaLogicException, ParseException {
         MultaLogicMock multaLogic = new MultaLogicMock();
         Date fecha = new Date();
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy");
@@ -247,12 +247,12 @@ public class PrestamoLogicMock {
         }
         if (prestamo == null) {
             logger.severe("No existe una prestamo con ese id");
-            throw new BiblioLogicException("No existe una prestamo con ese id");
+            throw new BibliotecaLogicException("No existe una prestamo con ese id");
         }
         return prestamo;
     }
 
-    public void deletePrestamoDeUsuario(long id, long idUsuario) throws BiblioLogicException {
+    public void deletePrestamoDeUsuario(long id, long idUsuario) throws BibliotecaLogicException {
         logger.info("recibiendo solicitud de eliminar prestamo " + id);
         PrestamoDTO prestamo = getPrestamoDeUsuario(id, idUsuario);
         if (prestamo != null) {
@@ -260,7 +260,7 @@ public class PrestamoLogicMock {
             prestamos.remove(prestamo);
         } else {
             logger.severe("No existe una prestamo con ese id");
-            throw new BiblioLogicException("No existe una prestamo con ese id");
+            throw new BibliotecaLogicException("No existe una prestamo con ese id");
         }
     }
 
@@ -275,11 +275,11 @@ public class PrestamoLogicMock {
         return presLib; 
     }
 
-    public ArrayList<PrestamoDTO> getPrestamosBiblioteca(Long idBiblioteca) throws BiblioLogicException {
+    public ArrayList<PrestamoDTO> getPrestamosBiblioteca(Long idBiblioteca) throws BibliotecaLogicException {
         ArrayList<PrestamoDTO> prestamosBiblioteca = new ArrayList<>();
         if (prestamos == null) {
             logger.severe("Error interno: lista de prestamos no existe.");
-            throw new BiblioLogicException("Error interno: lista de prestamos no existe.");
+            throw new BibliotecaLogicException("Error interno: lista de prestamos no existe.");
         }
         for (PrestamoDTO m : prestamos) {
             if (idBiblioteca == m.getIdBiblioteca()) {
@@ -291,7 +291,7 @@ public class PrestamoLogicMock {
     }
 
 
-    public PrestamoDTO getPrestamoDeBiblioteca(long id, long idBiblioteca) throws BiblioLogicException {
+    public PrestamoDTO getPrestamoDeBiblioteca(long id, long idBiblioteca) throws BibliotecaLogicException {
         PrestamoDTO m = null;
         List<PrestamoDTO> prestamosBiblioteca = getPrestamosBiblioteca(idBiblioteca);
         for (int i = 0; i < prestamosBiblioteca.size() && m == null; i++) {
@@ -302,7 +302,7 @@ public class PrestamoLogicMock {
         }
         if (m == null) {
             logger.severe("No existe una prestamo con ese id");
-            throw new BiblioLogicException("No existe una prestamo con ese id");
+            throw new BibliotecaLogicException("No existe una prestamo con ese id");
         }
         return m;
     }
@@ -315,7 +315,7 @@ public class PrestamoLogicMock {
      * suministrado
      * @return biblioteca agregada
      */
-    public PrestamoDTO createPrestamoBiblioteca(PrestamoDTO newPrestamo, Long idBiblioteca) throws BiblioLogicException {
+    public PrestamoDTO createPrestamoBiblioteca(PrestamoDTO newPrestamo, Long idBiblioteca) throws BibliotecaLogicException {
         logger.info("recibiendo solicitud de agregar prestamo " + newPrestamo);
         // agrega el prestamo
         // el nuevo prestamo tiene id ?
@@ -325,7 +325,7 @@ public class PrestamoLogicMock {
                 // si existe una sala con ese id
                 if (prestamo.getId() == newPrestamo.getId()) {
                     logger.severe("Ya existe un prestamo con ese id");
-                    throw new BiblioLogicException("Ya existe un prestamo con ese id");
+                    throw new BibliotecaLogicException("Ya existe un prestamo con ese id");
                 }
             }
 
@@ -350,7 +350,7 @@ public class PrestamoLogicMock {
         return newPrestamo;
     }
     
-     public PrestamoDTO deletePrestamoDeBiblioteca(long id, long idBiblioteca) throws BiblioLogicException {
+     public PrestamoDTO deletePrestamoDeBiblioteca(long id, long idBiblioteca) throws BibliotecaLogicException {
         logger.info("recibiendo solicitud de eliminar prestamo " + id);
         PrestamoDTO prestamo = getPrestamoDeBiblioteca(id, idBiblioteca);
         if (prestamo != null) {
@@ -359,11 +359,11 @@ public class PrestamoLogicMock {
             return prestamo;
         } else {
             logger.severe("No existe una prestamo con ese id");
-            throw new BiblioLogicException("No existe una prestamo con ese id");
+            throw new BibliotecaLogicException("No existe una prestamo con ese id");
         }
     }
      
-     public PrestamoDTO updatePrestamoDeBiblioteca(long id, PrestamoDTO m, Long idBiblioteca) throws BiblioLogicException {
+     public PrestamoDTO updatePrestamoDeBiblioteca(long id, PrestamoDTO m, Long idBiblioteca) throws BibliotecaLogicException {
         PrestamoDTO prestamo = getPrestamoDeBiblioteca(id, idBiblioteca);
         if (prestamo != null) {
             prestamo.setCosto(m.getCosto());
@@ -379,7 +379,7 @@ public class PrestamoLogicMock {
             return prestamo;
         } else {
             logger.severe("No existe una prestamo con ese id");
-            throw new BiblioLogicException("No existe una prestamo con ese id");
+            throw new BibliotecaLogicException("No existe una prestamo con ese id");
         }
     }
 

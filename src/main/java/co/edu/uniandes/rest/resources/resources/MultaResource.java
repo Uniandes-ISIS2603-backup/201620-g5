@@ -7,7 +7,7 @@ package co.edu.uniandes.rest.resources.resources;
 
 import co.edu.uniandes.rest.resources.dtos.MultaDTO;
 
-import co.edu.uniandes.rest.resources.exceptions.BiblioLogicException;
+import co.edu.uniandes.rest.resources.exceptions.BibliotecaLogicException;
 import co.edu.uniandes.rest.resources.mocks.MultaLogicMock;
 
 import java.util.List;
@@ -43,13 +43,13 @@ public class MultaResource {
      * @throws BiblioLogicException excepción retornada por la lógica
      */
     @GET
-    public List<MultaDTO> getMultas() throws BiblioLogicException {
+    public List<MultaDTO> getMultas() throws BibliotecaLogicException {
         return multaLogic.getMultas();
     }
    
     @Path("{idUsuario: \\d+}")
     @GET
-    public List<MultaDTO> getMultasUsuario(@PathParam("idUsuario")int idUsuario) throws BiblioLogicException {
+    public List<MultaDTO> getMultasUsuario(@PathParam("idUsuario")int idUsuario) throws BibliotecaLogicException {
         MultaLogicMock multaLogic = new MultaLogicMock();
         return multaLogic.getMultasUsuario(idUsuario);
     }
@@ -71,21 +71,21 @@ public class MultaResource {
      
     @GET
     @Path("{id: \\d+}/{idUsuario: \\d+}")
-    public MultaDTO getMultaDeUsuario(@PathParam("id")int id,@PathParam("idUsuario")int idUsuario) throws BiblioLogicException {
+    public MultaDTO getMultaDeUsuario(@PathParam("id")int id,@PathParam("idUsuario")int idUsuario) throws BibliotecaLogicException {
         MultaLogicMock multaLogic = new MultaLogicMock();
         return multaLogic.getMultaDeUsuario(id, idUsuario);
     }
     
     @PUT
     @Path("{id: \\d+}/{idUsuario: \\d+}")
-    public MultaDTO updateMulta(@PathParam("id")int id, MultaDTO m,@PathParam("idUsuario")int idUsuario)throws BiblioLogicException{
+    public MultaDTO updateMulta(@PathParam("id")int id, MultaDTO m,@PathParam("idUsuario")int idUsuario)throws BibliotecaLogicException{
         MultaLogicMock multaLogic = new MultaLogicMock();
         return multaLogic.updateMultaDeUsuario(id, m, idUsuario);
     }
     
     @DELETE
     @Path("{id: \\d+}/{idUsuario: \\d+}")
-    public void deleteMulta(@PathParam("id") int id,@PathParam("idUsuario")int idUsuario )throws BiblioLogicException{
+    public void deleteMulta(@PathParam("id") int id,@PathParam("idUsuario")int idUsuario )throws BibliotecaLogicException{
         MultaLogicMock multaLogic = new MultaLogicMock();
         multaLogic.deleteMultaDeBiblioteca(id, idUsuario);
     }

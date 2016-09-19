@@ -6,7 +6,6 @@
 package co.edu.uniandes.rest.resources.resources;
 
 import co.edu.uniandes.rest.resources.dtos.BlogDTO;
-import co.edu.uniandes.rest.resources.exceptions.BiblioLogicException;
 import co.edu.uniandes.rest.resources.exceptions.BibliotecaLogicException;
 import co.edu.uniandes.rest.resources.mocks.BlogLogicMock;
 import co.edu.uniandes.rest.resources.mocks.PrestamoLogicMock;

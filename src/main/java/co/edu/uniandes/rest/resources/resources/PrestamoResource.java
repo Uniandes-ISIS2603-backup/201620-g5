@@ -6,7 +6,6 @@
 package co.edu.uniandes.rest.resources.resources;
 
 import co.edu.uniandes.rest.resources.dtos.PrestamoDTO;
-import co.edu.uniandes.rest.resources.exceptions.BiblioLogicException;
 import co.edu.uniandes.rest.resources.exceptions.BibliotecaLogicException;
 import co.edu.uniandes.rest.resources.mocks.PrestamoLogicMock;
 import java.text.ParseException;
@@ -39,14 +38,14 @@ public class PrestamoResource {
      */
     @GET
     @Path("prestamos")
-    public ArrayList<PrestamoDTO> getPrestamos() throws BiblioLogicException, ParseException {
+    public ArrayList<PrestamoDTO> getPrestamos() throws BibliotecaLogicException, ParseException {
         return prestamoLogic.getPrestamos();
     }
 
     //servicios rest de bibliotecas.
     @GET
     @Path("usuarios/{idUsuario: \\d+}/prestamos")
-    public ArrayList<PrestamoDTO> getPrestamosUsuario(@PathParam("idUsuario") Long idUsuario) throws BiblioLogicException, ParseException {
+    public ArrayList<PrestamoDTO> getPrestamosUsuario(@PathParam("idUsuario") Long idUsuario) throws BibliotecaLogicException, ParseException {
         return prestamoLogic.getPrestamosUsuario(idUsuario);
     }
 
@@ -66,24 +65,24 @@ public class PrestamoResource {
 
     @POST
     @Path("usuarios/{idUsuario: \\d+}/prestamos")
-    public PrestamoDTO createPrestamo(PrestamoDTO prestamo, @PathParam("idUsuario") Long idUsuario) throws ParseException, BiblioLogicException {
+    public PrestamoDTO createPrestamo(PrestamoDTO prestamo, @PathParam("idUsuario") Long idUsuario) throws ParseException, BibliotecaLogicException {
         return prestamoLogic.createPrestamo(prestamo, idUsuario);
     }
 
     @GET
     @Path("usuarios/{idUsuario: \\d+}/prestamos/{id: \\d+}")
-    public PrestamoDTO getPrestamoDeUsuario(@PathParam("id") int id, @PathParam("idUsuario") Long idUsuario) throws BiblioLogicException, ParseException {
+    public PrestamoDTO getPrestamoDeUsuario(@PathParam("id") int id, @PathParam("idUsuario") Long idUsuario) throws BibliotecaLogicException, ParseException {
         return prestamoLogic.getPrestamoDeUsuario(id, idUsuario);
     }
     @PUT
     @Path("prestamos/{id: \\d+}/{idUsuario: \\d+}")
-    public PrestamoDTO updatePrestamo(@PathParam("id") Long id, PrestamoDTO m, @PathParam("idUsuario") Long idUsuario) throws BiblioLogicException, ParseException {
+    public PrestamoDTO updatePrestamo(@PathParam("id") Long id, PrestamoDTO m, @PathParam("idUsuario") Long idUsuario) throws BibliotecaLogicException, ParseException {
         return prestamoLogic.updatePrestamoDeUsuario(id, m, idUsuario);
     }
 
     @DELETE
     @Path("prestamos/{id: \\d+}/{idUsuario: \\d+}")
-    public void deleteMulta(@PathParam("id") int id, @PathParam("idUsuario") int idUsuario) throws BiblioLogicException, ParseException {
+    public void deleteMulta(@PathParam("id") int id, @PathParam("idUsuario") int idUsuario) throws BibliotecaLogicException, ParseException {
         prestamoLogic.deletePrestamoDeUsuario(id, idUsuario);
     }
     
@@ -92,30 +91,30 @@ public class PrestamoResource {
     
     @GET
     @Path("bibliotecas/{idBiblioteca: \\d+}/prestamos")
-    public ArrayList<PrestamoDTO> getPrestamosBiblioteca(@PathParam("idBiblioteca") Long idBiblioteca) throws BiblioLogicException, ParseException {
+    public ArrayList<PrestamoDTO> getPrestamosBiblioteca(@PathParam("idBiblioteca") Long idBiblioteca) throws BibliotecaLogicException, ParseException {
         return prestamoLogic.getPrestamosBiblioteca(idBiblioteca);
     }
     @GET
     @Path("bibliotecas/{idBiblioteca: \\d+}/prestamos/{id: \\d+}")
-    public PrestamoDTO getPrestamoDeBiblioteca(@PathParam("id") Long id, @PathParam("idBiblioteca") Long idBiblioteca) throws BiblioLogicException, ParseException {
+    public PrestamoDTO getPrestamoDeBiblioteca(@PathParam("id") Long id, @PathParam("idBiblioteca") Long idBiblioteca) throws BibliotecaLogicException, ParseException {
         return prestamoLogic.getPrestamoDeBiblioteca(id, idBiblioteca);
     }
     
     @POST
     @Path("bibliotecas/{idBiblioteca: \\d+}/prestamos")
-    public PrestamoDTO createPrestamoBiblioteca(PrestamoDTO prestamo, @PathParam("idBiblioteca") Long idBiblioteca) throws ParseException, BiblioLogicException {
+    public PrestamoDTO createPrestamoBiblioteca(PrestamoDTO prestamo, @PathParam("idBiblioteca") Long idBiblioteca) throws ParseException, BibliotecaLogicException {
         return prestamoLogic.createPrestamoBiblioteca(prestamo, idBiblioteca);
     }
     
     @PUT
     @Path("bibliotecas/{idBiblioteca: \\d+}/prestamos/{id: \\d+}")
-    public PrestamoDTO updatePrestamoBiblioteca(@PathParam("id") Long id, PrestamoDTO m, @PathParam("idBiblioteca") Long idBiblioteca) throws BiblioLogicException, ParseException {
+    public PrestamoDTO updatePrestamoBiblioteca(@PathParam("id") Long id, PrestamoDTO m, @PathParam("idBiblioteca") Long idBiblioteca) throws BibliotecaLogicException, ParseException {
         return prestamoLogic.updatePrestamoDeBiblioteca(id, m, idBiblioteca);
     }
     
     @DELETE
     @Path("bibliotecas/{idBiblioteca: \\d+}/prestamos/{id: \\d+}")
-    public PrestamoDTO deletePrestamoBiblioteca(@PathParam("id") Long id, @PathParam("idBiblioteca") Long idBiblioteca) throws ParseException, BiblioLogicException {
+    public PrestamoDTO deletePrestamoBiblioteca(@PathParam("id") Long id, @PathParam("idBiblioteca") Long idBiblioteca) throws ParseException, BibliotecaLogicException {
         return prestamoLogic.deletePrestamoDeBiblioteca(id, idBiblioteca);
     }
 }

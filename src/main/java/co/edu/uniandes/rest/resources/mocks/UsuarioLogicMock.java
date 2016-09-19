@@ -8,7 +8,6 @@ package co.edu.uniandes.rest.resources.mocks;
 
 import co.edu.uniandes.rest.resources.dtos.PrestamoDTO;
 import co.edu.uniandes.rest.resources.dtos.UsuarioDTO;
-import co.edu.uniandes.rest.resources.exceptions.BiblioLogicException;
 import co.edu.uniandes.rest.resources.exceptions.BibliotecaLogicException;
 import java.util.ArrayList;
 import java.util.List;

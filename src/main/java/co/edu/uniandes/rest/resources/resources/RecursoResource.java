@@ -6,7 +6,6 @@
 package co.edu.uniandes.rest.resources.resources;
 
 import co.edu.uniandes.rest.resources.dtos.RecursoDTO;
-import co.edu.uniandes.rest.resources.exceptions.BiblioLogicException;
 import co.edu.uniandes.rest.resources.exceptions.BibliotecaLogicException;
 import co.edu.uniandes.rest.resources.mocks.RecursoLogicMock;
 
@@ -52,7 +51,7 @@ public class RecursoResource {
      * suministrado
      */
     @POST
-    public RecursoDTO createRecurso(RecursoDTO city) throws BibliotecaLogicException, BiblioLogicException {
+    public RecursoDTO createRecurso(RecursoDTO city) throws BibliotecaLogicException {
         return recursoLogic.createRecurso(city);
     }
 }

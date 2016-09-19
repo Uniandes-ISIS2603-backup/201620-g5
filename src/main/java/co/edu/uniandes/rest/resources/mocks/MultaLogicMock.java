@@ -12,7 +12,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import co.edu.uniandes.rest.resources.dtos.MultaDTO;
-import co.edu.uniandes.rest.resources.exceptions.BiblioLogicException;
+import co.edu.uniandes.rest.resources.exceptions.BibliotecaLogicException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -56,21 +56,21 @@ public class MultaLogicMock {
      * @return lista de multas
      * @throws BiblioLogicException cuando no existe la lista en memoria
      */
-    public List<MultaDTO> getMultas() throws BiblioLogicException {
+    public List<MultaDTO> getMultas() throws BibliotecaLogicException {
         if (multas == null) {
             logger.severe("Error interno: lista de multas no existe.");
-            throw new BiblioLogicException("Error interno: lista de multas no existe.");
+            throw new BibliotecaLogicException("Error interno: lista de multas no existe.");
         }
 
         logger.info("retornando todas las multas");
         return multas;
     }
 
-    public List<MultaDTO> getMultasUsuario(long idUsuario) throws BiblioLogicException {
+    public List<MultaDTO> getMultasUsuario(long idUsuario) throws BibliotecaLogicException {
         ArrayList<MultaDTO> multasUsuario = new ArrayList<>();
         if (multas == null) {
             logger.severe("Error interno: lista de multas no existe.");
-            throw new BiblioLogicException("Error interno: lista de multas no existe.");
+            throw new BibliotecaLogicException("Error interno: lista de multas no existe.");
         }
         for (MultaDTO m : multas) {
             if (Objects.equals(idUsuario, m.getIdUsuario())) {
@@ -98,7 +98,7 @@ public class MultaLogicMock {
         return newMulta;
     }
 
-    public MultaDTO getMultaDeUsuario(long id, long idUsuario) throws BiblioLogicException {
+    public MultaDTO getMultaDeUsuario(long id, long idUsuario) throws BibliotecaLogicException {
         MultaDTO m = null;
         List<MultaDTO> multasUsuario = getMultasUsuario(idUsuario);
         for (int i = 0; i < multasUsuario.size() && m == null; i++) {
@@ -109,12 +109,12 @@ public class MultaLogicMock {
         }
         if (m == null) {
             logger.severe("No existe una multa con ese id");
-            throw new BiblioLogicException("No existe una multa con ese id");
+            throw new BibliotecaLogicException("No existe una multa con ese id");
         }
         return m;
     }
 
-    public MultaDTO updateMultaDeUsuario(long id, MultaDTO m, long idUsuario) throws BiblioLogicException {
+    public MultaDTO updateMultaDeUsuario(long id, MultaDTO m, long idUsuario) throws BibliotecaLogicException {
         MultaDTO multa = getMultaDeUsuario(id, idUsuario);
         if (multa != null) {
             multa.setCosto(m.getCosto());
@@ -126,11 +126,11 @@ public class MultaLogicMock {
             return multa;
         } else {
             logger.severe("No existe una multa con ese id");
-            throw new BiblioLogicException("No existe una multa con ese id");
+            throw new BibliotecaLogicException("No existe una multa con ese id");
         }
     }
 
-    public void deleteMultaDeBiblioteca(long id, long idUsuario) throws BiblioLogicException {
+    public void deleteMultaDeBiblioteca(long id, long idUsuario) throws BibliotecaLogicException {
         logger.info("recibiendo solicitud de eliminar multa " + id);
         MultaDTO multa = getMultaDeUsuario(id, idUsuario);
         if (multa != null) {
@@ -138,7 +138,7 @@ public class MultaLogicMock {
             multas.remove(multa);
         } else {
             logger.severe("No existe una multa con ese id");
-            throw new BiblioLogicException("No existe una multa con ese id");
+            throw new BibliotecaLogicException("No existe una multa con ese id");
         }
     }
 }
