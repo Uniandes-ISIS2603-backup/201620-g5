@@ -19,13 +19,27 @@
                 url: '/blogs/create',
                 parent: 'libroEdit',
                 views: {
-                    '}libroInstanceView': {
+                    'libroInstanceView': {
                         controller: 'blogsCtrl',
                         controllerAs: 'ctrl',
                         templateUrl: basePath + 'blogs.create.html'
                     }
                 }
 
+            })
+            .state('blogEdit', {
+                url: '/blogs/edit/:blogId',
+                parent: 'libroEdit',
+                param: {
+                    blogId: null
+                },
+                views: {
+                    'libroInstanceView': {
+                        controller: 'blogsCtrl',
+                        controllerAs: 'ctrl',
+                        templateUrl: basePath + 'blogs.create.html'
+                    }
+                }
             });
         }]);
 })(window.angular);

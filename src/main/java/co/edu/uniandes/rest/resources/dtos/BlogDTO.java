@@ -18,7 +18,7 @@ public class BlogDTO {
     private Long idLibro;
     private String texto;
     private String nombreAutor;
-    private Long idBlog;
+    private Long id;
 
     
     
@@ -28,14 +28,21 @@ public class BlogDTO {
     
     public BlogDTO(String pTitulo, String pNombre, Long pIdLibro, String pTexto, String pNombreAutor, Long pIdBlog)
     {
-        super();
         this.titulo= pTitulo;
         this.nombre = pNombre;
         this.idLibro = pIdLibro;
         this.texto = pTexto;
         this.nombreAutor = pNombreAutor;
-        this.idBlog = pIdBlog;
+        this.id = pIdBlog;
     
+    }
+
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
     }
 
     public String getNombre() {
@@ -70,20 +77,14 @@ public class BlogDTO {
         this.nombreAutor = nombreAutor;
     }
 
-    public Long getIdBlog() {
-        return idBlog;
+    public Long getId() {
+        return id;
     }
 
-    public void setIdBlog(Long idBlog) {
-        this.idBlog = idBlog;
+    public void setId(Long id) {
+        this.id = id;
     }
     
-    public String getTitulo()
-    {
-        return titulo;
-    }
-    
-
     @Override
     public String toString() {
         return super.toString(); //To change body of generated methods, choose Tools | Templates.

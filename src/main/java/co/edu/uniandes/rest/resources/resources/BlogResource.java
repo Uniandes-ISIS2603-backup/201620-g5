@@ -12,7 +12,9 @@ import co.edu.uniandes.rest.resources.mocks.BlogLogicMock;
 import co.edu.uniandes.rest.resources.mocks.PrestamoLogicMock;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.ArrayList;
 import java.util.List;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -33,6 +35,7 @@ public class BlogResource
     BlogLogicMock BlogLogic = new BlogLogicMock();
     
     
+    
     @GET
     @Path("blogs")
     public List<BlogDTO> getBlogs() throws BibliotecaLogicException 
@@ -40,8 +43,17 @@ public class BlogResource
         return BlogLogic.getBlogs();
     }
     
+    
     @GET
-    @Path("blogs/(idBlog: \\d+}")
+    @Path ("blogs/prueba")
+    public BlogDTO getPrueba()
+    {
+        
+        return new BlogDTO("prueba", "prueba", 1L, "prueba", "prueba", 1L);
+    }
+    
+    @GET
+    @Path("blogs/{id: \\d+}/")
     public BlogDTO getBlog(@PathParam("id") Long id) throws BibliotecaLogicException 
     {
         return BlogLogic.getBlog(id);
@@ -49,10 +61,10 @@ public class BlogResource
     
     
     @GET
-    @Path("libros/(idLibro: \\d+)/blogs")
-    public List<BlogDTO> getBlogsLibro(@PathParam("idLibro") Long id) throws BibliotecaLogicException
+    @Path("libros/{idLibro: \\d+}/blogs")
+    public List<BlogDTO> getBlogsLibro(@PathParam("idLibro") Long idLibro) throws BibliotecaLogicException
     {
-        return BlogLogic.getBlogsLibro(id);
+        return BlogLogic.getBlogsLibro(idLibro);
     }
     
     @POST

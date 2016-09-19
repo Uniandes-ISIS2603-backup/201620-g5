@@ -27,27 +27,28 @@ public class BlogLogicMock {
         if (blogs == null)
         {
             blogs = new ArrayList<>();
-            blogs.add(new BlogDTO("Titulo libro", "nombreReseña", 1L, "Aqui debe ir la reseña", "Juan Sebastian", 3423L));
-            blogs.add(new BlogDTO("Titulo libro", "nombreReseña", 1L, "Aqui debe ir la reseña", "Juan Sebastian", 344L));
-            blogs.add(new BlogDTO("Titulo libro", "nombreReseña", 2L, "Aqui debe ir la reseña", "Juan Sebastian", 36234L));
-            blogs.add(new BlogDTO("Titulo libro", "nombreReseña", 3L, "Aqui debe ir la reseña", "Juan Sebastian", 357234L));
-            blogs.add(new BlogDTO("Titulo libro", "nombreReseña", 3L, "Aqui debe ir la reseña", "Juan Sebastian", 343334L));
-            blogs.add(new BlogDTO("Titulo libro", "nombreReseña", 3L, "Aqui debe ir la reseña", "Juan Sebastian", 343634L));
+            blogs.add(new BlogDTO("Titulo libro", "nombreReseña", 1L, "Aqui debe ir la reseña", "Juan Sebastian", 1L));
+            blogs.add(new BlogDTO("Titulo libro", "nombreReseña", 1L, "Aqui debe ir la reseña", "Juan Sebastian", 2L));
+            blogs.add(new BlogDTO("Titulo libro", "nombreReseña", 2L, "Aqui debe ir la reseña", "Juan Sebastian", 3L));
+            blogs.add(new BlogDTO("Titulo libro", "nombreReseña", 3L, "Aqui debe ir la reseña", "Juan Sebastian", 4L));
+            blogs.add(new BlogDTO("Titulo libro", "nombreReseña", 3L, "Aqui debe ir la reseña", "Juan Sebastian", 5L));
+            blogs.add(new BlogDTO("Titulo libro", "nombreReseña", 3L, "Aqui debe ir la reseña", "Juan Sebastian", 6L));
         }
         
-        logger.setLevel(Level.INFO);
-
-        // muestra información 
-        logger.info(
-                "Inicializa la lista de blogs");
-        logger.info(
-                "Blogs: " + blogs);
+       
     }
     
     
-    public List<BlogDTO> getBlogsLibro(Long pIdLibro) throws BibliotecaLogicException
+    public String prueba1()
     {
-        logger.severe("hola"+pIdLibro);
+        return "Probando";
+    }
+    
+    
+    
+    
+    public ArrayList<BlogDTO> getBlogsLibro(Long idLibro) throws BibliotecaLogicException
+    {
         ArrayList<BlogDTO> a = new ArrayList<>();
         if (blogs == null)
         {
@@ -56,7 +57,7 @@ public class BlogLogicMock {
         }
         
         for (BlogDTO m : blogs) {
-            if (pIdLibro == m.getIdLibro()) {
+            if (idLibro == m.getIdLibro()) {
                 a.add(m);
             }
         }
@@ -73,17 +74,17 @@ public class BlogLogicMock {
         return blogs;
     }
     
-    public BlogDTO getBlog(Long pId) throws BibliotecaLogicException
+    public BlogDTO getBlog(Long id) throws BibliotecaLogicException
      {
          if (blogs == null) {
             logger.severe("Error interno: lista de blogs no existe.");
             throw new BibliotecaLogicException("Error interno: lista de blogs no existe.");
         }
         logger.info("buscando blogs");
-        for (BlogDTO blog : blogs) {
-            if (blog.getIdBlog().equals(pId)) {
+        for (BlogDTO b : blogs) {
+            if (b.getId() == id) {
                 logger.info("blog encontrado");
-                return blog;
+                return b;
             }
         }
         logger.severe("No se encontró el blog");
@@ -97,11 +98,11 @@ public class BlogLogicMock {
         logger.info("recibiendo solicitud de agregar blog " + pBlog);
     	
     	
-    	if ( pBlog.getIdBlog() != null ) {
+    	if ( pBlog.getId() != null ) {
 	    	
 	        for (BlogDTO blog : blogs) {
 	        
-	            if (blog.getIdBlog().equals(pBlog.getIdBlog())){
+	            if (blog.getId().equals(pBlog.getId())){
 	            	logger.severe("Ya existe un Blog con ese id");
                         throw new BibliotecaLogicException("Ya existe un Blog con ese id");
                     }
@@ -112,11 +113,11 @@ public class BlogLogicMock {
     		logger.info("Generando id para el nuevo Blog");
     		long id = 1;
 	        for (BlogDTO blog : blogs) {
-	            if (id <= blog.getIdBlog()){
-	                id =  blog.getIdBlog() + 1;
+	            if (id <= blog.getId()){
+	                id =  blog.getId() + 1;
 	            }
 	        }
-	        pBlog.setIdBlog(id);
+	        pBlog.setId(id);
     	}
     	
         logger.info("agregando Blog" + pBlog);

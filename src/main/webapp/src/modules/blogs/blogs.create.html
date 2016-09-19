@@ -23,7 +23,16 @@
                 </div>
                 <label for="texto" class="col-md-2 control-label">Texto</label>
                 <div class="col-md-10">
-                    <input id="texto" name="titulo" class="form-control" type="text" ng-model="currentBlog.texto" ng-init="currentBlog.texto" required />
+                    <textarea rows="5" cols="50" id="texto" name="titulo" class="form-control" type="text" ng-model="currentBlog.texto" ng-init="currentBlog.texto" required></textarea>
+                </div>
+                <label for="fecha" class="col-md-2 control-label">Fecha</label>
+                <div class="col-md-10">
+                    <p class="input-group">
+                        <input  id="fecha" name="fechal"  type="text" class="form-control" uib-datepicker-popup ng-model="currentBlog.fechaInicial" is-open="popup.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-default" ng-click="ctrl.open()"><i class="glyphicon glyphicon-calendar"></i></button>
+                        </span>
+                    </p>
                 </div>
             </div>
             <button type="button" ui-sref='blogsList'>Cancelar</button>
