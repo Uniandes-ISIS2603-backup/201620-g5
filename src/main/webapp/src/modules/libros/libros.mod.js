@@ -1,23 +1,35 @@
 (function (ng) {
-    var mod = ng.module("librosModule", ["ngMessages"]);
+    var mod = ng.module("librosModule", ["ngMessages", "ui.router"]);
     mod.constant("librosContext", "api/libros");
     mod.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
             var basePath = 'src/modules/libros/';
             $urlRouterProvider.otherwise("/librosList");
      
-            $stateProvider.state('librosList', {
-                url: '/libros',
-                views: {
+            $stateProvider.state('libros',{
+                url:'/libros',
+                abstract:true,
+                views:{
                     'mainView': {
+                        controller: 'librosCtrl',
+                        controllerAs: 'ctrl',
+                        templateUrl: basePath + 'libros.html'
+                    }
+                }
+            }).state('librosList', {
+                url: '/list',
+                parent:'libros',
+                views: {
+                    'libroView': {
                         controller: 'librosCtrl',
                         controllerAs: 'ctrl',
                         templateUrl: basePath + 'libros.list.html'
                     }
                 }
             }).state('libroCreate', {
-                url: '/libros/create',
+                url: '/create',
+                parent:'usarios',
                 views: {
-                    'mainView': {
+                    'libroView': {
                         controller: 'librosCtrl',
                         controllerAs: 'ctrl',
                         templateUrl: basePath + 'libros.create.html'
@@ -25,15 +37,19 @@
                 }
 
             }).state('libroEdit', {
-                url: '/libros/:libroId',
+                url: '/:libroId',
+                parent:'libros',
                 param: {
                     libroId: null
                 },
                 views: {
-                    'mainView': {
+                    'libroView': {
                         controller: 'librosCtrl',
                         controllerAs: 'ctrl',
                         templateUrl: basePath + 'libros.create.html'
+                    },
+                    'childsView': {
+                        templateUrl: basePath + 'libros.instance.html'
                     }
                 }
             });

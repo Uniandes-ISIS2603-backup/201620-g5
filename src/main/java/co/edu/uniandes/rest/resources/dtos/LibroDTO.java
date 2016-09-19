@@ -5,6 +5,8 @@
  */
 package co.edu.uniandes.rest.resources.dtos;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author s.rojas19
@@ -38,6 +40,7 @@ public class LibroDTO {
         this.titulo = titulo;
         this.numEjemplares = numEjemplares;
         this.online = esOnline;
+        
     }
 
     /**

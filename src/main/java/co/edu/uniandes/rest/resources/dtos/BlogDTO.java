@@ -13,34 +13,27 @@ import java.util.Date;
  */
 public class BlogDTO {
     
+    private String titulo;
     private String nombre;
-    
-    private Long isbn;
-    
+    private Long idLibro;
     private String texto;
-    
-    private Date fecha;
-    
     private String nombreAutor;
-    
-    private Long idAutor;
-    
     private Long idBlog;
+
     
     
     public BlogDTO()
     {}
     
     
-    public BlogDTO(String pNombre, Long pIsbn, String pTexto, Date pFecha, String pNombreAutor, Long pIdAutor, Long pIdBlog)
+    public BlogDTO(String pTitulo, String pNombre, Long pIdLibro, String pTexto, String pNombreAutor, Long pIdBlog)
     {
         super();
+        this.titulo= pTitulo;
         this.nombre = pNombre;
-        this.isbn = pIsbn;
+        this.idLibro = pIdLibro;
         this.texto = pTexto;
-        this.fecha = pFecha;
         this.nombreAutor = pNombreAutor;
-        this.idAutor = pIdAutor;
         this.idBlog = pIdBlog;
     
     }
@@ -53,12 +46,12 @@ public class BlogDTO {
         this.nombre = nombre;
     }
 
-    public Long getIsbn() {
-        return isbn;
+    public Long getIdLibro() {
+        return idLibro;
     }
 
-    public void setIsbn(Long isbn) {
-        this.isbn = isbn;
+    public void setIdLibro(Long idLibro) {
+        this.idLibro = idLibro;
     }
 
     public String getTexto() {
@@ -69,28 +62,12 @@ public class BlogDTO {
         this.texto = texto;
     }
 
-    public Date getFecha() {
-        return fecha;
-    }
-
-    public void setFecha(Date fecha) {
-        this.fecha = fecha;
-    }
-
     public String getNombreAutor() {
         return nombreAutor;
     }
 
     public void setNombreAutor(String nombreAutor) {
         this.nombreAutor = nombreAutor;
-    }
-
-    public Long getIdAutor() {
-        return idAutor;
-    }
-
-    public void setIdAutor(Long idAutor) {
-        this.idAutor = idAutor;
     }
 
     public Long getIdBlog() {
@@ -100,6 +77,12 @@ public class BlogDTO {
     public void setIdBlog(Long idBlog) {
         this.idBlog = idBlog;
     }
+    
+    public String getTitulo()
+    {
+        return titulo;
+    }
+    
 
     @Override
     public String toString() {
