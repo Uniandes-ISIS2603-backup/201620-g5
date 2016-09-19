@@ -82,7 +82,7 @@
             };
             
              this.deletePrestamo = function (prestamo) {
-                return $http.delete($scope.prestamosContext + "/" + prestamo.prestamoId)
+                return $http.delete(bibliotecasContext + "/" + $stateParams.bibliotecaId + $scope.prestamosContext + "/" + prestamo.prestamoId)
                     .then(function () {
                         // cuando termine bien, cambie de estado
                         $state.reload();

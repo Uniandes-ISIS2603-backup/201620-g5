@@ -22,7 +22,7 @@
         <tbody>
             <tr ng-repeat="prestamo in prestamos">
                 <td id="{{$index}}-id">{{prestamo.id}}</td>
-                <td id="{{$index}}-idUsuario">{{prestamo.idUsuario}}</td>
+                <td id="{{$index}}-usuario">{{prestamo.usuario.id}}</td>
                 <td id="{{$index}}-idBiblioteca">{{prestamo.idBiblioteca}}</td>
                 <td id="{{$index}}-tipoRecurso">{{prestamo.tipoRecurso}}</td>
                 <td id="{{$index}}-recurso">{{prestamo.recurso.name}}</td>

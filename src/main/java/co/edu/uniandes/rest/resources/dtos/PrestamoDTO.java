@@ -20,7 +20,7 @@ public class PrestamoDTO {
     
     
     private Long id;
-    private Long idUsuario;
+    private UsuarioDTO usuario;
     private Long idBiblioteca;
     private String tipoRecurso;
 
@@ -28,8 +28,8 @@ public class PrestamoDTO {
     private RecursoDTO recurso;
     private double costo;
     private String medioPago;
-    private Date fechaInicial;
-    private Date fechaFinal;
+    private String fechaInicial;
+    private String fechaFinal;
     private boolean estaActivo;
 
     /**
@@ -38,10 +38,10 @@ public class PrestamoDTO {
     public PrestamoDTO() {
     }
 
-    public PrestamoDTO(Long id, Long idUsuario, Long idBiblioteca,String tipoRecurso, RecursoDTO recurso, double costo, String medioPago, Date fechaInicial, Date fechaFinal, boolean estaActivo) {
+    public PrestamoDTO(Long id, UsuarioDTO usuario, Long idBiblioteca,String tipoRecurso, RecursoDTO recurso, double costo, String medioPago, String fechaInicial, String fechaFinal, boolean estaActivo) {
         super();
         this.id = id;
-        this.idUsuario = idUsuario;
+        this.usuario = usuario;
         this.idBiblioteca = idBiblioteca;
         this.tipoRecurso = tipoRecurso;
         this.recurso = recurso;
@@ -69,15 +69,15 @@ public class PrestamoDTO {
     /**
      * @return the idUsuario
      */
-    public Long getIdUsuario() {
-        return idUsuario;
+    public UsuarioDTO getUsuario() {
+        return usuario;
     }
 
     /**
-     * @param idUsuario the idUsuario to set
+     * @param usuario the idUsuario to set
      */
-    public void setIdUsuario(Long idUsuario) {
-        this.idUsuario = idUsuario;
+    public void setUsuario(UsuarioDTO usuario) {
+        this.usuario = usuario;
     }
 
     /**
@@ -145,28 +145,28 @@ public void setTipoRecurso(String tipoRecurso) {
     /**
      * @return the fechaInicial
      */
-    public Date getFechaInicial() {
+    public String getFechaInicial() {
         return fechaInicial;
     }
 
     /**
      * @param fechaInicial the fechaInicial to set
      */
-    public void setFechaInicial(Date fechaInicial) {
+    public void setFechaInicial(String fechaInicial) {
         this.fechaInicial = fechaInicial;
     }
 
     /**
      * @return the fechaFinal
      */
-    public Date getFechaFinal() {
+    public String getFechaFinal() {
         return fechaFinal;
     }
 
     /**
      * @param fechaFinal the fechaFinal to set
      */
-    public void setFechaFinal(Date fechaFinal) {
+    public void setFechaFinal(String fechaFinal) {
         this.fechaFinal = fechaFinal;
     }
 
@@ -189,6 +189,6 @@ public void setTipoRecurso(String tipoRecurso) {
      */
     @Override
     public String toString() {
-    	return "{ id : " + getId() + ", idUsuario : \"" + getIdUsuario()+ ", idBiblioteca : \"" + getIdBiblioteca() + ", idRecurso : \"" + getRecurso() + ", costo : \"" + getCosto() + ", medioPago : \"" + getMedioPago() + ", fechaInicial : \"" + getFechaInicial() + ", fechaFinal : \"" + getFechaFinal()  + ", estaActivo : \"" + isEstaActivo() + "\" }" ;  
+    	return "{ id : " + getId() + ", idUsuario : \"" + getUsuario()+ ", idBiblioteca : \"" + getIdBiblioteca() + ", idRecurso : \"" + getRecurso() + ", costo : \"" + getCosto() + ", medioPago : \"" + getMedioPago() + ", fechaInicial : \"" + getFechaInicial() + ", fechaFinal : \"" + getFechaFinal()  + ", estaActivo : \"" + isEstaActivo() + "\" }" ;  
     }
 }

@@ -91,7 +91,7 @@ public class PrestamoResource {
     }
     @GET
     @Path("bibliotecas/{idBiblioteca: \\d+}/prestamos/{id: \\d+}")
-    public PrestamoDTO getPrestamoDeBiblioteca(@PathParam("id") int id, @PathParam("idBiblioteca") Long idBiblioteca) throws BiblioLogicException, ParseException {
+    public PrestamoDTO getPrestamoDeBiblioteca(@PathParam("id") Long id, @PathParam("idBiblioteca") Long idBiblioteca) throws BiblioLogicException, ParseException {
         return prestamoLogic.getPrestamoDeBiblioteca(id, idBiblioteca);
     }
     
@@ -100,6 +100,13 @@ public class PrestamoResource {
     public PrestamoDTO createPrestamoBiblioteca(PrestamoDTO prestamo, @PathParam("idBiblioteca") Long idBiblioteca) throws ParseException, BiblioLogicException {
         return prestamoLogic.createPrestamoBiblioteca(prestamo, idBiblioteca);
     }
+    
+     @DELETE
+    @Path("bibliotecas/{idBiblioteca: \\d+}/prestamos/{id: \\d+}")
+    public PrestamoDTO deletePrestamoBiblioteca(@PathParam("id") Long id, @PathParam("idBiblioteca") Long idBiblioteca) throws ParseException, BiblioLogicException {
+        return prestamoLogic.deletePrestamoDeBiblioteca(id, idBiblioteca);
+    }
+
 
    
     

@@ -11,9 +11,9 @@
             <input id="id" class="form-control" type="hidden" ng-model="currentPrestamo.id"/>
             <!-- idUsuario -->
             <div class="form-group col-md-6" ng-class="{'has-success': form.name.$valid && form.name.$dirty, 'has-error': form.name.$invalid && (form.name.$dirty || form.$submitted)}" >
-                <label for="idUsuario" class="col-md-4 control-label">Id Usuario</label>
+                <label for="usuario" class="col-md-4 control-label">Usuario</label>
                 <div class="col-md-10">
-                    <select id="idUsuario" name="idUsuario" ng-options="rc.id as rc.id for rc in usuarios track by rc.id" class="form-control" type="number" ng-model="currentPrestamo.idUsuario" ></select>
+                    <select id="usuario" name="usuario" ng-options="rc.id for rc in usuarios track by rc.id" class="form-control" type="text" ng-model="currentPrestamo.usuario" ></select>
                 </div>
             <!-- tipoRecurso -->
                 <label for="tipoRecurso" class="col-md-4 control-label">Tipo de Recurso</label>
