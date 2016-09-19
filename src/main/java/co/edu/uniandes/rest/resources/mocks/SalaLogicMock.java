@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.logging.Level;
+
+
 import java.util.logging.Logger;
 
 import co.edu.uniandes.rest.resources.dtos.SalaDTO;
@@ -31,7 +33,7 @@ public class SalaLogicMock {
     /**
      * Constructor. Crea los datos de ejemplo.
      */
-    public SalaLogicMock() throws BibliotecaLogicException {
+    public SalaLogicMock() {
         if (salas == null) {
             salas = new ArrayList<>();
             salas.add(new SalaDTO(1L, 1L, "Sala 1", 6));
@@ -114,7 +116,7 @@ public class SalaLogicMock {
      * suministrado
      * @return sala agregada
      */
-    public SalaDTO createSala(SalaDTO newSala, long idBiblioteca) throws BibliotecaLogicException {
+    public SalaDTO createSalaBiblioteca(SalaDTO newSala, long idBiblioteca) throws BibliotecaLogicException {
         BiblioLogicMock biblioLogic = new BiblioLogicMock();
         BiblioDTO biblioteca = biblioLogic.getCity(idBiblioteca);
         logger.info("recibiendo solicitud de agregar sala " + newSala);
@@ -173,6 +175,44 @@ public class SalaLogicMock {
         recursos.add(r);
         return newSala;
     }
+    
+    public SalaDTO createSala(SalaDTO newSala) throws BibliotecaLogicException {
+        logger.info("recibiendo solicitud de agregar sala " + newSala);
+        
+        // la nueva sala tiene id ?
+        if (newSala.getId() != null) {
+            // busca la sala con el id suministrado segun el id de Biblioteca
+            for (SalaDTO sala : salas) {
+                // si existe una sala con ese id
+                if (Objects.equals(sala.getId(), newSala.getId())) {
+                    logger.severe("Ya existe una sala con ese id");
+                    throw new BibliotecaLogicException("Ya existe una sala con ese id");
+                }
+            }
+
+            // la nueva sala no tiene id ? 
+        }
+       else
+        {
+        
+            // genera un id para la sala
+            logger.info("Generando id para la nueva sala");
+            logger.info("Generando idBiblioteca para la nueva sala");
+            logger.info("Generando idRecurso para la nueva sala");
+            long newId = newSala.getId();
+            for (SalaDTO sala : salas) {
+                if (newId <= sala.getId()) {
+                    newId = sala.getId() + 1;
+                }
+            }
+            newSala.setId(newId);
+        }
+
+        // agrega la sala 
+        salas.add(newSala);
+        return newSala;
+    }
+
 
     public SalaDTO getSalaDeBiblioteca(long id, long idBiblioteca) throws BibliotecaLogicException {
         SalaDTO s = null;
@@ -189,7 +229,24 @@ public class SalaLogicMock {
         }
         return s;
     }
-
+    
+    public SalaDTO getSala(Long id) throws BibliotecaLogicException {
+        SalaDTO s = null;
+        List<SalaDTO> salasBiblioteca = getAllSalas();
+        for (int i = 0; i < salasBiblioteca.size() && s == null; i++) {
+            SalaDTO sala = salasBiblioteca.get(i);
+            if (sala.getId() == id) {
+                s = sala;
+            }
+        }
+        if (s == null) {
+            logger.severe("No existe una sala con ese id");
+            throw new BibliotecaLogicException("No existe una sala con ese id");
+        }
+        return s;
+    }
+    
+    
     public SalaDTO updateSalaDeBiblioteca(long id, SalaDTO s, long idBiblioteca) throws BibliotecaLogicException {
         SalaDTO sala = getSalaDeBiblioteca(id, idBiblioteca);
         if (sala != null) {
@@ -201,6 +258,33 @@ public class SalaLogicMock {
             throw new BibliotecaLogicException("No existe una sala con ese id");
         }
     }
+    
+     public SalaDTO updateSala(Long idSala, SalaDTO newSala) throws BibliotecaLogicException
+    {
+    	logger.info("recibiendo solicitud de actualizar video " + idSala);
+    	
+	    	// busca el video con el id suministrado
+	        for (SalaDTO sala : salas) 
+                {
+	        	// si existe un video con ese id
+	            if (Objects.equals(sala.getId(), idSala)){
+                         // actualiza el video
+                        logger.info("actualizando video " + idSala );
+	            	sala.setName(newSala.getName());
+                        sala.setId(newSala.getId());
+                        sala.setCapacidad(newSala.getCapacidad());
+                        sala.setIdBiblioteca(newSala.getIdBiblioteca());
+                        
+                        return newSala;
+	            }
+	        }
+	        
+               
+                 logger.severe("No existe un video con ese id");
+	         throw new BibliotecaLogicException("No existe un video con ese id");
+
+    }
+    		
 
     public void deleteSalaDeBiblioteca(long id, long idBiblioteca) throws BibliotecaLogicException, BibliotecaLogicException {
         logger.info("recibiendo solicitud de eliminar sala " + id);
@@ -217,4 +301,34 @@ public class SalaLogicMock {
             throw new BibliotecaLogicException("No existe una sala con ese id");
         }
     }
+    
+     public SalaDTO deleteSala(Long id) throws BibliotecaLogicException 
+    {
+    	logger.info("recibiendo solicitud de eliminar sala " + id);
+    	
+    	// el video tiene id ?
+       
+	    	// busca el video con el id suministrado
+	        for (SalaDTO sala : salas) 
+                {
+	        	// si existe un video con ese id
+	            if (Objects.equals(sala.getId(), id))
+                    {
+                         // elimina la ciudad
+                        logger.info("eliminando video " + id);
+                        salas.remove(sala);
+                        return sala;
+	            }
+	        }
+               
+        logger.severe("No existe un video con ese id");
+	throw new BibliotecaLogicException("No existe un video con ese id");
+  
+                    
+	        
+	
+    	 
+       
+    }
+   
 }

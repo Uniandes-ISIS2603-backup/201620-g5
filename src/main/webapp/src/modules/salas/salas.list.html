@@ -5,6 +5,9 @@
             <tr>
                 <th>Id</th>
                 <th>Nombre</th>
+                <th>Id Biblioteca</th>
+                <th>Capacidad</th>
+
                 <th>Acciones</th>
             </tr>
         </thead>
@@ -12,6 +15,10 @@
             <tr ng-repeat="sala in salas">
                 <td id="{{$index}}-id">{{sala.id}}</td>
                 <td id="{{$index}}-name">{{sala.name}}</td>
+                <td id="{{$index}}-idBiblioteca">{{sala.idBiblioteca}}</td>
+                <td id="{{$index}}-capacidad">{{sala.capacidad}}</td>
+                
+
                 
                 <td>
                     <button id="{{$index}}-edit-btn" class="btn btn-default btn-sm" data-ui-sref="salaEdit({salaId: sala.id})"><span class="glyphicon glyphicon-edit"></span> Editar</button>

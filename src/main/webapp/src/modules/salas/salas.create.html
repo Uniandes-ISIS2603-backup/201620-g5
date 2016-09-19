@@ -8,22 +8,22 @@
         </div>
    
         <fieldset>
-            <input id="id" class="form-control" type="hidden" ng-model="currentBiblioteca.id"/>
+            <input id="id" class="form-control" type="hidden" ng-model="currentSala.id"/>
             <div class="form-group col-md-12" ng-class="{'has-success': form.name.$valid && form.name.$dirty, 'has-error': form.name.$invalid && (form.name.$dirty || form.$submitted)}" >
                 <label for="name" class="col-md-2 control-label">Nombre</label>
                 <div class="col-md-10">
-                    <input id="name" name="name" class="form-control" type="text" ng-model="currentBiblioteca.name" ng-init="currentBiblioteca.name" required />
+                    <input id="name" name="name" class="form-control" type="text" ng-model="currentSala.name" ng-init="currentSala.name" required />
                 </div>
-                <label for="idAdmin" class="col-md-2 control-label">IdAdmin</label>
+                <label for="idBiblioteca" class="col-md-2 control-label">Id Biblioteca</label>
                 <div class="col-md-10">
-                    <input id="idAdmin" name="idAdmin" class="form-control" type="number" ng-model="currentBiblioteca.idAdmin" ng-init="currentBiblioteca.idAdmin" required />
+                    <input id="idBiblioteca" name="idBiblioteca" class="form-control" type="number" ng-model="currentSala.idBiblioteca" ng-init="currentSala.idBiblioteca" required />
                 </div>
-                <label for="zona" class="col-md-2 control-label">Zona</label>
+                <label for="capacidad" class="col-md-2 control-label">Capacidad</label>
                 <div class="col-md-10">
-                    <input id="zona" name="zona" class="form-control" type="text" ng-model="currentBiblioteca.zona" ng-init="currentBiblioteca.zona" required />
+                    <input id="capacidad" name="capacidad" class="form-control" type="number" ng-model="currentSala.capacidad" ng-init="currentSala.capacidad" required />
                 </div>
             </div>
-            <button type="button" ui-sref='bibliotecasList'>Cancelar</button>
+            <button type="button" ui-sref='salasList'>Cancelar</button>
             <button type="submit" >Guardar</button>    
         </fieldset>
     </form>

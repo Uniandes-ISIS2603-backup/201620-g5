@@ -6,7 +6,6 @@
 package co.edu.uniandes.rest.resources.dtos;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 /**
@@ -27,9 +26,7 @@ public class UsuarioDTO {
     
     private String direccion;
     
-    private ArrayList prestamos;
     
-    private ArrayList reservas;
     
     public UsuarioDTO()
     {
@@ -43,9 +40,7 @@ public class UsuarioDTO {
         this.login = pLogin;
         this.id = pId;
         this.contrasenha = pContrasenha;
-        this.direccion = pDireccion;
-        this.prestamos = new ArrayList();
-        this.reservas = new ArrayList();
+        this.direccion = pDireccion;       
     }
 
     public String getNombre() {
@@ -96,21 +91,7 @@ public class UsuarioDTO {
         this.direccion = direccion;
     }
 
-    public ArrayList getPrestamos() {
-        return prestamos;
-    }
-
-    public void setPrestamos(ArrayList prestamos) {
-        this.prestamos = prestamos;
-    }
-
-    public ArrayList getReservas() {
-        return reservas;
-    }
-
-    public void setReservas(ArrayList reservas) {
-        this.reservas = reservas;
-    }
+    
 
     
 

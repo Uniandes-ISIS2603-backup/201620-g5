@@ -26,10 +26,10 @@ public class PrestamoDTO {
 
     
     private RecursoDTO recurso;
-    private double costo;
+    private Double costo;
     private String medioPago;
-    private String fechaInicial;
-    private String fechaFinal;
+    private Date fechaInicial;
+    private Date fechaFinal;
     private boolean estaActivo;
 
     /**
@@ -38,7 +38,7 @@ public class PrestamoDTO {
     public PrestamoDTO() {
     }
 
-    public PrestamoDTO(Long id, UsuarioDTO usuario, Long idBiblioteca,String tipoRecurso, RecursoDTO recurso, double costo, String medioPago, String fechaInicial, String fechaFinal, boolean estaActivo) {
+    public PrestamoDTO(Long id, UsuarioDTO usuario, Long idBiblioteca,String tipoRecurso, RecursoDTO recurso, Double costo, String medioPago, Date fechaInicial, Date fechaFinal, boolean estaActivo) {
         super();
         this.id = id;
         this.usuario = usuario;
@@ -117,14 +117,14 @@ public void setTipoRecurso(String tipoRecurso) {
     /**
      * @return the costo
      */
-    public double getCosto() {
+    public Double getCosto() {
         return costo;
     }
 
     /**
      * @param costo the costo to set
      */
-    public void setCosto(double costo) {
+    public void setCosto(Double costo) {
         this.costo = costo;
     }
 
@@ -145,28 +145,28 @@ public void setTipoRecurso(String tipoRecurso) {
     /**
      * @return the fechaInicial
      */
-    public String getFechaInicial() {
+    public Date getFechaInicial() {
         return fechaInicial;
     }
 
     /**
      * @param fechaInicial the fechaInicial to set
      */
-    public void setFechaInicial(String fechaInicial) {
+    public void setFechaInicial(Date fechaInicial) {
         this.fechaInicial = fechaInicial;
     }
 
     /**
      * @return the fechaFinal
      */
-    public String getFechaFinal() {
+    public Date getFechaFinal() {
         return fechaFinal;
     }
 
     /**
      * @param fechaFinal the fechaFinal to set
      */
-    public void setFechaFinal(String fechaFinal) {
+    public void setFechaFinal(Date fechaFinal) {
         this.fechaFinal = fechaFinal;
     }
 
