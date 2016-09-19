@@ -1,30 +1,58 @@
-
-<div class="col-md-6 well">
+    <div class="col-md-6 well">
     <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="ctrl.closeAlert($index)" dismiss-on-timeout="5000">{{alert.msg}} </alert>
-    <form novalidate name="form" id="sala-form" role="form" ng-submit="form.$valid && ctrl.saveSala(currentSala.id)">
+    <form novalidate name="form" id="video-form" role="form" ng-submit="form.$valid && ctrl.saveVideo(currentVideo.id)">
         
         <div ng-messages="form.$error">
-            <div ng-message="required">Llene los espacios especificados:</div>
+            <div ng-message="required">Fill the required fields!</div>
         </div>
    
         <fieldset>
-            <input id="id" class="form-control" type="hidden" ng-model="currentSala.id"/>
-            <div class="form-group col-md-12" ng-class="{'has-success': form.name.$valid && form.name.$dirty, 'has-error': form.name.$invalid && (form.name.$dirty || form.$submitted)}" >
-                <label for="name" class="col-md-2 control-label">Nombre</label>
-                <div class="col-md-10">
-                    <input id="name" name="name" class="form-control" type="text" ng-model="currentSala.name" ng-init="currentSala.name" required />
+            <input id="id" class="form-control" type="hidden" ng-model="currentVideo.id"/>
+            <div class="form-group col-md-12" ng-class="{'has-success': form.titulo.$valid && form.titulo.$dirty, 'has-error': form.titulo.$invalid && (form.titulo.$dirty || form.$submitted)}" >
+                <label for="name" class="col-md-3 control-label">Titulo</label>
+                <div class="col-md-9">
+                    <input id="titulo" name="name" class="form-control" type="text" ng-model="currentVideo.name" ng-init="currentVideo.name" required />
                 </div>
-                <label for="idBiblioteca" class="col-md-2 control-label">Id Biblioteca</label>
-                <div class="col-md-10">
-                    <input id="idBiblioteca" name="idBiblioteca" class="form-control" type="number" ng-model="currentSala.idBiblioteca" ng-init="currentSala.idBiblioteca" required />
+               
+                <label for="numEjemplares" class="col-md-3 control-label">#Ejemplares</label>
+                <div class="col-md-9">
+                    <input id="numEjemplares" name="numEjemplares" class="form-control" type="number" ng-model="currentVideo.numEjemplares" ng-init="currentVideo.numEjemplares" required />
                 </div>
-                <label for="capacidad" class="col-md-2 control-label">Capacidad</label>
-                <div class="col-md-10">
-                    <input id="capacidad" name="capacidad" class="form-control" type="number" ng-model="currentSala.capacidad" ng-init="currentSala.capacidad" required />
+                
+                <label for="director" class="col-md-3 control-label">Director</label>
+                <div class="col-md-9">
+                    <input id="director" name="director" class="form-control" type="text" ng-model="currentVideo.director" ng-init="currentVideo.director" required />
                 </div>
+                
+                <label for="genero" class="col-md-3 control-label">Genero</label>
+                <div class="col-md-9">
+                    <input id="genero" name="genero" class="form-control" type="text" ng-model="currentVideo.genero" ng-init="currentVideo.genero" required />
+                </div>
+                
+               <label for="anioPublicacion" class="col-md-3 control-label">Año publicación</label>
+                <div class="col-md-9">
+                    <input id="anioPublicacion" name="anioPublicacion" class="form-control" type="number" ng-model="currentVideo.anioPublicacion" ng-init="currentVideo.anioPublicacion" required />
+                </div>
+                
+                <label for="sinopsis" class="col-md-3 control-label">Sinopsis</label>
+                <div class="col-md-9">
+                    <input id="sinopsis" name="sinopsis" class="form-control" type="text" ng-model="currentVideo.sinopsis" ng-init="currentVideo.sinopsis" required />
+                </div>
+                
+                <label for="duracion" class="col-md-3 control-label">Duración</label>
+                <div class="col-md-9">
+                    <input id="duracion" name="duracion" class="form-control" type="number" ng-model="currentVideo.duracion" ng-init="currentVideo.duracion" required />
+                </div>
+                
+                
+                <label for="esOnline" class="col-md-3 control-label">¿Online?</label>
+                <div class="col-md-9">
+                    <input id="esOnline" name="esOnline" class="form-control" type="checkbox" ng-model="currentVideo.esOnline" ng-init="currentVideo.esOnline" novalidate />
+                </div>
+                
             </div>
-            <button type="button" ui-sref='salasList'>Cancelar</button>
-            <button type="submit" >Guardar</button>    
+            <button type="button" data-ui-sref='videosList'>Cancelar</button>
+            <button type="submit" >Agregar</button>    
         </fieldset>
     </form>
 </div>

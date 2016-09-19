@@ -1,39 +1,39 @@
 (function (ng) {
-    var mod = ng.module("salasModule", ["ngMessages"]);
-    mod.constant("salasContext", "api/salas");
+    var mod = ng.module("videosModule", ["ngMessages","ui.router"]);
+    mod.constant("videosContext", "api/videos");
     mod.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
-            var basePath = 'src/modules/salas/';
-            $urlRouterProvider.otherwise("/salasList");
+            var basePath = 'src/modules/videos/';
+            $urlRouterProvider.otherwise("/videosList");
      
-            $stateProvider.state('salasList', {
-                url: '/salas',
+            $stateProvider.state('videosList', {
+                url: '/videos',
                 views: {
                     'mainView': {
-                        controller: 'salasCtrl',
+                        controller: 'videosCtrl',
                         controllerAs: 'ctrl',
-                        templateUrl: basePath + 'salas.list.html'
+                        templateUrl: basePath + 'videos.list.html'
                     }
                 }
-            }).state('salaCreate', {
-                url: '/salas/create',
+            }).state('videoCreate', {
+                url: '/videos/create',
                 views: {
                     'mainView': {
-                        controller: 'salasCtrl',
+                        controller: 'videosCtrl',
                         controllerAs: 'ctrl',
-                        templateUrl: basePath + 'salas.create.html'
+                        templateUrl: basePath + 'videos.create.html'
                     }
                 }
 
-            }).state('salaEdit', {
-                url: '/salas/:salaId',
+            }).state('videoEdit', {
+                url: '/videos/:videoId',
                 param: {
-                    salaId: null
+                    videoId: null
                 },
                 views: {
                     'mainView': {
-                        controller: 'salasCtrl',
+                        controller: 'videosCtrl',
                         controllerAs: 'ctrl',
-                        templateUrl: basePath + 'salas.create.html'
+                        templateUrl: basePath + 'videos.create.html'
                     }
                 }
             });

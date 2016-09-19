@@ -1,62 +1,77 @@
 (function (ng) {
-    var mod = ng.module("salasModule");
+    var mod = ng.module("videosModule");
 
-    mod.controller("salasCtrl", ['$scope', '$state', '$stateParams', '$http', 'salasContext', function ($scope, $state, $stateParams, $http, context) {
+    mod.controller("videosCtrl", ['$scope', '$state', '$stateParams', '$http', 'videosContext', function ($scope, $state, $stateParams, $http, context) {
 
-
-            $scope.salas = {};
+            $scope.videos = {};
             $http.get(context).then(function(response){
-                $scope.salas = response.data;    
+                $scope.videos = response.data;    
             }, responseError);
 
-            if ($stateParams.salaId !== null && $stateParams.salaId !== undefined) {
+            // el controlador recibió un videoId ??
+            // revisa los parámetros (ver el :videoId en la definición de la ruta)
+            if ($stateParams.videoId !== null && $stateParams.videoId !== undefined) {
                 
-
-                id = $stateParams.salaId;
+                // toma el id del parámetro
+                id = $stateParams.videoId;
+                // obtiene el dato del recurso REST
                 $http.get(context + "/" + id)
                     .then(function (response) {
-                        $scope.currentSala = response.data;
+                        // $http.get es una promesa
+                        // cuando llegue el dato, actualice currentRecord
+                        $scope.currentVideo = response.data;
                     }, responseError);
 
+            // el controlador no recibió un videoId
             } else
             {
-
-                $scope.currentSala = {
-                    id: undefined,
-                    nombre: '',
-                    
+                // el registro actual debe estar vacio
+                $scope.currentVideo = {
+                    id: undefined /*Tipo Long. El valor se asigna en el backend*/,
+                    name: '' /*Tipo String*/,
                 };
               
                 $scope.alerts = [];
             }
 
 
-            this.saveSala = function (id) {
-                currentSala = $scope.currentSala;
+            this.saveVideo = function (id) {
+                currentVideo = $scope.currentVideo;
                 
-                
+                // si el id es null, es un registro nuevo, entonces lo crea
                 if (id == null) {
 
-                    return $http.post(context, currentSala)
+                    // ejecuta POST en el recurso REST
+                    return $http.post(context, currentVideo)
                         .then(function () {
-                            $state.go('salasList');
+                            // $http.post es una promesa
+                            // cuando termine bien, cambie de estado
+                            $state.go('videosList');
                         }, responseError);
                         
+                // si el id no es null, es un registro existente entonces lo actualiza
                 } else {
                     
-                    return $http.put(context + "/" + currentSala.id, currentSala)
+                    // ejecuta PUT en el recurso REST
+                    return $http.put(context + "/" + currentVideo.id, currentVideo)
                         .then(function () {
-                            $state.go('salasList');
+                            // $http.put es una promesa
+                            // cuando termine bien, cambie de estado
+                            $state.go('videosList');
                         }, responseError);
                 };
             };
             
-            this.deleteSala = function(sala) {
-                return $http.delete(context + "/" + sala.salaId)
+            this.deleteVideo = function( video) {
+                return $http.delete(context + "/" + video.videoId)
                     .then(function () {
+                        // cuando termine bien, cambie de estado
                         $state.reload();
                     }, responseError);
             };
+
+            // -----------------------------------------------------------------
+            // Funciones para manejra los mensajes en la aplicación
 
 
             //Alertas
@@ -90,3 +105,4 @@
         }]);
 
 })(window.angular);
+
