@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public class LibroDTO extends RecursoDTO {
 
     private Long isbn;
-    private long numEjemplares;
+    private Long numEjemplares;
     private boolean online;
 
     /**
@@ -32,7 +32,7 @@ public class LibroDTO extends RecursoDTO {
      * @param numEjemplares cantidad de ejemplares disponibles
      * @param esOnline define si el libro es disponible digitalmente
      */
-    public LibroDTO(Long id, Long isbn, String titulo, Long numEjemplares, boolean esOnline) {
+    public LibroDTO( Long id, Long isbn, String titulo, Long numEjemplares, boolean esOnline) {
         super(id, titulo);
         this.isbn = isbn;
         this.numEjemplares = numEjemplares;
@@ -41,7 +41,6 @@ public class LibroDTO extends RecursoDTO {
     }
 
     
-
     /**
      * Devuelve el codigo isbn del libro
      *

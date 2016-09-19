@@ -12,7 +12,7 @@
             <div class="form-group col-md-12" ng-class="{'has-success': form.titulo.$valid && form.titulo.$dirty, 'has-error': form.titulo.$invalid && (form.titulo.$dirty || form.$submitted)}" >
                 <label for="name" class="col-md-2 control-label">Titulo</label>
                 <div class="col-md-10">
-                    <input id="name" name="name" class="form-control" type="text" ng-model="currentLibro.name" ng-init="currentLibro.name" required />
+                    <input id="titulo" name="name" class="form-control" type="text" ng-model="currentLibro.name" ng-init="currentLibro.name" required />
                 </div>
                 <label for="isbn" class="col-md-2 control-label">ISBN</label>
                 <div class="col-md-10">
