@@ -10,10 +10,10 @@ package co.edu.uniandes.rest.resources.dtos;
  * @author sf.munera10
  */
 public class RecursoDTO {
-    private Long id;
-    private String name;
-    private boolean estaReservado;
-    private boolean estaPrestado;
+    protected Long id;
+    protected String name;
+    protected boolean estaReservado;
+    protected boolean estaPrestado;
 
     /**
      * Constructor por defecto

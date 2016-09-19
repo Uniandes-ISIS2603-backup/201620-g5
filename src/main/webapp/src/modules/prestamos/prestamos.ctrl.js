@@ -1,8 +1,8 @@
 (function (ng) {
     var mod = ng.module("usuariosModule");
 
-    mod.controller("prestamosCtrl", ['$scope', '$state', '$stateParams', '$http','usuariosContext',  
-        function ($scope, $state, $stateParams, $http, usuariosContext ) {
+    mod.controller("prestamosCtrl", ['$scope', '$state', '$stateParams', '$http','usuariosContext','videosContext','librosContext','salasContext',  
+        function ($scope, $state, $stateParams, $http, usuariosContext, videosContext, librosContext, salasContext ) {
 
             // inicialmente el listado de prestamos
             //  está vacio
@@ -39,8 +39,15 @@
 
                 $scope.alerts = [];
             }
-
-           
+            $http.get(videosContext).then(function (response) {
+                $scope.videos = response.data;
+            });
+            $http.get(librosContext).then(function (response) {
+                $scope.libros = response.data;
+            });
+            $http.get(salasContext).then(function (response) {
+                $scope.salas = response.data;
+            });
             
             this.savePrestamo = function (id) {
                 currentPrestamo = $scope.currentPrestamo;
@@ -80,14 +87,26 @@
             
 
 
-            // -----------------------------------------------------------------
+           // -----------------------------------------------------------------
             // Funciones para manejar las fechas
 
             $scope.popup = {
                 opened: false
             };
+             $scope.popup2 = {
+                opened: false
+            };
+           
             $scope.dateOptions = {
-                dateDisabled: disabled,
+                dateDisabled: false,
+                formatYear: 'yy',
+                maxDate: new Date(2020,5,22),
+                minDate: new Date(),
+                startingDay: 1
+            };
+
+             $scope.dateOptions2 = {
+                dateDisabled: false,
                 formatYear: 'yy',
                 maxDate: new Date(2020, 5, 22),
                 minDate: new Date(),
@@ -106,15 +125,26 @@
                 $scope.dt = new Date(year, month, day);
             };
 
-            this.open = function () {
+            this.open = function (fechaFinal) {
+                
                 $scope.popup.opened = true;
+                if(fechaFinal != null)
+                {
+                    $scope.dateOptions.maxDate = fechaFinal;
+                }
+                
+            };
+            
+             this.open2 = function (fechaInicial) {
+                $scope.popup2.opened = true;
+                if(fechaInicial != null)
+                {
+                    $scope.dateOptions2.minDate = fechaInicial;
+                }
+                
             };
 
-            function disabled(data) {
-                var date = data.date,
-                        mode = data.mode;
-                return mode === 'day' && (date.getDay() === 0 || date.getDay() === 6);
-            }
+
 
 
             // Funciones para manejar los mensajes en la aplicación

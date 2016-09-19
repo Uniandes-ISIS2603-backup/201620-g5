@@ -38,25 +38,25 @@ public class PrestamoLogicMock {
         if (prestamos == null) {
             try {
                 prestamos = new ArrayList<>();
-                SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy");
-                String fecha1 = "30-Nov-1996";
-                String fecha2 = "30-Nov-1997";
-                String fecha3 = "30-Nov-1998";
-                String fecha4 = "30-Nov-1999";
-                String fecha5 = "30-Nov-2000";
-                String fecha6 = "30-Nov-2001";
-                String fecha7 = "30-Nov-2002";
-                String fecha8 = "30-Nov-2003";
-                String fecha9 = "30-Nov-2004";
-                String fecha10 = "30-Nov-2005";
-                String fecha11 = "30-Nov-2006";
-                String fecha12 = "30-Nov-2007";
-                prestamos.add(new PrestamoDTO(1L, 1L,1L,PrestamoDTO.LIBRO,  1L, 3000, "Efectivo", formatter.parse(fecha1), formatter.parse(fecha2), true));
-                prestamos.add(new PrestamoDTO(2L, 2L, 2L,PrestamoDTO.VIDEO, 2L, 3000, "Tarjeta Credito", formatter.parse(fecha3), formatter.parse(fecha4), true));
-                prestamos.add(new PrestamoDTO(3L, 3L, 3L,PrestamoDTO.SALA,  3L, 3000, "Efectivo", formatter.parse(fecha5), formatter.parse(fecha6), true));
-                prestamos.add(new PrestamoDTO(4L, 1L, 1L,PrestamoDTO.VIDEO,  1L, 3000, "Efectivo", formatter.parse(fecha7), formatter.parse(fecha8), true));
-                prestamos.add(new PrestamoDTO(5L, 2L, 2L,PrestamoDTO.SALA,  2L, 3000, "Tarjeta Credito", formatter.parse(fecha9), formatter.parse(fecha10), true));
-                prestamos.add(new PrestamoDTO(6L, 3L, 3L,PrestamoDTO.LIBRO, 3L, 3000, "Efectivo", formatter.parse(fecha11), formatter.parse(fecha12), true));
+                SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+                String fecha1 = "1996-09-30";
+                String fecha2 = "1997-09-30";
+                String fecha3 = "1998-09-30";
+                String fecha4 = "1999-09-30";
+                String fecha5 = "2000-09-30";
+                String fecha6 = "2001-09-30";
+                String fecha7 = "2002-09-30";
+                String fecha8 = "2003-09-30";
+                String fecha9 = "2004-09-30";
+                String fecha10 = "2005-09-30";
+                String fecha11 = "2006-09-30";
+                String fecha12 = "2007-09-30";
+                prestamos.add(new PrestamoDTO(1L, 1L,1L,PrestamoDTO.LIBRO,  "Moby Dick", 3000, "Efectivo", formatter.parse(fecha1), formatter.parse(fecha2), true));
+                prestamos.add(new PrestamoDTO(2L, 2L, 2L,PrestamoDTO.VIDEO, "The Revenant", 3000, "Tarjeta Credito", formatter.parse(fecha3), formatter.parse(fecha4), true));
+                prestamos.add(new PrestamoDTO(3L, 3L, 3L,PrestamoDTO.SALA,  "Sala 1", 3000, "Efectivo", formatter.parse(fecha5), formatter.parse(fecha6), true));
+                prestamos.add(new PrestamoDTO(4L, 1L, 1L,PrestamoDTO.VIDEO,  "The Wolf of Wall Street", 3000, "Efectivo", formatter.parse(fecha7), formatter.parse(fecha8), true));
+                prestamos.add(new PrestamoDTO(5L, 2L, 2L,PrestamoDTO.SALA,  "Sala 2", 3000, "Tarjeta Credito", formatter.parse(fecha9), formatter.parse(fecha10), true));
+                prestamos.add(new PrestamoDTO(6L, 3L, 3L,PrestamoDTO.LIBRO, "The Great Gatsby", 3000, "Efectivo", formatter.parse(fecha11), formatter.parse(fecha12), true));
                 
                 
             } catch (ParseException ex) {
@@ -187,7 +187,7 @@ public class PrestamoLogicMock {
             prestamo.setMedioPago(m.getMedioPago());
             prestamo.setId(id);
             prestamo.setIdBiblioteca(m.getIdBiblioteca());
-            prestamo.setIdRecurso(m.getIdRecurso());
+            prestamo.setNombreRecurso(m.getNombreRecurso());
             prestamo.setIdUsuario(idUsuario);
             return prestamo;
         } else {
@@ -196,7 +196,7 @@ public class PrestamoLogicMock {
         }
     }
 
-    public PrestamoDTO regresarLibro(long idRecurso, long idUsuario, String fechaEntrega) throws BiblioLogicException, ParseException {
+    public PrestamoDTO regresarLibro(String nombreRecurso, long idUsuario, String fechaEntrega) throws BiblioLogicException, ParseException {
         MultaLogicMock multaLogic = new MultaLogicMock();
         Date fecha = new Date();
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy");
@@ -205,9 +205,9 @@ public class PrestamoLogicMock {
         for (int i = 0; i < prestamos.size() && prestamo == null; i++) {
             PrestamoDTO p = prestamos.get(i);
             logger.info("recibiendo informacion para retornar libro...");
-            if (p.getIdRecurso() == idRecurso) {
+            if (p.getNombreRecurso() == nombreRecurso) {
                 prestamo = p;
-                MultaDTO multa = new MultaDTO(multas.size()+1L, idUsuario, p.getIdBiblioteca(), idRecurso, 1500, fecha);
+                MultaDTO multa = new MultaDTO(multas.size()+1L, idUsuario, p.getIdBiblioteca(), nombreRecurso, 1500, fecha);
                 prestamo.setCosto(p.getCosto());
                 prestamo.setFechaInicial(p.getFechaInicial());
                 prestamo.setFechaFinal(p.getFechaFinal());
@@ -215,7 +215,7 @@ public class PrestamoLogicMock {
                 prestamo.setMedioPago(p.getMedioPago());
                 prestamo.setId(p.getId());
                 prestamo.setIdBiblioteca(p.getIdBiblioteca());
-                prestamo.setIdRecurso(idRecurso);
+                prestamo.setNombreRecurso(nombreRecurso);
                 prestamo.setIdUsuario(idUsuario);
                 if(prestamo.getFechaFinal().before(formatter.parse(fechaEntrega))){
                     multaLogic.createMulta(multa, idUsuario);

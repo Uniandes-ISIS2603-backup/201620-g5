@@ -9,11 +9,9 @@ package co.edu.uniandes.rest.resources.dtos;
  *
  * @author s.rojas19
  */
-public class LibroDTO {
+public class LibroDTO extends RecursoDTO {
 
-    private Long id;
     private Long isbn;
-    private String titulo;
     private long numEjemplares;
     private boolean online;
 
@@ -33,30 +31,13 @@ public class LibroDTO {
      * @param esOnline define si el libro es disponible digitalmente
      */
     public LibroDTO(Long id, Long isbn, String titulo, Long numEjemplares, boolean esOnline) {
-        this.id = id;
+        super(id, titulo);
         this.isbn = isbn;
-        this.titulo = titulo;
         this.numEjemplares = numEjemplares;
         this.online = esOnline;
     }
 
-    /**
-     * Devuelve el id del libro
-     *
-     * @return id del libro
-     */
-    public Long getId() {
-        return id;
-    }
-
-    /**
-     * Cambia el id del libro por el que entra por parametro
-     *
-     * @param id nuevo id del libro
-     */
-    public void setId(Long id) {
-        this.id = id;
-    }
+    
 
     /**
      * Devuelve el codigo isbn del libro
@@ -76,24 +57,7 @@ public class LibroDTO {
         this.isbn = isbn;
     }
 
-    /**
-     * Devuelve el titulo del libro
-     *
-     * @return titulo del libro
-     */
-    public String getTitulo() {
-        return titulo;
-    }
-
-    /**
-     * Cambia el titulo del libro por el que entra por parametro
-     *
-     * @param titulo nuevo titulo del libro
-     */
-    public void setTitulo(String titulo) {
-        this.titulo = titulo;
-    }
-
+   
     /**
      * Devuelve el numero de ejemplares disponibles del libro.
      *
@@ -130,7 +94,7 @@ public class LibroDTO {
 
     @Override
     public String toString() {
-        return "{ id: " + id + ", isbn: " + isbn + ", titulo : \"" + titulo + "\" , numEjemplares: " + numEjemplares + " , online: \"" + online + "\" }";
+        return "{ id: " + id + ", isbn: " + isbn + ", titulo : \"" + name + "\" , numEjemplares: " + numEjemplares + " , online: \"" + online + "\" }";
     }
 
 }

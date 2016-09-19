@@ -25,7 +25,7 @@ public class PrestamoDTO {
     private String tipoRecurso;
 
     
-    private Long idRecurso;
+    private Recurso recurso;
     private double costo;
     private String medioPago;
     private Date fechaInicial;
@@ -38,13 +38,13 @@ public class PrestamoDTO {
     public PrestamoDTO() {
     }
 
-    public PrestamoDTO(Long id, Long idUsuario, Long idBiblioteca,String tipoRecurso, Long idRecurso, double costo, String medioPago, Date fechaInicial, Date fechaFinal, boolean estaActivo) {
+    public PrestamoDTO(Long id, Long idUsuario, Long idBiblioteca,String tipoRecurso, String nombreRecurso, double costo, String medioPago, Date fechaInicial, Date fechaFinal, boolean estaActivo) {
         super();
         this.id = id;
         this.idUsuario = idUsuario;
         this.idBiblioteca = idBiblioteca;
         this.tipoRecurso = tipoRecurso;
-        this.idRecurso = idRecurso;
+        this.nombreRecurso = nombreRecurso;
         this.costo = costo;
         this.medioPago = medioPago;
         this.fechaInicial = fechaInicial;
@@ -103,15 +103,15 @@ public void setTipoRecurso(String tipoRecurso) {
     /**
      * @return the idRecurso
      */
-    public Long getIdRecurso() {
-        return idRecurso;
+    public String getNombreRecurso() {
+        return nombreRecurso;
     }
 
     /**
-     * @param idRecurso the idRecurso to set
+     * @param nombreRecurso the idRecurso to set
      */
-    public void setIdRecurso(Long idRecurso) {
-        this.idRecurso = idRecurso;
+    public void setNombreRecurso(String nombreRecurso) {
+        this.nombreRecurso = nombreRecurso;
     }
 
     /**
@@ -189,6 +189,6 @@ public void setTipoRecurso(String tipoRecurso) {
      */
     @Override
     public String toString() {
-    	return "{ id : " + getId() + ", idUsuario : \"" + getIdUsuario()+ ", idBiblioteca : \"" + getIdBiblioteca() + ", idRecurso : \"" + getIdRecurso() + ", costo : \"" + getCosto() + ", medioPago : \"" + getMedioPago() + ", fechaInicial : \"" + getFechaInicial() + ", fechaFinal : \"" + getFechaFinal()  + ", estaActivo : \"" + isEstaActivo() + "\" }" ;  
+    	return "{ id : " + getId() + ", idUsuario : \"" + getIdUsuario()+ ", idBiblioteca : \"" + getIdBiblioteca() + ", idRecurso : \"" + getNombreRecurso() + ", costo : \"" + getCosto() + ", medioPago : \"" + getMedioPago() + ", fechaInicial : \"" + getFechaInicial() + ", fechaFinal : \"" + getFechaFinal()  + ", estaActivo : \"" + isEstaActivo() + "\" }" ;  
     }
 }

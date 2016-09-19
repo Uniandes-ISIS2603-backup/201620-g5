@@ -1,5 +1,5 @@
 
-<div class="col-md-10 well">
+
     <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="ctrl.closeAlert($index)" dismiss-on-timeout="5000">{{alert.msg}} </alert>
     <form novalidate name="form" id="prestamo-form" role="form" ng-submit="form.$valid && ctrl.savePrestamo(currentPrestamo.id)">
         
@@ -18,13 +18,32 @@
             <!-- tipoRecurso -->
                 <label for="tipoRecurso" class="col-md-4 control-label">Tipo de Recurso</label>
                 <div class="col-md-10">
-                    <input id="tipoRecurso" name="tipoRecurso" class="form-control" type="text" ng-model="currentPrestamo.tipoRecurso" ng-init="currentPrestamo.tipoRecurso" required />
+                    <form action = ""> 
+                    <select id="tipoRecurso" name="tipoRecurso" class="form-control" ng-model="currentPrestamo.tipoRecurso" ng-init="currentPrestamo.tipoRecurso" required>
+                    <option selected> ---</option>
+                    <option value="Video">Video</option>
+                    <option value="Libro">Libro</option>
+                    <option value="Sala">Sala</option>
+                </select>
+                    </form>
                 </div>
-            <!-- idRecurso -->
-                <label for="idRecurso" class="col-md-4 control-label">Id Recurso</label>
-                <div class="col-md-10">
-                    <input id="idRecurso" name="idRecurso" class="form-control" type="number" ng-model="currentPrestamo.idRecurso" ng-init="currentPrestamo.idRecurso" required />
+            <!-- nombreRecurso -->
+            <div>
+                <label for="nombreRecurso" class="col-md-4 control-label">Recurso</label>
+               <div class="col-md-10" ng-if= "currentPrestamo.tipoRecurso=='Video'">
+                <select id="video" name="video" ng-options="rc.titulo for rc in videos track by rc.id" class="form-control" type="text" ng-model="currentPrestamo.idRecurso" ></select>
                 </div>
+                 <div class="col-md-10" ng-if="currentPrestamo.tipoRecurso=='Libro'">
+                 <select id="libro" name="libro" ng-options="rc.titulo for rc in libros track by rc.id" class="form-control" type="text" ng-model="currentPrestamo.idRecurso" ></select>
+                </div>
+                 <div class="col-md-10" ng-if="currentPrestamo.tipoRecurso=='Sala'">
+                 <select id="sala" name="sala" ng-options="rc.nombre for rc in salas track by rc.id" class="form-control" type="text" ng-model="currentPrestamo.idRecurso" ></select>
+                </div>
+                <div class="col-md-10" ng-if="currentPrestamo.tipoRecurso!='Video' && currentPrestamo.tipoRecurso!='Libro'&& currentPrestamo.tipoRecurso!='Sala'">
+                <input id ="nombreRecurso" name ="nombreRecurso" class="form-control" type="text" placeholder="Seleccione un tipo de recurso primero" disabled><br>
+                </div>
+            </div>
+                
                 <!-- costo -->
                 <label for="costo" class="col-md-4 control-label">Costo</label>
                 <div class="col-md-10">
@@ -73,4 +92,4 @@
                 <button type="submit" >Save</button>   
             </div>
     </form>
-</div>
+
