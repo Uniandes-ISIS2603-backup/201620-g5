@@ -25,7 +25,7 @@ import javax.ws.rs.Produces;
  * @author js.prieto10
  */
     
-@Path("blogs")
+@Path("")
 @Produces("application/json")
 public class BlogResource
 {
@@ -34,27 +34,36 @@ public class BlogResource
     
     
     @GET
-    public List<BlogDTO> getBlogs() throws BiblioLogicException, BibliotecaLogicException 
+    @Path("blogs")
+    public List<BlogDTO> getBlogs() throws BibliotecaLogicException 
     {
         return BlogLogic.getBlogs();
     }
     
     @GET
-    @Path("{id: \\d+}")
+    @Path("blogs/(idBlog: \\d+}")
     public BlogDTO getBlog(@PathParam("id") Long id) throws BibliotecaLogicException 
     {
         return BlogLogic.getBlog(id);
     }
     
+    
+    @GET
+    @Path("libros/(idLibro: \\d+)/blogs")
+    public List<BlogDTO> getBlogsLibro(@PathParam("idLibro") Long isbn) throws BibliotecaLogicException
+    {
+        return BlogLogic.getBlogsLibro(isbn);
+    }
+    
     @POST
+    @Path("libros/(idLibro: \\d+)/blogs")
     public BlogDTO createLibro(BlogDTO blog) throws BibliotecaLogicException {
         return BlogLogic.createBlog(blog);
     }
     @PUT
-    @Path("{id: \\d+}")
-    public BlogDTO updateBlog(@PathParam("id") Long id, String texto) throws BibliotecaLogicException {
-        SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy");
-        return null;
-//        return BlogLogic.updateBlog(id, texto, fecha);
+    @Path("blogs/(idBlog: \\d+)")
+    public BlogDTO updateBlog(@PathParam("idBlog") Long id, String texto) throws BibliotecaLogicException {
+        return BlogLogic.updateBlog(id, texto);
     }
+    
 }

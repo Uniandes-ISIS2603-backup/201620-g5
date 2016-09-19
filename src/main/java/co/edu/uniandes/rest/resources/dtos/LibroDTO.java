@@ -5,6 +5,8 @@
  */
 package co.edu.uniandes.rest.resources.dtos;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author s.rojas19
@@ -35,6 +37,7 @@ public class LibroDTO extends RecursoDTO {
         this.isbn = isbn;
         this.numEjemplares = numEjemplares;
         this.online = esOnline;
+        
     }
 
     

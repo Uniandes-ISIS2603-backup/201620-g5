@@ -1,0 +1,33 @@
+<div class="col-md-6 well">
+    <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="ctrl.closeAlert($index)" dismiss-on-timeout="5000">{{alert.msg}} </alert>
+    <form novalidate name="form" id="blog-form" role="form" ng-submit="form.$valid && ctrl.saveBlog(currentBlog.id)">
+        
+        <div ng-messages="form.$error">
+            <div ng-message="required">Fill the required fields!</div>
+        </div>
+   
+        <fieldset>
+            <input id="id" class="form-control" type="hidden" ng-model="currentBlog.id"/>
+            <div class="form-group col-md-12" ng-class="{'has-success': form.titulo.$valid && form.titulo.$dirty, 'has-error': form.titulo.$invalid && (form.titulo.$dirty || form.$submitted)}" >
+                <label for="titulo" class="col-md-2 control-label">Titulo</label>
+                <div class="col-md-10">
+                    <input id="titulo" name="titulo" class="form-control" type="text" ng-model="currentBlog.titulo" ng-init="currentBlog.titulo" required />
+                </div>
+                <label for="nombre" class="col-md-2 control-label">Nombre</label>
+                <div class="col-md-10">
+                    <input id="nombre" name="nombre" class="form-control" type="text" ng-model="currentBlog.nombre" ng-init="currentBlog.nombre" required />
+                </div>
+                <label for="nombreAutor" class="col-md-2 control-label">Autor</label>
+                <div class="col-md-10">
+                    <input id="nombreAutor" name="nombreAutor" class="form-control" type="text" ng-model="currentBlog.nombreAutor" ng-init="currentBlog.nombreAutor" required />
+                </div>
+                <label for="texto" class="col-md-2 control-label">Texto</label>
+                <div class="col-md-10">
+                    <input id="texto" name="titulo" class="form-control" type="text" ng-model="currentBlog.texto" ng-init="currentBlog.texto" required />
+                </div>
+            </div>
+            <button type="button" ui-sref='blogsList'>Cancelar</button>
+            <button type="submit" >Guardar</button>    
+        </fieldset>
+    </form>
+</div>
