@@ -11,6 +11,7 @@
         "videosModule",
         "reservasModule",
         "prestamosModule",
+        "salasModule",
         "ngMessages"
     ]);
 
