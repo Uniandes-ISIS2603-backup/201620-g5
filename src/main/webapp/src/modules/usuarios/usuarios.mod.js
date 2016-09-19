@@ -26,8 +26,8 @@
                     }
                 }
             }).state('usuarioCreate', {
+                parent:'usuarios',
                 url: '/create',
-                parent:'usarios',
                 views: {
                     'usuarioView': {
                         controller: 'usuariosCtrl',
@@ -37,8 +37,8 @@
                 }
 
             }).state('usuarioEdit', {
-                url: '/:usuarioId',
                 parent:'usuarios',
+                url: '/:usuarioId',
                 param: {
                     usuarioId: null
                 },

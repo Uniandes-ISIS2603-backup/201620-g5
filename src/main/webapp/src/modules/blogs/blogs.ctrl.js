@@ -4,29 +4,34 @@
     mod.controller("blogsCtrl", ['$scope', '$state', '$stateParams', '$http','librosContext',  
         function ($scope, $state, $stateParams, $http, librosContext ) {
 
+            // inicialmente el listado de blogs
+            //  está vacio
             $scope.blogsContext = '/blogs';
             $scope.blogs = {};
-            
-            $http.get(blogs + "/" + $stateParams.libroId + $scope.blogsContext).then(function (response) {
+            // carga las blogs
+            $http.get(librosContext + "/" + $stateParams.libroId + $scope.blogsContext).then(function (response) {
                 $scope.blogs = response.data;
             }, responseError);
 
+            // el controlador recibió un blogId ??
+            // revisa los parámetros (ver el :blogId en la definición de la ruta)
             if ($stateParams.blogId !== null && $stateParams.blogId !== undefined) {
 
+                // toma el id del parámetro
                 id = $stateParams.blogId;
                 // obtiene el dato del recurso REST
-                $http.get(librosContext + "/" + $stateParams.librosId +$scope.blogsContext + "/" + id)
+                $http.get(librosContext + "/" + $stateParams.libroId +$scope.blogsContext + "/" + id)
                         .then(function (response) {
                             // $http.get es una promesa
                             // cuando llegue el dato, actualice currentblog
-                            $scope.currentBlog = response.data;
+                            $scope.currentblog = response.data;
                         }, responseError);
 
                 // el controlador no recibió un blogId
             } else
             {
                 // el registro actual debe estar vacio
-                $scope.currentBlog = {
+                $scope.currentblog = {
                     id: undefined /*Tipo Long. El valor se asigna en el backend*/,
                
                    
@@ -37,7 +42,7 @@
 
            
             
-            this.saveBlog = function (id) {
+            this.saveblog = function (id) {
                 currentblog = $scope.currentblog;
 
                 // si el id es null, es un registro nuevo, entonces lo crea
@@ -66,7 +71,7 @@
             };
             
              this.deleteblog = function (blog) {
-                return $http.delete(context + "/" + blog.blogId)
+                return $http.delete($scope.blogsContext + "/" + blog.blogId)
                     .then(function () {
                         // cuando termine bien, cambie de estado
                         $state.reload();
@@ -76,7 +81,43 @@
 
 
             // -----------------------------------------------------------------
-            // Funciones para manejra los mensajes en la aplicación
+            // Funciones para manejar las fechas
+
+            $scope.popup = {
+                opened: false
+            };
+            $scope.dateOptions = {
+                dateDisabled: disabled,
+                formatYear: 'yy',
+                maxDate: new Date(2020, 5, 22),
+                minDate: new Date(),
+                startingDay: 1
+            };
+
+            this.today = function () {
+                $scope.dt = new Date();
+            };
+            this.today();
+
+            this.clear = function () {
+                $scope.dt = null;
+            };
+            this.setDate = function (year, month, day) {
+                $scope.dt = new Date(year, month, day);
+            };
+
+            this.open = function () {
+                $scope.popup.opened = true;
+            };
+
+            function disabled(data) {
+                var date = data.date,
+                        mode = data.mode;
+                return mode === 'day' && (date.getDay() === 0 || date.getDay() === 6);
+            }
+
+
+            // Funciones para manejar los mensajes en la aplicación
 
 
             //Alertas
