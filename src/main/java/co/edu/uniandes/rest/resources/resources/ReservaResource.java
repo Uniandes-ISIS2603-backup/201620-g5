@@ -32,7 +32,7 @@ import javax.ws.rs.Produces;
  *
  * @author sf.munera10
  */
-@Path("reservas")
+@Path("")
 @Produces("application/json")
 public class ReservaResource {
 
@@ -45,6 +45,7 @@ public class ReservaResource {
      * @throws BiblioLogicException excepción retornada por la lógica
      */
     @GET
+    @Path("reservas")
     public List<ReservaDTO> getReservas() throws BibliotecaLogicException {
         return reservaLogic.getReservas();
     }
@@ -58,33 +59,29 @@ public class ReservaResource {
      * suministrado
      */
     @POST
+    @Path("reservas")
     public ReservaDTO createReserva(ReservaDTO reserva) throws BibliotecaLogicException {
         return reservaLogic.createReserva(reserva);
     }
 
     @GET
-    @Path("{id: \\d+}")
+    @Path("reservas/{id: \\d+}")
     public ReservaDTO getReserva(@PathParam("id")Long id) throws BibliotecaLogicException {
         return reservaLogic.getReserva(id);
     }
     
     @PUT
-    @Path("{id: \\d+}")
+    @Path("reservas/{id: \\d+}")
     public ReservaDTO updateReserva(@PathParam("id")int id, ReservaDTO reserva)throws BibliotecaLogicException{
         return reservaLogic.updateReserva(id, reserva);
     }
     
     @DELETE
-    @Path("{id: \\d+}")
+    @Path("reservas/{id: \\d+}")
     public void deleteReserva(@PathParam("id") int id)throws BibliotecaLogicException{
         reservaLogic.deleteReserva(id);
     }
     
-    
-    /**
-     * DEBE IR EN LibroResource, solucionar para acceder a reservas desde ahi.
-     * @param id 
-     */
     @GET
     @Path("libros/{idLibro: \\d+}/reservas")
     public List<ReservaDTO> getReservasLibro(@PathParam("idLibro") Long id){
