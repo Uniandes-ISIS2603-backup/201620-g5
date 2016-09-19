@@ -254,7 +254,7 @@ public class PrestamoLogicMock {
         ArrayList<PrestamoDTO> presLib;
         presLib = new ArrayList<>();
         for (PrestamoDTO p : prestamos) {
-            if (id.equals(p.getRecurso().getId()) && p.isEstaActivo()) {
+            if (id.equals(p.getRecurso().getId()) && p.isEstaActivo() && p.getTipoRecurso().equals(PrestamoDTO.LIBRO)) {
                 presLib.add(p);
             }
         }

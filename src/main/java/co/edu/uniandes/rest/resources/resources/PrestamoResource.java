@@ -50,6 +50,12 @@ public class PrestamoResource {
         return prestamoLogic.getPrestamosUsuario(idUsuario);
     }
 
+    @GET
+    @Path("libros/{idLibro: \\d+}/prestamos")
+    public List<PrestamoDTO> getPrestamosLibro(@PathParam("idLibro") Long id){
+        return prestamoLogic.getPrestamosLibro(id);
+    }
+    
     /**
      * Agrega un prestamo a un usuario
      *
@@ -101,25 +107,9 @@ public class PrestamoResource {
         return prestamoLogic.createPrestamoBiblioteca(prestamo, idBiblioteca);
     }
     
-     @DELETE
+    @DELETE
     @Path("bibliotecas/{idBiblioteca: \\d+}/prestamos/{id: \\d+}")
     public PrestamoDTO deletePrestamoBiblioteca(@PathParam("id") Long id, @PathParam("idBiblioteca") Long idBiblioteca) throws ParseException, BiblioLogicException {
         return prestamoLogic.deletePrestamoDeBiblioteca(id, idBiblioteca);
-    }
-
-
-   
-    
-
-    
-    
-    /**
-     * DEBE IR EN LibroResource, solucionar para acceder a reservas desde ahi.
-     * @param id 
-     */
-    @GET
-    @Path("libros/{idLibro: \\d+}/prestamos")
-    public List<PrestamoDTO> getReservasLibro(@PathParam("idLibro") Long id){
-        return prestamoLogic.getPrestamosLibro(id);
     }
 }
