@@ -42,7 +42,8 @@ public class PrestamoLogicMock {
     public PrestamoLogicMock() {
 
         if (prestamos == null) {
-            prestamos = new ArrayList<>();
+            try {
+                prestamos = new ArrayList<>();
                 String fecha1 = "2016-09-25";
                 String fecha2 = "2016-09-26";
                 String fecha3 = "2016-09-27";
@@ -55,17 +56,30 @@ public class PrestamoLogicMock {
                 String fecha10 = "2016-10-04";
                 String fecha11 = "2016-10-05";
                 String fecha12 = "2016-10-06";
-                UsuarioDTO u1 = new UsuarioDTO("Stephen", "Hawking", "elLocoStephe", 1L, "1234", "en mi casa");
-                UsuarioDTO u2 = new UsuarioDTO("Uribe", "Alvaro", "elDotorUribe", 2L, "4321", "la casa nariño");
-                UsuarioDTO u3 = new UsuarioDTO("Chuck", "Norris", " tuDios", 3L, "9874", "En todo lado");
-                prestamos.add(new PrestamoDTO(1L, u1,1L,PrestamoDTO.LIBRO, new LibroDTO(1L, 553213113L, "Moby Dick", 10L, true), 3000, "Efectivo", fecha1, fecha2, true));
-                prestamos.add(new PrestamoDTO(2L, u2, 2L,PrestamoDTO.VIDEO, new VideoDTO(1L, "The Revenant", "Alejandro G. Iñarritu",152L, 2015L, "Accion", 2L , "Oso contra hombre",false), 3000, "Tarjeta Credito", fecha3, fecha4, true));
-                prestamos.add(new PrestamoDTO(3L, u3, 3L,PrestamoDTO.SALA,  new SalaDTO(1L, 1L, "Sala 1", 6), 3000, "Efectivo",fecha5,fecha6, true));
-                prestamos.add(new PrestamoDTO(4L, u1, 1L,PrestamoDTO.VIDEO,  new VideoDTO(2L, "Mermaids: The Body Found", "Sid Bennet", 27L, 2012L,"Documental", 20L, "Sirenas", true ), 3000, "Efectivo", fecha7, fecha8, true));
-                prestamos.add(new PrestamoDTO(5L, u2, 2L,PrestamoDTO.SALA,  new SalaDTO(2L, 2L, "Sala 2", 6), 3000, "Tarjeta Credito", fecha9, fecha10, true));
-                prestamos.add(new PrestamoDTO(6L, u3, 3L,PrestamoDTO.LIBRO, new LibroDTO(2L, 743273567L, "The Great Gatsby", 10L, false), 3000, "Efectivo", fecha11, fecha12, true));
-                
+                SimpleDateFormat formater = new SimpleDateFormat("yyyy-MM-dd");
                 usuarioMock = new UsuarioLogicMock();
+
+                try {
+                    UsuarioDTO u1 = usuarioMock.getUsuarios().get(0);
+                    UsuarioDTO u2 = usuarioMock.getUsuarios().get(1);
+                    UsuarioDTO u3 = usuarioMock.getUsuarios().get(2);
+                
+                
+                prestamos.add(new PrestamoDTO(1L, u1,1L,PrestamoDTO.LIBRO, new LibroDTO(1L, 553213113L, "Moby Dick", 10L, true), 3000D, "Efectivo", formater.parse(fecha1), formater.parse(fecha2), true));
+                prestamos.add(new PrestamoDTO(2L, u2, 2L,PrestamoDTO.VIDEO, new VideoDTO(1L, "The Revenant", "Alejandro G. Iñarritu",152L, 2015L, "Accion", 2L , "Oso contra hombre",false), 3000D, "Tarjeta Credito", formater.parse(fecha3), formater.parse(fecha4), true));
+                prestamos.add(new PrestamoDTO(3L, u3, 3L,PrestamoDTO.SALA,  new SalaDTO(1L, 1L, "Sala 1", 6), 3000D, "Efectivo",formater.parse(fecha5),formater.parse(fecha6), true));
+                prestamos.add(new PrestamoDTO(4L, u1, 1L,PrestamoDTO.VIDEO,  new VideoDTO(2L, "Mermaids: The Body Found", "Sid Bennet", 27L, 2012L,"Documental", 20L, "Sirenas", true ), 3000D, "Efectivo", formater.parse(fecha7), formater.parse(fecha8), true));
+                prestamos.add(new PrestamoDTO(5L, u2, 2L,PrestamoDTO.SALA,  new SalaDTO(2L, 2L, "Sala 2", 6), 3000D, "Tarjeta Credito", formater.parse(fecha9), formater.parse(fecha10), true));
+                prestamos.add(new PrestamoDTO(6L, u3, 3L,PrestamoDTO.LIBRO, new LibroDTO(2L, 743273567L, "The Great Gatsby", 10L, false), 3000D, "Efectivo", formater.parse(fecha11), formater.parse(fecha12), true));
+                
+            } catch (ParseException ex) {
+                Logger.getLogger(PrestamoLogicMock.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            } catch (Exception ex) {
+                    Logger.getLogger(PrestamoLogicMock.class.getName()).log(Level.SEVERE, null, ex);
+                    
+                }
+                
         }
 
         // indica que se muestren todos los mensajes
@@ -226,7 +240,7 @@ public class PrestamoLogicMock {
                 prestamo = p;
                 MultaDTO multa = new MultaDTO(multas.size()+1L, idUsuario, p.getIdBiblioteca(), idRecurso, 1500, fecha);
                 
-                if(formatter.parse(p.getFechaFinal()).before(formatter.parse(fechaEntrega))){
+                if(p.getFechaFinal().before(formatter.parse(fechaEntrega))){
                     multaLogic.createMulta(multa, idUsuario);
                 }
             }
