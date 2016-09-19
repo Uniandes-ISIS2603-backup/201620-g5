@@ -3,30 +3,22 @@
         <thead>
             <tr>
                 <th> Id </th>
-                <th>Video</th>
-                <th># Ejemplares</th>
-                <th>Director</th>
-                <th>Año de publicacion</th>
-                 <th>Duracion</th>
-                  <th>Genero</th>
-                <th>Sinopsis</th>
-                <th>Online</th>
+                <th>Nombre</th>
+                <th>Capacidad</th>
+                <th>Id Biblioteca</th>
+                <th>Acciones</th>
+
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="video in videos">
-                <td id="{{$index}}-id">{{video.id}}</td>
-                <td id="{{$index}}-titulo">{{video.name}}</td>
-                <td id="{{$index}}-numEjemplares">{{video.numEjemplares}}</td>
-                <td id="{{$index}}-director">{{video.director}}</td>
-                <td id="{{$index}}-anioPublicacion">{{video.anioPublicacion}}</td>
-                <td id="{{$index}}-duracion">{{video.duracion}}</td>
-                <td id="{{$index}}-genero">{{video.genero}}</td>
-                <td id="{{$index}}-sinopsis">{{video.sinopsis}}</td>
-                <td id="{{$index}}-esOnline">{{video.esOnline}}</td>
+            <tr ng-repeat="sala in salas">
+                <td id="{{$index}}-id">{{sala.id}}</td>
+                <td id="{{$index}}-name">{{sala.name}}</td>
+                <td id="{{$index}}-capacidad">{{sala.capacidad}}</td>
+                <td id="{{$index}}-idBiblioteca">{{sala.idBiblioteca}}</td>
                 <td>
-                    <button id="{{$index}}-edit-btn" class="btn btn-default btn-sm" data-ui-sref="videoEdit({videoId: video.id})"><span class="glyphicon glyphicon-edit"></span> Editar</button>
-                    <button id="{{$index}}-delete-btn" class="btn btn-default btn-sm" ng-click="ctrl.deleteVideo({videoId: video.id})"><span class="glyphicon glyphicon-minus"></span> Eliminar</button>
+                    <button id="{{$index}}-edit-btn" class="btn btn-default btn-sm" data-ui-sref="salaEdit({salaId: sala.id})"><span class="glyphicon glyphicon-edit"></span> Editar</button>
+                    <button id="{{$index}}-delete-btn" class="btn btn-default btn-sm" ng-click="ctrl.deleteSala({salaId: sala.id})"><span class="glyphicon glyphicon-minus"></span> Eliminar</button>
                 </td>
             </tr>
         </tbody>

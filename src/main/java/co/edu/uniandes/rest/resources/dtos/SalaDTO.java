@@ -11,7 +11,7 @@ package co.edu.uniandes.rest.resources.dtos;
  */
 public class SalaDTO extends RecursoDTO {
     private Long idBiblioteca;
-    private int capacidad;
+    private Integer capacidad;
     
     /**
      * Constructor por defecto
@@ -19,10 +19,11 @@ public class SalaDTO extends RecursoDTO {
     public SalaDTO() {
     }
     
-    public SalaDTO(Long idRecurso, Long idBiblioteca, String nombre, int capacidad) {
+    public SalaDTO(Long idRecurso, Long idBiblioteca, String nombre, Integer capacidad) {
 		super(idRecurso, nombre);
                 this.idBiblioteca = idBiblioteca;
                 this.capacidad = capacidad;
+                
     }
 
     
@@ -45,14 +46,14 @@ public class SalaDTO extends RecursoDTO {
     /**
      * @return the capacidad
      */
-    public int getCapacidad() {
+    public Integer getCapacidad() {
         return capacidad;
     }
 
     /**
      * @param capacidad the capacidad to set
      */
-    public void setCapacidad(int capacidad) {
+    public void setCapacidad(Integer capacidad) {
         this.capacidad = capacidad;
     }
     

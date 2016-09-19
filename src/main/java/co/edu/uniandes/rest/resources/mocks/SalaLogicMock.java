@@ -206,6 +206,8 @@ public class SalaLogicMock {
                 }
             }
             newSala.setId(newId);
+            newSala.setEstaPrestado(false);
+            newSala.setEstaReservado(false);
         }
 
         // agrega la sala 

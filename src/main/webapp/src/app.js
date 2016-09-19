@@ -5,14 +5,15 @@
         'ui.router',
         'ui.bootstrap',
         // Internal modules dependencies
-        "usuariosModule",
         "bibliotecasModule",
-        "librosModule",
+        "usuariosModule",
         "videosModule",
-        "reservasModule",
-        "prestamosModule",
+        "librosModule",
         "salasModule",
+        "reservasModule",
         "blogsModule",
+        "prestamosModule",
+         
         "ngMessages"
     ]);
 

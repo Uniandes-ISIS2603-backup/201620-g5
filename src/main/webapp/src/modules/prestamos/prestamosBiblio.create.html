@@ -81,20 +81,16 @@
                     </p>
                 </div>
                 
-                <label for="estaActivo" class="col-md-4 control-label">¿Online?</label>
+                <label for="estaActivo" class="col-md-4 control-label">¿Está activo?</label>
                 <div class="col-md-9">
                     <input id="estaActivo" name="estaActivo" class="form-control" type="checkbox" ng-model="currentPrestamo.estaActivo" ng-init="currentPrestamo.estaActivo" novalidate />
                 </div>
-           <!-- Editorial 
-                <label for="editorial" class="col-md-2 control-label">Editorial</label>
-                <div class="col-md-10">
-                    <select id="editorial" name="editorial" ng-options="rc.name for rc in editorials track by rc.id" class="form-control" type="text" ng-model="currentPrestamo.editorial" ></select>
-                </div>-->
             </div>
-        </fieldset>
-        <div class="form-group col-md-12">
+             <div class="form-group col-md-12">
                 <button type="button" ui-sref='prestamosBiblioList'>Cancel</button>
                 <button type="submit" >Save</button>   
             </div>
+        </fieldset>
+       
     </form>
 

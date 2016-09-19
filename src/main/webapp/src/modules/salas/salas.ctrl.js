@@ -1,32 +1,32 @@
 (function (ng) {
-    var mod = ng.module("videosModule");
+    var mod = ng.module("salasModule");
 
-    mod.controller("videosCtrl", ['$scope', '$state', '$stateParams', '$http', 'videosContext', function ($scope, $state, $stateParams, $http, context) {
+    mod.controller("salasCtrl", ['$scope', '$state', '$stateParams', '$http', 'salasContext', function ($scope, $state, $stateParams, $http, context) {
 
-            $scope.videos = {};
+            $scope.salas = {};
             $http.get(context).then(function(response){
-                $scope.videos = response.data;    
+                $scope.salas = response.data;    
             }, responseError);
 
-            // el controlador recibió un videoId ??
-            // revisa los parámetros (ver el :videoId en la definición de la ruta)
-            if ($stateParams.videoId !== null && $stateParams.videoId !== undefined) {
+            // el controlador recibió un salaId ??
+            // revisa los parámetros (ver el :salaId en la definición de la ruta)
+            if ($stateParams.salaId !== null && $stateParams.salaId !== undefined) {
                 
                 // toma el id del parámetro
-                id = $stateParams.videoId;
+                id = $stateParams.salaId;
                 // obtiene el dato del recurso REST
                 $http.get(context + "/" + id)
                     .then(function (response) {
                         // $http.get es una promesa
                         // cuando llegue el dato, actualice currentRecord
-                        $scope.currentVideo = response.data;
+                        $scope.currentSala = response.data;
                     }, responseError);
 
-            // el controlador no recibió un videoId
+            // el controlador no recibió un salaId
             } else
             {
                 // el registro actual debe estar vacio
-                $scope.currentVideo = {
+                $scope.currentSala = {
                     id: undefined /*Tipo Long. El valor se asigna en el backend*/,
                     name: '' /*Tipo String*/,
                 };
@@ -35,35 +35,35 @@
             }
 
 
-            this.saveVideo = function (id) {
-                currentVideo = $scope.currentVideo;
+            this.saveSala = function (id) {
+                currentSala = $scope.currentSala;
                 
                 // si el id es null, es un registro nuevo, entonces lo crea
                 if (id == null) {
 
                     // ejecuta POST en el recurso REST
-                    return $http.post(context, currentVideo)
+                    return $http.post(context, currentSala)
                         .then(function () {
                             // $http.post es una promesa
                             // cuando termine bien, cambie de estado
-                            $state.go('videosList');
+                            $state.go('salasList');
                         }, responseError);
                         
                 // si el id no es null, es un registro existente entonces lo actualiza
                 } else {
                     
                     // ejecuta PUT en el recurso REST
-                    return $http.put(context + "/" + currentVideo.id, currentVideo)
+                    return $http.put(context + "/" + currentSala.id, currentSala)
                         .then(function () {
                             // $http.put es una promesa
                             // cuando termine bien, cambie de estado
-                            $state.go('videosList');
+                            $state.go('salasList');
                         }, responseError);
                 };
             };
             
-            this.deleteVideo = function( video) {
-                return $http.delete(context + "/" + video.videoId)
+            this.deleteSala = function( sala) {
+                return $http.delete(context + "/" + sala.salaId)
                     .then(function () {
                         // cuando termine bien, cambie de estado
                         $state.reload();

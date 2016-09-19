@@ -56,6 +56,7 @@
            
             
             this.savePrestamo = function (id) {
+                console.log($scope.currentPrestamo);
                 currentPrestamo = $scope.currentPrestamo;
                 // si el id es null, es un registro nuevo, entonces lo crea
                 if (id == null) {
@@ -65,7 +66,7 @@
                             .then(function () {
                                 // $http.post es una promesa
                                 // cuando termine bien, cambie de estado
-                                $state.go('prestamosList');
+                                $state.go('prestamosBiblioList');
                             }, responseError);
 
                     // si el id no es null, es un registro existente entonces lo actualiza
@@ -76,7 +77,7 @@
                             .then(function () {
                                 // $http.put es una promesa
                                 // cuando termine bien, cambie de estado
-                                $state.go('prestamosList');
+                                $state.go('prestamosBiblioList');
                             }, responseError);
                 }
                 ;

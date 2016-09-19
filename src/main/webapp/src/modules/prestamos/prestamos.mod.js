@@ -38,19 +38,6 @@
                     }
                 }
 
-            }).state('prestamoEdit', {
-                url: '/prestamos/edit/:prestamoId',
-                parent: 'usuarioEdit',
-                param: {
-                    prestamoId: null
-                },
-                views: {
-                    'usuarioInstanceView': {
-                        controller: 'prestamosCtrl',
-                        controllerAs: 'ctrl',
-                        templateUrl: basePath + 'prestamos.create.html'
-                    }
-                }
             }).state('prestamoBiblioEdit', {
                 url: '/prestamos/edit/:prestamoId',
                 parent: 'bibliotecaPrestar',

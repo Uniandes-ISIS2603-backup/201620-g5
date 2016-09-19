@@ -107,6 +107,12 @@ public class PrestamoResource {
         return prestamoLogic.createPrestamoBiblioteca(prestamo, idBiblioteca);
     }
     
+    @PUT
+    @Path("bibliotecas/{idBiblioteca: \\d+}/prestamos/{id: \\d+}")
+    public PrestamoDTO updatePrestamoBiblioteca(@PathParam("id") Long id, PrestamoDTO m, @PathParam("idBiblioteca") Long idBiblioteca) throws BiblioLogicException, ParseException {
+        return prestamoLogic.updatePrestamoDeBiblioteca(id, m, idBiblioteca);
+    }
+    
     @DELETE
     @Path("bibliotecas/{idBiblioteca: \\d+}/prestamos/{id: \\d+}")
     public PrestamoDTO deletePrestamoBiblioteca(@PathParam("id") Long id, @PathParam("idBiblioteca") Long idBiblioteca) throws ParseException, BiblioLogicException {

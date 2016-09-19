@@ -362,4 +362,25 @@ public class PrestamoLogicMock {
             throw new BiblioLogicException("No existe una prestamo con ese id");
         }
     }
+     
+     public PrestamoDTO updatePrestamoDeBiblioteca(long id, PrestamoDTO m, Long idBiblioteca) throws BiblioLogicException {
+        PrestamoDTO prestamo = getPrestamoDeBiblioteca(id, idBiblioteca);
+        if (prestamo != null) {
+            prestamo.setCosto(m.getCosto());
+            prestamo.setFechaInicial(m.getFechaInicial());
+            prestamo.setFechaFinal(m.getFechaFinal());
+            prestamo.setEstaActivo(m.isEstaActivo());
+            prestamo.setMedioPago(m.getMedioPago());
+            prestamo.setId(id);
+            prestamo.setUsuario(m.getUsuario());
+            prestamo.setRecurso(m.getRecurso());
+            
+            prestamo.setIdBiblioteca(idBiblioteca);
+            return prestamo;
+        } else {
+            logger.severe("No existe una prestamo con ese id");
+            throw new BiblioLogicException("No existe una prestamo con ese id");
+        }
+    }
+
 }
