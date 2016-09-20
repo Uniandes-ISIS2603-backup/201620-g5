@@ -17,6 +17,7 @@ public class ReservaDTO {
     private boolean estaA;
     private Long idRecurso;
     private RecursoDTO recurso;
+    private String tipoRecurso;
 
     /**
      * Constructor por defecto

@@ -10,7 +10,7 @@
         <fieldset>
             <input id="id" class="form-control" type="hidden" ng-model="currentReserva.id"/>
             <div class="form-group col-md-12" ng-class="{'has-success': form.id.$valid && form.id.$dirty, 'has-error': form.id.$invalid && (form.id.$dirty || form.$submitted)}" >
-                <label for="idUsuario" class="col-md-2 control-label">IdUsuarioasdasd</label>
+                <label for="idUsuario" class="col-md-2 control-label">IdUsuario</label>
                 <div class="col-md-10">
                     <input id="idUsuario" name="idUsuario" class="form-control" type="number" ng-model="currentReserva.idUsuario" ng-init="currentReserva.idUsuario" required />
                 </div>
@@ -19,17 +19,20 @@
                     <input id="idBiblioteca" name="idBiblioteca" class="form-control" type="number" ng-model="currentReserva.idBiblioteca" ng-init="currentReserva.idBiblioteca" required />
                 </div>
                 
+               
+                
               
                 <label for="idRecurso" class="col-md-2 control-label">IdRecurso</label>
                 <div class="col-md-10">
                     <input id="idRecurso" name="idRecurso" class="form-control" type="number" ng-model="currentReserva.idRecurso" ng-init="currentReserva.idRecurso" required />
                 </div>
-                <!--
+                
+                
                 <label for="titulo" class="col-md-2 control-label">Titulo Recurso</label>
                 <div class="col-md-10">
                     <input id="tituloRecurso" name="tituloRecusro" class="form-control" type="text" ng-model="currentReserva.tituloRecurso" ng-init="currentReserva.tituloRecurso" required />
                 </div>
-                -->
+                
                 <label for="estaA" class="col-md-2 control-label">Está Activa?</label>
                 <div class="col-md-10">
                     <input id="estaA" name="estaA" class="form-control" type="checkbox" ng-model="currentReserva.estaA" ng-init="currentVideo.estaA" novalidate />
