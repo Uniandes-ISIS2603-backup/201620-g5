@@ -35,7 +35,7 @@ public class SalaResource {
     
    
     SalaLogicMock salaLogic = new SalaLogicMock();
-
+   
     /**
      * Obtiene el listado de salas.
      *

@@ -48,7 +48,7 @@
                         controllerAs: 'ctrl',
                         templateUrl: basePath + 'libros.create.html'
                     },
-                    'childsView': {
+                    'childView': {
                         templateUrl: basePath + 'libros.instance.html'
                     }
                 }
