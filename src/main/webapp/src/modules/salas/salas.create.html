@@ -3,7 +3,7 @@
     <form novalidate name="form" id="sala-form" role="form" ng-submit="form.$valid && ctrl.saveSala(currentSala.id)">
         
         <div ng-messages="form.$error">
-            <div ng-message="required">Fill the required fields!</div>
+            <div ng-message="required">Llene los espacios especificados:</div>
         </div>
    
         <fieldset>
@@ -13,18 +13,17 @@
                 <div class="col-md-9">
                     <input id="name" name="name" class="form-control" type="text" ng-model="currentSala.name" ng-init="currentSala.name" required />
                 </div>
-               
-                <label for="capacidad" class="col-md-3 control-label">Capacidad</label>
-                <div class="col-md-9">
-                    <input id="capacidad" name="capacidad" class="form-control" type="number" ng-model="currentSala.capacidad" ng-init="currentSala.capacidad" required />
-                </div>
                 
                 <label for="idBiblioteca" class="col-md-3 control-label">Id Biblioteca</label>
                 <div class="col-md-9">
                     <input id="idBiblioteca" name="idBiblioteca" class="form-control" type="number" ng-model="currentSala.idBiblioteca" ng-init="currentSala.idBiblioteca" required />
                 </div>
-                
-                
+               
+                <label for="capacidad" class="col-md-3 control-label">Capacidad</label>
+                <div class="col-md-9">
+                    <input id="capacidad" name="capacidad" class="form-control" type="number" ng-model="currentSala.capacidad" ng-init="currentSala.capacidad" required />
+                </div>
+           
                 
             </div>
             <button type="button" data-ui-sref='salasList'>Cancelar</button>

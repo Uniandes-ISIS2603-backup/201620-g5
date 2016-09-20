@@ -1,7 +1,7 @@
 (function (ng) {
     var mod = ng.module("salasModule");
 
-    mod.controller("salasCtrl", ['$scope', '$state', '$stateParams', '$http', 'bibliotecasContext', function ($scope, $state, $stateParams, $http, context) {
+    mod.controller("salasCtrl", ['$scope', '$state', '$stateParams', '$http', 'salasContext', function ($scope, $state, $stateParams, $http, context) {
 
             $scope.salas = {};
             $http.get(context).then(function(response){
@@ -29,6 +29,8 @@
                 $scope.currentSala = {
                     id: undefined /*Tipo Long. El valor se asigna en el backend*/,
                     name: '' /*Tipo String*/,
+                    idBiblioteca: undefined,
+                    capacidad: undefined
                 };
               
                 $scope.alerts = [];

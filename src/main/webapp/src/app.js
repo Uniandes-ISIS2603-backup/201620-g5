@@ -28,7 +28,6 @@
            $urlRouterProvider.otherwise('/videosList');
            $urlRouterProvider.otherwise('/reservasList');
            $urlRouterProvider.otherwise('/usuariosList');
-           $urlRouterProvider.otherwise('/salasList');
            $urlRouterProvider.otherwise('/');
 
 
