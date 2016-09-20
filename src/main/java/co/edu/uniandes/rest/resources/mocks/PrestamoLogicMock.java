@@ -128,7 +128,7 @@ public class PrestamoLogicMock {
             throw new BibliotecaLogicException("Error interno: lista de prestamos no existe.");
         }
         for (PrestamoDTO m : prestamos) {
-            if (idUsuario == m.getUsuario().getId()) {
+            if (Objects.equals(idUsuario, m.getUsuario().getId())) {
                 prestamosUsuario.add(m);
             }
         }
@@ -136,6 +136,7 @@ public class PrestamoLogicMock {
         return prestamosUsuario;
     }
 
+    
     
     /**
      * Agrega una prestamo a un usuario y a la lista.
@@ -206,6 +207,21 @@ public class PrestamoLogicMock {
         }
         return m;
     }
+    
+    public PrestamoDTO getPrestamoDeUsuario2(long id, long idUsuario) throws BibliotecaLogicException {
+        PrestamoDTO m = null;
+        for (int i = 0; i < prestamos.size() && m == null; i++) {
+            PrestamoDTO prestamo = prestamos.get(i);
+            if (prestamo.getId() == id && prestamo.getUsuario().getId() == idUsuario) {
+                m = prestamo;
+            }
+        }
+        if (m == null) {
+            logger.severe("No existe una prestamo con ese id");
+            throw new BibliotecaLogicException("No existe una prestamo con ese id");
+        }
+        return m;
+    }
 
     public PrestamoDTO updatePrestamoDeUsuario(long id, PrestamoDTO m, Long idUsuario) throws BibliotecaLogicException {
         PrestamoDTO prestamo = getPrestamoDeUsuario(id, idUsuario);
@@ -228,7 +244,7 @@ public class PrestamoLogicMock {
     }
     
     public PrestamoDTO regresarLibro1(long id, PrestamoDTO m, Long idUsuario) throws BibliotecaLogicException {
-        PrestamoDTO prestamo = getPrestamoDeUsuario(id, idUsuario);
+        PrestamoDTO prestamo = getPrestamoDeUsuario2(id, idUsuario);
         if (prestamo != null) {
             prestamo.setCosto(m.getCosto());
             prestamo.setFechaInicial(m.getFechaInicial());
