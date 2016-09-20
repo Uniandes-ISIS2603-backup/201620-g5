@@ -1,27 +1,35 @@
-<div class="container-fluid" >
-   
-    <table class="table table-striped col-md-4">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Nombre</th>
-                <th>Identificador Administrador</th>
-                <th>Zona De Ciudad</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr ng-repeat="biblioteca in bibliotecas">
-                <td id="{{$index}}-id">{{biblioteca.id}}</td>
-                <td id="{{$index}}-name">{{biblioteca.name}}</td>
-                <td id="{{$index}}-idAdmin">{{biblioteca.idAdmin}}</td>
-                <td id="{{$index}}-zona">{{biblioteca.zona}}</td>
-                <td>
-                    <button id="{{$index}}-edit-btn" class="btn btn-default btn-sm" data-ui-sref="bibliotecaEdit({bibliotecaId: biblioteca.id})"><span class="glyphicon glyphicon-edit"></span> Editar</button>
-                    <button id="{{$index}}-delete-btn" class="btn btn-default btn-sm" ng-click="ctrl.deleteBiblioteca({bibliotecaId: biblioteca.id})"><span class="glyphicon glyphicon-minus"></span> Eliminar</button>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+<div class="col-md-12">
+    <div class="container-fluid">
+        <div class="row">
+            <button class="btn btn-default" ui-sref="multaCreate">Crear Multa</button></div>
+        <div class="row">
+            <table class="table table-striped col-md-4">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Id de Usuario</th>
+                        <th>Id de Biblioteca</th>
+                        <th>Id de Recurso</th>
+                        <th>Costo</th>
+                        <th>Fecha</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="multa in multas">
+                        <td id="{{$index}}-id">{{multa.id}}</td>
+                        <td id="{{$index}}-idUsuario">{{multa.idUsuario}}</td>
+                        <td id="{{$index}}-idBiblioteca">{{multa.idBiblioteca}}</td>
+                        <td id="{{$index}}-idRecurso">{{multa.idRecurso}}</td>
+                        <td id="{{$index}}-costo">{{multa.costo}}</td>
+                        <td id="{{$index}}-fecha">{{multa.fecha}}</td>
+                        <td>
+                            <button id="{{$index}}-edit-btn" class="btn btn-default btn-sm" data-ui-sref="multaEdit({multaId: multa.id})"><span class="glyphicon glyphicon-edit"></span> Editar</button>
+                            <button id="{{$index}}-delete-btn" class="btn btn-default btn-sm" ng-click="ctrl.deleteMulta({multaId: multa.id})"><span class="glyphicon glyphicon-minus"></span> Eliminar</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
 

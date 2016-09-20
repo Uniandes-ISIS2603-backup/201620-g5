@@ -7,8 +7,9 @@
      
             $stateProvider.state('salasList', {
                 url: '/salas',
+                parent: 'bibliotecaEdit',
                 views: {
-                    'mainView': {
+                    'bibliotecaInstanceView': {
                         controller: 'salasCtrl',
                         controllerAs: 'ctrl',
                         templateUrl: basePath + 'salas.list.html'
@@ -16,8 +17,9 @@
                 }
             }).state('salaCreate', {
                 url: '/salas/create',
+                parent: 'bibliotecaEdit',
                 views: {
-                    'mainView': {
+                    'bibliotecaInstanceView': {
                         controller: 'salasCtrl',
                         controllerAs: 'ctrl',
                         templateUrl: basePath + 'salas.create.html'
@@ -26,11 +28,12 @@
 
             }).state('salaEdit', {
                 url: '/salas/:salaId',
+                parent: 'bibliotecaEdit',
                 param: {
                     salaId: null
                 },
                 views: {
-                    'mainView': {
+                    'bibliotecaInstanceView': {
                         controller: 'salasCtrl',
                         controllerAs: 'ctrl',
                         templateUrl: basePath + 'salas.create.html'

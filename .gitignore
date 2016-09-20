@@ -44,4 +44,3 @@ nbactions.xml
 
 # IntelliJ
 .idea/
-!/src/main/webapp/bower_components/

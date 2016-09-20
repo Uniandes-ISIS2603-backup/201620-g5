@@ -79,6 +79,12 @@ public class PrestamoResource {
     public PrestamoDTO updatePrestamo(@PathParam("id") Long id, PrestamoDTO m, @PathParam("idUsuario") Long idUsuario) throws BibliotecaLogicException, ParseException {
         return prestamoLogic.updatePrestamoDeUsuario(id, m, idUsuario);
     }
+    
+    @PUT
+    @Path("prestamos/{id: \\d+}/usuarios/{idUsuario: \\d+}/fecha")
+    public PrestamoDTO regresarLibro(@PathParam("id") Long id, PrestamoDTO m, @PathParam("idUsuario") Long idUsuario) throws BibliotecaLogicException, ParseException {
+        return prestamoLogic.regresarLibro1(id, m, idUsuario);
+    }
 
     @DELETE
     @Path("prestamos/{id: \\d+}/{idUsuario: \\d+}")

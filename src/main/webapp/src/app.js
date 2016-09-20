@@ -11,6 +11,7 @@
         "librosModule",
         "salasModule",
         "reservasModule",
+        "multasModule",
         "blogsModule",
         "prestamosModule",
          
@@ -28,7 +29,6 @@
            $urlRouterProvider.otherwise('/reservasList');
            $urlRouterProvider.otherwise('/usuariosList');
            $urlRouterProvider.otherwise('/salasList');
-
            $urlRouterProvider.otherwise('/');
 
 

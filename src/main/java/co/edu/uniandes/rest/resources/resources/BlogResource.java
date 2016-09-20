@@ -42,15 +42,6 @@ public class BlogResource
         return BlogLogic.getBlogs();
     }
     
-    
-    @GET
-    @Path ("blogs/prueba")
-    public BlogDTO getPrueba()
-    {
-        
-        return new BlogDTO("prueba", "prueba", 1L, "prueba", "prueba", 1L);
-    }
-    
     @GET
     @Path("blogs/{id: \\d+}/")
     public BlogDTO getBlog(@PathParam("id") Long id) throws BibliotecaLogicException 
@@ -72,9 +63,9 @@ public class BlogResource
         return BlogLogic.createBlog(blog);
     }
     @PUT
-    @Path("blogs/(idBlog: \\d+)")
-    public BlogDTO updateBlog(@PathParam("idBlog") Long id, String texto) throws BibliotecaLogicException {
-        return BlogLogic.updateBlog(id, texto);
+    @Path("libros/{idLibro: \\d+}/blogs/{id: \\d+}")
+    public BlogDTO updateBlog(@PathParam("id") Long id, @PathParam("idLibro") Long idLibro, BlogDTO blog) throws BibliotecaLogicException {
+        return BlogLogic.updateBlog(id, idLibro, blog);
     }
     
 }

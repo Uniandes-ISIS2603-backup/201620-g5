@@ -6,6 +6,7 @@
         <thead>
             <tr>
                 <th>Id</th>
+                <th>Fecha</th>
                 <th>Titulo</th>
                 <th>Nombre</th>
                 <th>Autor</th>
@@ -14,11 +15,12 @@
         <tbody>
             <tr ng-repeat="blog in blogs">
                 <td id="{{$index}}-id">{{blog.id}}</td>
+                <td id="{{$index}}-fecha">{{blog.fecha}}</td>
                 <td id="{{$index}}-titulo">{{blog.titulo}}</td>
-                <td id="{{$index}}-nombre">{{blog.id}}</td>
+                <td id="{{$index}}-nombre">{{blog.nombre}}</td>
                 <td id="{{$index}}-nombreAutor">{{blog.nombreAutor}}</td>
                 <td>
-                    <button id="{{$index}}-edit-btn" class="btn btn-default btn-sm" ui-sref="libroEdit({BlogId: blog.id})"><span class="glyphicon glyphicon-edit"></span> Editar</button>
+                    <button id="{{$index}}-edit-btn" class="btn btn-default btn-sm" data-ui-sref="blogEdit({BlogId: blog.id})"><span class="glyphicon glyphicon-edit"></span> Editar</button>
                     <button id="{{$index}}-delete-btn" class="btn btn-default btn-sm" ng-click="ctrl.deleteBlog({BlogId: blog.id})"><span class="glyphicon glyphicon-minus"></span> Eliminar</button>
                 </td>
             </tr>

@@ -226,6 +226,26 @@ public class PrestamoLogicMock {
             throw new BibliotecaLogicException("No existe una prestamo con ese id");
         }
     }
+    
+    public PrestamoDTO regresarLibro1(long id, PrestamoDTO m, Long idUsuario) throws BibliotecaLogicException {
+        PrestamoDTO prestamo = getPrestamoDeUsuario(id, idUsuario);
+        if (prestamo != null) {
+            prestamo.setCosto(m.getCosto());
+            prestamo.setFechaInicial(m.getFechaInicial());
+            prestamo.setFechaFinal(m.getFechaFinal());
+            prestamo.setEstaActivo(false);
+            prestamo.setMedioPago(m.getMedioPago());
+            prestamo.setId(id);
+            prestamo.setIdBiblioteca(m.getIdBiblioteca());
+            prestamo.setRecurso(m.getRecurso());
+            
+            prestamo.setUsuario(getUsuario(idUsuario));
+            return prestamo;
+        } else {
+            logger.severe("No existe una prestamo con ese id");
+            throw new BibliotecaLogicException("No existe una prestamo con ese id");
+        }
+    }
 
     public PrestamoDTO regresarLibro(Long idRecurso, long idUsuario, String fechaEntrega) throws BibliotecaLogicException, ParseException {
         MultaLogicMock multaLogic = new MultaLogicMock();
@@ -241,7 +261,7 @@ public class PrestamoLogicMock {
                 MultaDTO multa = new MultaDTO(multas.size()+1L, idUsuario, p.getIdBiblioteca(), idRecurso, 1500, fecha);
                 
                 if(p.getFechaFinal().before(formatter.parse(fechaEntrega))){
-                    multaLogic.createMulta(multa, idUsuario);
+                    multaLogic.createMultaUsuario(multa, idUsuario);
                 }
             }
         }

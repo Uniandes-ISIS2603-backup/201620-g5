@@ -1,27 +1,33 @@
-    <div class="container-fluid" >
-    <table class="table table-striped col-md-4">
-        <thead>
-            <tr>
-                <th> Id </th>
-                <th>Nombre</th>
-                <th>Capacidad</th>
-                <th>Id Biblioteca</th>
-                <th>Acciones</th>
+<div class="col-md-12">
+    <div class="container-fluid">
+        <div class="row">
+            <button class="btn btn-default" ui-sref="salaCreate">Crear Sala</button></div>
+        <div class="row">
+            <table class="table table-striped col-md-4">
+                <thead>
+                    <tr>
+                        <th> Id </th>
+                        <th>Nombre</th>
+                        <th>Capacidad</th>
+                        <th>Id Biblioteca</th>
+                        <th>Acciones</th>
 
-            </tr>
-        </thead>
-        <tbody>
-            <tr ng-repeat="sala in salas">
-                <td id="{{$index}}-id">{{sala.id}}</td>
-                <td id="{{$index}}-name">{{sala.name}}</td>
-                <td id="{{$index}}-capacidad">{{sala.capacidad}}</td>
-                <td id="{{$index}}-idBiblioteca">{{sala.idBiblioteca}}</td>
-                <td>
-                    <button id="{{$index}}-edit-btn" class="btn btn-default btn-sm" data-ui-sref="salaEdit({salaId: sala.id})"><span class="glyphicon glyphicon-edit"></span> Editar</button>
-                    <button id="{{$index}}-delete-btn" class="btn btn-default btn-sm" ng-click="ctrl.deleteSala({salaId: sala.id})"><span class="glyphicon glyphicon-minus"></span> Eliminar</button>
-                </td>
-            </tr>
-        </tbody>
-        
-    </table>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="sala in salas">
+                        <td id="{{$index}}-id">{{sala.id}}</td>
+                        <td id="{{$index}}-name">{{sala.name}}</td>
+                        <td id="{{$index}}-capacidad">{{sala.capacidad}}</td>
+                        <td id="{{$index}}-idBiblioteca">{{sala.idBiblioteca}}</td>
+                        <td>
+                            <button id="{{$index}}-edit-btn" class="btn btn-default btn-sm" data-ui-sref="salaEdit({salaId: sala.id})"><span class="glyphicon glyphicon-edit"></span> Editar</button>
+                            <button id="{{$index}}-delete-btn" class="btn btn-default btn-sm" ng-click="ctrl.deleteSala({salaId: sala.id})"><span class="glyphicon glyphicon-minus"></span> Eliminar</button>
+                        </td>
+                    </tr>
+                </tbody>
+
+            </table>
+        </div>
+    </div>
 </div>

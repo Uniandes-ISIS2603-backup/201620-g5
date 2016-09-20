@@ -5,6 +5,7 @@ package co.edu.uniandes.rest.resources.mocks;
  *
  * @author sf.munera10
  */
+import co.edu.uniandes.rest.resources.dtos.BiblioDTO;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -81,6 +82,88 @@ public class MultaLogicMock {
         return multasUsuario;
     }
     
+    public MultaDTO createMulta(MultaDTO newMulta) throws BibliotecaLogicException
+    {
+        logger.info("recibiendo solicitud de agregar multa " + newMulta);
+
+        // la nueva multa tiene id ?
+        if (newMulta.getId() != null) {
+            // busca la multa con el id suministrado
+            for (MultaDTO m : multas) {
+                // si existe una multa con ese id
+                if (Objects.equals(m.getId(), newMulta.getId())) {
+                    logger.severe("Ya existe una multa con ese id");
+                    throw new BibliotecaLogicException("Ya existe una multa con ese id");
+                }
+            }
+
+            // la nueva multa no tiene id ? 
+        } else {
+
+            // genera un id para la multa
+            logger.info("Generando id para la nueva multa");
+            long newId = 1;
+            for (MultaDTO multa : multas) {
+                if (newId <= multa.getId()) {
+                    newId = multa.getId() + 1;
+                }
+            }
+            newMulta.setId(newId);
+        }
+
+        // agrega la biblioteca
+        logger.info("agregando multa: " + newMulta);
+        multas.add(newMulta);
+        return newMulta;
+    }
+    
+    public MultaDTO getMulta(long id) throws BibliotecaLogicException {
+        MultaDTO m = null;
+        for (int i = 0; i < multas.size() && m == null; i++) {
+            MultaDTO multa = multas.get(i);
+            if (multa.getId() == id) {
+                m = multa;
+            }
+        }
+        if (m == null) {
+            logger.severe("No existe una multa con ese id");
+            throw new BibliotecaLogicException("No existe una multa con ese id");
+        }
+        return m;
+    }
+
+    public MultaDTO updateMulta(long id, MultaDTO m) throws BibliotecaLogicException {
+        MultaDTO mu = getMulta(id);
+        if (mu != null) {
+            mu.setCosto(m.getCosto());
+            mu.setFecha(m.getFecha());
+            mu.setIdBiblioteca(m.getIdBiblioteca());
+            mu.setIdRecurso(m.getIdRecurso());
+            mu.setIdUsuario(m.getIdUsuario());
+            return mu;
+        } else {
+            logger.severe("No existe una multa con ese id");
+            throw new BibliotecaLogicException("No existe una multa con ese id");
+        }
+    }
+
+    public void deleteMulta(long id) throws BibliotecaLogicException {
+        logger.info("recibiendo solicitud de eliminar multa " + id);
+        MultaDTO b = null;
+        for (int i = 0; i < multas.size() && b == null; i++) {
+            MultaDTO m = multas.get(i);
+            if (id == m.getId()) {
+                b = m;
+                logger.info("Eliminando multa con el id especfificado: id = " + b.getId());
+                multas.remove(b);
+            }
+        }
+        if (b == null) {
+            logger.severe("No existe una multa con ese id");
+            throw new BibliotecaLogicException("No existe una multa con ese id");
+        }
+    }
+    
     /**
      * Agrega una multa a un usuario y a la lista.
      *
@@ -89,7 +172,7 @@ public class MultaLogicMock {
      * suministrado
      * @return biblioteca agregada
      */
-    public MultaDTO createMulta(MultaDTO newMulta, long idUsuario)  {
+    public MultaDTO createMultaUsuario(MultaDTO newMulta, long idUsuario)  {
         logger.info("recibiendo solicitud de agregar multa " + newMulta);
         // agrega la multa
         logger.info("agregando multa: " + newMulta);

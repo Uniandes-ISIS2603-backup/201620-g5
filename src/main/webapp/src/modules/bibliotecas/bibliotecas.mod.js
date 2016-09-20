@@ -14,6 +14,9 @@
                         controller: 'bibliotecasCtrl',
                         controllerAs: 'ctrl',
                         templateUrl: basePath + 'bibliotecas.html'
+                    },
+                    'childsView': {
+                        templateUrl: basePath + 'bibliotecas.instance.html'
                     }
                 }
             }).state('bibliotecasList', {
@@ -48,6 +51,9 @@
                         controller: 'bibliotecasCtrl',
                         controllerAs: 'ctrl',
                         templateUrl: basePath + 'bibliotecas.create.html'
+                    },
+                    'childsView': {
+                        templateUrl: basePath + 'bibliotecas.instance.html'
                     }
                 }
             }).state('bibliotecaPrestar', {
