@@ -28,14 +28,14 @@
                 <label for="fecha" class="col-md-2 control-label">Fecha</label>
                 <div class="col-md-10">
                     <p class="input-group">
-                        <input  id="fecha" name="fechal"  type="text" class="form-control" uib-datepicker-popup ng-model="currentBlog.fechaInicial" is-open="popup.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+                        <input  id="fecha" name="fechal"  ng-init="currentBlog.fechaInicial" type="text" class="form-control" uib-datepicker-popup ng-model="currentBlog.fechaInicial" is-open="popup.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
                         <span class="input-group-btn">
                             <button type="button" class="btn btn-default" ng-click="ctrl.open()"><i class="glyphicon glyphicon-calendar"></i></button>
                         </span>
                     </p>
                 </div>
             </div>
-            <button type="button" ui-sref='blogsList'>Cancelar</button>
+            <button type="button" data-ui-sref='blogsList'>Cancelar</button>
             <button type="submit" >Guardar</button>    
         </fieldset>
     </form>

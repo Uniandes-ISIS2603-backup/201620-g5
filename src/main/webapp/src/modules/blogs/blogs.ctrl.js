@@ -20,7 +20,7 @@
                 // toma el id del parámetro
                 id = $stateParams.blogId;
                 // obtiene el dato del recurso REST
-                $http.get(librosContext + "/" + $stateParams.libroId +$scope.blogsContext + "/" + id)
+                $http.get($scope.blogsContext + "/" + id)
                         .then(function (response) {
                             // $http.get es una promesa
                             // cuando llegue el dato, actualice currentblog

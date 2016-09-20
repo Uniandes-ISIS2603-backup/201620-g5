@@ -106,9 +106,9 @@ public class BlogLogicMock {
          
      }
     
-    public BlogDTO getBlogLibro(Long id, Long idBiblioteca) throws BibliotecaLogicException {
-        BlogDTO m = null;
-        List<BlogDTO> blogsLibro = getBlogsLibro(idBiblioteca);
+    public BlogDTO getBlogLibro(Long idLibro, Long id) throws BibliotecaLogicException {
+        /*BlogDTO m = null;
+        List<BlogDTO> blogsLibro = getBlogsLibro(idLibro);
         for (int i = 0; i < blogsLibro.size() && m == null; i++) {
             BlogDTO blog = blogsLibro.get(i);
             if (blog.getId() == id) {
@@ -119,14 +119,15 @@ public class BlogLogicMock {
             logger.severe("No existe una blog con ese id");
             throw new BibliotecaLogicException("No existe una blog con ese id");
         }
-        return m;
+        return m;*/
+        return getBlog(id);
     }
     
     
     
     
     
-    public BlogDTO createBlog(BlogDTO newBlog) throws BibliotecaLogicException {
+    public BlogDTO createBlog(BlogDTO newBlog, Long idLibro) throws BibliotecaLogicException {
         logger.info("recibiendo solicitud de agregar blog " + newBlog);
         // agrega el blog
         // el nuevo blog tiene id ?
@@ -153,6 +154,7 @@ public class BlogLogicMock {
                 }
             }
             newBlog.setId(newId);
+            newBlog.setIdLibro(idLibro);
         }
         logger.info("agregando blog: " + newBlog);
         blogs.add(newBlog);
@@ -167,7 +169,7 @@ public class BlogLogicMock {
      * @return
      * @throws Exception
      */
-    public BlogDTO updateBlog(long id, Long idLibro, BlogDTO b ) throws BibliotecaLogicException
+    public BlogDTO updateBlog(Long id, BlogDTO b ) throws BibliotecaLogicException
     {
        BlogDTO blog = getBlog(id);
        if (blog != null)
@@ -176,8 +178,6 @@ public class BlogLogicMock {
            blog.setTexto(b.getTexto());
            blog.setNombreAutor(b.getNombreAutor());
            blog.setNombre(b.getNombre());
-           blog.setIdLibro(b.getIdLibro());
-           blog.setId(blog.getId());
            blog.setFecha(b.getFecha());
            return blog;
        }
@@ -185,6 +185,20 @@ public class BlogLogicMock {
             throw new BibliotecaLogicException("No existe un blog con ese id");
        
     }
+    
+    
+    public BlogDTO createBlogLibro(BlogDTO newBlog, long idLibro)  {
+        logger.info("recibiendo solicitud de agregar multa " + newBlog);
+        // agrega la multa
+        logger.info("agregando multa: " + newBlog);
+        newBlog.setIdLibro(idLibro);
+        blogs.add(newBlog);
+        return newBlog;
+    }
+    
+    
+    
+    
     
     
     public String prueba1()

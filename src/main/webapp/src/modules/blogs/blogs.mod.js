@@ -27,8 +27,20 @@
                 }
 
             })
+                .state('blogGet', {
+                url: '/blogs/ver/:id',
+                parent: 'libroEdit',
+                views: {
+                    'libroInstanceView': {
+                        controller: 'blogsCtrl',
+                        controllerAs: 'ctrl',
+                        templateUrl: basePath + 'blogs.ver.html'
+                    }
+                }
+
+            })
             .state('blogEdit', {
-                url: '/blogs/edit/:blogId',
+                url: '/blogs/edit/:id',
                 parent: 'libroEdit',
                 param: {
                     blogId: null
