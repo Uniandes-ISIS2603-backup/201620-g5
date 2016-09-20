@@ -29,7 +29,7 @@ import javax.ws.rs.Produces;
  *
  * @author sf.munera10
  */
-@Path("salas")
+@Path("")
 @Produces("application/json")
 public class SalaResource {
     
@@ -43,17 +43,19 @@ public class SalaResource {
      * @throws BiblioLogicException excepción retornada por la lógica
      */
     @GET
+    @Path("salas")
     public List<SalaDTO> getAllSalas() throws BibliotecaLogicException {
         return salaLogic.getAllSalas();
     }
     
-    @Path("{id: \\d+}")
+    @Path("salas/{id: \\d+}")
     @GET
     public SalaDTO getSala(@PathParam("id")Long id) throws BibliotecaLogicException {
         return salaLogic.getSala(id);
     }
 
     @POST
+    @Path("bibliotecas/salas")
     public SalaDTO createSala(SalaDTO sala) throws BibliotecaLogicException, BibliotecaLogicException {
         return salaLogic.createSala(sala);
     }
@@ -61,7 +63,7 @@ public class SalaResource {
 
     
     @PUT
-    @Path("{id: \\d+}")
+    @Path("salas/{id: \\d+}")
     public SalaDTO updateSala(@PathParam("id") Long id, SalaDTO newSala) throws BibliotecaLogicException 
     {
         return salaLogic.updateSala(id, newSala);
@@ -69,7 +71,7 @@ public class SalaResource {
     
 
     @DELETE
-    @Path("{id: \\d+}")
+    @Path("salas/{id: \\d+}")
     public SalaDTO deleteSala(@PathParam("id") Long id) throws BibliotecaLogicException 
     {
         return salaLogic.deleteSala(id);
