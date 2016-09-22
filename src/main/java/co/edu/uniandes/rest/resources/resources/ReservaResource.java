@@ -82,6 +82,9 @@ public class ReservaResource {
         reservaLogic.deleteReserva(id);
     }
     
+    /*
+    R11: Ver reservas activas de un libro.
+    */
     @GET
     @Path("libros/{idLibro: \\d+}/reservas")
     public List<ReservaDTO> getReservasLibro(@PathParam("idLibro") Long id){

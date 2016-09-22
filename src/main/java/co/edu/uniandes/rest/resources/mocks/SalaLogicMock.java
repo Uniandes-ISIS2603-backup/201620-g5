@@ -337,12 +337,13 @@ public class SalaLogicMock {
       * R13
       * @param idBiblioteca biblioteca a la que pertenece la sala
       * @param fecha fecha que se desea consultar
-      * @return 
+      * @return la sala buscada si esta disponible, null de lo contrario.
       */
     public SalaDTO getDisponibilidadSala(Long idSala, String fecha) {
         ReservaLogicMock r = new ReservaLogicMock();
         PrestamoLogicMock p = new PrestamoLogicMock();
         return null;
+        
     }
    
 }

@@ -55,6 +55,11 @@ public class PrestamoResource {
         return prestamoLogic.getPrestamosUsuario(idUsuario);
     }
 
+    /**
+     * R12
+     * @param id id del libro a consultar
+     * @return lista de prestamos activos del libro
+     */
     @GET
     @Path("libros/{idLibro: \\d+}/prestamos")
     public List<PrestamoDTO> getPrestamosLibro(@PathParam("idLibro") Long id){
