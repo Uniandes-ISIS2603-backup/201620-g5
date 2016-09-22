@@ -5,6 +5,7 @@ package co.edu.uniandes.rest.resources.mocks;
  *
  * @author sf.munera10
  */
+import co.edu.uniandes.rest.resources.dtos.BiblioDTO;
 import co.edu.uniandes.rest.resources.dtos.LibroDTO;
 import co.edu.uniandes.rest.resources.dtos.MultaDTO;
 import java.util.ArrayList;
@@ -104,6 +105,33 @@ public class PrestamoLogicMock {
 
         logger.info("retornando todas las prestamos");
         return prestamos;
+    }
+    
+    public PrestamoDTO getPrestamo1(Long id) throws BibliotecaLogicException{
+        PrestamoDTO p = null;
+        for (int i = 0; i < prestamos.size() && p == null; i++) {
+            PrestamoDTO prestamo = prestamos.get(i);
+            if (prestamo.getId() == id) {
+                p = prestamo;
+            }
+        }
+        if (p == null) {
+            logger.severe("No existe un prestamo con ese id");
+            throw new BibliotecaLogicException("No existe un prestamo con ese id");
+        }
+        return p;
+    }
+    
+    public PrestamoDTO updatePrestamo1(Long id, PrestamoDTO b) throws BibliotecaLogicException {
+        PrestamoDTO c = getPrestamo1(id);
+        if (c != null) {
+            c.setEstaActivo(b.isEstaActivo());
+            
+            return c;
+        } else {
+            logger.severe("No existe un prestamo con ese id");
+            throw new BibliotecaLogicException("No existe un prestamo con ese id");
+        }
     }
     
     public ArrayList<PrestamoDTO> getPrestamo(Long idPrestamo) throws BibliotecaLogicException {
@@ -310,6 +338,8 @@ public class PrestamoLogicMock {
         }
         return presLib; 
     }
+    
+   
 
     public ArrayList<PrestamoDTO> getPrestamosBiblioteca(Long idBiblioteca) throws BibliotecaLogicException {
         ArrayList<PrestamoDTO> prestamosBiblioteca = new ArrayList<>();
