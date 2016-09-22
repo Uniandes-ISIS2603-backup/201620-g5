@@ -15,6 +15,16 @@
                         templateUrl: basePath + 'prestamos.list.html'
                     }
                 }
+            }).state('libroPrestamosList', {
+                url: '/prestamos',
+                parent: 'libroEdit',
+                views: {
+                    'libroInstanceView': {
+                        controller: 'prestamosLibroCtrl',
+                        controllerAs: 'ctrl',
+                        templateUrl: basePath + 'prestamos.list.html'
+                    }
+                }
             }).state('prestamoCreate', {
                 url: '/prestamos/create',
                 parent: 'bibliotecaPrestar',
@@ -25,7 +35,6 @@
                         templateUrl: basePath + 'prestamosBiblio.create.html'
                     }
                 }
-
             })
             .state('prestamosBiblioList', {
                 url: '/prestamos',
