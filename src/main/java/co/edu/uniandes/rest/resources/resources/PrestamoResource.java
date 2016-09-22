@@ -41,6 +41,12 @@ public class PrestamoResource {
     public ArrayList<PrestamoDTO> getPrestamos() throws BibliotecaLogicException, ParseException {
         return prestamoLogic.getPrestamos();
     }
+    
+     @GET
+    @Path("prestamos/{id: \\d+}")
+    public PrestamoDTO getPrestamo1(@PathParam("id") Long id) throws BibliotecaLogicException, ParseException {
+        return prestamoLogic.getPrestamo1(id);
+    }
 
     //servicios rest de bibliotecas.
     @GET
@@ -80,11 +86,6 @@ public class PrestamoResource {
         return prestamoLogic.updatePrestamoDeUsuario(id, m, idUsuario);
     }
     
-    @PUT
-    @Path("prestamos/{id: \\d+}/usuarios/{idUsuario: \\d+}/fecha")
-    public PrestamoDTO regresarLibro(@PathParam("id") Long id, PrestamoDTO m, @PathParam("idUsuario") Long idUsuario) throws BibliotecaLogicException, ParseException {
-        return prestamoLogic.regresarLibro1(id, m, idUsuario);
-    }
 
     @DELETE
     @Path("prestamos/{id: \\d+}/{idUsuario: \\d+}")
@@ -116,6 +117,12 @@ public class PrestamoResource {
     @Path("bibliotecas/{idBiblioteca: \\d+}/prestamos/{id: \\d+}")
     public PrestamoDTO updatePrestamoBiblioteca(@PathParam("id") Long id, PrestamoDTO m, @PathParam("idBiblioteca") Long idBiblioteca) throws BibliotecaLogicException, ParseException {
         return prestamoLogic.updatePrestamoDeBiblioteca(id, m, idBiblioteca);
+    }
+    
+    @PUT
+    @Path("prestamos/{id: \\d+}/usuarios/idUsuario/fecha")
+    public PrestamoDTO regresarLibro(@PathParam("id") Long id, PrestamoDTO m) throws BibliotecaLogicException, ParseException {
+        return prestamoLogic.updatePrestamo1(id,m);
     }
     
     @DELETE

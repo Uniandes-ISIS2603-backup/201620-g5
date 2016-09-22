@@ -44,7 +44,7 @@
                 if (id == null) {
 
                     // ejecuta POST en el recurso REST
-                    return $http.post(context, currentSala)
+                    return $http.post("api/bibliotecas" + "/salas", currentSala)
                         .then(function () {
                             // $http.post es una promesa
                             // cuando termine bien, cambie de estado

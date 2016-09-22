@@ -1,100 +1,102 @@
 (function (ng) {
-    var mod = ng.module("multasModule");
+    var mod = ng.module("librosModule");
 
-    mod.controller("multasCtrl", ['$scope', '$state', '$stateParams', '$http', 'multasContext', function ($scope, $state, $stateParams, $http, context) {
+    mod.controller("prestamosLibroCtrl", ['$scope', '$state', '$stateParams', '$http','librosContext',  
+        function ($scope, $state, $stateParams, $http, librosContext ) {
 
-            $scope.multas = {};
-            $http.get(context).then(function (response) {
-                $scope.multas = response.data;
+            // inicialmente el listado de prestamos
+            //  está vacio
+            $scope.prestamosContext = '/prestamos';
+            $scope.prestamos = {};
+            // carga las prestamos
+            $http.get(librosContext + "/" + $stateParams.libroId + $scope.prestamosContext).then(function (response) {
+                $scope.prestamos = response.data;
             }, responseError);
 
-            // el controlador recibió un salaId ??
-            // revisa los parámetros (ver el :salaId en la definición de la ruta)
-            if ($stateParams.multaId !== null && $stateParams.multaId !== undefined) {
+            // el controlador recibió un prestamoId ??
+            // revisa los parámetros (ver el :prestamoId en la definición de la ruta)
+            if ($stateParams.prestamoId !== null && $stateParams.prestamoId !== undefined) {
 
                 // toma el id del parámetro
-                id = $stateParams.multaId;
+                id = $stateParams.prestamoId;
                 // obtiene el dato del recurso REST
-                $http.get(context + "/" + id)
+                $http.get(librosContext + "/" + $stateParams.libroId +$scope.prestamosContext + "/" + id)
                         .then(function (response) {
                             // $http.get es una promesa
-                            // cuando llegue el dato, actualice currentRecord
-                            $scope.currentMulta = response.data;
+                            // cuando llegue el dato, actualice currentPrestamo
+                            $scope.currentPrestamo = response.data;
                         }, responseError);
 
-                // el controlador no recibió un salaId
+                // el controlador no recibió un prestamoId
             } else
             {
                 // el registro actual debe estar vacio
-                $scope.currentMulta = {
+                $scope.currentPrestamo = {
                     id: undefined /*Tipo Long. El valor se asigna en el backend*/,
-                    idUsuario: '' /*Tipo String*/,
-                    idBiblioteca: undefined,
-                    idRecurso: undefined,
-                    costo: undefined,
-                    fecha: ''
+               
+                   
                 };
 
                 $scope.alerts = [];
             }
-
-
-            this.saveMulta = function (id) {
-                currentMulta = $scope.currentMulta;
+            
+            this.savePrestamo = function (id) {
+                currentPrestamo = $scope.currentPrestamo;
 
                 // si el id es null, es un registro nuevo, entonces lo crea
                 if (id == null) {
 
                     // ejecuta POST en el recurso REST
-                    return $http.post("api/usuarios" + "/multas", currentMulta)
+                    return $http.post(librosContext + "/" + $stateParams.libroId + $scope.prestamosContext, currentPrestamo)
                             .then(function () {
                                 // $http.post es una promesa
                                 // cuando termine bien, cambie de estado
-                                $state.go('multasList');
+                                $state.go('prestamosList');
                             }, responseError);
 
                     // si el id no es null, es un registro existente entonces lo actualiza
                 } else {
 
                     // ejecuta PUT en el recurso REST
-                    return $http.put(context + "/" + currentMulta.id, currentMulta)
+                    return $http.put(librosContext + "/" + $stateParams.libroId + $scope.prestamosContext + "/" + currentPrestamo.id, currentPrestamo)
                             .then(function () {
                                 // $http.put es una promesa
                                 // cuando termine bien, cambie de estado
-                                $state.go('multasList');
+                                $state.go('prestamosList');
                             }, responseError);
                 }
                 ;
             };
-
-            this.deleteMulta = function (multa) {
-                return $http.delete(context + "/" + multa.multaId)
-                        .then(function () {
-                            // cuando termine bien, cambie de estado
-                            $state.reload();
-                        }, responseError);
+            
+             this.deletePrestamo = function (prestamo) {
+                return $http.delete($scope.prestamosContext + "/" + prestamo.prestamoId)
+                    .then(function () {
+                        // cuando termine bien, cambie de estado
+                        $state.reload();
+                    }, responseError);
             };
+            
 
 
-            // -----------------------------------------------------------------
+           // -----------------------------------------------------------------
             // Funciones para manejar las fechas
 
             $scope.popup = {
                 opened: false
             };
-            $scope.popup2 = {
+             $scope.popup2 = {
                 opened: false
             };
-
+           
             $scope.dateOptions = {
                 dateDisabled: false,
-                formatYear: 'yyyy',
-                maxDate: new Date(2020, 5, 22),
+                formatYear: 'yy',
+                maxDate: new Date(2020,5,22),
                 minDate: new Date(),
                 startingDay: 1
             };
 
-            $scope.dateOptions2 = {
+             $scope.dateOptions2 = {
                 dateDisabled: false,
                 formatYear: 'yy',
                 maxDate: new Date(2020, 5, 22),
@@ -115,22 +117,22 @@
             };
 
             this.open = function (fechaFinal) {
-
+                
                 $scope.popup.opened = true;
-                if (fechaFinal != null)
+                if(fechaFinal != null)
                 {
                     $scope.dateOptions.maxDate = fechaFinal;
                 }
-
+                
             };
-
-            this.open2 = function (fechaInicial) {
+            
+             this.open2 = function (fechaInicial) {
                 $scope.popup2.opened = true;
-                if (fechaInicial != null)
+                if(fechaInicial != null)
                 {
                     $scope.dateOptions2.minDate = fechaInicial;
                 }
-
+                
             };
 
 
@@ -168,38 +170,5 @@
                 self.showError(response.data);
             }
         }]);
-    mod.config(['$httpProvider', function ($httpProvider) {
-
-            // ISO 8601 Date Pattern: YYYY-mm-ddThh:MM:ss
-            var dateMatchPattern = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}/;
-
-            var convertDates = function (obj) {
-                for (var key in obj) {
-                    if (!obj.hasOwnProperty(key))
-                        continue;
-
-                    var value = obj[key];
-                    var typeofValue = typeof (value);
-
-                    if (typeofValue === 'object') {
-                        // If it is an object, check within the object for dates.
-                        convertDates(value);
-                    } else if (typeofValue === 'string') {
-                        if (dateMatchPattern.test(value)) {
-                            obj[key] = new Date(value);
-                        }
-                    }
-                }
-            }
-
-            $httpProvider.defaults.transformResponse.push(function (data) {
-                if (typeof (data) === 'object') {
-                    convertDates(data);
-                }
-
-                return data;
-            });
-        }]);
 
 })(window.angular);
-
