@@ -14,6 +14,7 @@
                 
                 // toma el id del parámetro
                 id = $stateParams.libroId;
+                console.log(id);
                 // obtiene el dato del recurso REST
                 $http.get(context + "/" + id)
                     .then(function (response) {

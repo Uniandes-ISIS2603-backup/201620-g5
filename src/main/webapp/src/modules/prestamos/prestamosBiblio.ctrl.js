@@ -20,6 +20,7 @@
 
                 // toma el id del parámetro
                 id = $stateParams.prestamoId;
+                console.log(id);
                 // obtiene el dato del recurso REST
                 $http.get(bibliotecasContext + "/" + $stateParams.bibliotecaId +$scope.prestamosContext + "/" + id)
                         .then(function (response) {

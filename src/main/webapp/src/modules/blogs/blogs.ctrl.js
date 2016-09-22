@@ -1,8 +1,8 @@
 (function (ng) {
     var mod = ng.module("librosModule");
 
-    mod.controller("blogsCtrl", ['$scope', '$state', '$stateParams', '$http','librosContext', 'usuariosContext', 'videosContext','librosContext','salasContext',
-        function ($scope, $state, $stateParams, $http, librosContext, usuariosContext, videosContext, librosContext, salasContext ) {
+    mod.controller("blogsCtrl", ['$scope', '$state', '$stateParams', '$http','librosContext',
+        function ($scope, $state, $stateParams, $http, librosContext ) {
             
     
             // inicialmente el listado de blogs
@@ -16,24 +16,28 @@
 
             // el controlador recibió un blogId ??
             // revisa los parámetros (ver el :blogId en la definición de la ruta)
-            if ($stateParams.blogId !== null && $stateParams.blogId !== undefined) {
+            if ($stateParams.id !== null && $stateParams.id !== undefined) {
 
+                console.log("prueba");
                 // toma el id del parámetro
-                id = $stateParams.blogId;
+                id = $stateParams.id;
+                console.log(id);
                 // obtiene el dato del recurso REST
                 $http.get(librosContext + "/" + $stateParams.libroId +$scope.blogsContext + "/" + id)
                         .then(function (response) {
+                            
                             // $http.get es una promesa
                             // cuando llegue el dato, actualice currentblog
-                            $scope.currentblog = response.data;
+                            $scope.currentBlog = response.data;
+                            console.log($scope.currentBlog);
                         }, responseError);
 
                 // el controlador no recibió un blogId
             } else
             {
                 // el registro actual debe estar vacio
-                $scope.currentblog = {
-                    id: undefined //Tipo Long. El valor se asigna en el backend,
+                $scope.currentBlog = {
+                    id: undefined, //Tipo Long. El valor se asigna en el backend,
                     
                    
                 };
@@ -42,13 +46,13 @@
             }
            
             
-            this.saveblog = function (id) {
-                currentblog = $scope.currentblog;
+            this.saveBlog = function (id) {
+                currentBlog = $scope.currentBlog;
                 // si el id es null, es un registro nuevo, entonces lo crea
                 if (id == null) {
 
                     // ejecuta POST en el recurso REST
-                    return $http.post(librosContext + "/" + $stateParams.libroId + $scope.blogsContext, currentblog)
+                    return $http.post(librosContext + "/" + $stateParams.libroId + $scope.blogsContext, currentBlog)
                             .then(function () {
                                 // $http.post es una promesa
                                 // cuando termine bien, cambie de estado
@@ -59,7 +63,7 @@
                 } else {
 
                     // ejecuta PUT en el recurso REST
-                    return $http.put(librosContext + "/" + $stateParams.libroId + $scope.blogsContext + "/" + currentblog.id, currentblog)
+                    return $http.put(librosContext + "/" + $stateParams.libroId + $scope.blogsContext + "/" + currentBlog.id, currentBlog)
                             .then(function () {
                                 // $http.put es una promesa
                                 // cuando termine bien, cambie de estado

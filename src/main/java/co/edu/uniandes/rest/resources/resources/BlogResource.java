@@ -64,7 +64,7 @@ public class BlogResource
     }
     @POST
     @Path("libros/{idLibro: \\d+}/blogs")
-    public BlogDTO createLibro(BlogDTO blog, @PathParam("idLibro") Long libro) throws BibliotecaLogicException {
+    public BlogDTO createLibro(@PathParam("idLibro") Long libro, BlogDTO blog) throws BibliotecaLogicException {
             return BlogLogic.createBlog(blog, libro);
     }
     @PUT
