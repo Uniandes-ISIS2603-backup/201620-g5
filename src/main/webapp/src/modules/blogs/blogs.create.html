@@ -8,11 +8,7 @@
    
         <fieldset>
             <input id="id" class="form-control" type="hidden" ng-model="currentBlog.id"/>
-            <div class="form-group col-md-12" ng-class="{'has-success': form.titulo.$valid && form.titulo.$dirty, 'has-error': form.titulo.$invalid && (form.titulo.$dirty || form.$submitted)}" >
-                <label for="titulo" class="col-md-2 control-label">Titulo</label>
-                <div class="col-md-10">
-                    <input id="titulo" name="titulo" class="form-control" type="text" ng-model="currentBlog.titulo" ng-init="currentBlog.titulo" required />
-                </div>
+            <div class="form-group col-md-12" ng-class="{'has-success': form.nombre.$valid && form.nombre.$dirty, 'has-error': form.nombre.$invalid && (form.nombre.$dirty || form.$submitted)}" >
                 <label for="nombre" class="col-md-2 control-label">Nombre</label>
                 <div class="col-md-10">
                     <input id="nombre" name="nombre" class="form-control" type="text" ng-model="currentBlog.nombre" ng-init="currentBlog.nombre" required />
@@ -23,20 +19,16 @@
                 </div>
                 <label for="texto" class="col-md-2 control-label">Texto</label>
                 <div class="col-md-10">
-                    <textarea rows="5" cols="50" id="texto" name="titulo" class="form-control" type="text" ng-model="currentBlog.texto" ng-init="currentBlog.texto" required></textarea>
+                    <input id="texto" name="texto" class="form-control" type="text" ng-model="currentBlog.texto" ng-init="currentBlog.texto" required />
                 </div>
-                <label for="fecha" class="col-md-2 control-label">Fecha</label>
+                <label for="titulo" class="col-md-2 control-label">Titulo</label>
                 <div class="col-md-10">
-                    <p class="input-group">
-                        <input  id="fecha" name="fechal"  ng-init="currentBlog.fechaInicial" type="text" class="form-control" uib-datepicker-popup ng-model="currentBlog.fechaInicial" is-open="popup.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
-                        <span class="input-group-btn">
-                            <button type="button" class="btn btn-default" ng-click="ctrl.open()"><i class="glyphicon glyphicon-calendar"></i></button>
-                        </span>
-                    </p>
+                    <input id="titulo" name="titulo" class="form-control" type="text" ng-model="currentBlog.titulo" ng-init="currentBlog.titulo" required />
                 </div>
             </div>
-            <button type="button" data-ui-sref='blogsList'>Cancelar</button>
+            <button type="button" data-ui-sref='blogList'>Cancelar</button>
             <button type="submit" >Guardar</button>    
         </fieldset>
     </form>
 </div>
+

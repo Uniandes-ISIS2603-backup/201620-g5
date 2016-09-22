@@ -1,12 +1,11 @@
 <div class="container-fluid" >
     <div class="row">
-            <button class="btn btn-default" ui-sref="blogCreate">Escribir nuevo blog</button></div>
+            <button class="btn btn-default" data-ui-sref="blogCreate">Escribir nuevo blog</button></div>
         <div class="row">
-    <table class="table table-striped" class="col-md-4">
+    <table class="table table-striped col-md-4">
         <thead>
             <tr>
                 <th>Id</th>
-                <th>Fecha</th>
                 <th>Titulo</th>
                 <th>Nombre</th>
                 <th>Autor</th>
@@ -15,7 +14,6 @@
         <tbody>
             <tr ng-repeat="blog in blogs">
                 <td id="{{$index}}-id">{{blog.id}}</td>
-                <td id="{{$index}}-fecha">{{blog.fecha}}</td>
                 <td id="{{$index}}-titulo">{{blog.titulo}}</td>
                 <td id="{{$index}}-nombre">{{blog.nombre}}</td>
                 <td id="{{$index}}-nombreAutor">{{blog.nombreAutor}}</td>
@@ -26,4 +24,5 @@
             </tr>
         </tbody>
     </table>
+</div>
 </div>

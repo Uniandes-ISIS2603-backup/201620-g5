@@ -18,7 +18,7 @@ public class BlogDTO {
     private Long idLibro;
     private String texto;
     private String nombreAutor;
-    private Date fecha;
+    // private Date fecha;
     private Long id;
 
     
@@ -27,14 +27,14 @@ public class BlogDTO {
     {}
     
     
-    public BlogDTO(String pTitulo, String pNombre, Long pIdLibro, String pTexto, String pNombreAutor, Date pFecha, Long pIdBlog)
+    public BlogDTO(String pTitulo, String pNombre, Long pIdLibro, String pTexto, String pNombreAutor, Long pIdBlog)
     {
         this.titulo= pTitulo;
         this.nombre = pNombre;
         this.idLibro = pIdLibro;
         this.texto = pTexto;
         this.nombreAutor = pNombreAutor;
-        this.fecha = pFecha;
+        //this.fecha = pFecha;
         this.id = pIdBlog;
     
     }
@@ -79,13 +79,13 @@ public class BlogDTO {
         this.nombreAutor = nombreAutor;
     }
 
-    public Date getFecha() {
+    /*public Date getFecha() {
         return fecha;
     }
 
     public void setFecha(Date fecha) {
         this.fecha = fecha;
-    }
+    }*/
 
     public Long getId() {
         return id;

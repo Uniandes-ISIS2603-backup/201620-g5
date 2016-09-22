@@ -39,12 +39,12 @@ public class BlogLogicMock {
             try
             {
             blogs = new ArrayList<>();
-            blogs.add(new BlogDTO("Titulo libro", "nombreReseña", 1L, "Aqui debe ir la reseña", "Juan Sebastian", formater.parse(fecha1), 1L));
-            blogs.add(new BlogDTO("Titulo libro", "nombreReseña", 1L, "Aqui debe ir la reseña", "Juan Sebastian", formater.parse(fecha2),2L));
-            blogs.add(new BlogDTO("Titulo libro", "nombreReseña", 2L, "Aqui debe ir la reseña", "Juan Sebastian", formater.parse(fecha3),3L));
-            blogs.add(new BlogDTO("Titulo libro", "nombreReseña", 3L, "Aqui debe ir la reseña", "Juan Sebastian", formater.parse(fecha4),4L));
-            blogs.add(new BlogDTO("Titulo libro", "nombreReseña", 3L, "Aqui debe ir la reseña", "Juan Sebastian", formater.parse(fecha5),5L));
-            blogs.add(new BlogDTO("Titulo libro", "nombreReseña", 3L, "Aqui debe ir la reseña", "Juan Sebastian", formater.parse(fecha2),6L));
+            blogs.add(new BlogDTO("Titulo libro", "nombreReseña", 1L, "Aqui debe ir la reseña", "Juan Sebastian", 1L)); 
+            blogs.add(new BlogDTO("Titulo libro", "nombreReseña", 1L, "Aqui debe ir la reseña", "Juan Sebastian", 2L));
+            blogs.add(new BlogDTO("Titulo libro", "nombreReseña", 2L, "Aqui debe ir la reseña", "Juan Sebastian", 3L));
+            blogs.add(new BlogDTO("Titulo libro", "nombreReseña", 3L, "Aqui debe ir la reseña", "Juan Sebastian", 4L));
+            blogs.add(new BlogDTO("Titulo libro", "nombreReseña", 3L, "Aqui debe ir la reseña", "Juan Sebastian", 5L));
+            blogs.add(new BlogDTO("Titulo libro", "nombreReseña", 3L, "Aqui debe ir la reseña", "Juan Sebastian", 6L));
             }
             catch(ParserException e)
             {
@@ -178,7 +178,7 @@ public class BlogLogicMock {
            blog.setTexto(b.getTexto());
            blog.setNombreAutor(b.getNombreAutor());
            blog.setNombre(b.getNombre());
-           blog.setFecha(b.getFecha());
+           ///blog.setFecha(b.getFecha());
            return blog;
        }
             logger.severe("No existe un blog con ese id");

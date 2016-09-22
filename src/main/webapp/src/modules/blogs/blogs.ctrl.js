@@ -1,9 +1,10 @@
 (function (ng) {
     var mod = ng.module("librosModule");
 
-    mod.controller("blogsCtrl", ['$scope', '$state', '$stateParams', '$http','librosContext',  
-        function ($scope, $state, $stateParams, $http, librosContext ) {
-
+    mod.controller("blogsCtrl", ['$scope', '$state', '$stateParams', '$http','librosContext', 'usuariosContext', 'videosContext','librosContext','salasContext',
+        function ($scope, $state, $stateParams, $http, librosContext, usuariosContext, videosContext, librosContext, salasContext ) {
+            
+    
             // inicialmente el listado de blogs
             //  está vacio
             $scope.blogsContext = '/blogs';
@@ -20,7 +21,7 @@
                 // toma el id del parámetro
                 id = $stateParams.blogId;
                 // obtiene el dato del recurso REST
-                $http.get($scope.blogsContext + "/" + id)
+                $http.get(librosContext + "/" + $stateParams.libroId +$scope.blogsContext + "/" + id)
                         .then(function (response) {
                             // $http.get es una promesa
                             // cuando llegue el dato, actualice currentblog
@@ -32,19 +33,17 @@
             {
                 // el registro actual debe estar vacio
                 $scope.currentblog = {
-                    id: undefined /*Tipo Long. El valor se asigna en el backend*/,
-               
+                    id: undefined //Tipo Long. El valor se asigna en el backend,
+                    
                    
                 };
 
                 $scope.alerts = [];
             }
-
            
             
             this.saveblog = function (id) {
                 currentblog = $scope.currentblog;
-
                 // si el id es null, es un registro nuevo, entonces lo crea
                 if (id == null) {
 
@@ -71,7 +70,7 @@
             };
             
              this.deleteblog = function (blog) {
-                return $http.delete($scope.blogsContext + "/" + blog.blogId)
+                return $http.delete(librosContext + "/" + $stateParams.libroId + $scope.blogsContext + "/" + blog.blogId)
                     .then(function () {
                         // cuando termine bien, cambie de estado
                         $state.reload();
@@ -86,8 +85,20 @@
             $scope.popup = {
                 opened: false
             };
+             $scope.popup2 = {
+                opened: false
+            };
+           
             $scope.dateOptions = {
-                dateDisabled: disabled,
+                dateDisabled: false,
+                formatYear: 'yyyy',
+                maxDate: new Date(2020,5,22),
+                minDate: new Date(),
+                startingDay: 1
+            };
+
+             $scope.dateOptions2 = {
+                dateDisabled: false,
                 formatYear: 'yy',
                 maxDate: new Date(2020, 5, 22),
                 minDate: new Date(),
@@ -106,15 +117,26 @@
                 $scope.dt = new Date(year, month, day);
             };
 
-            this.open = function () {
+            this.open = function (fechaFinal) {
+                
                 $scope.popup.opened = true;
+                if(fechaFinal != null)
+                {
+                    $scope.dateOptions.maxDate = fechaFinal;
+                }
+                
+            };
+            
+             this.open2 = function (fechaInicial) {
+                $scope.popup2.opened = true;
+                if(fechaInicial != null)
+                {
+                    $scope.dateOptions2.minDate = fechaInicial;
+                }
+                
             };
 
-            function disabled(data) {
-                var date = data.date,
-                        mode = data.mode;
-                return mode === 'day' && (date.getDay() === 0 || date.getDay() === 6);
-            }
+
 
 
             // Funciones para manejar los mensajes en la aplicación
@@ -149,5 +171,35 @@
                 self.showError(response.data);
             }
         }]);
+    mod.config(['$httpProvider', function ($httpProvider) {
 
+    // ISO 8601 Date Pattern: YYYY-mm-ddThh:MM:ss
+    var dateMatchPattern = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}/;
+
+   var convertDates = function (obj) {
+      for (var key in obj) {
+         if (!obj.hasOwnProperty(key)) continue;
+
+         var value = obj[key];
+         var typeofValue = typeof (value);
+
+         if (typeofValue === 'object') {
+            // If it is an object, check within the object for dates.
+            convertDates(value);
+         } else if (typeofValue === 'string') {
+            if (dateMatchPattern.test(value)) {
+               obj[key] = new Date(value);
+            }
+         }
+      }
+   }
+
+   $httpProvider.defaults.transformResponse.push(function (data) {
+      if (typeof (data) === 'object') {
+         convertDates(data);
+      }
+
+      return data;
+   });
+}]);
 })(window.angular);
