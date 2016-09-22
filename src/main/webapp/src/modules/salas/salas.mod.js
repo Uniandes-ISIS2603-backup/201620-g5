@@ -26,6 +26,17 @@
                     }
                 }
 
+            }).state('salaDisponibilidad', {
+                url: '/salas/create',
+                parent: 'bibliotecaEdit',
+                views: {
+                    'bibliotecaInstanceView': {
+                        controller: 'salasCtrl',
+                        controllerAs: 'ctrl',
+                        templateUrl: basePath + 'salas.create.html'
+                    }
+                }
+
             }).state('salaEdit', {
                 url: '/salas/:salaId',
                 parent: 'bibliotecaEdit',

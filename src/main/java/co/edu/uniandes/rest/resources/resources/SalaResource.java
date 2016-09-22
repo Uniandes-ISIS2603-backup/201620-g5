@@ -56,7 +56,7 @@ public class SalaResource {
 
     @POST
     @Path("bibliotecas/salas")
-    public SalaDTO createSala(SalaDTO sala) throws BibliotecaLogicException, BibliotecaLogicException {
+    public SalaDTO createSala(SalaDTO sala) throws BibliotecaLogicException{
         return salaLogic.createSala(sala);
     }
     
@@ -75,5 +75,13 @@ public class SalaResource {
     public SalaDTO deleteSala(@PathParam("id") Long id) throws BibliotecaLogicException 
     {
         return salaLogic.deleteSala(id);
+    }
+    /*
+    R13
+    */
+    @GET
+    @Path("salas/ {id: \\d+}")
+    public SalaDTO getDisponibilidadSala(@PathParam("id") Long idSala, String fecha){
+        return salaLogic.getDisponibilidadSala(idSala, fecha);
     }
 }

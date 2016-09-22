@@ -328,6 +328,11 @@ public class PrestamoLogicMock {
         }
     }
 
+    /**
+     * R12 Ver prestamos activos de un libro
+     * @param id id del libro a consultar
+     * @return lista de los prestamos activos del libro
+     */
     public List<PrestamoDTO> getPrestamosLibro(Long id) {
         ArrayList<PrestamoDTO> presLib;
         presLib = new ArrayList<>();

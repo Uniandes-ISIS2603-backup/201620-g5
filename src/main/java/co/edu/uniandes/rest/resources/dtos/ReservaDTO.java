@@ -5,12 +5,19 @@
  */
 package co.edu.uniandes.rest.resources.dtos;
 
+import java.util.Date;
+
 
 /**
  * Objeto de transferencia de datos de Ciudades.
  * @author sf.munera10
  */
 public class ReservaDTO {
+    
+    public static final String LIBRO = "Libro";
+    public static final String VIDEO = "Video";
+    public static final String SALA = "Sala";
+    
     private Long id;
     private Long idUsuario;
     private Long idBiblioteca;
@@ -18,6 +25,8 @@ public class ReservaDTO {
     private Long idRecurso;
     private RecursoDTO recurso;
     private String tipoRecurso;
+    private Date fechaInicial;
+    private Date fechaFinal;
 
     /**
      * Constructor por defecto
@@ -78,6 +87,40 @@ public class ReservaDTO {
     public void setIdRecurso(Long idRecurso) {
         this.idRecurso = idRecurso;
     }
+
+    public RecursoDTO getRecurso() {
+        return recurso;
+    }
+
+    public void setRecurso(RecursoDTO recurso) {
+        this.recurso = recurso;
+    }
+
+    public String getTipoRecurso() {
+        return tipoRecurso;
+    }
+
+    public void setTipoRecurso(String tipoRecurso) {
+        this.tipoRecurso = tipoRecurso;
+    }
+
+    public Date getFechaInicial() {
+        return fechaInicial;
+    }
+
+    public void setFechaInicial(Date fechaInicial) {
+        this.fechaInicial = fechaInicial;
+    }
+
+    public Date getFechaFinal() {
+        return fechaFinal;
+    }
+
+    public void setFechaFinal(Date fechaFinal) {
+        this.fechaFinal = fechaFinal;
+    }
+    
+    
 	
     @Override
     public String toString() {

@@ -155,6 +155,12 @@ public class ReservaLogicMock {
         throw new BibliotecaLogicException("No existe una reserva con ese id");
     }
 
+    
+    /**
+     * R11: Dar reservas activas de un libro
+     * @param id id del libro a consultar
+     * @return lista de las reservas activas del libro.
+     */
     public List<ReservaDTO> getReservasLibro(Long id) {
         ArrayList<ReservaDTO> resLib;
         resLib = new ArrayList<>();
