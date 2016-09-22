@@ -1,0 +1,39 @@
+<div class="container-fluid" >
+
+
+    <table class="table table-striped col-md-4">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Id Usuario</th>
+                <th>Id Biblioteca</th>
+                <th>Tipo de recurso</th>
+                <th>Nombre del recurso</th>
+                <th>Costo</th>
+                <th>Medio de pago</th>
+                <th>Fecha  inicial</th>
+                <th>Fecha Final</th>
+                <th>Esta activo</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="prestamo in prestamos">
+                <td id="{{$index}}-id">{{prestamo.id}}</td>
+                <td id="{{$index}}-usuario">{{prestamo.usuario.id}}</td>
+                <td id="{{$index}}-idBiblioteca">{{prestamo.idBiblioteca}}</td>
+                <td id="{{$index}}-tipoRecurso">{{prestamo.tipoRecurso}}</td>
+                <td id="{{$index}}-recurso">{{prestamo.recurso.name}}</td>
+                <td id="{{$index}}-costo">{{prestamo.costo}}</td>
+                <td id="{{$index}}-medioPago">{{prestamo.medioPago}}</td>
+                <td id="{{$index}}-fechaInicial">{{prestamo.fechaInicial}}</td>
+                <td id="{{$index}}-fechaFinal">{{prestamo.fechaFinal}}</td>
+                <td id="{{$index}}-estaActivo">{{prestamo.estaActivo}}</td>
+
+                <td>
+                    <button id="{{$index}}-edit-btn" class="btn btn-default btn-sm" data-ui-sref="prestamoSoloEdit({prestamoId: prestamo.id})"><span class="glyphicon glyphicon-edit"></span> Regresar Libro</button>                    
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

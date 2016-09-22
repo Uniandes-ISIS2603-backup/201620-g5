@@ -199,7 +199,7 @@ public class SalaLogicMock {
             logger.info("Generando id para la nueva sala");
             logger.info("Generando idBiblioteca para la nueva sala");
             logger.info("Generando idRecurso para la nueva sala");
-            long newId = newSala.getId();
+            long newId = 1L;
             for (SalaDTO sala : salas) {
                 if (newId <= sala.getId()) {
                     newId = sala.getId() + 1;

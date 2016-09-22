@@ -35,8 +35,31 @@
                         templateUrl: basePath + 'prestamosBiblio.create.html'
                     }
                 }
-            })
-            .state('prestamosBiblioList', {
+            }).state('prestamosSolosList', {
+                url: '/prestamos',
+                parent: 'libroEdit',
+                views: {
+                    'libroInstanceView': {
+                        controller: 'prestamosSolosCtrl',
+                        controllerAs: 'ctrl',
+                        templateUrl: basePath + 'prestamosSolos.list.html'
+                    }
+                }
+
+            }).state('prestamoSoloEdit', {
+                url: '/prestamos/edit/:prestamoId',
+                parent: 'libroEdit',
+                param: {
+                    prestamoId: null
+                },
+                views: {
+                    'libroInstanceView': {
+                        controller: 'prestamosSolosCtrl',
+                        controllerAs: 'ctrl',
+                        templateUrl: basePath + 'prestamosSolos.list.html'
+                    }
+                }
+            }).state('prestamosBiblioList', {
                 url: '/prestamos',
                 parent: 'bibliotecaPrestar',
                 views: {
