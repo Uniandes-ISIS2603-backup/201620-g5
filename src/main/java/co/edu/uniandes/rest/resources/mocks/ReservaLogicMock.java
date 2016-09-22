@@ -14,6 +14,10 @@ import java.util.logging.Logger;
 import co.edu.uniandes.rest.resources.dtos.BiblioDTO;
 import co.edu.uniandes.rest.resources.dtos.ReservaDTO;
 import co.edu.uniandes.rest.resources.exceptions.BibliotecaLogicException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+
+
 
 /*
  * CityLogicMock
@@ -33,13 +37,32 @@ public class ReservaLogicMock {
      * Constructor. Crea los datos de ejemplo.
      */
     public ReservaLogicMock() {
+       
 
         if (reservas == null) {
+                String fecha1 = "2016-09-25";
+                String fecha2 = "2016-09-26";
+                String fecha3 = "2016-09-27";
+                String fecha4 = "2016-09-28";
+                String fecha5 = "2016-09-29";
+                String fecha6 = "2016-09-30";
+                String fecha7 = "2016-10-01";
+                String fecha8 = "2016-10-02";
+                String fecha9 = "2016-10-03";
+                String fecha10 = "2016-10-04";
+                String fecha11 = "2016-10-05";
+                String fecha12 = "2016-10-06";
+                SimpleDateFormat formater = new SimpleDateFormat("yyyy-MM-dd");
             reservas = new ArrayList<>();
-            reservas.add(new ReservaDTO(1L, 1L,1L, true,1L));
-            reservas.add(new ReservaDTO(2L, 2L,2L, true,2L));
-            reservas.add(new ReservaDTO(3L, 3L,3L, true,3L));
-            reservas.add(new ReservaDTO(4L, 4L,4L, true,4L));
+            try {
+                reservas.add(new ReservaDTO(1L, 1L,1L,ReservaDTO.LIBRO,"caperucita",formater.parse(fecha1),true));
+                reservas.add(new ReservaDTO(2L, 2L,2L, ReservaDTO.SALA, "Sala1", formater.parse(fecha2),true));
+                reservas.add(new ReservaDTO(3L, 3L,3L, ReservaDTO.VIDEO, "El video", formater.parse(fecha3), true));
+                reservas.add(new ReservaDTO(4L, 4L,4L, ReservaDTO.LIBRO,"libro",formater.parse(fecha4), true));
+            } catch (ParseException ex) {
+                Logger.getLogger(ReservaLogicMock.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
             
         }
 
@@ -49,8 +72,8 @@ public class ReservaLogicMock {
         // muestra información 
         logger.info("Inicializa la lista de reservas");
         logger.info("Reservas" + reservas);
-    }
-
+        }
+   
     /**
      * Obtiene el listado de personas.
      *
@@ -102,7 +125,7 @@ public class ReservaLogicMock {
             }
             
             newReserva.setId(newId);
-            recursos.getRecurso(newReserva.getIdRecurso()).setEstaPrestado(true);
+            
         }
 
         // agrega la ciudad
@@ -132,7 +155,7 @@ public class ReservaLogicMock {
         if (reservaE != null) {
             reservaE.setId(reserva.getId());
             reservaE.setIdBiblioteca(reserva.getIdBiblioteca());
-            reservaE.setIdRecurso(reserva.getIdRecurso());
+            
             reservaE.setIdUsuario(reserva.getIdUsuario());
             reservaE.setEstaA(reserva.isEstaA());
             return reservaE;
@@ -164,5 +187,78 @@ public class ReservaLogicMock {
             }
         }
         return resLib;
+    }
+
+    public List<ReservaDTO> getReservasBiblioteca(Long id) {
+        ArrayList<ReservaDTO> resBiblioteca;
+        resBiblioteca = new ArrayList<>();
+        for (ReservaDTO r : reservas) {
+            if (id.equals(r.getIdBiblioteca())) {
+                resBiblioteca.add(r);
+            }
+        }
+        return resBiblioteca;
+    }
+
+    public ReservaDTO getReservaDeBiblioteca(Long id, Long idBiblioteca) throws BibliotecaLogicException {
+        ReservaDTO respuesta=null;
+        List<ReservaDTO> reservasBiblio= getReservasBiblioteca(idBiblioteca);
+        for(ReservaDTO r:reservasBiblio){
+            if(r.getId()==id){
+                respuesta=r;
+            }
+        }
+        if( respuesta==null){
+            throw new BibliotecaLogicException("La reserva no existe");
+        }
+        return respuesta;
+    }
+
+    public ReservaDTO createReservaBiblioteca(ReservaDTO newReserva, Long idBiblioteca) throws BibliotecaLogicException {
+        logger.info("recibiendo solicitud de agregar reserva " + newReserva);
+        // agrega el reserva
+        // el nuevo reserva tiene id ?
+        if (newReserva.getId() != null) {
+            // busca la sala con el id suministrado segun el id de Biblioteca
+            for (ReservaDTO reserva : reservas) {
+                // si existe una sala con ese id
+                if (reserva.getId() == newReserva.getId()) {
+                    logger.severe("Ya existe un reserva con ese id");
+                    throw new BibliotecaLogicException("Ya existe un reserva con ese id");
+                }
+            }
+
+            // el nuevo reserva no tiene id ? 
+        } else {
+
+            // genera un id para la sala
+            logger.info("Generando id para el nuevo reserva");
+            logger.info("Generando idUsuario para el nuevo reserva");
+            long newId = 1;
+            for (ReservaDTO reserva : reservas) {
+                if (newId <= reserva.getId()) {
+                    newId = reserva.getId() + 1;
+                }
+            }
+            newReserva.setId(newId);
+            newReserva.setIdBiblioteca(idBiblioteca);
+            newReserva.getRecurso().setEstaPrestado(true);
+    }
+        return newReserva;
+    }
+
+    public ReservaDTO updateReservaDeBiblioteca(Long id, ReservaDTO m, Long idBiblioteca) throws BibliotecaLogicException {
+        
+        ReservaDTO reserva=getReservaDeBiblioteca(id, idBiblioteca);
+        reserva.actualizar(m, idBiblioteca);
+        
+                return reserva;
+    }
+
+    public ReservaDTO deleteReservaDeBiblioteca(Long id, Long idBiblioteca) throws BibliotecaLogicException {
+        ReservaDTO reserva=getReservaDeBiblioteca(id, idBiblioteca);
+        reservas.remove(reserva);
+        return reserva;
+        
     }
 }

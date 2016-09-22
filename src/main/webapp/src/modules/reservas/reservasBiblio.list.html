@@ -1,0 +1,42 @@
+<div class="container-fluid" >
+   
+    <div class="row">
+            <button class="btn btn-default" ui-sref="reservaCreate">Crear nuevo reserva</button></div>
+        <div class="row">
+    <table class="table table-striped col-md-4">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Id Usuario</th>
+                <th>Id Biblioteca</th>
+                <th>Tipo de recurso</th>
+                <th>Nombre del recurso</th>
+               
+                
+                <th>Fecha  inicial</th>
+               
+                <th>Esta activo</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="reserva in reservas">
+                <td id="{{$index}}-id">{{reserva.id}}</td>
+                <td id="{{$index}}-usuario">{{reserva.usuario.id}}</td>
+                <td id="{{$index}}-idBiblioteca">{{reserva.idBiblioteca}}</td>
+                <td id="{{$index}}-tipoRecurso">{{reserva.tipoRecurso}}</td>
+                <td id="{{$index}}-recurso">{{reserva.recurso.name}}</td>
+               
+                
+                <td id="{{$index}}-fechaInicial">{{reserva.fechaInicial}}</td>
+                
+                <td id="{{$index}}-estaActivo">{{reserva.estaActivo}}</td>
+                
+                <td>
+                    <button id="{{$index}}-edit-btn" class="btn btn-default btn-sm" data-ui-sref="reservaBiblioEdit({reservaId: reserva.id})"><span class="glyphicon glyphicon-edit"></span> Editar</button>
+                    <button id="{{$index}}-delete-btn" class="btn btn-default btn-sm" ng-click="ctrl.deletePrestamo({reservaId: reserva.id})"><span class="glyphicon glyphicon-minus"></span> Eliminar</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

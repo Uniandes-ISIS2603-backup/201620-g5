@@ -5,19 +5,28 @@
  */
 package co.edu.uniandes.rest.resources.dtos;
 
+import java.util.Date;
+
 
 /**
  * Objeto de transferencia de datos de Ciudades.
  * @author sf.munera10
  */
 public class ReservaDTO {
+    
+    public static final String LIBRO = "Libro";
+    public static final String VIDEO = "Video";
+    public static final String SALA = "Sala";
+    
     private Long id;
     private Long idUsuario;
     private Long idBiblioteca;
     private boolean estaA;
-    private Long idRecurso;
     private RecursoDTO recurso;
+    private String nombreRecurso;
     private String tipoRecurso;
+    private Date fechaInicial;
+    private Long idRecurso;
 
     /**
      * Constructor por defecto
@@ -30,13 +39,17 @@ public class ReservaDTO {
      * @param id identificador de la ciudad
      * @param name nombre de la ciudad
      */
-    public ReservaDTO(Long id, Long idUsuario, Long idBiblioteca, boolean estaA, Long idRecurso) {
+    public ReservaDTO(Long id, Long idUsuario, Long idBiblioteca, String tipoRecurso, String nombreRecurso, Date fechaInicio, boolean estaA) {
 		super();
 		this.id = id;
                 this.idUsuario = idUsuario;
 		this.idBiblioteca = idBiblioteca;
                 this.estaA = estaA;
-                this.idRecurso=idRecurso;
+                this.nombreRecurso=nombreRecurso;
+                this.tipoRecurso=tipoRecurso;
+                this.fechaInicial=fechaInicio;
+                
+                
 	}
 
     public Long getId() {
@@ -71,6 +84,38 @@ public class ReservaDTO {
         this.estaA = estaA;
     }
 
+    public RecursoDTO getRecurso() {
+        return recurso;
+    }
+
+    public void setRecurso(RecursoDTO recurso) {
+        this.recurso = recurso;
+    }
+
+    public String getNombreRecurso() {
+        return nombreRecurso;
+    }
+
+    public void setNombreRecurso(String nombreRecurso) {
+        this.nombreRecurso = nombreRecurso;
+    }
+
+    public String getTipoRecurso() {
+        return tipoRecurso;
+    }
+
+    public void setTipoRecurso(String tipoRecurso) {
+        this.tipoRecurso = tipoRecurso;
+    }
+
+    public Date getFechaInicio() {
+        return fechaInicial;
+    }
+
+    public void setFechaInicio(Date fechaInicio) {
+        this.fechaInicial = fechaInicio;
+    }
+
     public Long getIdRecurso() {
         return idRecurso;
     }
@@ -78,9 +123,17 @@ public class ReservaDTO {
     public void setIdRecurso(Long idRecurso) {
         this.idRecurso = idRecurso;
     }
+    
+    
+
+    
 	
     @Override
     public String toString() {
     	return "{ id : " + getId() + ", idUsuario : \"" + getIdUsuario()+ ", idBiblioteca : \"" + getIdBiblioteca()+ ", Esta Activo : \"" + isEstaA()+ ",idRecurso : \"" + getIdRecurso()+"\" }" ;  
+    }
+
+    public void actualizar(ReservaDTO m, Long idBiblioteca) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

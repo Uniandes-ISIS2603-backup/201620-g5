@@ -81,11 +81,40 @@ public class ReservaResource {
     public void deleteReserva(@PathParam("id") int id)throws BibliotecaLogicException{
         reservaLogic.deleteReserva(id);
     }
-    
+   
     @GET
     @Path("libros/{idLibro: \\d+}/reservas")
     public List<ReservaDTO> getReservasLibro(@PathParam("idLibro") Long id){
         return reservaLogic.getReservasLibro(id);
+    }
+    
+    @GET
+    @Path("bibliotecas/{idBiblioteca: \\d+}/reservas")
+    public List<ReservaDTO> getReservasBiblioteca(@PathParam("idBiblioteca") Long id){
+        return reservaLogic.getReservasBiblioteca(id);
+    }
+    @GET
+    @Path("bibliotecas/{idBiblioteca: \\d+}/reservas/{id: \\d+}")
+    public ReservaDTO getReservaDeBiblioteca(@PathParam("id") Long id, @PathParam("idBiblioteca") Long idBiblioteca) throws BibliotecaLogicException {
+        return reservaLogic.getReservaDeBiblioteca(id, idBiblioteca);
+    }
+    
+    @POST
+    @Path("bibliotecas/{idBiblioteca: \\d+}/reservas")
+    public ReservaDTO createReservaBiblioteca(ReservaDTO reserva, @PathParam("idBiblioteca") Long idBiblioteca) throws  BibliotecaLogicException {
+        return reservaLogic.createReservaBiblioteca(reserva, idBiblioteca);
+    }
+    
+    @PUT
+    @Path("bibliotecas/{idBiblioteca: \\d+}/reservas/{id: \\d+}")
+    public ReservaDTO updateReservaBiblioteca(@PathParam("id") Long id, ReservaDTO m, @PathParam("idBiblioteca") Long idBiblioteca) throws BibliotecaLogicException {
+        return reservaLogic.updateReservaDeBiblioteca(id, m, idBiblioteca);
+    }
+    
+    @DELETE
+    @Path("bibliotecas/{idBiblioteca: \\d+}/reservas/{id: \\d+}")
+    public ReservaDTO deleteReservaBiblioteca(@PathParam("id") Long id, @PathParam("idBiblioteca") Long idBiblioteca) throws  BibliotecaLogicException {
+        return reservaLogic.deleteReservaDeBiblioteca(id, idBiblioteca);
     }
 
 }

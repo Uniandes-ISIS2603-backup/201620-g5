@@ -1,0 +1,73 @@
+
+
+    <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="ctrl.closeAlert($index)" dismiss-on-timeout="5000">{{alert.msg}} </alert>
+    <form novalidate name="form" id="reserva-form" role="form" ng-submit="form.$valid && ctrl.saveReserva(currentReserva.id)">
+        
+        <div ng-messages="form.$error">
+            <div ng-message="required">Llene los espacios especificados:</div>
+        </div>
+   
+        <fieldset>            
+            <input id="id" class="form-control" type="hidden" ng-model="currentReserva.id"/>
+            <!-- idUsuario -->
+            <div class="form-group col-md-6" ng-class="{'has-success': form.name.$valid && form.name.$dirty, 'has-error': form.name.$invalid && (form.name.$dirty || form.$submitted)}" >
+                <label for="usuario" class="col-md-4 control-label">Usuario</label>
+                <div class="col-md-10">
+                    <select id="usuario" name="usuario" ng-options="rc.id for rc in usuarios track by rc.id" class="form-control" type="text" ng-model="currentReserva.usuario" ></select>
+                </div>
+            <!-- tipoRecurso -->
+                <label for="tipoRecurso" class="col-md-4 control-label">Tipo de Recurso</label>
+                <div class="col-md-10">
+                    <form action = ""> 
+                    <select id="tipoRecurso" name="tipoRecurso" class="form-control" ng-model="currentReserva.tipoRecurso" ng-init="currentReserva.tipoRecurso" required>
+                    <option selected> ---</option>
+                    <option value="Video">Video</option>
+                    <option value="Libro">Libro</option>
+                    <option value="Sala">Sala</option>
+                </select>
+                    </form>
+                </div>
+            <!-- nombreRecurso -->
+            <div>
+                <label for="nombreRecurso" class="col-md-4 control-label">Recurso</label>
+               <div class="col-md-10" ng-if= "currentReserva.tipoRecurso=='Video'">
+                <select id="video" name="video" ng-options="rc.name for rc in videos track by rc.id" class="form-control" type="text" ng-model="currentReserva.nombreRecurso" ></select>
+                </div>
+                 <div class="col-md-10" ng-if="currentReserva.tipoRecurso=='Libro'">
+                 <select id="libro" name="libro" ng-options="rc.name for rc in libros track by rc.id" class="form-control" type="text" ng-model="currentReserva.nombreRecurso" ></select>
+                </div>
+                 <div class="col-md-10" ng-if="currentReserva.tipoRecurso=='Sala'">
+                 <select id="sala" name="sala" ng-options="rc.name for rc in salas track by rc.id" class="form-control" type="text" ng-model="currentReserva.nombreRecurso" ></select>
+                </div>
+                <div class="col-md-10" ng-if="currentReserva.tipoRecurso!='Video' && currentReserva.tipoRecurso!='Libro'&& currentReserva.tipoRecurso!='Sala'">
+                <input id ="nombreRecurso" name ="nombreRecurso" class="form-control" type="text" placeholder="Seleccione un tipo de recurso primero" disabled><br>
+                </div>
+            </div>
+                
+                
+                
+            <!-- Fecha inicial -->
+                <label for="fechaInicial" class="col-md-4 control-label">Fecha Inicial</label>
+                <div class="col-md-10">
+                    <p class="input-group">
+                        <input  id="fechaInicial" name="fechaInicial"  type="text" class="form-control" uib-datepicker-popup ng-model="currentReserva.fechaInicial" is-open="popup.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-default" ng-click="ctrl.open(currentReserva.fechaFinal)"><i class="glyphicon glyphicon-calendar"></i></button>
+                        </span>
+                    </p>
+                </div>
+                
+                
+                <label for="estaActivo" class="col-md-4 control-label">¿Está activo?</label>
+                <div class="col-md-9">
+                    <input id="estaActivo" name="estaActivo" class="form-control" type="checkbox" ng-model="currentReserva.estaActivo" ng-init="currentReserva.estaActivo" novalidate />
+                </div>
+            </div>
+             <div class="form-group col-md-12">
+                <button type="button" ui-sref='reservasBiblioList'>Cancel</button>
+                <button type="submit" >Save</button>   
+            </div>
+        </fieldset>
+       
+    </form>
+
