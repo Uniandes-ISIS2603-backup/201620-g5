@@ -14,6 +14,16 @@
                         templateUrl: basePath + 'reservas.list.html'
                     }
                 }
+            }).state('reservasLibroList', {
+                url: '/reservas',
+                parent: 'libroEdit',
+                views: {
+                    'libroInstanceView': {
+                        controller: 'reservasLibroCtrl',
+                        controllerAs: 'ctrl',
+                        templateUrl: basePath + 'reservas.list.html'
+                    }
+                }
             }).state('reservaCreate', {
                 url: '/reservas/create',
                 views: {

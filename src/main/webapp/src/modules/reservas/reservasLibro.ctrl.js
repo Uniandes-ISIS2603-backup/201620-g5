@@ -1,16 +1,16 @@
 (function (ng) {
     var mod = ng.module("librosModule");
 
-    mod.controller("prestamosLibroCtrl", ['$scope', '$state', '$stateParams', '$http','librosContext',  
+    mod.controller("reservasLibroCtrl", ['$scope', '$state', '$stateParams', '$http','librosContext',  
         function ($scope, $state, $stateParams, $http, librosContext ) {
 
             // inicialmente el listado de prestamos
             //  está vacio
-            $scope.prestamosContext = '/prestamos';
-            $scope.prestamos = {};
+            $scope.reservasContext = '/reservas';
+            $scope.reservas = {};
             // carga las prestamos
-            $http.get(librosContext + "/" + $stateParams.libroId + $scope.prestamosContext).then(function (response) {
-                $scope.prestamos = response.data;
+            $http.get(librosContext + "/" + $stateParams.libroId + $scope.reservasContext).then(function (response) {
+                $scope.reservas = response.data;
             }, responseError);
 
             // el controlador recibió un prestamoId ??
@@ -20,18 +20,18 @@
                 // toma el id del parámetro
                 id = $stateParams.prestamoId;
                 // obtiene el dato del recurso REST
-                $http.get(librosContext + "/" + $stateParams.libroId +$scope.prestamosContext + "/" + id)
+                $http.get(librosContext + "/" + $stateParams.libroId +$scope.reservasContext + "/" + id)
                         .then(function (response) {
                             // $http.get es una promesa
                             // cuando llegue el dato, actualice currentPrestamo
-                            $scope.currentPrestamo = response.data;
+                            $scope.currentReserva = response.data;
                         }, responseError);
 
                 // el controlador no recibió un prestamoId
             } else
             {
                 // el registro actual debe estar vacio
-                $scope.currentPrestamo = {
+                $scope.currentReserva = {
                     id: undefined /*Tipo Long. El valor se asigna en el backend*/,
                
                    
@@ -40,36 +40,36 @@
                 $scope.alerts = [];
             }
             
-            this.savePrestamo = function (id) {
-                currentPrestamo = $scope.currentPrestamo;
+            this.saveReserva = function (id) {
+                currentReserva = $scope.currentReserva;
 
                 // si el id es null, es un registro nuevo, entonces lo crea
                 if (id == null) {
 
                     // ejecuta POST en el recurso REST
-                    return $http.post(librosContext + "/" + $stateParams.libroId + $scope.prestamosContext, currentPrestamo)
+                    return $http.post(librosContext + "/" + $stateParams.libroId + $scope.reservasContext, currentReserva)
                             .then(function () {
                                 // $http.post es una promesa
                                 // cuando termine bien, cambie de estado
-                                $state.go('prestamosLibroList');
+                                $state.go('reservasLibroList');
                             }, responseError);
 
                     // si el id no es null, es un registro existente entonces lo actualiza
                 } else {
 
                     // ejecuta PUT en el recurso REST
-                    return $http.put(librosContext + "/" + $stateParams.libroId + $scope.prestamosContext + "/" + currentPrestamo.id, currentPrestamo)
+                    return $http.put(librosContext + "/" + $stateParams.libroId + $scope.reservasContext + "/" + currentReserva.id, currentReserva)
                             .then(function () {
                                 // $http.put es una promesa
                                 // cuando termine bien, cambie de estado
-                                $state.go('prestamosLibroList');
+                                $state.go('reservasLibroList');
                             }, responseError);
                 }
                 ;
             };
             
-             this.deletePrestamo = function (prestamo) {
-                return $http.delete($scope.prestamosContext + "/" + prestamo.prestamoId)
+             this.deleteReserva = function (reserva) {
+                return $http.delete($scope.reservasContext + "/" + reserva.id)
                     .then(function () {
                         // cuando termine bien, cambie de estado
                         $state.reload();

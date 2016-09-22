@@ -15,7 +15,7 @@
                         templateUrl: basePath + 'prestamos.list.html'
                     }
                 }
-            }).state('libroPrestamosList', {
+            }).state('prestamosLibroList', {
                 url: '/prestamos',
                 parent: 'libroEdit',
                 views: {
