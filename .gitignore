@@ -8,7 +8,7 @@ tmp/
 *.class
 
 # Binaries produced by Maven
-/target/
+target/
 
 # Package Files
 *.jar
@@ -23,6 +23,7 @@ hs_err_pid*
 
 # Bower
 bower_components/
+/bibloteca.web/src/main/webapp/bower_components
 
 # Grunt 
 .grunt
