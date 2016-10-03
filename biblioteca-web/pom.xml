@@ -8,7 +8,7 @@
 		<version>1.0-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
-    <artifactId>biblioteca.web</artifactId>
+    <artifactId>biblioteca-web</artifactId>
     <packaging>war</packaging>
 
     <name>sistemaBibliotecas(G5)</name>

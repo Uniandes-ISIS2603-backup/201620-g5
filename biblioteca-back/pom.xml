@@ -8,7 +8,7 @@
 		<version>1.0-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
-    <artifactId>bibliotecas.back</artifactId>
+    <artifactId>bibliotecas-back</artifactId>
     <packaging>jar</packaging>
 	
     <dependencies>
