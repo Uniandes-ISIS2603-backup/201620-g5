@@ -9,6 +9,8 @@ tmp/
 
 # Binaries produced by Maven
 target/
+biblioteca-web/target/
+biblioteca-back/target/
 
 # Package Files
 *.jar
@@ -37,6 +39,9 @@ node_modules/
 # NetBeans
 nbactions.xml
 /nb-configuration.xml
+biblioteca-web/nb-configuration.xml/
+biblioteca-back/nb-configuration.xml/
+
 
 # Eclipse 
 .project
