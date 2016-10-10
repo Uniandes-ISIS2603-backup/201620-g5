@@ -23,15 +23,14 @@ SOFTWARE.
  */
 package co.edu.uniandes.g5.bibliotecas.api;
 
-import co.edu.uniandes.csw.company.entities.EmployeeEntity;
+import co.edu.uniandes.g5.bibliotecas.entities.SalaEntity;
 import java.util.List;
 
-public interface IEmployeeLogic {
-    
-    public List<EmployeeEntity> getEmployees();
-    public EmployeeEntity getEmployee(Long id);
-    public EmployeeEntity getEmployeeByName(String name);
-    public EmployeeEntity createEmployee(EmployeeEntity entity); 
-    public EmployeeEntity updateEmployee(EmployeeEntity entity);
-    public void deleteEmployee(Long id);
+public interface ISalaLogic {
+  
+    public List<SalaEntity> getSalas(Long bibliotecaId);
+    public SalaEntity getSala(Long departmentid);
+    public SalaEntity createSala(Long bibliotecaid, SalaEntity entity);
+    public SalaEntity updateSala(Long bibliotecaid, SalaEntity entity);
+    public void deleteSala(Long id);
 }

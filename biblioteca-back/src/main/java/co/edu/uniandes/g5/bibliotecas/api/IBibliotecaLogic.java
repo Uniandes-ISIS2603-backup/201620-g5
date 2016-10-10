@@ -23,14 +23,14 @@ SOFTWARE.
  */
 package co.edu.uniandes.g5.bibliotecas.api;
 
-import co.edu.uniandes.csw.company.entities.CompanyEntity;
+import co.edu.uniandes.g5.bibliotecas.entities.BibliotecaEntity;
 import java.util.List;
 
-public interface ICompanyLogic {
+public interface IBibliotecaLogic {
    
-    public List<CompanyEntity> getCompanys();
-    public CompanyEntity getCompany(Long id);
-    public CompanyEntity createCompany(CompanyEntity entity); 
-    public CompanyEntity updateCompany(CompanyEntity entity);
-    public void deleteCompany(Long id);
+    public List<BibliotecaEntity> getBibliotecas();
+    public BibliotecaEntity getBiblioteca(Long id);
+    public BibliotecaEntity createBiblioteca(BibliotecaEntity entity); 
+    public BibliotecaEntity updateBiblioteca(BibliotecaEntity entity);
+    public void deleteBiblioteca(Long id);
 }
