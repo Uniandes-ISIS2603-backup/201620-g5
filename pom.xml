@@ -8,7 +8,6 @@
     <packaging>pom</packaging>
     
     <modules>
-        <module>biblioteca-back</module>
         <module>biblioteca-web</module>
     </modules>
 	
