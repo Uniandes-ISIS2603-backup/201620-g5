@@ -6,7 +6,8 @@
 package co.edu.uniandes.g5.bibliotecas.persistence;
 
 import co.edu.uniandes.g5.bibliotecas.entities.BlogEntity;
-import static com.sun.xml.internal.ws.spi.db.BindingContextFactory.LOGGER;
+
+import java.util.logging.Logger;
 import java.util.List;
 import java.util.logging.Level;
 import javax.ejb.Stateless;
@@ -22,6 +23,7 @@ import javax.persistence.TypedQuery;
 @Stateless
 public class BlogPersistence {
  
+    private static final Logger LOGGER = Logger.getLogger(LibroPersistence.class.getName());
     @PersistenceContext(unitName = "G5PU")
     protected EntityManager em;
     
