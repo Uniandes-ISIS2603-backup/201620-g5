@@ -31,7 +31,6 @@ public class ReservaEntity extends BaseEntity implements Serializable {
 
     
     
-    private Long id;
     @PodamExclude
     @ManyToOne
     private co.edu.uniandes.g5.bibliotecas.entities.UsuarioEntity usuario;
@@ -51,13 +50,7 @@ public class ReservaEntity extends BaseEntity implements Serializable {
     private Date fechaFinal;
     private boolean estaA;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
+    
 
     public UsuarioEntity getUsuario() {
         return usuario;

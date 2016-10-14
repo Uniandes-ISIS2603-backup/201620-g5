@@ -14,6 +14,15 @@ public class RecursoDTO {
     protected String name;
     protected boolean estaReservado;
     protected boolean estaPrestado;
+    protected BiblioDTO biblioteca;
+
+    public BiblioDTO getBiblioteca() {
+        return biblioteca;
+    }
+
+    public void setBiblioteca(BiblioDTO biblioteca) {
+        this.biblioteca = biblioteca;
+    }
 
     /**
      * Constructor por defecto
@@ -25,13 +34,15 @@ public class RecursoDTO {
      * Constructor con parámetros.
      * @param id identificador de la recurso
      * @param name nombre de la recurso
+     * @param biblioteca biblioteca donde está el recurso
      */
-    public RecursoDTO(Long id, String name) {
+    public RecursoDTO(Long id, String name, BiblioDTO biblioteca) {
 		super();
 		this.id = id;
 		this.name = name;
                 estaPrestado=false;
                 estaReservado=false;
+                this.biblioteca = biblioteca;
 	}
 
 	/**

@@ -4,6 +4,7 @@ package co.edu.uniandes.rest.resources.mocks;
  * Mock del recurso Videos (Mock del servicio REST)
  * author: ce.gonzalez13
  */
+import co.edu.uniandes.rest.resources.dtos.BiblioDTO;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -27,6 +28,8 @@ public class VideoLogicMock {
 	
 	// listado de videos
     private static ArrayList<VideoDTO> videos;
+    
+    private BiblioLogicMock biblioMock;
 
     /**
      * Constructor. Crea los datos de ejemplo.
@@ -34,10 +37,18 @@ public class VideoLogicMock {
     public VideoLogicMock() {
 
     	if (videos == null) {
-            videos = new ArrayList<>();
-            videos.add(new VideoDTO(1L, "The Revenant", "Alejandro G. Iñarritu",152L, 2015L, "Accion", 2L , "Oso contra hombre",false));
-            videos.add(new VideoDTO(2L, "Mermaids: The Body Found", "Sid Bennet", 27L, 2012L,"Documental", 20L, "Sirenas", true ));
-            videos.add(new VideoDTO(3L, "The Wolf of Wall Street","Martin Scorsese",180L, 2013L , "Pelicula Biográfica", 5L, "Dinero y locura", false  ));
+                try {
+                    videos = new ArrayList<>();
+                    biblioMock = new BiblioLogicMock();
+                    BiblioDTO b1 = biblioMock.getCities().get(0);
+                    BiblioDTO b2 = biblioMock.getCities().get(1);
+                    BiblioDTO b3 = biblioMock.getCities().get(2);
+                    videos.add(new VideoDTO(1L, "The Revenant", "Alejandro G. Iñarritu",152L, 2015L, "Accion", 2L , "Oso contra hombre",false, b1));
+                    videos.add(new VideoDTO(2L, "Mermaids: The Body Found", "Sid Bennet", 27L, 2012L,"Documental", 20L, "Sirenas", true , b2));
+                    videos.add(new VideoDTO(3L, "The Wolf of Wall Street","Martin Scorsese",180L, 2013L , "Pelicula Biográfica", 5L, "Dinero y locura", false,b3  ));
+                } catch (BibliotecaLogicException ex) {
+                    Logger.getLogger(VideoLogicMock.class.getName()).log(Level.SEVERE, null, ex);
+                }
         }
         
     	// indica que se muestren todos los mensajes

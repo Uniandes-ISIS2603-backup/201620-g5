@@ -17,12 +17,9 @@ import javax.persistence.OneToOne;
 @Entity
 public class BlogEntity extends RecursoEntity implements Serializable{
     
-    private String titulo;
-    private String nombre;
     private Long idLibro;
     private String texto;
     private String nombreAutor;
-    private Long id;
     
    @OneToOne(mappedBy = "libro")
     private LibroEntity libro = new LibroEntity(); 
@@ -37,21 +34,8 @@ public class BlogEntity extends RecursoEntity implements Serializable{
         this.libro = libro;
     }
 
-    public String getTitulo() {
-        return titulo;
-    }
-
-    public void setTitulo(String titulo) {
-        this.titulo = titulo;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
+   
+   
 
     public Long getIdLibro() {
         return idLibro;
@@ -77,13 +61,6 @@ public class BlogEntity extends RecursoEntity implements Serializable{
         this.nombreAutor = nombreAutor;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
     
 
 }

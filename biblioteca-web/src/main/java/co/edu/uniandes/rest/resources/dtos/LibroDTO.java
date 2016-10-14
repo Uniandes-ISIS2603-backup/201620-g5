@@ -32,8 +32,8 @@ public class LibroDTO extends RecursoDTO {
      * @param numEjemplares cantidad de ejemplares disponibles
      * @param esOnline define si el libro es disponible digitalmente
      */
-    public LibroDTO( Long id, Long isbn, String titulo, Long numEjemplares, boolean esOnline) {
-        super(id, titulo);
+    public LibroDTO( Long id, Long isbn, String titulo, Long numEjemplares, boolean esOnline, BiblioDTO biblioteca) {
+        super(id, titulo, biblioteca);
         this.isbn = isbn;
         this.numEjemplares = numEjemplares;
         this.online = esOnline;

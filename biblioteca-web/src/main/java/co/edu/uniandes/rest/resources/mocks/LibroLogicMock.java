@@ -5,6 +5,7 @@
  */
 package co.edu.uniandes.rest.resources.mocks;
 
+import co.edu.uniandes.rest.resources.dtos.BiblioDTO;
 import co.edu.uniandes.rest.resources.dtos.LibroDTO;
 import java.util.List;
 import java.util.ArrayList;
@@ -24,15 +25,26 @@ public class LibroLogicMock {
     // listado de libros
     private static ArrayList<LibroDTO> libros;
 
+    private BiblioLogicMock biblioMock;
+
     /**
      * Constructor. Inicia un mock de Libros, con 3 ejemplares.
      */
     public LibroLogicMock() {
         if (libros == null) {
-            libros = new ArrayList<>();
-            libros.add(new LibroDTO(1L, 553213113L, "Moby Dick", 10L, true));
-            libros.add(new LibroDTO(2L, 743273567L, "The Great Gatsby", 10L, false));
-            libros.add(new LibroDTO(3L, 451524934L, "1984", 10L, false));
+            try {
+                libros = new ArrayList<>();
+                biblioMock = new BiblioLogicMock();
+                BiblioDTO b1 = biblioMock.getCities().get(0);
+                BiblioDTO b2 = biblioMock.getCities().get(1);
+                BiblioDTO b3 = biblioMock.getCities().get(2);
+                
+                libros.add(new LibroDTO(1L, 553213113L, "Moby Dick", 10L, true, b1));
+                libros.add(new LibroDTO(2L, 743273567L, "The Great Gatsby", 10L, false, b2));
+                libros.add(new LibroDTO(3L, 451524934L, "1984", 10L, false, b3));
+            } catch (BibliotecaLogicException ex) {
+                Logger.getLogger(LibroLogicMock.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         // indica que se muestren todos los mensajes
         logger.setLevel(Level.INFO);

@@ -10,7 +10,6 @@ package co.edu.uniandes.rest.resources.dtos;
  * @author sf.munera10
  */
 public class SalaDTO extends RecursoDTO {
-    private Long idBiblioteca;
     private Integer capacidad;
     
     /**
@@ -19,30 +18,13 @@ public class SalaDTO extends RecursoDTO {
     public SalaDTO() {
     }
     
-    public SalaDTO(Long idRecurso, Long idBiblioteca, String nombre, Integer capacidad) {
-		super(idRecurso, nombre);
-                this.idBiblioteca = idBiblioteca;
+    public SalaDTO(Long idRecurso, BiblioDTO biblioteca, String nombre, Integer capacidad) {
+		super(idRecurso, nombre, biblioteca);
                 this.capacidad = capacidad;
                 
-    }
-
-    
-    /**
-     * @return the idBiblioteca
-     */
-    public Long getIdBiblioteca() {
-        return idBiblioteca;
-    }
-
-    /**
-     * @param idBiblioteca the idBiblioteca to set
-     */
-    public void setIdBiblioteca(Long idBiblioteca) {
-        this.idBiblioteca = idBiblioteca;
-    }
 
    
-  
+    }
     /**
      * @return the capacidad
      */
@@ -63,6 +45,6 @@ public class SalaDTO extends RecursoDTO {
      */
     @Override
     public String toString() {
-    	return "{ id : " + getId() + ", idBiblioteca : \"" + getIdBiblioteca() +  ", nombre : \"" + getName() + ", capacidad : \"" + getCapacidad() + "\" }" ;  
+    	return "{ id : " + getId() + ", idBiblioteca : \"" + getBiblioteca().getId()+  ", nombre : \"" + getName() + ", capacidad : \"" + getCapacidad() + "\" }" ;  
     }
 }

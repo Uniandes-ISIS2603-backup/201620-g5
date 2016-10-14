@@ -39,8 +39,8 @@ public class VideoDTO extends RecursoDTO{
      * @param sinopsis
      * @param esOnline
      */
-    public VideoDTO(Long id, String titulo, String director, Long duracion, Long anio_publicacion, String genero,  Long numEjemplares, String sinopsis, boolean esOnline) {
-		super(id, titulo);
+    public VideoDTO(Long id, String titulo, String director, Long duracion, Long anio_publicacion, String genero,  Long numEjemplares, String sinopsis, boolean esOnline, BiblioDTO biblioteca) {
+		super(id, titulo, biblioteca);
                 this.director = director;
                 this.duracion = duracion;
                 this.anio_publicacion = anio_publicacion;

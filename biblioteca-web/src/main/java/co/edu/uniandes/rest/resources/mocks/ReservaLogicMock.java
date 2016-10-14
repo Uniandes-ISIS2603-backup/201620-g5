@@ -36,6 +36,9 @@ public class ReservaLogicMock {
     private static RecursoLogicMock recursos;
     private UsuarioLogicMock usuarioMock;
     private BiblioLogicMock biblioMock;
+    private LibroLogicMock libroMock;
+    private SalaLogicMock salaMock;
+    private VideoLogicMock videoMock;
 
     /**
      * Constructor. Crea los datos de ejemplo.
@@ -58,6 +61,9 @@ public class ReservaLogicMock {
                 String fecha11 = "2016-10-05";
                 String fecha12 = "2016-10-06";
                 SimpleDateFormat formater = new SimpleDateFormat("yyyy-MM-dd");
+                libroMock = new LibroLogicMock();
+                videoMock = new VideoLogicMock();
+                salaMock = new SalaLogicMock();
                 usuarioMock = new UsuarioLogicMock();
                 UsuarioDTO u1 = usuarioMock.getUsuarios().get(0);
                 UsuarioDTO u2 = usuarioMock.getUsuarios().get(1);
@@ -67,11 +73,17 @@ public class ReservaLogicMock {
                 BiblioDTO b2 = biblioMock.getCities().get(1);
                 BiblioDTO b3 = biblioMock.getCities().get(2);
                 
+                LibroDTO l1 = libroMock.getLibros().get(0);
+
+                VideoDTO v1 = videoMock.getVideos().get(0);
+                VideoDTO v2 = videoMock.getVideos().get(1);
+
+                SalaDTO s1 = salaMock.getAllSalas().get(0);
                 
-                reservas.add(new ReservaDTO(1L, u1,b1, true,ReservaDTO.LIBRO, new LibroDTO(1L, 553213113L, "Moby Dick", 10L, true), formater.parse(fecha1), formater.parse(fecha2)));
-                reservas.add(new ReservaDTO(2L, u2,b2, true,ReservaDTO.VIDEO, new VideoDTO(1L, "The Revenant", "Alejandro G. Iñarritu",152L, 2015L, "Accion", 2L , "Oso contra hombre",false), formater.parse(fecha3), formater.parse(fecha4)));
-                reservas.add(new ReservaDTO(3L, u3,b3, true,ReservaDTO.SALA,  new SalaDTO(1L, 1L, "Sala 1", 6),formater.parse(fecha5),formater.parse(fecha6)));
-                reservas.add(new ReservaDTO(4L, u1,b1, true,PrestamoDTO.VIDEO, new VideoDTO(2L, "Mermaids: The Body Found", "Sid Bennet", 27L, 2012L,"Documental", 20L, "Sirenas", true ), formater.parse(fecha7), formater.parse(fecha8)));
+                reservas.add(new ReservaDTO(1L, u1,b1, true,ReservaDTO.LIBRO, l1, formater.parse(fecha1), formater.parse(fecha2)));
+                reservas.add(new ReservaDTO(2L, u2,b2, true,ReservaDTO.VIDEO, v1, formater.parse(fecha3), formater.parse(fecha4)));
+                reservas.add(new ReservaDTO(3L, u3,b3, true,ReservaDTO.SALA,  s1,formater.parse(fecha5),formater.parse(fecha6)));
+                reservas.add(new ReservaDTO(4L, u1,b1, true,PrestamoDTO.VIDEO, v2, formater.parse(fecha7), formater.parse(fecha8)));
             } catch (Exception ex) {
                 Logger.getLogger(ReservaLogicMock.class.getName()).log(Level.SEVERE, null, ex);
             }

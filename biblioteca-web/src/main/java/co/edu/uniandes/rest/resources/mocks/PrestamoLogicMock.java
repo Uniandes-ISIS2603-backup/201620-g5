@@ -37,6 +37,9 @@ public class PrestamoLogicMock {
 
     
     private UsuarioLogicMock usuarioMock;
+    private SalaLogicMock salaMock;
+    private LibroLogicMock libroMock;
+    private VideoLogicMock videoMock;
     /**
      * Constructor. Crea los datos de ejemplo.
      */
@@ -59,19 +62,30 @@ public class PrestamoLogicMock {
                 String fecha12 = "2016-10-06";
                 SimpleDateFormat formater = new SimpleDateFormat("yyyy-MM-dd");
                 usuarioMock = new UsuarioLogicMock();
+                videoMock = new VideoLogicMock();
+                libroMock = new LibroLogicMock();
+                salaMock = new SalaLogicMock();
 
         
                     UsuarioDTO u1 = usuarioMock.getUsuarios().get(0);
                     UsuarioDTO u2 = usuarioMock.getUsuarios().get(1);
                     UsuarioDTO u3 = usuarioMock.getUsuarios().get(2);
                 
+                    LibroDTO l1 = libroMock.getLibros().get(0);
+                    LibroDTO l2 = libroMock.getLibros().get(1);
+                    
+                    VideoDTO v1 = videoMock.getVideos().get(0);
+                    VideoDTO v2 = videoMock.getVideos().get(1);
+                    
+                    SalaDTO s1 = salaMock.getAllSalas().get(0);
+                    SalaDTO s2 = salaMock.getAllSalas().get(1);
                 
-                prestamos.add(new PrestamoDTO(1L, u1,1L,PrestamoDTO.LIBRO, new LibroDTO(1L, 553213113L, "Moby Dick", 10L, true), 3000D, "Efectivo", formater.parse(fecha1), formater.parse(fecha2), true));
-                prestamos.add(new PrestamoDTO(2L, u2, 2L,PrestamoDTO.VIDEO, new VideoDTO(1L, "The Revenant", "Alejandro G. Iñarritu",152L, 2015L, "Accion", 2L , "Oso contra hombre",false), 3000D, "Tarjeta Credito", formater.parse(fecha3), formater.parse(fecha4), true));
-                prestamos.add(new PrestamoDTO(3L, u3, 3L,PrestamoDTO.SALA,  new SalaDTO(1L, 1L, "Sala 1", 6), 3000D, "Efectivo",formater.parse(fecha5),formater.parse(fecha6), true));
-                prestamos.add(new PrestamoDTO(4L, u1, 1L,PrestamoDTO.VIDEO,  new VideoDTO(2L, "Mermaids: The Body Found", "Sid Bennet", 27L, 2012L,"Documental", 20L, "Sirenas", true ), 3000D, "Efectivo", formater.parse(fecha7), formater.parse(fecha8), true));
-                prestamos.add(new PrestamoDTO(5L, u2, 2L,PrestamoDTO.SALA,  new SalaDTO(2L, 2L, "Sala 2", 6), 3000D, "Tarjeta Credito", formater.parse(fecha9), formater.parse(fecha10), true));
-                prestamos.add(new PrestamoDTO(6L, u3, 3L,PrestamoDTO.LIBRO, new LibroDTO(2L, 743273567L, "The Great Gatsby", 10L, false), 3000D, "Efectivo", formater.parse(fecha11), formater.parse(fecha12), true));
+                prestamos.add(new PrestamoDTO(1L, u1,1L,PrestamoDTO.LIBRO, l1, 3000D, "Efectivo", formater.parse(fecha1), formater.parse(fecha2), true));
+                prestamos.add(new PrestamoDTO(2L, u2, 2L,PrestamoDTO.VIDEO, v1, 3000D, "Tarjeta Credito", formater.parse(fecha3), formater.parse(fecha4), true));
+                prestamos.add(new PrestamoDTO(3L, u3, 3L,PrestamoDTO.SALA,  s1, 3000D, "Efectivo",formater.parse(fecha5),formater.parse(fecha6), true));
+                prestamos.add(new PrestamoDTO(4L, u1, 1L,PrestamoDTO.VIDEO,  v2, 3000D, "Efectivo", formater.parse(fecha7), formater.parse(fecha8), true));
+                prestamos.add(new PrestamoDTO(5L, u2, 2L,PrestamoDTO.SALA,  s2, 3000D, "Tarjeta Credito", formater.parse(fecha9), formater.parse(fecha10), true));
+                prestamos.add(new PrestamoDTO(6L, u3, 3L,PrestamoDTO.LIBRO, l2, 3000D, "Efectivo", formater.parse(fecha11), formater.parse(fecha12), true));
                 
             }catch (ParseException ex)
             {

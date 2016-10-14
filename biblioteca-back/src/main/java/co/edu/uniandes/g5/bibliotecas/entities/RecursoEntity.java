@@ -11,6 +11,25 @@ import uk.co.jemos.podam.common.PodamExclude;
  */
 public abstract class RecursoEntity extends BaseEntity implements Serializable{
     
+    
+    private boolean estaReservado;
+
+    public boolean isEstaReservado() {
+        return estaReservado;
+    }
+
+    public void setEstaReservado(boolean estaReservado) {
+        this.estaReservado = estaReservado;
+    }
+
+    public boolean isEstaPrestado() {
+        return estaPrestado;
+    }
+
+    public void setEstaPrestado(boolean estaPrestado) {
+        this.estaPrestado = estaPrestado;
+    }
+    private boolean estaPrestado;
     @PodamExclude
     @ManyToOne
     private BibliotecaEntity biblioteca;

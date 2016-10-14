@@ -21,34 +21,12 @@ import uk.co.jemos.podam.common.PodamExclude;
 @Entity
 public class SalaEntity extends RecursoEntity implements Serializable {
 
-    @PodamExclude
-    @ManyToOne
-    private co.edu.uniandes.g5.bibliotecas.entities.BibliotecaEntity biblioteca;
     
     private boolean estaOcupada;
     
     private int capacidad;
 
-    /**
-     * Obtiene el atributo biblioteca.
-     *
-     * @return atributo biblioteca.
-     *
-     */
-    public co.edu.uniandes.g5.bibliotecas.entities.BibliotecaEntity getBiblioteca() {
-        return biblioteca;
-    }
-
-    /**
-     * Establece el valor del atributo biblioteca.
-     *
-     * @param biblioteca nuevo valor del atributo
-     *
-     */
-    public void setBiblioteca(co.edu.uniandes.g5.bibliotecas.entities.BibliotecaEntity biblioteca) {
-        this.biblioteca = biblioteca;
-    }
-
+   
     /**
      * @return the estaOcupada
      */
