@@ -60,7 +60,7 @@ public class PrestamoLogicMock {
                 SimpleDateFormat formater = new SimpleDateFormat("yyyy-MM-dd");
                 usuarioMock = new UsuarioLogicMock();
 
-                try {
+        
                     UsuarioDTO u1 = usuarioMock.getUsuarios().get(0);
                     UsuarioDTO u2 = usuarioMock.getUsuarios().get(1);
                     UsuarioDTO u3 = usuarioMock.getUsuarios().get(2);
@@ -73,16 +73,17 @@ public class PrestamoLogicMock {
                 prestamos.add(new PrestamoDTO(5L, u2, 2L,PrestamoDTO.SALA,  new SalaDTO(2L, 2L, "Sala 2", 6), 3000D, "Tarjeta Credito", formater.parse(fecha9), formater.parse(fecha10), true));
                 prestamos.add(new PrestamoDTO(6L, u3, 3L,PrestamoDTO.LIBRO, new LibroDTO(2L, 743273567L, "The Great Gatsby", 10L, false), 3000D, "Efectivo", formater.parse(fecha11), formater.parse(fecha12), true));
                 
-            } catch (ParseException ex) {
+            }catch (ParseException ex)
+            {
                 Logger.getLogger(PrestamoLogicMock.class.getName()).log(Level.SEVERE, null, ex);
             }
-            } catch (Exception ex) {
-                    Logger.getLogger(PrestamoLogicMock.class.getName()).log(Level.SEVERE, null, ex);
+             catch (Exception ex2)
+                    {
+                    Logger.getLogger(PrestamoLogicMock.class.getName()).log(Level.SEVERE, null, ex2);
                     
                 }
-                
-        }
-
+        }      
+    
         // indica que se muestren todos los mensajes
         logger.setLevel(Level.INFO);
 

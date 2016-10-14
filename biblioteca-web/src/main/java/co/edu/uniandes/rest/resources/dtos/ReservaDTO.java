@@ -38,13 +38,16 @@ public class ReservaDTO {
      * @param id identificador de la ciudad
      * @param name nombre de la ciudad
      */
-    public ReservaDTO(Long id, UsuarioDTO idUsuario, BiblioDTO idBiblioteca, boolean estaA, RecursoDTO idRecurso) {
+    public ReservaDTO(Long id, UsuarioDTO idUsuario, BiblioDTO idBiblioteca, boolean estaA,String tipoRecurso, RecursoDTO idRecurso, Date fechaInicial, Date fechaFinal) {
 		super();
 		this.id = id;
                 this.usuario = idUsuario;
 		this.biblioteca = idBiblioteca;
                 this.estaA = estaA;
                 this.recurso = idRecurso;
+                this.tipoRecurso = tipoRecurso;
+                this.fechaInicial = fechaInicial;
+                this.fechaFinal = fechaFinal;
 	}
 
     public Long getId() {

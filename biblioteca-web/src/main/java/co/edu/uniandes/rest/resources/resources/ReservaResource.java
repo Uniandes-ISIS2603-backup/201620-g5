@@ -72,13 +72,13 @@ public class ReservaResource {
     
     @PUT
     @Path("reservas/{id: \\d+}")
-    public ReservaDTO updateReserva(@PathParam("id")int id, ReservaDTO reserva)throws BibliotecaLogicException{
+    public ReservaDTO updateReserva(@PathParam("id")Long id, ReservaDTO reserva)throws BibliotecaLogicException{
         return reservaLogic.updateReserva(id, reserva);
     }
     
     @DELETE
     @Path("reservas/{id: \\d+}")
-    public void deleteReserva(@PathParam("id") int id)throws BibliotecaLogicException{
+    public void deleteReserva(@PathParam("id") Long id)throws BibliotecaLogicException{
         reservaLogic.deleteReserva(id);
     }
     

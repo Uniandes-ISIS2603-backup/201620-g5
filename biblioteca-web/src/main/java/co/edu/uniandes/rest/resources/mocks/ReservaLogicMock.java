@@ -12,8 +12,14 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import co.edu.uniandes.rest.resources.dtos.BiblioDTO;
+import co.edu.uniandes.rest.resources.dtos.LibroDTO;
+import co.edu.uniandes.rest.resources.dtos.PrestamoDTO;
 import co.edu.uniandes.rest.resources.dtos.ReservaDTO;
+import co.edu.uniandes.rest.resources.dtos.SalaDTO;
+import co.edu.uniandes.rest.resources.dtos.UsuarioDTO;
+import co.edu.uniandes.rest.resources.dtos.VideoDTO;
 import co.edu.uniandes.rest.resources.exceptions.BibliotecaLogicException;
+import java.text.SimpleDateFormat;
 
 /*
  * CityLogicMock
@@ -28,6 +34,8 @@ public class ReservaLogicMock {
     private static ArrayList<ReservaDTO> reservas;
     
     private static RecursoLogicMock recursos;
+    private UsuarioLogicMock usuarioMock;
+    private BiblioLogicMock biblioMock;
 
     /**
      * Constructor. Crea los datos de ejemplo.
@@ -35,11 +43,38 @@ public class ReservaLogicMock {
     public ReservaLogicMock() {
 
         if (reservas == null) {
-            reservas = new ArrayList<>();
-            reservas.add(new ReservaDTO(1L, 1L,1L, true,1L));
-            reservas.add(new ReservaDTO(2L, 2L,2L, true,2L));
-            reservas.add(new ReservaDTO(3L, 3L,3L, true,3L));
-            reservas.add(new ReservaDTO(4L, 4L,4L, true,4L));
+            try {
+                reservas = new ArrayList<>();
+                String fecha1 = "2016-09-25";
+                String fecha2 = "2016-09-26";
+                String fecha3 = "2016-09-27";
+                String fecha4 = "2016-09-28";
+                String fecha5 = "2016-09-29";
+                String fecha6 = "2016-09-30";
+                String fecha7 = "2016-10-01";
+                String fecha8 = "2016-10-02";
+                String fecha9 = "2016-10-03";
+                String fecha10 = "2016-10-04";
+                String fecha11 = "2016-10-05";
+                String fecha12 = "2016-10-06";
+                SimpleDateFormat formater = new SimpleDateFormat("yyyy-MM-dd");
+                usuarioMock = new UsuarioLogicMock();
+                UsuarioDTO u1 = usuarioMock.getUsuarios().get(0);
+                UsuarioDTO u2 = usuarioMock.getUsuarios().get(1);
+                UsuarioDTO u3 = usuarioMock.getUsuarios().get(2);
+                
+                BiblioDTO b1 = biblioMock.getCities().get(0);
+                BiblioDTO b2 = biblioMock.getCities().get(1);
+                BiblioDTO b3 = biblioMock.getCities().get(2);
+                
+                
+                reservas.add(new ReservaDTO(1L, u1,b1, true,ReservaDTO.LIBRO, new LibroDTO(1L, 553213113L, "Moby Dick", 10L, true), formater.parse(fecha1), formater.parse(fecha2)));
+                reservas.add(new ReservaDTO(2L, u2,b2, true,ReservaDTO.VIDEO, new VideoDTO(1L, "The Revenant", "Alejandro G. Iñarritu",152L, 2015L, "Accion", 2L , "Oso contra hombre",false), formater.parse(fecha3), formater.parse(fecha4)));
+                reservas.add(new ReservaDTO(3L, u3,b3, true,ReservaDTO.SALA,  new SalaDTO(1L, 1L, "Sala 1", 6),formater.parse(fecha5),formater.parse(fecha6)));
+                reservas.add(new ReservaDTO(4L, u1,b1, true,PrestamoDTO.VIDEO, new VideoDTO(2L, "Mermaids: The Body Found", "Sid Bennet", 27L, 2012L,"Documental", 20L, "Sirenas", true ), formater.parse(fecha7), formater.parse(fecha8)));
+            } catch (Exception ex) {
+                Logger.getLogger(ReservaLogicMock.class.getName()).log(Level.SEVERE, null, ex);
+            }
             
         }
 
@@ -102,7 +137,7 @@ public class ReservaLogicMock {
             }
             
             newReserva.setId(newId);
-            recursos.getRecurso(newReserva.getIdRecurso()).setEstaPrestado(true);
+            recursos.getRecurso(newReserva.getRecurso().getId()).setEstaPrestado(true);
         }
 
         // agrega la ciudad
@@ -132,7 +167,7 @@ public class ReservaLogicMock {
         if (reservaE != null) {
             reservaE.setId(reserva.getId());
             reservaE.setIdBiblioteca(reserva.getIdBiblioteca());
-            reservaE.setIdRecurso(reserva.getIdRecurso());
+            reservaE.setRecurso(reserva.getRecurso());
             reservaE.setIdUsuario(reserva.getIdUsuario());
             reservaE.setEstaA(reserva.isEstaA());
             return reservaE;
@@ -165,7 +200,7 @@ public class ReservaLogicMock {
         ArrayList<ReservaDTO> resLib;
         resLib = new ArrayList<>();
         for (ReservaDTO r : reservas) {
-            if (id.equals(r.getIdRecurso())) {
+            if (id.equals(r.getRecurso().getId())) {
                 resLib.add(r);
             }
         }
