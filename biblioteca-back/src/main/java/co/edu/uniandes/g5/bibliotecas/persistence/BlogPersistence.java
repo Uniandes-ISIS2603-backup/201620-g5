@@ -6,8 +6,6 @@
 package co.edu.uniandes.g5.bibliotecas.persistence;
 
 import co.edu.uniandes.g5.bibliotecas.entities.BlogEntity;
-
-import java.util.logging.Logger;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;

@@ -7,37 +7,42 @@ package co.edu.uniandes.g5.bibliotecas.ejbs;
 
 import co.edu.uniandes.g5.bibliotecas.api.IBlogLogic;
 import co.edu.uniandes.g5.bibliotecas.entities.BlogEntity;
+import co.edu.uniandes.g5.bibliotecas.persistence.BlogPersistence;
 import java.util.List;
+import javax.inject.Inject;
 
 /**
  *
  * @author js.prieto10
  */
 public class BlogLogic implements IBlogLogic {
+    
+    @Inject
+    private BlogPersistence persistence;
 
     @Override
     public List<BlogEntity> getBlogs() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return persistence.findAll();
     }
 
     @Override
     public BlogEntity getBlog(Long id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return persistence.find(id);
     }
 
     @Override
     public BlogEntity createBlog(BlogEntity entity) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return persistence.create(entity);
     }
 
     @Override
     public BlogEntity updateBlog(BlogEntity entity) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return persistence.update(entity);
     }
 
     @Override
     public void deleteBlog(Long id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        persistence.delete(id);
     }
     
 }

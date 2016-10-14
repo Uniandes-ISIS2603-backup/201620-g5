@@ -127,7 +127,7 @@ public class ReservaLogicMock {
         return reservaE;
     }
 
-    public ReservaDTO updateReserva(long id, ReservaDTO reserva) throws BibliotecaLogicException {
+    public ReservaDTO updateReserva(Long id, ReservaDTO reserva) throws BibliotecaLogicException {
         ReservaDTO reservaE = getReserva(id);
         if (reservaE != null) {
             reservaE.setId(reserva.getId());
@@ -142,7 +142,7 @@ public class ReservaLogicMock {
         }
     }
 
-    public void deleteReserva(long id) throws BibliotecaLogicException {
+    public void deleteReserva(Long id) throws BibliotecaLogicException {
             for (ReservaDTO reserva : reservas) {
                 if (id == reserva.getId()) {
                     logger.info("Eliminando reserva con el id especfificado: id = " + reserva.getId());
