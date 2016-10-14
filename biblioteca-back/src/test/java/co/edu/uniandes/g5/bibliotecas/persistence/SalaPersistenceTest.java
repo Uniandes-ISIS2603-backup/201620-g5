@@ -5,12 +5,21 @@
  */
 package co.edu.uniandes.g5.bibliotecas.persistence;
 
-import org.junit.After;
-import org.junit.AfterClass;
+import co.edu.uniandes.g5.bibliotecas.entities.SalaEntity;
+import java.util.ArrayList;
+import java.util.List;
+import javax.inject.Inject;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.transaction.UserTransaction;
+import org.junit.Assert;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
+import uk.co.jemos.podam.api.PodamFactory;
+import uk.co.jemos.podam.api.PodamFactoryImpl;
+import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.spec.JavaArchive;
 
 /**
  *
@@ -18,30 +27,81 @@ import static org.junit.Assert.*;
  */
 public class SalaPersistenceTest {
     
-    public SalaPersistenceTest() {
-    }
-    
-    @BeforeClass
-    public static void setUpClass() {
-    }
-    
-    @AfterClass
-    public static void tearDownClass() {
-    }
-    
-    @Before
-    public void setUp() {
-    }
-    
-    @After
-    public void tearDown() {
+   /**
+     *
+     * @return el jar que va a desplegar para la prueba
+     */
+    @Deployment
+    public static JavaArchive createDeployment() {
+        return ShrinkWrap.create(JavaArchive.class)
+                .addPackage(SalaEntity.class.getPackage())
+                .addPackage(SalaPersistence.class.getPackage())
+                .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
+                .addAsManifestResource("META-INF/beans.xml", "beans.xml");
     }
 
+    @Inject
+    private SalaPersistence salaPersistence;
+
+    @PersistenceContext
+    private EntityManager em;
+
+    @Inject
+    UserTransaction utx;
+
+    private List<SalaEntity> tuplas = new ArrayList<SalaEntity>();
+
+    /**
+     * Configuración inicial de la prueba.
+     */
+    @Before
+    public void setUp() {
+        try {
+            utx.begin();
+            em.joinTransaction();
+            clearData();
+            insertData();
+            utx.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+            try {
+                utx.rollback();
+            } catch (Exception e1) {
+                e1.printStackTrace();
+            }
+        }
+    }
+
+    /**
+     * Limpia las tablas que están implicadas en la prueba.
+     */
+    private void clearData() {
+        em.createQuery("delete from SalaEntity").executeUpdate();
+        em.createQuery("delete from BibliotecaEntity").executeUpdate();
+    }
+
+    /**
+     * Inserta los datos iniciales para el correcto funcionamiento de las
+     * pruebas.
+     *
+     */
+    private void insertData() {
+        PodamFactory factory = new PodamFactoryImpl();
+        for (int i = 0; i < 3; i++) {
+            SalaEntity entity = factory.manufacturePojo(SalaEntity.class);
+            em.persist(entity);
+            tuplas.add(entity);
+        }
+    }
     /**
      * Test of find method, of class SalaPersistence.
      */
     @Test
     public void testFind() throws Exception {
+        SalaEntity entity = tuplas.get(0);
+        SalaEntity newEntity = salaPersistence.find(entity.getId());
+        Assert.assertNotNull(newEntity);
+        Assert.assertEquals(entity.getName(), newEntity.getName());
     }
 
     /**
@@ -49,13 +109,33 @@ public class SalaPersistenceTest {
      */
     @Test
     public void testFindAll() throws Exception {
+        List<SalaEntity> list = salaPersistence.findAll();
+        Assert.assertEquals(tuplas.size(), list.size());
+        for (SalaEntity ent : list) {
+            boolean found = false;
+            for (SalaEntity entity : tuplas) {
+                if (ent.getId().equals(entity.getId())) {
+                    found = true;
+                }
+            }
+            Assert.assertTrue(found);
+        }
     }
 
     /**
-     * Test of findAllInBiblioteca method, of class SalaPersistence.
+     * Test of findAllInSala method, of class SalaPersistence.
      */
     @Test
     public void testFindAllInBiblioteca() throws Exception {
+        List<SalaEntity> list = salaPersistence.findAll();
+        for(SalaEntity e : tuplas){
+            List<SalaEntity> list2 = salaPersistence.findAllInBiblioteca(e.getBiblioteca().getId());
+            for(SalaEntity en : list)
+            {
+                List<SalaEntity> list3 = salaPersistence.findAllInBiblioteca(en.getBiblioteca().getId());
+                Assert.assertEquals(list2.size(),list3.size());
+            }
+        }
     }
 
     /**
@@ -63,6 +143,15 @@ public class SalaPersistenceTest {
      */
     @Test
     public void testCreate() throws Exception {
+        PodamFactory factory = new PodamFactoryImpl();
+        SalaEntity newEntity = factory.manufacturePojo(SalaEntity.class);
+
+        SalaEntity result = salaPersistence.create(newEntity);
+
+        Assert.assertNotNull(result);
+        SalaEntity entity = em.find(SalaEntity.class, result.getId());
+        Assert.assertNotNull(entity);
+        Assert.assertEquals(newEntity.getName(), entity.getName());
     }
 
     /**
@@ -70,6 +159,17 @@ public class SalaPersistenceTest {
      */
     @Test
     public void testUpdate() throws Exception {
+        SalaEntity entity = tuplas.get(0);
+        PodamFactory factory = new PodamFactoryImpl();
+        SalaEntity newEntity = factory.manufacturePojo(SalaEntity.class);
+
+        newEntity.setId(entity.getId());
+
+        salaPersistence.update(newEntity);
+
+        SalaEntity resp = em.find(SalaEntity.class, entity.getId());
+
+        Assert.assertEquals(newEntity.getName(), resp.getName());
     }
 
     /**
@@ -77,6 +177,10 @@ public class SalaPersistenceTest {
      */
     @Test
     public void testDelete() throws Exception {
+        SalaEntity entity = tuplas.get(0);
+        salaPersistence.delete(entity.getId());
+        SalaEntity deleted = em.find(SalaEntity.class, entity.getId());
+        Assert.assertNull(deleted);
     }
     
 }

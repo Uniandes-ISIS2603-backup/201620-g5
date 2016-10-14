@@ -21,22 +21,27 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
  */
-package co.edu.uniandes.g5.bibliotecas.api;
+package co.edu.uniandes.g5.bibliotecas.exceptions;
 
-import co.edu.uniandes.g5.bibliotecas.entities.BibliotecaEntity;
-import co.edu.uniandes.g5.bibliotecas.entities.RecursoEntity;
-import java.util.List;
+import javax.ejb.ApplicationException;
 
-public interface IBibliotecaLogic {
-   
-    public List<BibliotecaEntity> getBibliotecas();
-    public BibliotecaEntity getBiblioteca(Long id);
-    public BibliotecaEntity createBiblioteca(BibliotecaEntity entity); 
-    public BibliotecaEntity updateBiblioteca(BibliotecaEntity entity);
-    public void deleteBiblioteca(Long id);
-    public List<RecursoEntity> listRecursos(Long bibliotecaId);
-    public RecursoEntity getRecurso(Long bibliotecaId, Long recursoId);
-    public RecursoEntity addRecurso(Long bibliotecaId, Long recursoId);
-    public List<RecursoEntity> replaceRecursos(Long bibliotecaId, List<RecursoEntity> list);
-    public void removeRecurso(Long bibliotecaId, Long recursoId);
+@ApplicationException(rollback = true)
+public class BibliotecaLogicException extends Exception {
+
+    public BibliotecaLogicException() {
+        super();
+    }
+
+    public BibliotecaLogicException(String message) {
+        super(message);
+    }
+
+    public BibliotecaLogicException(Throwable cause) {
+        super(cause);
+    }
+
+    public BibliotecaLogicException(String message, Throwable cause) {
+        super(message, cause);
+    }
+
 }
