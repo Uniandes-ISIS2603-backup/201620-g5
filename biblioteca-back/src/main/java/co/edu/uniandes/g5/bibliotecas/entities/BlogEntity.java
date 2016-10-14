@@ -18,6 +18,15 @@ import javax.persistence.OneToOne;
 public class BlogEntity extends RecursoEntity implements Serializable{
     
     private Long idLibro;
+    private String titulo;
+
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+    }
     private String texto;
     private String nombreAutor;
     
