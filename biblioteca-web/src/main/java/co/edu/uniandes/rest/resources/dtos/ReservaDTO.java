@@ -19,10 +19,9 @@ public class ReservaDTO {
     public static final String SALA = "Sala";
     
     private Long id;
-    private Long idUsuario;
-    private Long idBiblioteca;
+    private UsuarioDTO usuario;
+    private BiblioDTO biblioteca;
     private boolean estaA;
-    private Long idRecurso;
     private RecursoDTO recurso;
     private String tipoRecurso;
     private Date fechaInicial;
@@ -39,13 +38,13 @@ public class ReservaDTO {
      * @param id identificador de la ciudad
      * @param name nombre de la ciudad
      */
-    public ReservaDTO(Long id, Long idUsuario, Long idBiblioteca, boolean estaA, Long idRecurso) {
+    public ReservaDTO(Long id, UsuarioDTO idUsuario, BiblioDTO idBiblioteca, boolean estaA, RecursoDTO idRecurso) {
 		super();
 		this.id = id;
-                this.idUsuario = idUsuario;
-		this.idBiblioteca = idBiblioteca;
+                this.usuario = idUsuario;
+		this.biblioteca = idBiblioteca;
                 this.estaA = estaA;
-                this.idRecurso=idRecurso;
+                this.recurso = idRecurso;
 	}
 
     public Long getId() {
@@ -56,20 +55,20 @@ public class ReservaDTO {
         this.id = id;
     }
 
-    public Long getIdUsuario() {
-        return idUsuario;
+    public UsuarioDTO getIdUsuario() {
+        return usuario;
     }
 
-    public void setIdUsuario(Long idUsuario) {
-        this.idUsuario = idUsuario;
+    public void setIdUsuario(UsuarioDTO idUsuario) {
+        this.usuario = idUsuario;
     }
 
-    public Long getIdBiblioteca() {
-        return idBiblioteca;
+    public BiblioDTO getIdBiblioteca() {
+        return biblioteca;
     }
 
-    public void setIdBiblioteca(Long idBiblioteca) {
-        this.idBiblioteca = idBiblioteca;
+    public void setIdBiblioteca(BiblioDTO idBiblioteca) {
+        this.biblioteca = idBiblioteca;
     }
 
     public boolean isEstaA() {
@@ -80,14 +79,7 @@ public class ReservaDTO {
         this.estaA = estaA;
     }
 
-    public Long getIdRecurso() {
-        return idRecurso;
-    }
-
-    public void setIdRecurso(Long idRecurso) {
-        this.idRecurso = idRecurso;
-    }
-
+  
     public RecursoDTO getRecurso() {
         return recurso;
     }
@@ -124,6 +116,6 @@ public class ReservaDTO {
 	
     @Override
     public String toString() {
-    	return "{ id : " + getId() + ", idUsuario : \"" + getIdUsuario()+ ", idBiblioteca : \"" + getIdBiblioteca()+ ", Esta Activo : \"" + isEstaA()+ ",idRecurso : \"" + getIdRecurso()+"\" }" ;  
+    	return "{ id : " + getId() + ", idUsuario : \"" + getIdUsuario()+ ", idBiblioteca : \"" + getIdBiblioteca()+ ", Esta Activo : \"" + isEstaA()+ ",idRecurso : \"" + getRecurso().getId() + "\" }" ;  
     }
 }
