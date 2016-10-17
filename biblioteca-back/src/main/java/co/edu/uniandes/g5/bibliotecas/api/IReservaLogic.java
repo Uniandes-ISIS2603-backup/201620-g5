@@ -21,27 +21,15 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
  */
-package co.edu.uniandes.g5.bibliotecas.exceptions;
+package co.edu.uniandes.g5.bibliotecas.api;
 
-import javax.ejb.ApplicationException;
+import co.edu.uniandes.g5.bibliotecas.entities.ReservaEntity;
+import java.util.List;
 
-@ApplicationException(rollback = true)
-public class BusinessLogicException extends Exception {
-
-    public BusinessLogicException() {
-        super();
-    }
-
-    public BusinessLogicException(String message) {
-        super(message);
-    }
-
-    public BusinessLogicException(Throwable cause) {
-        super(cause);
-    }
-
-    public BusinessLogicException(String message, Throwable cause) {
-        super(message, cause);
-    }
-
+public interface IReservaLogic {
+      public List<ReservaEntity> getReservas();
+    public ReservaEntity getReserva(Long id);
+    public ReservaEntity createReserva(ReservaEntity entity); 
+    public ReservaEntity updateReserva(ReservaEntity entity);
+    public void deleteReserva(Long id);
 }

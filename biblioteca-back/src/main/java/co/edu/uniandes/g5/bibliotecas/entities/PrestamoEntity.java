@@ -11,13 +11,10 @@ package co.edu.uniandes.g5.bibliotecas.entities;
  */
 import java.io.Serializable;
 import javax.persistence.Entity;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
-import javax.persistence.CascadeType;
-import javax.persistence.OneToMany;
 import javax.persistence.ManyToOne;
 import uk.co.jemos.podam.common.PodamExclude;
+import uk.co.jemos.podam.common.PodamStrategyValue;
 
 
 @Entity
@@ -48,7 +45,11 @@ public class PrestamoEntity extends BaseEntity implements Serializable {
 
      private Double costo;
     private String medioPago;
+    
+    //@PodamStrategyValue(DateStrategy.class)
     private Date fechaInicial;
+    
+   // @PodamStrategyValue(DateStrategy.class)
     private Date fechaFinal;
     private boolean estaActivo;
 
