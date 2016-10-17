@@ -24,10 +24,19 @@ public class BibliotecaEntity extends BaseEntity implements Serializable {
     
     @OneToMany(mappedBy = "biblioteca", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<SalaEntity> salas = new ArrayList<>();
-      
-    @PodamExclude
+     
+    
     @OneToMany(mappedBy = "biblioteca")
     private List<RecursoEntity> recursos = new ArrayList<>();
+    
+    @OneToMany(mappedBy = "biblioteca")
+    private List<PrestamoEntity> prestamos = new ArrayList<>();
+    
+    @OneToMany(mappedBy = "biblioteca")
+    private List<MultaEntity> multas = new ArrayList<>();
+    
+    @OneToMany(mappedBy = "biblioteca")
+    private List<ReservaEntity> reservas = new ArrayList<>();
     
     /**
      * Obtiene la colección de salas.
@@ -63,6 +72,48 @@ public class BibliotecaEntity extends BaseEntity implements Serializable {
      */
     public void setRecursos(List<RecursoEntity> recursos) {
         this.recursos = recursos;
+    }
+
+    /**
+     * @return the prestamos
+     */
+    public List<PrestamoEntity> getPrestamos() {
+        return prestamos;
+    }
+
+    /**
+     * @param prestamos the prestamos to set
+     */
+    public void setPrestamos(List<PrestamoEntity> prestamos) {
+        this.prestamos = prestamos;
+    }
+
+    /**
+     * @return the multas
+     */
+    public List<MultaEntity> getMultas() {
+        return multas;
+    }
+
+    /**
+     * @param multas the multas to set
+     */
+    public void setMultas(List<MultaEntity> multas) {
+        this.multas = multas;
+    }
+
+    /**
+     * @return the reservas
+     */
+    public List<ReservaEntity> getReservas() {
+        return reservas;
+    }
+
+    /**
+     * @param reservas the reservas to set
+     */
+    public void setReservas(List<ReservaEntity> reservas) {
+        this.reservas = reservas;
     }
 
 }
