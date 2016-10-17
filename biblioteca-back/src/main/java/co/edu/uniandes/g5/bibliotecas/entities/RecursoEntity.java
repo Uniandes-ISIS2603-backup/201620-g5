@@ -11,7 +11,7 @@ import uk.co.jemos.podam.common.PodamExclude;
  * @author sf.munera10
  */
 @Entity
-public abstract class RecursoEntity extends BaseEntity implements Serializable{
+public class RecursoEntity extends BaseEntity implements Serializable{
     
     
     

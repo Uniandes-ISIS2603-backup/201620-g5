@@ -30,27 +30,27 @@ public class ReservaPersistence {
     @PersistenceContext(unitName = "G5PU")
     protected EntityManager em;
 
-    public ReservaEntity find(Long id) {
+    public ReservaEntity getReserva(Long id) {
         LOGGER.log(Level.INFO, "Consultando reserva con id={0}", id);
         return em.find(ReservaEntity.class, id);
     }
 
-    public ReservaEntity findAllInUsuario(Long usuarioId) {
+    public List<ReservaEntity> getReservasByUsuario(Long usuarioId) {
         LOGGER.log(Level.INFO, "Consultando todas las reservas con usuario = {0}", usuarioId);
         TypedQuery<ReservaEntity> q
                 = em.createQuery("select u from ReservaEntity u where u.usuario.id = :usuarioId", ReservaEntity.class);
-        q = q.setParameter("name", usuarioId); 
-        return q.getSingleResult();
+        q = q.setParameter("usuarioId", usuarioId); 
+        return q.getResultList();
     }
     
-     public List<ReservaEntity> findAllInBiblioteca(Long bibliotecaId) {
+     public List<ReservaEntity> getReservasByBiblioteca(Long bibliotecaId) {
         LOGGER.log(Level.INFO, "Consultando todas las reservas de la id de biblioteca ={0}", bibliotecaId);
         TypedQuery q = em.createQuery("select d from ReservaEntity d  where d.biblioteca.id = :bibliotecaId", ReservaEntity.class);
         q = q.setParameter("bibliotecaId", bibliotecaId);
         return q.getResultList();
     }
      
-      public List<ReservaEntity> findAllInRecurso(Long recursoId) {
+      public List<ReservaEntity> getReservasByRecurso(Long recursoId) {
         LOGGER.log(Level.INFO, "Consultando todas las reservas del recurso con id={0}", recursoId);
         TypedQuery q = em.createQuery("select d from ReservaEntity d  where d.recurso.id = :recursoId", PrestamoEntity.class);
         q = q.setParameter("recursoId", recursoId);
@@ -59,7 +59,7 @@ public class ReservaPersistence {
       
       
 
-    public List<ReservaEntity> findAll() {
+    public List<ReservaEntity> getReservas() {
         LOGGER.info("Consultando todas las reservas");
         Query q = em.createQuery("select u from ReservaEntity u");
         return q.getResultList();

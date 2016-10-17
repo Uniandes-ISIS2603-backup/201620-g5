@@ -7,7 +7,7 @@ package co.edu.uniandes.g5.bibliotecas.persistence;
 
 
 import co.edu.uniandes.g5.bibliotecas.entities.BibliotecaEntity;
-import co.edu.uniandes.g5.bibliotecas.entities.PrestamoEntity;
+import co.edu.uniandes.g5.bibliotecas.entities.ReservaEntity;
 import co.edu.uniandes.g5.bibliotecas.entities.RecursoEntity;
 import co.edu.uniandes.g5.bibliotecas.entities.UsuarioEntity;
 import org.junit.Before;
@@ -34,9 +34,9 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
  * @author ce.gonzalez13
  */
 @RunWith(Arquillian.class)
-public class PrestamoPersistenceTest {
+public class ReservaPersistenceTest {
     
-    public PrestamoPersistenceTest() {
+    public ReservaPersistenceTest() {
     }
     
     /**
@@ -46,8 +46,8 @@ public class PrestamoPersistenceTest {
     @Deployment
     public static JavaArchive createDeployment(){
         return ShrinkWrap.create(JavaArchive.class)
-                .addPackage(PrestamoEntity.class.getPackage())
-                .addPackage(PrestamoPersistence.class.getPackage())
+                .addPackage(ReservaEntity.class.getPackage())
+                .addPackage(ReservaPersistence.class.getPackage())
                 .addPackage(BibliotecaEntity.class.getPackage())
                 .addPackage(UsuarioEntity.class.getPackage())
                 .addPackage(RecursoEntity.class.getPackage())
@@ -56,7 +56,7 @@ public class PrestamoPersistenceTest {
     }
     
     @Inject
-    private PrestamoPersistence prestamoPersistence;
+    private ReservaPersistence reservaPersistence;
     
     @PersistenceContext
     private EntityManager em;
@@ -66,19 +66,19 @@ public class PrestamoPersistenceTest {
     
     
     
-    private List<PrestamoEntity> data = new ArrayList<PrestamoEntity>();
+    private List<ReservaEntity> data = new ArrayList<ReservaEntity>();
     /**
-     * Usuario que contiene los prestamos.
+     * Usuario que contiene los reservas.
      */
     private UsuarioEntity usuarioEntity;
 
     /**
-     * Biblioteca que contiene los prestamos.
+     * Biblioteca que contiene los reservas.
      */
     private BibliotecaEntity bibliotecaEntity;
     
      /**
-     * Biblioteca que contiene los prestamos.
+     * Biblioteca que contiene los reservas.
      */
     private RecursoEntity recursoEntity;
     
@@ -119,7 +119,7 @@ public class PrestamoPersistenceTest {
      * Limpia las tablas que están implicadas en la prueba
      */
     private void clearData(){
-        em.createQuery("delete from PrestamoEntity").executeUpdate();
+        em.createQuery("delete from ReservaEntity").executeUpdate();
         em.createQuery("delete from UsuarioEntity").executeUpdate();
         em.createQuery("delete from BibliotecaEntity").executeUpdate();
         em.createQuery("delete from RecursoEntity").executeUpdate();
@@ -141,7 +141,7 @@ public class PrestamoPersistenceTest {
         recursoEntity.setId(1L);
         em.persist(recursoEntity);
         for(int i =0; i<3; i++){
-            PrestamoEntity entity = factory.manufacturePojo(PrestamoEntity.class);
+            ReservaEntity entity = factory.manufacturePojo(ReservaEntity.class);
             entity.setBiblioteca(bibliotecaEntity);
             entity.setUsuario(usuarioEntity);
             entity.setRecurso(recursoEntity);
@@ -153,45 +153,45 @@ public class PrestamoPersistenceTest {
     
     
     /**
-     * Test of create method, of class PrestamoPersistence.
+     * Test of create method, of class ReservaPersistence.
      */
     @Test
     public void testCreate() throws Exception {
         PodamFactory factory = new PodamFactoryImpl();
-        PrestamoEntity newEntity = factory.manufacturePojo(PrestamoEntity.class);
+        ReservaEntity newEntity = factory.manufacturePojo(ReservaEntity.class);
         newEntity.setBiblioteca(bibliotecaEntity);
         newEntity.setUsuario(usuarioEntity);
         newEntity.setRecurso(recursoEntity);
-        PrestamoEntity result = prestamoPersistence.create(newEntity);
+        ReservaEntity result = reservaPersistence.create(newEntity);
 
         Assert.assertNotNull(result);
 
-        PrestamoEntity entity = em.find(PrestamoEntity.class, result.getId());
+        ReservaEntity entity = em.find(ReservaEntity.class, result.getId());
 
         Assert.assertEquals(newEntity.getName(), entity.getName());
     }
 
     /**
-     * Test of find method, of class PrestamoPersistence.
+     * Test of find method, of class ReservaPersistence.
      */
     @Test
-    public void testGetPrestamo() throws Exception {
-        PrestamoEntity entity = data.get(0);
-        PrestamoEntity newEntity = prestamoPersistence.getPrestamo(entity.getId());
+    public void testGetReserva() throws Exception {
+        ReservaEntity entity = data.get(0);
+        ReservaEntity newEntity = reservaPersistence.getReserva(entity.getId());
         Assert.assertNotNull(newEntity);
         Assert.assertEquals(entity.getId(), newEntity.getId());
     }
     
         /**
-     * Test of findAll method, of class PrestamoPersistence.
+     * Test of findAll method, of class ReservaPersistence.
      */
     @Test
-    public void testGetPrestamos() throws Exception {
-         List<PrestamoEntity> list = prestamoPersistence.getPrestamos();
+    public void testGetReservas() throws Exception {
+         List<ReservaEntity> list = reservaPersistence.getReservas();
         Assert.assertEquals(data.size(), list.size());
-        for (PrestamoEntity ent : list) {
+        for (ReservaEntity ent : list) {
             boolean found = false;
-            for (PrestamoEntity entity : data) {
+            for (ReservaEntity entity : data) {
                 if (ent.getId().equals(entity.getId())) {
                     found = true;
                 }
@@ -202,15 +202,15 @@ public class PrestamoPersistenceTest {
     }
 
     /**
-     * Test of findAllInUsuario method, of class PrestamoPersistence.
+     * Test of findAllInUsuario method, of class ReservaPersistence.
      */
     @Test
-    public void testGetPrestamosByUsuario() throws Exception {
-        List<PrestamoEntity> list = prestamoPersistence.getPrestamosByUsuario(usuarioEntity.getId());
+    public void testGetReservasByUsuario() throws Exception {
+        List<ReservaEntity> list = reservaPersistence.getReservasByUsuario(usuarioEntity.getId());
         Assert.assertEquals(data.size(), list.size());
-        for (PrestamoEntity ent : list) {
+        for (ReservaEntity ent : list) {
             boolean found = false;
-            for (PrestamoEntity entity : data) {
+            for (ReservaEntity entity : data) {
                 if (ent.getId().equals(entity.getId())) {
                     found = true;
                 }
@@ -221,16 +221,16 @@ public class PrestamoPersistenceTest {
 
 
     /**
-     * Test of findAllInBiblioteca method, of class PrestamoPersistence.
+     * Test of findAllInBiblioteca method, of class ReservaPersistence.
      */
     @Test
-    public void testGetPrestamosByBiblioteca() throws Exception 
+    public void testGetReservasByBiblioteca() throws Exception 
     {
-       List<PrestamoEntity> list = prestamoPersistence.getPrestamosByBiblioteca(bibliotecaEntity.getId());
+       List<ReservaEntity> list = reservaPersistence.getReservasByBiblioteca(bibliotecaEntity.getId());
         Assert.assertEquals(data.size(), list.size());
-        for (PrestamoEntity ent : list) {
+        for (ReservaEntity ent : list) {
             boolean found = false;
-            for (PrestamoEntity entity : data) {
+            for (ReservaEntity entity : data) {
                 if (ent.getId().equals(entity.getId())) {
                     found = true;
                 }
@@ -243,16 +243,16 @@ public class PrestamoPersistenceTest {
     
 
     /**
-     * Test of findAllInRecurso method, of class PrestamoPersistence.
+     * Test of findAllInRecurso method, of class ReservaPersistence.
      */
     @Test
-    public void testGetPrestamosByRecurso() throws Exception {
+    public void testGetReservasByRecurso() throws Exception {
          
-       List<PrestamoEntity> list = prestamoPersistence.getPrestamosByRecurso(recursoEntity.getId());
+       List<ReservaEntity> list = reservaPersistence.getReservasByRecurso(recursoEntity.getId());
         Assert.assertEquals(data.size(), list.size());
-        for (PrestamoEntity ent : list) {
+        for (ReservaEntity ent : list) {
             boolean found = false;
-            for (PrestamoEntity entity : data) {
+            for (ReservaEntity entity : data) {
                 if (ent.getId().equals(entity.getId())) {
                     found = true;
                 }
@@ -266,31 +266,31 @@ public class PrestamoPersistenceTest {
     
 
     /**
-     * Test of update method, of class PrestamoPersistence.
+     * Test of update method, of class ReservaPersistence.
      */
     @Test
     public void testUpdate() throws Exception {
-        PrestamoEntity entity = data.get(0);
+        ReservaEntity entity = data.get(0);
         PodamFactory factory = new PodamFactoryImpl();
-        PrestamoEntity newEntity = factory.manufacturePojo(PrestamoEntity.class);
+        ReservaEntity newEntity = factory.manufacturePojo(ReservaEntity.class);
 
         newEntity.setId(entity.getId());
 
-        prestamoPersistence.update(newEntity);
+        reservaPersistence.update(newEntity);
 
-        PrestamoEntity resp = em.find(PrestamoEntity.class, entity.getId());
+        ReservaEntity resp = em.find(ReservaEntity.class, entity.getId());
 
         Assert.assertEquals(newEntity.getId(), resp.getId());
     }
 
     /**
-     * Test of delete method, of class PrestamoPersistence.
+     * Test of delete method, of class ReservaPersistence.
      */
     @Test
     public void testDelete() throws Exception {
-       PrestamoEntity entity = data.get(0);
-        prestamoPersistence.delete(entity.getId());
-        PrestamoEntity deleted = em.find(PrestamoEntity.class, entity.getId());
+       ReservaEntity entity = data.get(0);
+        reservaPersistence.delete(entity.getId());
+        ReservaEntity deleted = em.find(ReservaEntity.class, entity.getId());
         Assert.assertNull(deleted);
     }
     

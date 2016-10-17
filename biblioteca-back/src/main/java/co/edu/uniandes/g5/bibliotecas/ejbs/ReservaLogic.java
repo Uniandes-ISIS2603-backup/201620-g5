@@ -22,12 +22,12 @@ public class ReservaLogic implements IReservaLogic {
 
     @Override
     public List<ReservaEntity> getReservas() {
-        return persistence.findAll();
+        return persistence.getReservas();
     }
 
     @Override
     public ReservaEntity getReserva(Long id) {
-        return persistence.find(id);
+        return persistence.getReserva(id);
     }
 
     @Override
