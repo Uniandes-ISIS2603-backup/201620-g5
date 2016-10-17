@@ -2,7 +2,7 @@
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
- */
+ 
 package co.edu.uniandes.g5.bibliotecas.ejbs;
 
 import co.edu.uniandes.g5.bibliotecas.api.IBlogLogic;
@@ -33,10 +33,7 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
 /**
  *
  * @author js.prieto10
- */ 
-    /**
-     *
-     */
+
     @RunWith(Arquillian.class)
     public class BlogLogicTest {
     
@@ -167,3 +164,4 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
         Assert.assertEquals(pojoEntity.getId(), resp.getId());
     }
 }
+*/
