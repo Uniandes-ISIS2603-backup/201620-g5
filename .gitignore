@@ -50,5 +50,4 @@ biblioteca-back/nb-configuration.xml/
 
 # IntelliJ
 .idea/
-!/biblioteca-web/src/main/webapp/bower_components/
 /biblioteca-back/nbproject/
