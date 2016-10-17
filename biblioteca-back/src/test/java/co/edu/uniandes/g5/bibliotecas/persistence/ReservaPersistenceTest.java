@@ -7,6 +7,7 @@ package co.edu.uniandes.g5.bibliotecas.persistence;
 
 
 import co.edu.uniandes.g5.bibliotecas.entities.BibliotecaEntity;
+import co.edu.uniandes.g5.bibliotecas.entities.LibroEntity;
 import co.edu.uniandes.g5.bibliotecas.entities.ReservaEntity;
 import co.edu.uniandes.g5.bibliotecas.entities.RecursoEntity;
 import co.edu.uniandes.g5.bibliotecas.entities.UsuarioEntity;
@@ -61,6 +62,8 @@ public class ReservaPersistenceTest {
     @PersistenceContext
     private EntityManager em;
     
+    
+    
     @Inject 
     UserTransaction utx;
     
@@ -78,9 +81,9 @@ public class ReservaPersistenceTest {
     private BibliotecaEntity bibliotecaEntity;
     
      /**
-     * Biblioteca que contiene los reservas.
+     * Recurso que contiene los reservas.
      */
-    private RecursoEntity recursoEntity;
+    private LibroEntity libroEntity;
     
     
      /**
@@ -122,7 +125,7 @@ public class ReservaPersistenceTest {
         em.createQuery("delete from ReservaEntity").executeUpdate();
         em.createQuery("delete from UsuarioEntity").executeUpdate();
         em.createQuery("delete from BibliotecaEntity").executeUpdate();
-        em.createQuery("delete from RecursoEntity").executeUpdate();
+        em.createQuery("delete from LibroEntity").executeUpdate();
     }
     
     /**
@@ -137,14 +140,14 @@ public class ReservaPersistenceTest {
         bibliotecaEntity = factory.manufacturePojo(BibliotecaEntity.class);
         bibliotecaEntity.setId(1L);
         em.persist(bibliotecaEntity);
-        recursoEntity = factory.manufacturePojo(RecursoEntity.class);
-        recursoEntity.setId(1L);
-        em.persist(recursoEntity);
+        libroEntity = factory.manufacturePojo(LibroEntity.class);
+        libroEntity.setId(1L);
+        em.persist(libroEntity);
         for(int i =0; i<3; i++){
             ReservaEntity entity = factory.manufacturePojo(ReservaEntity.class);
             entity.setBiblioteca(bibliotecaEntity);
             entity.setUsuario(usuarioEntity);
-            entity.setRecurso(recursoEntity);
+            entity.setRecurso(libroEntity);
             em.persist(entity);
             data.add(entity);
         }
@@ -161,7 +164,7 @@ public class ReservaPersistenceTest {
         ReservaEntity newEntity = factory.manufacturePojo(ReservaEntity.class);
         newEntity.setBiblioteca(bibliotecaEntity);
         newEntity.setUsuario(usuarioEntity);
-        newEntity.setRecurso(recursoEntity);
+        newEntity.setRecurso(libroEntity);
         ReservaEntity result = reservaPersistence.create(newEntity);
 
         Assert.assertNotNull(result);
@@ -248,7 +251,7 @@ public class ReservaPersistenceTest {
     @Test
     public void testGetReservasByRecurso() throws Exception {
          
-       List<ReservaEntity> list = reservaPersistence.getReservasByRecurso(recursoEntity.getId());
+       List<ReservaEntity> list = reservaPersistence.getReservasByRecurso(libroEntity.getId());
         Assert.assertEquals(data.size(), list.size());
         for (ReservaEntity ent : list) {
             boolean found = false;

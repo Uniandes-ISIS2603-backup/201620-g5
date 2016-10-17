@@ -23,11 +23,13 @@ import uk.co.jemos.podam.common.PodamExclude;
 public class UsuarioEntity extends BaseEntity implements Serializable {
 
   
-    
+    @PodamExclude
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<PrestamoEntity> prestamos = new ArrayList<>();
+    @PodamExclude
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<MultaEntity> multas = new ArrayList<>();
+    @PodamExclude
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ReservaEntity> reservas = new ArrayList<>();
     

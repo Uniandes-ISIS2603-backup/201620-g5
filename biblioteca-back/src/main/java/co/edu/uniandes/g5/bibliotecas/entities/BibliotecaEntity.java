@@ -29,6 +29,30 @@ public class BibliotecaEntity extends BaseEntity implements Serializable {
     @OneToMany(mappedBy = "biblioteca")
     private List<RecursoEntity> recursos = new ArrayList<>();
     
+    @PodamExclude 
+    @OneToMany(mappedBy = "biblioteca")
+    private List<PrestamoEntity> prestamos = new ArrayList<>();
+
+    public List<PrestamoEntity> getPrestamos() {
+        return prestamos;
+    }
+
+    public void setPrestamos(List<PrestamoEntity> prestamos) {
+        this.prestamos = prestamos;
+    }
+
+    public List<ReservaEntity> getReservas() {
+        return reservas;
+    }
+
+    public void setReservas(List<ReservaEntity> reservas) {
+        this.reservas = reservas;
+    }
+    
+    @PodamExclude 
+    @OneToMany(mappedBy = "biblioteca")
+    private List<ReservaEntity> reservas = new ArrayList<>();
+    
     /**
      * Obtiene la colección de salas.
      * @return colección salas. 
