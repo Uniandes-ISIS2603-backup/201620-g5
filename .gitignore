@@ -25,7 +25,7 @@ hs_err_pid*
 
 # Bower
 bower_components/
-/bibloteca.web/src/main/webapp/bower_components
+/bibloteca-web/src/main/webapp/bower_components
 
 # Grunt 
 .grunt
