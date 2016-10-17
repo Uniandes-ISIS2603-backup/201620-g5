@@ -22,12 +22,12 @@ public class PrestamoLogic implements IPrestamoLogic {
 
     @Override
     public List<PrestamoEntity> getPrestamos() {
-        return persistence.findAll();
+        return persistence.getPrestamos();
     }
 
     @Override
     public PrestamoEntity getPrestamo(Long id) {
-        return persistence.find(id);
+        return persistence.getPrestamo(id);
     }
 
     @Override

@@ -5,7 +5,10 @@
  */
 package co.edu.uniandes.g5.bibliotecas.persistence;
 
+import co.edu.uniandes.g5.bibliotecas.entities.BibliotecaEntity;
 import co.edu.uniandes.g5.bibliotecas.entities.PrestamoEntity;
+import co.edu.uniandes.g5.bibliotecas.entities.RecursoEntity;
+import co.edu.uniandes.g5.bibliotecas.entities.UsuarioEntity;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -63,9 +66,20 @@ public class PrestamoPersistenceTest {
     
     
     private List<PrestamoEntity> data = new ArrayList<PrestamoEntity>();
+    /**
+     * Usuario que contiene los prestamos.
+     */
+    private UsuarioEntity usuarioEntity;
+
+    /**
+     * Biblioteca que contiene los prestamos.
+     */
+    private BibliotecaEntity bibliotecaEntity;
     
-   
-    
+     /**
+     * Biblioteca que contiene los prestamos.
+     */
+    private RecursoEntity recursoEntity;
     
     @BeforeClass
     public static void setUpClass() {
@@ -123,6 +137,15 @@ public class PrestamoPersistenceTest {
      */
     private void insertData(){
         PodamFactory factory = new PodamFactoryImpl();
+        usuarioEntity = factory.manufacturePojo(UsuarioEntity.class);
+        usuarioEntity.setId(1L);
+        em.persist(usuarioEntity);
+        bibliotecaEntity = factory.manufacturePojo(BibliotecaEntity.class);
+        bibliotecaEntity.setId(1L);
+        em.persist(bibliotecaEntity);
+        recursoEntity = factory.manufacturePojo(RecursoEntity.class);
+        recursoEntity.setId(1L);
+        em.persist(recursoEntity);
         for(int i =0; i<3; i++){
             PrestamoEntity entity = factory.manufacturePojo(PrestamoEntity.class);
             em.persist(entity);
@@ -145,41 +168,77 @@ public class PrestamoPersistenceTest {
      */
     @Test
     public void testGetPrestamosByUsuario() throws Exception {
-        PrestamoEntity entity = data.get(0);
-        PrestamoEntity newEntity = prestamoPersistence.getPrestamosByUsuario(entity.getUsuario().getId());
-        Assert.assertNotNull(newEntity);
-        Assert.assertEquals(entity.getName(), newEntity.getName());
+        List<PrestamoEntity> list = prestamoPersistence.getPrestamosByUsuario(usuarioEntity.getId());
+        Assert.assertEquals(data.size(), list.size());
+        for (PrestamoEntity ent : list) {
+            boolean found = false;
+            for (PrestamoEntity entity : data) {
+                if (ent.getId().equals(entity.getId())) {
+                    found = true;
+                }
+            }
+            Assert.assertTrue(found);
+        }
     }
+
 
     /**
      * Test of findAllInBiblioteca method, of class PrestamoPersistence.
      */
     @Test
-    public void testGetPrestamosByBiblioteca() throws Exception {
-        PrestamoEntity entity = data.get(0);
-        PrestamoEntity newEntity = prestamoPersistence.getPrestamosByBiblioteca(entity.getBiblioteca().getId());
-        Assert.assertNotNull(newEntity);
-        Assert.assertEquals(entity.getName(), newEntity.getName());
-
+    public void testGetPrestamosByBiblioteca() throws Exception 
+    {
+       List<PrestamoEntity> list = prestamoPersistence.getPrestamosByBiblioteca(bibliotecaEntity.getId());
+        Assert.assertEquals(data.size(), list.size());
+        for (PrestamoEntity ent : list) {
+            boolean found = false;
+            for (PrestamoEntity entity : data) {
+                if (ent.getId().equals(entity.getId())) {
+                    found = true;
+                }
+            }
+            Assert.assertTrue(found);
+        }
     }
+
+
+    
 
     /**
      * Test of findAllInRecurso method, of class PrestamoPersistence.
      */
     @Test
     public void testGetPrestamosByRecurso() throws Exception {
-        PrestamoEntity entity = data.get(0);
-        PrestamoEntity newEntity = prestamoPersistence.getPrestamosByRecurso(entity.getRecurso().getId());
-        Assert.assertNotNull(newEntity);
-        Assert.assertEquals(entity.getName(), newEntity.getName());      
+         
+       List<PrestamoEntity> list = prestamoPersistence.getPrestamosByRecurso(recursoEntity.getId());
+        Assert.assertEquals(data.size(), list.size());
+        for (PrestamoEntity ent : list) {
+            boolean found = false;
+            for (PrestamoEntity entity : data) {
+                if (ent.getId().equals(entity.getId())) {
+                    found = true;
+                }
+            }
+            Assert.assertTrue(found);
+        }
     }
 
     /**
      * Test of findAll method, of class PrestamoPersistence.
      */
     @Test
-    public void testFindAll() throws Exception {
-        fail("testFindAll");
+    public void testGetPrestamos() throws Exception {
+         List<PrestamoEntity> list = prestamoPersistence.getPrestamos();
+        Assert.assertEquals(data.size(), list.size());
+        for (PrestamoEntity ent : list) {
+            boolean found = false;
+            for (PrestamoEntity entity : data) {
+                if (ent.getId().equals(entity.getId())) {
+                    found = true;
+                }
+            }
+            Assert.assertTrue(found);
+        }
 
     }
 
@@ -188,16 +247,35 @@ public class PrestamoPersistenceTest {
      */
     @Test
     public void testCreate() throws Exception {
-        fail("testCreate");
+        PodamFactory factory = new PodamFactoryImpl();
+        PrestamoEntity newEntity = factory.manufacturePojo(PrestamoEntity.class);
 
+        PrestamoEntity result = prestamoPersistence.create(newEntity);
+
+        Assert.assertNotNull(result);
+        PrestamoEntity entity = em.find(PrestamoEntity.class, result.getId());
+        Assert.assertNotNull(entity);
+        Assert.assertEquals(newEntity.getId(), entity.getId());
     }
+
+    
 
     /**
      * Test of update method, of class PrestamoPersistence.
      */
     @Test
     public void testUpdate() throws Exception {
-        fail("testUpdate");
+        PrestamoEntity entity = data.get(0);
+        PodamFactory factory = new PodamFactoryImpl();
+        PrestamoEntity newEntity = factory.manufacturePojo(PrestamoEntity.class);
+
+        newEntity.setId(entity.getId());
+
+        prestamoPersistence.update(newEntity);
+
+        PrestamoEntity resp = em.find(PrestamoEntity.class, entity.getId());
+
+        Assert.assertEquals(newEntity.getName(), resp.getName());
     }
 
     /**
@@ -205,7 +283,10 @@ public class PrestamoPersistenceTest {
      */
     @Test
     public void testDelete() throws Exception {
-        fail("testDelete");
+       PrestamoEntity entity = data.get(0);
+        prestamoPersistence.delete(entity.getId());
+        PrestamoEntity deleted = em.find(PrestamoEntity.class, entity.getId());
+        Assert.assertNull(deleted);
     }
     
 }
