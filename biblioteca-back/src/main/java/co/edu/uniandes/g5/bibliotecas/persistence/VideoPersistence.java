@@ -45,6 +45,14 @@ public class VideoPersistence {
         return q.getResultList();
     }
 
+    public List<VideoEntity> findAllInBiblioteca(Long idBiblioteca){
+        LOGGER.log(Level.INFO, "Consultando todos los videos de la biblioteca id={0}", idBiblioteca);
+        TypedQuery q = em.createQuery("select u from VideoEntity u where u.biblioteca.id= :idBiblioteca",VideoEntity.class);
+        q = q.setParameter("idBiblioteca", idBiblioteca);
+        return q.getResultList();
+        
+    }
+    
     public VideoEntity create(VideoEntity entity) {
         LOGGER.info("Creando un video nuevo");
         em.persist(entity);

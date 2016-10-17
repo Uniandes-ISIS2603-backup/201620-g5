@@ -45,6 +45,14 @@ public class LibroPersistence {
         Query q = em.createQuery("select u from LibroEntity u");
         return q.getResultList();
     }
+    
+    public List<LibroEntity> findAllInBiblioteca(Long idBiblioteca){
+        LOGGER.log(Level.INFO, "Consultando todos los libros de la biblioteca id={0}", idBiblioteca);
+        TypedQuery q = em.createQuery("select u from LibroEntity u where u.biblioteca.id= :idBiblioteca",LibroEntity.class);
+        q = q.setParameter("idBiblioteca", idBiblioteca);
+        return q.getResultList();
+        
+    }
 
     public LibroEntity create(LibroEntity entity) {
         LOGGER.info("Creando un libro nuevo");
