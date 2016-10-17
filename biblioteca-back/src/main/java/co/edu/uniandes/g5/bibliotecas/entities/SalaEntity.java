@@ -21,12 +21,14 @@ import uk.co.jemos.podam.common.PodamExclude;
 @Entity
 public class SalaEntity extends RecursoEntity implements Serializable {
 
-    
+    @PodamExclude
+    @ManyToOne
+    private co.edu.uniandes.g5.bibliotecas.entities.BibliotecaEntity biblioteca;
+
     private boolean estaOcupada;
-    
+
     private int capacidad;
 
-   
     /**
      * @return the estaOcupada
      */
@@ -53,5 +55,21 @@ public class SalaEntity extends RecursoEntity implements Serializable {
      */
     public void setCapacidad(int capacidad) {
         this.capacidad = capacidad;
+    }
+
+    /**
+     * @return the biblioteca
+     */
+    @Override
+    public BibliotecaEntity getBiblioteca() {
+        return biblioteca;
+    }
+
+    /**
+     * @param biblioteca the biblioteca to set
+     */
+    @Override
+    public void setBiblioteca(BibliotecaEntity biblioteca) {
+        this.biblioteca = biblioteca;
     }
 }

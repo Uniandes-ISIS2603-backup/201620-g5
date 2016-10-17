@@ -1,12 +1,12 @@
 package co.edu.uniandes.g5.bibliotecas.entities;
 
-import co.edu.uniandes.g5.bibliotecas.entities.BaseEntity;
 import java.io.Serializable;
-import javax.persistence.CascadeType;
+
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import uk.co.jemos.podam.common.PodamExclude;
 
 /**
@@ -16,36 +16,26 @@ import uk.co.jemos.podam.common.PodamExclude;
 @Entity
 public abstract class RecursoEntity extends BaseEntity implements Serializable{
     
+    @PodamExclude
+    @OneToMany(mappedBy = "recurso")
+    private List<PrestamoEntity> prestamos = new ArrayList<>();
     
+    @PodamExclude
+    @OneToMany(mappedBy = "recurso")
+    private List<MultaEntity> multas = new ArrayList<>();
+    
+    @PodamExclude
+    @OneToMany(mappedBy = "recurso")
+    private List<ReservaEntity> reservas = new ArrayList<>();
     
     @PodamExclude
     @ManyToOne
-    private BibliotecaEntity biblioteca;
+    private co.edu.uniandes.g5.bibliotecas.entities.BibliotecaEntity biblioteca;
     
-    @PodamExclude
-    @OneToOne
-    private PrestamoEntity prestamo;
-    
-     @PodamExclude
-    @OneToOne
-    private ReservaEntity reserva;
 
-    public PrestamoEntity getPrestamo() {
-        return prestamo;
-    }
 
-    public void setPrestamo(PrestamoEntity prestamo) {
-        this.prestamo = prestamo;
-    }
+   
 
-    public ReservaEntity getReserva() {
-        return reserva;
-    }
-
-    public void setReserva(ReservaEntity reserva) {
-        this.reserva = reserva;
-    }
-    
     /**
      * Obtiene el atributo biblioteca.
      *
@@ -64,5 +54,47 @@ public abstract class RecursoEntity extends BaseEntity implements Serializable{
      */
     public void setBiblioteca(BibliotecaEntity biblioteca) {
         this.biblioteca = biblioteca;
+    }
+
+    /**
+     * @return the prestamos
+     */
+    public List<PrestamoEntity> getPrestamos() {
+        return prestamos;
+    }
+
+    /**
+     * @param prestamos the prestamos to set
+     */
+    public void setPrestamos(List<PrestamoEntity> prestamos) {
+        this.prestamos = prestamos;
+    }
+
+    /**
+     * @return the multas
+     */
+    public List<MultaEntity> getMultas() {
+        return multas;
+    }
+
+    /**
+     * @param multas the multas to set
+     */
+    public void setMultas(List<MultaEntity> multas) {
+        this.multas = multas;
+    }
+
+    /**
+     * @return the reservas
+     */
+    public List<ReservaEntity> getReservas() {
+        return reservas;
+    }
+
+    /**
+     * @param reservas the reservas to set
+     */
+    public void setReservas(List<ReservaEntity> reservas) {
+        this.reservas = reservas;
     }
 }

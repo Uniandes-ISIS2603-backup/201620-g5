@@ -5,6 +5,7 @@
  */
 package co.edu.uniandes.g5.bibliotecas.persistence;
 
+import co.edu.uniandes.g5.bibliotecas.entities.BibliotecaEntity;
 import co.edu.uniandes.g5.bibliotecas.entities.SalaEntity;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,6 +40,8 @@ public class SalaPersistenceTest {
                 .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
                 .addAsManifestResource("META-INF/beans.xml", "beans.xml");
     }
+    
+    BibliotecaEntity bibliotecaEntity;
 
     @Inject
     private SalaPersistence salaPersistence;
@@ -87,8 +90,13 @@ public class SalaPersistenceTest {
      */
     private void insertData() {
         PodamFactory factory = new PodamFactoryImpl();
+        bibliotecaEntity = factory.manufacturePojo(BibliotecaEntity.class);
+        bibliotecaEntity.setId(1L);
+        em.persist(bibliotecaEntity);
+        
         for (int i = 0; i < 3; i++) {
             SalaEntity entity = factory.manufacturePojo(SalaEntity.class);
+            entity.setBiblioteca(bibliotecaEntity);
             em.persist(entity);
             tuplas.add(entity);
         }

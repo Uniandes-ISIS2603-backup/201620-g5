@@ -81,8 +81,8 @@ public class BibliotecaPersistenceTest {
      * Limpia las tablas que están implicadas en la prueba.
      */
     private void clearData() {
-        em.createQuery("delete from SalaEntity").executeUpdate();
         em.createQuery("delete from BibliotecaEntity").executeUpdate();
+        em.createQuery("delete from SalaEntity").executeUpdate();
     }
 
     /**
