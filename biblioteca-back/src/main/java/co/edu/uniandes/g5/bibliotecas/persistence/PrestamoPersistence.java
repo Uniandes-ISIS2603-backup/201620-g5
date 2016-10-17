@@ -29,27 +29,27 @@ public class PrestamoPersistence {
     @PersistenceContext(unitName = "G5PU")
     protected EntityManager em;
 
-    public PrestamoEntity find(Long id) {
+    public PrestamoEntity getPrestamo(Long id) {
         LOGGER.log(Level.INFO, "Consultando prestamo con id={0}", id);
         return em.find(PrestamoEntity.class, id);
     }
 
-    public PrestamoEntity findAllInUsuario(Long usuarioId) {
+    public List<PrestamoEntity> getPrestamosByUsuario(Long usuarioId) {
         LOGGER.log(Level.INFO, "Consultando todos los prestamos con usuario = {0}", usuarioId);
         TypedQuery<PrestamoEntity> q
                 = em.createQuery("select u from PrestamoEntity u where u.usuario.id = :usuarioId", PrestamoEntity.class);
         q = q.setParameter("name", usuarioId); 
-        return q.getSingleResult();
+        return q.getResultList();
     }
     
-     public List<PrestamoEntity> findAllInBiblioteca(Long bibliotecaId) {
+     public List<PrestamoEntity> getPrestamosByBiblioteca(Long bibliotecaId) {
         LOGGER.log(Level.INFO, "Consultando todos los prestamos de la id de biblioteca ={0}", bibliotecaId);
         TypedQuery q = em.createQuery("select d from PrestamoEntity d  where d.biblioteca.id = :bibliotecaId", PrestamoEntity.class);
         q = q.setParameter("bibliotecaId", bibliotecaId);
         return q.getResultList();
     }
      
-      public List<PrestamoEntity> findAllInRecurso(Long recursoId) {
+      public List<PrestamoEntity> getPrestamosByRecurso(Long recursoId) {
         LOGGER.log(Level.INFO, "Consultando todos los prestamos del recurso con id={0}", recursoId);
         TypedQuery q = em.createQuery("select d from PrestamoEntity d  where d.recurso.id = :recursoId", PrestamoEntity.class);
         q = q.setParameter("recursoId", recursoId);
@@ -58,7 +58,7 @@ public class PrestamoPersistence {
       
        
 
-    public List<PrestamoEntity> findAll() {
+    public List<PrestamoEntity> getPrestamos() {
         LOGGER.info("Consultando todos los prestamos");
         Query q = em.createQuery("select u from PrestamoEntity u");
         return q.getResultList();

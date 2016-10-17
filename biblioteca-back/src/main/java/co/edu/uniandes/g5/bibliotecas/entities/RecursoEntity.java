@@ -2,6 +2,7 @@ package co.edu.uniandes.g5.bibliotecas.entities;
 
 import co.edu.uniandes.g5.bibliotecas.entities.BaseEntity;
 import java.io.Serializable;
+import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import uk.co.jemos.podam.common.PodamExclude;
 
@@ -9,6 +10,7 @@ import uk.co.jemos.podam.common.PodamExclude;
  *
  * @author sf.munera10
  */
+@Entity
 public abstract class RecursoEntity extends BaseEntity implements Serializable{
     
     

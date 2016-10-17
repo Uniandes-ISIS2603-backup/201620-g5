@@ -8,7 +8,9 @@ package co.edu.uniandes.g5.bibliotecas.entities;
 import java.io.Serializable;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import uk.co.jemos.podam.common.PodamExclude;
 
 /**
  *
@@ -17,7 +19,10 @@ import javax.persistence.OneToOne;
 @Entity
 public class BlogEntity extends RecursoEntity implements Serializable{
     
-    private Long idLibro;
+    @PodamExclude
+    @ManyToOne
+    private co.edu.uniandes.g5.bibliotecas.entities.LibroEntity libro;
+     
     private String titulo;
 
     public String getTitulo() {
@@ -29,9 +34,7 @@ public class BlogEntity extends RecursoEntity implements Serializable{
     }
     private String texto;
     private String nombreAutor;
-    
-   @OneToOne(mappedBy = "libro")
-    private LibroEntity libro = new LibroEntity(); 
+
     
     public LibroEntity getLibro()
     {
@@ -46,14 +49,7 @@ public class BlogEntity extends RecursoEntity implements Serializable{
    
    
 
-    public Long getIdLibro() {
-        return idLibro;
-    }
-
-    public void setIdLibro(Long idLibro) {
-        this.idLibro = idLibro;
-    }
-
+  
     public String getTexto() {
         return texto;
     }

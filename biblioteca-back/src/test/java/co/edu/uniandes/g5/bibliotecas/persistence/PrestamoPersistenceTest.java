@@ -23,6 +23,7 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.UserTransaction;
+import org.junit.Assert;
 import uk.co.jemos.podam.api.PodamFactory;
 import uk.co.jemos.podam.api.PodamFactoryImpl;
 
@@ -132,24 +133,33 @@ public class PrestamoPersistenceTest {
      * Test of find method, of class PrestamoPersistence.
      */
     @Test
-    public void testFind() throws Exception {
-        fail("testFind");
+    public void testGetPrestamo() throws Exception {
+        PrestamoEntity entity = data.get(0);
+        PrestamoEntity newEntity = prestamoPersistence.getPrestamo(entity.getId());
+        Assert.assertNotNull(newEntity);
+        Assert.assertEquals(entity.getName(), newEntity.getName());
     }
 
     /**
      * Test of findAllInUsuario method, of class PrestamoPersistence.
      */
     @Test
-    public void testFindAllInUsuario() throws Exception {
-        fail("testFindAllInUsuario");
+    public void testGetPrestamosByUsuario() throws Exception {
+        PrestamoEntity entity = data.get(0);
+        PrestamoEntity newEntity = prestamoPersistence.getPrestamosByUsuario(entity.getUsuario().getId());
+        Assert.assertNotNull(newEntity);
+        Assert.assertEquals(entity.getName(), newEntity.getName());
     }
 
     /**
      * Test of findAllInBiblioteca method, of class PrestamoPersistence.
      */
     @Test
-    public void testFindAllInBiblioteca() throws Exception {
-        fail("testFindAllInBiblioteca");
+    public void testGetPrestamosByBiblioteca() throws Exception {
+        PrestamoEntity entity = data.get(0);
+        PrestamoEntity newEntity = prestamoPersistence.getPrestamosByBiblioteca(entity.getBiblioteca().getId());
+        Assert.assertNotNull(newEntity);
+        Assert.assertEquals(entity.getName(), newEntity.getName());
 
     }
 
@@ -157,8 +167,11 @@ public class PrestamoPersistenceTest {
      * Test of findAllInRecurso method, of class PrestamoPersistence.
      */
     @Test
-    public void testFindAllInRecurso() throws Exception {
-        fail("testFindAllInRecurso");        
+    public void testGetPrestamosByRecurso() throws Exception {
+        PrestamoEntity entity = data.get(0);
+        PrestamoEntity newEntity = prestamoPersistence.getPrestamosByRecurso(entity.getRecurso().getId());
+        Assert.assertNotNull(newEntity);
+        Assert.assertEquals(entity.getName(), newEntity.getName());      
     }
 
     /**

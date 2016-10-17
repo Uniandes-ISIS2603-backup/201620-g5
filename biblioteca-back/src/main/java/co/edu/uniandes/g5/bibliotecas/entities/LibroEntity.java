@@ -30,7 +30,7 @@ public class LibroEntity extends RecursoEntity implements Serializable {
     
     private boolean online;
     
-     @OneToMany(mappedBy = "blogs", cascade = CascadeType.ALL, orphanRemoval = true)
+     @OneToMany(mappedBy = "libro", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<BlogEntity> blogs = new ArrayList<>();
 
     public Integer getIsbn() {

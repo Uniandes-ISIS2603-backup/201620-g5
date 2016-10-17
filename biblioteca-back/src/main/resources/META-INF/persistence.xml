@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <persistence version="2.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
   
-  Remplazar por los valores de su configuración
   <persistence-unit name="G5PU" transaction-type="JTA">
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
     <jta-data-source>java:app/jdbc/bibliotecas</jta-data-source>
@@ -9,6 +8,7 @@
     <class>co.edu.uniandes.g5.bibliotecas.entities.BlogEntity</class>
     <class>co.edu.uniandes.g5.bibliotecas.entities.PrestamoEntity</class>
     <class>co.edu.uniandes.g5.bibliotecas.entities.ReservaEntity</class>
+    <class>co.edu.uniandes.g5.bibliotecas.entities.RecursoEntity</class>
     <class>co.edu.uniandes.g5.bibliotecas.entities.LibroEntity</class>
     <class>co.edu.uniandes.g5.bibliotecas.entities.MultaEntity</class>
     <class>co.edu.uniandes.g5.bibliotecas.entities.SalaEntity</class>

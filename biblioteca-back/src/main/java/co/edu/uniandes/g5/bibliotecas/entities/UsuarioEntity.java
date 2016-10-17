@@ -24,12 +24,12 @@ public class UsuarioEntity extends BaseEntity implements Serializable {
 
   
     
-    @OneToMany(mappedBy = "prestamo", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Entity> prestamos = new ArrayList<>();
-    @OneToMany(mappedBy = "multa", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<PrestamoEntity> prestamos = new ArrayList<>();
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<MultaEntity> multas = new ArrayList<>();
-    @OneToMany(mappedBy = "reserva", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Entity> reservas = new ArrayList<>();
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ReservaEntity> reservas = new ArrayList<>();
     
     private List<Integer> clave = new ArrayList<>();
     
@@ -37,11 +37,11 @@ public class UsuarioEntity extends BaseEntity implements Serializable {
      
    private String medioDePago;
 
-    public List<Entity> getPrestamos() {
+    public List<PrestamoEntity> getPrestamos() {
         return prestamos;
     }
 
-    public void setPrestamos(List<Entity> prestamos) {
+    public void setPrestamos(List<PrestamoEntity> prestamos) {
         this.prestamos = prestamos;
     }
 
@@ -53,11 +53,11 @@ public class UsuarioEntity extends BaseEntity implements Serializable {
         this.multas = multas;
     }
 
-    public List<Entity> getReservas() {
+    public List<ReservaEntity> getReservas() {
         return reservas;
     }
 
-    public void setReservas(List<Entity> reservas) {
+    public void setReservas(List<ReservaEntity> reservas) {
         this.reservas = reservas;
     }
 
