@@ -24,8 +24,8 @@ hs_err_pid*
 # -- From Javascript
 
 # Bower
-bower_components/
-/bibloteca-web/src/main/webapp/bower_components
+#bower_components/
+#/bibloteca-web/src/main/webapp/bower_components
 
 # Grunt 
 .grunt
