@@ -19,13 +19,16 @@ import org.junit.Test;
 import uk.co.jemos.podam.api.PodamFactory;
 import uk.co.jemos.podam.api.PodamFactoryImpl;
 import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
+import org.junit.runner.RunWith;
 
 /**
  *
  * @author sf.munera10
  */
+@RunWith(Arquillian.class)
 public class SalaPersistenceTest {
     
    /**
@@ -92,13 +95,11 @@ public class SalaPersistenceTest {
         PodamFactory factory = new PodamFactoryImpl();
         bibliotecaEntity = factory.manufacturePojo(BibliotecaEntity.class);
         bibliotecaEntity.setId(1L);
-        em.persist(bibliotecaEntity);
-        
         for (int i = 0; i < 3; i++) {
             SalaEntity entity = factory.manufacturePojo(SalaEntity.class);
             entity.setBiblioteca(bibliotecaEntity);
-            em.persist(entity);
             tuplas.add(entity);
+            em.persist(entity);
         }
     }
     /**
@@ -135,14 +136,16 @@ public class SalaPersistenceTest {
      */
     @Test
     public void testFindAllInBiblioteca() throws Exception {
-        List<SalaEntity> list = salaPersistence.findAll();
-        for(SalaEntity e : tuplas){
-            List<SalaEntity> list2 = salaPersistence.findAllInBiblioteca(e.getBiblioteca().getId());
-            for(SalaEntity en : list)
-            {
-                List<SalaEntity> list3 = salaPersistence.findAllInBiblioteca(en.getBiblioteca().getId());
-                Assert.assertEquals(list2.size(),list3.size());
+        List<SalaEntity> list = salaPersistence.findAllInBiblioteca(bibliotecaEntity.getId());
+        Assert.assertEquals(0, list.size());
+        for (SalaEntity ent : list) {
+            boolean found = false;
+            for (SalaEntity entity : tuplas) {
+                if (ent.getId().equals(entity.getId())) {
+                    found = true;
+                }
             }
+            Assert.assertTrue(found);
         }
     }
 
