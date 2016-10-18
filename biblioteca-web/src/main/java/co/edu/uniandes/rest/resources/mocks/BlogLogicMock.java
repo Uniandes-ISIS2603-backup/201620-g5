@@ -6,7 +6,6 @@
 package co.edu.uniandes.rest.resources.mocks;
 
 import co.edu.uniandes.rest.resources.dtos.BlogDTO;
-import co.edu.uniandes.rest.resources.dtos.LibroDTO;
 import co.edu.uniandes.rest.resources.exceptions.BibliotecaLogicException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -20,7 +19,7 @@ import jdk.nashorn.internal.runtime.ParserException;
  */
 public class BlogLogicMock {
  
-    private final static Logger logger = Logger.getLogger(SalaLogicMock.class.getName());
+    private final static Logger LOGGER = Logger.getLogger(SalaLogicMock.class.getName());
     
     private static ArrayList<BlogDTO> blogs;
     
@@ -28,14 +27,6 @@ public class BlogLogicMock {
     {
         if (blogs == null)
         {
-            try
-            {
-            String fecha1 = "2016-09-1";
-            String fecha2 = "2016-09-31";
-            String fecha3 = "2016-11-25";
-            String fecha4 = "2016-01-25";
-            String fecha5 = "2010-02-25";
-            SimpleDateFormat formater = new SimpleDateFormat("yyyy-MM-dd");
             try
             {
             blogs = new ArrayList<>();
@@ -50,22 +41,17 @@ public class BlogLogicMock {
             {
                 Logger.getLogger(BlogLogicMock.class.getName()).log(Level.SEVERE, null, e);
             }
-            }
-            catch (Exception e)
-            {
-                Logger.getLogger(BlogLogicMock.class.getName()).log(Level.SEVERE, null, e);
-            }
         }
         
        
     } 
     
-    public ArrayList<BlogDTO> getBlogsLibro(Long idLibro) throws BibliotecaLogicException
+    public List<BlogDTO> getBlogsLibro(Long idLibro) throws BibliotecaLogicException
     {
         ArrayList<BlogDTO> a = new ArrayList<>();
         if (blogs == null)
         {
-            logger.severe("Error");
+            LOGGER.severe("Error");
             throw new BibliotecaLogicException("Error interno: lista de blogs no existe.");
         }
         
@@ -79,47 +65,34 @@ public class BlogLogicMock {
     
     public List<BlogDTO> getBlogs() throws BibliotecaLogicException {
         if (blogs == null) {
-            logger.severe("Error interno: lista de blogs no existe.");
+            LOGGER.severe("Error interno: lista de blogs no existe.");
             throw new BibliotecaLogicException("Error interno: lista de blogs no existe.");
         }
 
-        logger.info("retornando todos los blogs");
+        LOGGER.info("retornando todos los blogs");
         return blogs;
     }
     
     public BlogDTO getBlog(Long id) throws BibliotecaLogicException
      {
          if (blogs == null) {
-            logger.severe("Error interno: lista de blogs no existe.");
+            LOGGER.severe("Error interno: lista de blogs no existe.");
             throw new BibliotecaLogicException("Error interno: lista de blogs no existe.");
         }
-        logger.info("buscando blogs");
+        LOGGER.info("buscando blogs");
         for (BlogDTO b : blogs) {
             if (b.getId() == id) {
-                logger.info("blog encontrado");
+                LOGGER.info("blog encontrado");
                 return b;
             }
         }
-        logger.severe("No se encontró el blog");
+        LOGGER.severe("No se encontró el blog");
         throw new BibliotecaLogicException("blog no encontrado");
          
          
      }
     
     public BlogDTO getBlogLibro(Long idLibro, Long id) throws BibliotecaLogicException {
-        /*BlogDTO m = null;
-        List<BlogDTO> blogsLibro = getBlogsLibro(idLibro);
-        for (int i = 0; i < blogsLibro.size() && m == null; i++) {
-            BlogDTO blog = blogsLibro.get(i);
-            if (blog.getId() == id) {
-                m = blog;
-            }
-        }
-        if (m == null) {
-            logger.severe("No existe una blog con ese id");
-            throw new BibliotecaLogicException("No existe una blog con ese id");
-        }
-        return m;*/
         return getBlog(id);
     }
     
@@ -128,7 +101,7 @@ public class BlogLogicMock {
     
     
     public BlogDTO createBlog(BlogDTO newBlog, Long idLibro) throws BibliotecaLogicException {
-        logger.info("recibiendo solicitud de agregar blog " + newBlog);
+        LOGGER.info("recibiendo solicitud de agregar blog " + newBlog);
         // agrega el blog
         // el nuevo blog tiene id ?
         if (newBlog.getId() != null) {
@@ -136,7 +109,7 @@ public class BlogLogicMock {
             for (BlogDTO blog : blogs) {
                 // si existe una sala con ese id
                 if (blog.getId() == newBlog.getId()) {
-                    logger.severe("Ya existe un blog con ese id");
+                    LOGGER.severe("Ya existe un blog con ese id");
                     throw new BibliotecaLogicException("Ya existe un blog con ese id");
                 }
             }
@@ -145,8 +118,8 @@ public class BlogLogicMock {
         } else {
 
             // genera un id para la sala
-            logger.info("Generando id para el nuevo blog");
-            logger.info("Generando idUsuario para el nuevo blog");
+            LOGGER.info("Generando id para el nuevo blog");
+            LOGGER.info("Generando idUsuario para el nuevo blog");
             long newId = 1;
             for (BlogDTO blog : blogs) {
                 if (newId <= blog.getId()) {
@@ -156,7 +129,7 @@ public class BlogLogicMock {
             newBlog.setId(newId);
             newBlog.setIdLibro(idLibro);
         }
-        logger.info("agregando blog: " + newBlog);
+        LOGGER.info("agregando blog: " + newBlog);
         blogs.add(newBlog);
         return newBlog;
     }
@@ -178,32 +151,21 @@ public class BlogLogicMock {
            blog.setTexto(b.getTexto());
            blog.setNombreAutor(b.getNombreAutor());
            blog.setNombre(b.getNombre());
-           ///blog.setFecha(b.getFecha());
            return blog;
        }
-            logger.severe("No existe un blog con ese id");
+            LOGGER.severe("No existe un blog con ese id");
             throw new BibliotecaLogicException("No existe un blog con ese id");
        
     }
     
     
     public BlogDTO createBlogLibro(BlogDTO newBlog, long idLibro)  {
-        logger.info("recibiendo solicitud de agregar multa " + newBlog);
+        LOGGER.info("recibiendo solicitud de agregar multa " + newBlog);
         // agrega la multa
-        logger.info("agregando multa: " + newBlog);
+        LOGGER.info("agregando multa: " + newBlog);
         newBlog.setIdLibro(idLibro);
         blogs.add(newBlog);
         return newBlog;
-    }
-    
-    
-    
-    
-    
-    
-    public String prueba1()
-    {
-        return "pfokdfpo";
     }
     
 }

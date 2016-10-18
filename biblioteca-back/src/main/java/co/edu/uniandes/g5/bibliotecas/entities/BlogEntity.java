@@ -15,13 +15,17 @@ import uk.co.jemos.podam.common.PodamExclude;
  * @author js.prieto10
  */
 @Entity
-public class BlogEntity extends RecursoEntity implements Serializable{
+public class BlogEntity extends BaseEntity implements Serializable{
     
     @PodamExclude
     @ManyToOne
     private co.edu.uniandes.g5.bibliotecas.entities.LibroEntity libro;
      
     private String titulo;
+    
+    private String texto;
+    
+    private String nombreAutor;
 
     public String getTitulo() {
         return titulo;
@@ -30,10 +34,7 @@ public class BlogEntity extends RecursoEntity implements Serializable{
     public void setTitulo(String titulo) {
         this.titulo = titulo;
     }
-    private String texto;
-    private String nombreAutor;
 
-    
     public LibroEntity getLibro()
     {
         return libro;

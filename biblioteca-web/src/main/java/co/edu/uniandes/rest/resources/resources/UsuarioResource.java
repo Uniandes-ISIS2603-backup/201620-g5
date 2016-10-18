@@ -7,6 +7,7 @@ package co.edu.uniandes.rest.resources.resources;
 
 
 import co.edu.uniandes.rest.resources.dtos.UsuarioDTO;
+import co.edu.uniandes.rest.resources.exceptions.BibliotecaLogicException;
 import co.edu.uniandes.rest.resources.mocks.UsuarioLogicMock;
 import java.util.List;
 import javax.ws.rs.DELETE;
@@ -31,13 +32,13 @@ public class UsuarioResource {
 
     @GET
     @Path("usuarios")
-    public List<UsuarioDTO> getUsuarios() throws Exception {
+    public List<UsuarioDTO> getUsuarios() throws BibliotecaLogicException {
         return usuarioLogic.getUsuarios();
     }
     
     @GET
     @Path("usuarios/{id: \\d+}")
-    public UsuarioDTO getUsuario(@PathParam("id") Long id) throws Exception{
+    public UsuarioDTO getUsuario(@PathParam("id") Long id) throws BibliotecaLogicException{
         return usuarioLogic.getUsuario(id);
     }
 
@@ -45,14 +46,14 @@ public class UsuarioResource {
    
     @POST
     @Path("usuarios")
-    public UsuarioDTO createUsuario(UsuarioDTO usuario) throws Exception {
+    public UsuarioDTO createUsuario(UsuarioDTO usuario) throws BibliotecaLogicException {
         return usuarioLogic.createUsuario(usuario);
     }
     
 
     @PUT
     @Path("usuarios/{id: \\d+}")
-    public UsuarioDTO updateUsuario(@PathParam("id") Long id, UsuarioDTO newUsuario) throws Exception 
+    public UsuarioDTO updateUsuario(@PathParam("id") Long id, UsuarioDTO newUsuario) throws BibliotecaLogicException 
     {
         return usuarioLogic.updateUsuario(id, newUsuario);
     }
@@ -60,7 +61,7 @@ public class UsuarioResource {
 
     @DELETE
     @Path("usuarios/{id: \\d+}")
-    public void deleteUsuario(@PathParam("id") Long id) throws Exception 
+    public void deleteUsuario(@PathParam("id") Long id) throws BibliotecaLogicException 
     {
         usuarioLogic.deleteUsuario(id);
     }

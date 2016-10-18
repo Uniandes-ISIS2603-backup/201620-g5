@@ -3,8 +3,6 @@
 
     mod.controller("blogsCtrl", ['$scope', '$state', '$stateParams', '$http','librosContext',
         function ($scope, $state, $stateParams, $http, librosContext ) {
-            
-    
             // inicialmente el listado de blogs
             //  está vacio
             $scope.blogsContext = '/blogs';
@@ -16,41 +14,27 @@
 
             // el controlador recibió un blogId ??
             // revisa los parámetros (ver el :blogId en la definición de la ruta)
-            if ($stateParams.id !== null && $stateParams.id !== undefined) {
-
-                console.log("prueba");
-                // toma el id del parámetro
-                id = $stateParams.id;
-                console.log(id);
+            if ($stateParams.id !== null && $stateParams.id !== undefined){
                 // obtiene el dato del recurso REST
                 $http.get(librosContext + "/" + $stateParams.libroId +$scope.blogsContext + "/" + id)
-                        .then(function (response) {
-                            
+                        .then(function (response) {       
                             // $http.get es una promesa
                             // cuando llegue el dato, actualice currentblog
                             $scope.currentBlog = response.data;
-                            console.log($scope.currentBlog);
                         }, responseError);
-
                 // el controlador no recibió un blogId
             } else
             {
                 // el registro actual debe estar vacio
                 $scope.currentBlog = {
-                    id: undefined, //Tipo Long. El valor se asigna en el backend,
-                    
-                   
+                    id: undefined //Tipo Long. El valor se asigna en el backend,
                 };
-
                 $scope.alerts = [];
             }
-           
-            
             this.saveBlog = function (id) {
                 currentBlog = $scope.currentBlog;
                 // si el id es null, es un registro nuevo, entonces lo crea
                 if (id == null) {
-
                     // ejecuta POST en el recurso REST
                     return $http.post(librosContext + "/" + $stateParams.libroId + $scope.blogsContext, currentBlog)
                             .then(function () {
@@ -58,10 +42,8 @@
                                 // cuando termine bien, cambie de estado
                                 $state.go('blogsList');
                             }, responseError);
-
                     // si el id no es null, es un registro existente entonces lo actualiza
                 } else {
-
                     // ejecuta PUT en el recurso REST
                     return $http.put(librosContext + "/" + $stateParams.libroId + $scope.blogsContext + "/" + currentBlog.id, currentBlog)
                             .then(function () {
@@ -72,7 +54,6 @@
                 }
                 ;
             };
-            
              this.deleteblog = function (blog) {
                 return $http.delete(librosContext + "/" + $stateParams.libroId + $scope.blogsContext + "/" + blog.blogId)
                     .then(function () {
@@ -80,9 +61,6 @@
                         $state.reload();
                     }, responseError);
             };
-            
-
-
             // -----------------------------------------------------------------
             // Funciones para manejar las fechas
 
@@ -92,7 +70,6 @@
              $scope.popup2 = {
                 opened: false
             };
-           
             $scope.dateOptions = {
                 dateDisabled: false,
                 formatYear: 'yyyy',
@@ -100,7 +77,6 @@
                 minDate: new Date(),
                 startingDay: 1
             };
-
              $scope.dateOptions2 = {
                 dateDisabled: false,
                 formatYear: 'yy',
@@ -108,7 +84,6 @@
                 minDate: new Date(),
                 startingDay: 1
             };
-
             this.today = function () {
                 $scope.dt = new Date();
             };
@@ -120,37 +95,25 @@
             this.setDate = function (year, month, day) {
                 $scope.dt = new Date(year, month, day);
             };
-
             this.open = function (fechaFinal) {
-                
                 $scope.popup.opened = true;
                 if(fechaFinal != null)
                 {
                     $scope.dateOptions.maxDate = fechaFinal;
-                }
-                
+                }   
             };
-            
              this.open2 = function (fechaInicial) {
                 $scope.popup2.opened = true;
                 if(fechaInicial != null)
                 {
                     $scope.dateOptions2.minDate = fechaInicial;
                 }
-                
             };
-
-
-
-
             // Funciones para manejar los mensajes en la aplicación
-
-
             //Alertas
             this.closeAlert = function (index) {
                 $scope.alerts.splice(index, 1);
             };
-
             // Función showMessage: Recibe el mensaje en String y su tipo con el fin de almacenarlo en el array $scope.alerts.
             function showMessage(msg, type) {
                 var types = ["info", "danger", "warning", "success"];
@@ -160,7 +123,6 @@
                     $scope.alerts.push({type: type, msg: msg});
                 }
             }
-
             this.showError = function (msg) {
                 showMessage(msg, "danger");
             };
@@ -168,18 +130,14 @@
             this.showSuccess = function (msg) {
                 showMessage(msg, "success");
             };
-
             var self = this;
             function responseError(response) {
-
                 self.showError(response.data);
             }
         }]);
     mod.config(['$httpProvider', function ($httpProvider) {
-
     // ISO 8601 Date Pattern: YYYY-mm-ddThh:MM:ss
     var dateMatchPattern = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}/;
-
    var convertDates = function (obj) {
       for (var key in obj) {
          if (!obj.hasOwnProperty(key)) continue;
@@ -197,12 +155,10 @@
          }
       }
    }
-
    $httpProvider.defaults.transformResponse.push(function (data) {
       if (typeof (data) === 'object') {
          convertDates(data);
       }
-
       return data;
    });
 }]);

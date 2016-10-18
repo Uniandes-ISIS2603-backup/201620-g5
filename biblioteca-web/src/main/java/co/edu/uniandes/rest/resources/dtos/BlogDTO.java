@@ -5,8 +5,6 @@
  */
 package co.edu.uniandes.rest.resources.dtos;
 
-import java.util.Date;
-
 /**
  *
  * @author js.prieto10
@@ -18,14 +16,10 @@ public class BlogDTO {
     private Long idLibro;
     private String texto;
     private String nombreAutor;
-    // private Date fecha;
     private Long id;
 
-    
-    
     public BlogDTO()
     {}
-    
     
     public BlogDTO(String pTitulo, String pNombre, Long pIdLibro, String pTexto, String pNombreAutor, Long pIdBlog)
     {
@@ -34,7 +28,6 @@ public class BlogDTO {
         this.idLibro = pIdLibro;
         this.texto = pTexto;
         this.nombreAutor = pNombreAutor;
-        //this.fecha = pFecha;
         this.id = pIdBlog;
     
     }
@@ -78,14 +71,6 @@ public class BlogDTO {
     public void setNombreAutor(String nombreAutor) {
         this.nombreAutor = nombreAutor;
     }
-
-    /*public Date getFecha() {
-        return fecha;
-    }
-
-    public void setFecha(Date fecha) {
-        this.fecha = fecha;
-    }*/
 
     public Long getId() {
         return id;

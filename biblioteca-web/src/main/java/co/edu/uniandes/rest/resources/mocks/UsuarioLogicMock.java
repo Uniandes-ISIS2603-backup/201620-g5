@@ -6,7 +6,6 @@
 package co.edu.uniandes.rest.resources.mocks;
 
 
-import co.edu.uniandes.rest.resources.dtos.PrestamoDTO;
 import co.edu.uniandes.rest.resources.dtos.UsuarioDTO;
 import co.edu.uniandes.rest.resources.exceptions.BibliotecaLogicException;
 import java.util.ArrayList;
@@ -23,7 +22,7 @@ import java.util.logging.Logger;
 public class UsuarioLogicMock {
     
     
-    private final static Logger logger = Logger.getLogger(UsuarioLogicMock.class.getName());
+    private final static Logger LOGGER = Logger.getLogger(UsuarioLogicMock.class.getName());
 	
 	// listado de ciudades
     private static ArrayList<UsuarioDTO> usuarios;
@@ -44,11 +43,11 @@ public class UsuarioLogicMock {
             UsuarioDTO u3 = new UsuarioDTO("Chuck", "Norris", " tuDios", 3L, "9874", "En todo lado");
             usuarios.add(u3);
             
-            logger.setLevel(Level.INFO);
+            LOGGER.setLevel(Level.INFO);
             
             // muestra información
-            logger.info("Inicializa la lista de usuarios");
-            logger.info("usuarios" + usuarios);
+            LOGGER.info("Inicializa la lista de usuarios");
+            LOGGER.log(Level.INFO, "usuarios{0}", usuarios);
         }
         
     }
@@ -56,15 +55,14 @@ public class UsuarioLogicMock {
     /**
      * 
      * @return la lista de usuario
-     * @throws Exception arroja una excepcion si no existe ningun usuario
      */
-    public List<UsuarioDTO> getUsuarios() throws Exception {
+    public List<UsuarioDTO> getUsuarios() throws BibliotecaLogicException {
     	if (usuarios == null) {
-    		logger.severe("Error interno: lista de usuarios no existe.");
-    		throw new Exception("Error interno: lista de usuarios no existe.");    		
+    		LOGGER.severe("Error interno: lista de usuarios no existe.");
+    		throw new BibliotecaLogicException("Error interno: lista de usuarios no existe.");    		
     	}
     	
-    	logger.info("retornando todas las usuarios");
+    	LOGGER.info("retornando todas las usuarios");
     	return usuarios;
     }
     
@@ -74,23 +72,23 @@ public class UsuarioLogicMock {
      * 
      * @param pId
      * @return un usuario dado por parametro
-     * @throws Exception arroja una excepcion si el usuario no existe
+     * @throws BibliotecaLogicException arroja una excepcion si el usuario no existe
      */
-    public UsuarioDTO getUsuario(Long pId) throws Exception
+    public UsuarioDTO getUsuario(Long pId) throws BibliotecaLogicException
     {
         if (usuarios == null) {
-    		logger.severe("Error interno: lista de usuarios no existe.");
-    		throw new Exception("Error interno: lista de usuarios no existe.");
+    		LOGGER.severe("Error interno: lista de usuarios no existe.");
+    		throw new BibliotecaLogicException("Error interno: lista de usuarios no existe.");
         }
         for (UsuarioDTO usuario: usuarios) {
 	        
-	            if (usuario.getId()== pId){
-	            	logger.info("retornando la usuario buscada");
+	            if (Objects.equals(usuario.getId(), pId)){
+	            	LOGGER.info("retornando la usuario buscada");
                         return usuario;
 	            }
 	        }
-                logger.severe("No existe un usuario con ese id");
-	        throw new Exception("No existe un usuario con ese id");
+                LOGGER.severe("No existe un usuario con ese id");
+	        throw new BibliotecaLogicException("No existe un usuario con ese id");
     }
     
 
@@ -98,11 +96,11 @@ public class UsuarioLogicMock {
      * 
      * @param newUsuario
      * @return crea un usuario con la información que le entra por parametro
-     * @throws Exception arroja una excepcion si el usuario existe
+     * @throws BibliotecaLogicException arroja una excepcion si el usuario existe
      */
-    public UsuarioDTO createUsuario(UsuarioDTO newUsuario) throws Exception
+    public UsuarioDTO createUsuario(UsuarioDTO newUsuario) throws BibliotecaLogicException
     {
-    logger.info("recibiendo solicitud de agregar Usuario" + newUsuario);
+    LOGGER.log(Level.INFO, "recibiendo solicitud de agregar Usuario{0}", newUsuario);
     	
     
     	if ( newUsuario.getId() != null ) {
@@ -110,14 +108,14 @@ public class UsuarioLogicMock {
 	        for (UsuarioDTO usuario: usuarios) {
                     
 	            if (Objects.equals(usuario.getId(), newUsuario.getId())){
-	            	logger.severe("Ya existe una Usuario con ese id");
-	                throw new Exception("Ya existe una Usuario con ese id");
+	            	LOGGER.severe("Ya existe una Usuario con ese id");
+	                throw new BibliotecaLogicException("Ya existe una Usuario con ese id");
 	            }
 	        }
 	        
     	} else {
 
-    		logger.info("Generando id paa la nueva Usuario");
+    		LOGGER.info("Generando id paa la nueva Usuario");
     		long newId = 1;
 	        for (UsuarioDTO usuario : usuarios) {
 	            if (newId <= usuario.getId()){
@@ -127,7 +125,7 @@ public class UsuarioLogicMock {
 	        newUsuario.setId(newId);
     	}
     	
-    	logger.info("agregando usuario " + newUsuario);
+    	LOGGER.log(Level.INFO, "agregando usuario {0}", newUsuario);
         usuarios.add(newUsuario);
         return newUsuario;
     }
@@ -137,17 +135,17 @@ public class UsuarioLogicMock {
      * @param idUsuario
      * @param newUsuario
      * @return acualiza la informacion de un usuario
-     * @throws Exception arroja una excepcion si el id dado no existe
+     * @throws BibliotecaLogicException arroja una excepcion si el id dado no existe
      */
-    public UsuarioDTO updateUsuario(Long idUsuario, UsuarioDTO newUsuario) throws Exception
+    public UsuarioDTO updateUsuario(Long idUsuario, UsuarioDTO newUsuario) throws BibliotecaLogicException
     {
-        logger.info("recibiendo solicitud de actualizar video " + idUsuario);
+        LOGGER.log(Level.INFO, "recibiendo solicitud de actualizar video {0}", idUsuario);
    
    			UsuarioDTO usuario = getUsuario(idUsuario);
 	        	// si existe un usuario con ese id
 	            if (Objects.equals(usuario.getId(), idUsuario)){
                          // actualiza el usuario
-                        logger.info("actualizando usuario " + idUsuario );
+                        LOGGER.log(Level.INFO, "actualizando usuario {0}", idUsuario);
 	            	usuario.setNombre(newUsuario.getNombre());
                         usuario.setApellido(newUsuario.getApellido());
                         usuario.setContrasenha(newUsuario.getContrasenha());
@@ -158,22 +156,22 @@ public class UsuarioLogicMock {
                         return newUsuario;
 	        }
 	        
-                 logger.severe("No existe un Usuario con ese id");
-	         throw new Exception("No existe un Usuario con ese id");
+                 LOGGER.severe("No existe un Usuario con ese id");
+	         throw new BibliotecaLogicException("No existe un Usuario con ese id");
     }
     
     /**
      * 
      * @param pId elimina a un usuario con el id dado 
-     * @throws Exception 
+     * @throws BibliotecaLogicException 
      */
-    public void deleteUsuario(Long pId) throws Exception
+    public void deleteUsuario(Long pId) throws BibliotecaLogicException
     {
     	try {
             usuarios.remove(getUsuario(pId));
         } catch (BibliotecaLogicException ex) {
             Logger.getLogger(UsuarioLogicMock.class.getName()).log(Level.SEVERE, null, ex);
-            logger.severe("No fue posible elminiar el usuario con id " + pId);
+            LOGGER.log(Level.SEVERE, "No fue posible elminiar el usuario con id {0}", pId);
   throw new BibliotecaLogicException("No fue posible elminiar el usuario con id " + pId);
         }
     }

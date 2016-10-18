@@ -8,12 +8,7 @@ package co.edu.uniandes.rest.resources.resources;
 import co.edu.uniandes.rest.resources.dtos.BlogDTO;
 import co.edu.uniandes.rest.resources.exceptions.BibliotecaLogicException;
 import co.edu.uniandes.rest.resources.mocks.BlogLogicMock;
-import co.edu.uniandes.rest.resources.mocks.PrestamoLogicMock;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.ArrayList;
 import java.util.List;
-import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -31,7 +26,7 @@ import javax.ws.rs.Produces;
 public class BlogResource
 {
     
-    BlogLogicMock BlogLogic = new BlogLogicMock();
+    BlogLogicMock blogLogic = new BlogLogicMock();
     
     
     
@@ -39,20 +34,20 @@ public class BlogResource
     @Path("blogs")
     public List<BlogDTO> getBlogs() throws BibliotecaLogicException 
     {
-        return BlogLogic.getBlogs();
+        return blogLogic.getBlogs();
     }
     
     @GET
     @Path("blogs/{id: \\d+}/")
     public BlogDTO getBlog(@PathParam("id") Long id) throws BibliotecaLogicException 
     {
-        return BlogLogic.getBlog(id);
+        return blogLogic.getBlog(id);
     }
     @GET
     @Path("libros/{libro: \\d+}/blogs/{id: \\d+}")
     public BlogDTO getBlogLibro(@PathParam("idLibro") Long idLibro, @PathParam("id") Long id) throws BibliotecaLogicException
     {
-        return BlogLogic.getBlogLibro(idLibro, id);
+        return blogLogic.getBlogLibro(idLibro, id);
     }
     
     
@@ -60,17 +55,17 @@ public class BlogResource
     @Path("libros/{idLibro: \\d+}/blogs")
     public List<BlogDTO> getBlogsLibro(@PathParam("idLibro") Long idLibro) throws BibliotecaLogicException
     {
-        return BlogLogic.getBlogsLibro(idLibro);
+        return blogLogic.getBlogsLibro(idLibro);
     }
     @POST
     @Path("libros/{idLibro: \\d+}/blogs")
     public BlogDTO createLibro(@PathParam("idLibro") Long libro, BlogDTO blog) throws BibliotecaLogicException {
-            return BlogLogic.createBlog(blog, libro);
+            return blogLogic.createBlog(blog, libro);
     }
     @PUT
     @Path("libros/{idLibro: \\d+}/blogs/{id: \\d+}")
     public BlogDTO updateBlog(@PathParam("id") Long id, BlogDTO blog) throws BibliotecaLogicException {
-        return BlogLogic.updateBlog(id, blog);
+        return blogLogic.updateBlog(id, blog);
     }
     
 }

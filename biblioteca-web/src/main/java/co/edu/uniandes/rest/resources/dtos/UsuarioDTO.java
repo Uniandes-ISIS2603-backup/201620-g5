@@ -5,9 +5,6 @@
  */
 package co.edu.uniandes.rest.resources.dtos;
 
-import java.text.ParseException;
-import java.util.ArrayList;
-
 /**
  *
  * @author js.prieto10

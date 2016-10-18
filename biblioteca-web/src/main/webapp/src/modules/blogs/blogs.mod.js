@@ -4,7 +4,6 @@
     mod.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
             var basePath = 'src/modules/blogs/';
             $urlRouterProvider.otherwise("/blogsList");
-     
             $stateProvider.state('blogsList', {
                 url: '/blogs',
                 parent: 'libroEdit',
