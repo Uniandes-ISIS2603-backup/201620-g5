@@ -20,6 +20,7 @@ import javax.persistence.OneToMany;
 import uk.co.jemos.podam.common.PodamExclude;
 
 @Entity
+
 public class UsuarioEntity extends BaseEntity implements Serializable {
 
   

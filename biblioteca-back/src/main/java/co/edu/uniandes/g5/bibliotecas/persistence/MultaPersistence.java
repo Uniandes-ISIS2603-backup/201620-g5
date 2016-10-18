@@ -5,7 +5,9 @@
  */
 package co.edu.uniandes.g5.bibliotecas.persistence;
 
-import co.edu.uniandes.g5.bibliotecas.entities.LibroEntity;
+
+import co.edu.uniandes.g5.bibliotecas.entities.MultaEntity;
+import co.edu.uniandes.g5.bibliotecas.entities.UsuarioEntity;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -17,7 +19,7 @@ import javax.persistence.TypedQuery;
 
 /**
  *
- * @author s.rojas19
+ * @author d.patino12
  */
 @Stateless
 public class MultaPersistence {
@@ -26,41 +28,59 @@ public class MultaPersistence {
 
     @PersistenceContext(unitName = "G5PU")
     protected EntityManager em;
+    
+    
 
-    public LibroEntity find(Long id) {
-        LOGGER.log(Level.INFO, "Consultando libro con id={0}", id);
-        return em.find(LibroEntity.class, id);
+    public MultaEntity getMulta(Long id) {
+        LOGGER.log(Level.INFO, "Consultando la multa con id={0}", id);
+        return em.find(MultaEntity.class, id);
     }
 
-    public LibroEntity findByName(String name) {
-        LOGGER.log(Level.INFO, "Consultando libro con name = {0}", name);
-        TypedQuery<LibroEntity> q
-                = em.createQuery("select u from LibroEntity u where u.name = :name", LibroEntity.class);
-        q = q.setParameter("name", name); 
-        return q.getSingleResult();
+    public List<MultaEntity> getByUsuario(Long usuario) {
+        LOGGER.log(Level.INFO, "Consultando la multa con el id  de usuario = {0}", usuario );
+        TypedQuery<MultaEntity> q
+                = em.createQuery("select u from MultaEntity u where u.usuario.id = :idUsuario", MultaEntity.class);
+        q = q.setParameter("idUsuario", usuario); 
+        return q.getResultList();
     }
-
-    public List<LibroEntity> findAll() {
-        LOGGER.info("Consultando todos los libros");
-        Query q = em.createQuery("select u from LibroEntity u");
+    
+    public List<MultaEntity> getMultasByBiblioteca(Long biblioteca) {
+        LOGGER.log(Level.INFO, "Consultando la multa con el id  de usuario = {0}", biblioteca );
+        TypedQuery<MultaEntity> q
+                = em.createQuery("select u from MultaEntity u where u.biblioteca.id = :idBiblioteca", MultaEntity.class);
+        q = q.setParameter("idBiblioteca", biblioteca); 
+        return q.getResultList();
+    }
+    
+    public List<MultaEntity> getMultasByRecurso(Long recurso) {
+        LOGGER.log(Level.INFO, "Consultando la multa con el id  de usuario = {0}", recurso);
+        TypedQuery<MultaEntity> q
+                = em.createQuery("select u from MultaEntity u where u.recurso.id = :idRecurso", MultaEntity.class);
+        q = q.setParameter("idRecurso", recurso); 
         return q.getResultList();
     }
 
-    public LibroEntity create(LibroEntity entity) {
-        LOGGER.info("Creando un libro nuevo");
+    public List<MultaEntity> getMultas() {
+        LOGGER.info("Consultando todas las Multas");
+        Query q = em.createQuery("select u from MultaEntity u");
+        return q.getResultList();
+    }
+
+    public MultaEntity create(MultaEntity entity) {
+        LOGGER.info("Creando una Multa nueva");
         em.persist(entity);
-        LOGGER.info("Libro creado");
+        LOGGER.info("Multa creada");
         return entity;
     }
 
-    public LibroEntity update(LibroEntity entity) {
-        LOGGER.log(Level.INFO, "Actualizando libro con id={0}", entity.getId());
+    public MultaEntity update(MultaEntity entity) {
+        LOGGER.log(Level.INFO, "Actualizando la multa con id={0}", entity.getId());
         return em.merge(entity);
     }
 
     public void delete(Long id) {
-        LOGGER.log(Level.INFO, "Borrando libro con id={0}", id);
-        LibroEntity entity = em.find(LibroEntity.class, id);
+        LOGGER.log(Level.INFO, "Borrando multa con id={0}", id);
+        MultaEntity entity = em.find(MultaEntity.class, id);
         em.remove(entity);
     }
 }

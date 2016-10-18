@@ -5,7 +5,8 @@
  */
 package co.edu.uniandes.g5.bibliotecas.persistence;
 
-import co.edu.uniandes.g5.bibliotecas.entities.LibroEntity;
+
+import co.edu.uniandes.g5.bibliotecas.entities.UsuarioEntity;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -27,40 +28,40 @@ public class UsuarioPersistence {
     @PersistenceContext(unitName = "G5PU")
     protected EntityManager em;
 
-    public LibroEntity find(Long id) {
-        LOGGER.log(Level.INFO, "Consultando libro con id={0}", id);
-        return em.find(LibroEntity.class, id);
+    public UsuarioEntity getUsuario(Long id) {
+        LOGGER.log(Level.INFO, "Consultando el usuario con id={0}", id);
+        return em.find(UsuarioEntity.class, id);
     }
 
-    public LibroEntity findByName(String name) {
-        LOGGER.log(Level.INFO, "Consultando libro con name = {0}", name);
-        TypedQuery<LibroEntity> q
-                = em.createQuery("select u from LibroEntity u where u.name = :name", LibroEntity.class);
+    public UsuarioEntity getByName(String name) {
+        LOGGER.log(Level.INFO, "Consultando el usuario con name = {0}", name);
+        TypedQuery<UsuarioEntity> q
+                = em.createQuery("select u from UsuarioEntity u where u.name = :name", UsuarioEntity.class);
         q = q.setParameter("name", name); 
         return q.getSingleResult();
     }
 
-    public List<LibroEntity> findAll() {
-        LOGGER.info("Consultando todos los libros");
-        Query q = em.createQuery("select u from LibroEntity u");
+    public List<UsuarioEntity> getUsuarios() {
+        LOGGER.info("Consultando todos los usuarios");
+        Query q = em.createQuery("select u from UsuarioEntity u");
         return q.getResultList();
     }
 
-    public LibroEntity create(LibroEntity entity) {
-        LOGGER.info("Creando un libro nuevo");
+    public UsuarioEntity create(UsuarioEntity entity) {
+        LOGGER.info("Creando un usuario nuevo");
         em.persist(entity);
-        LOGGER.info("Libro creado");
+        LOGGER.info("Usuario creado");
         return entity;
     }
 
-    public LibroEntity update(LibroEntity entity) {
-        LOGGER.log(Level.INFO, "Actualizando libro con id={0}", entity.getId());
+    public UsuarioEntity update(UsuarioEntity entity) {
+        LOGGER.log(Level.INFO, "Actualizando el usuario con id={0}", entity.getId());
         return em.merge(entity);
     }
 
     public void delete(Long id) {
-        LOGGER.log(Level.INFO, "Borrando libro con id={0}", id);
-        LibroEntity entity = em.find(LibroEntity.class, id);
+        LOGGER.log(Level.INFO, "Borrando el usuario con id={0}", id);
+        UsuarioEntity entity = em.find(UsuarioEntity.class, id);
         em.remove(entity);
     }
 }
