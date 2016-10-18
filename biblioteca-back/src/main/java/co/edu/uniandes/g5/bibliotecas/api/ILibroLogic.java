@@ -9,7 +9,7 @@ import co.edu.uniandes.g5.bibliotecas.entities.LibroEntity;
 import java.util.List;
 
 /**
- *
+ * Interfaz de Logic
  * @author s.rojas19
  */
 public interface ILibroLogic {
