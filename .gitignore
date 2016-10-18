@@ -24,8 +24,8 @@ hs_err_pid*
 # -- From Javascript
 
 # Bower
-#bower_components/
-#/bibloteca-web/src/main/webapp/bower_components
+bower_components/
+/bibloteca-web/src/main/webapp/bower_components
 
 # Grunt 
 .grunt
@@ -51,3 +51,4 @@ biblioteca-back/nb-configuration.xml/
 # IntelliJ
 .idea/
 /biblioteca-back/nbproject/
+/biblioteca-web/src/main/webapp/bower_components/
