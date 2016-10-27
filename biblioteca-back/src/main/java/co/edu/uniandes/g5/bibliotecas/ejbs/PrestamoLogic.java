@@ -88,6 +88,7 @@ public class PrestamoLogic implements IPrestamoLogic {
      * medioPago.equals("Tarjeta de credito")||medioPago.equals("Efectivo")||medioPago.equals("Tarjeta de debito")
      * 
      * 
+     * @param prestamo
      * @param idUsuario
      * @param idBiblioteca
      * @param idRecurso
@@ -101,34 +102,14 @@ public class PrestamoLogic implements IPrestamoLogic {
      * @throws co.edu.uniandes.g5.bibliotecas.exceptions.BibliotecaLogicException
      */
     @Override
-    public PrestamoEntity createPrestamo(Long idUsuario, Long idBiblioteca, Long idRecurso,  Double costo,String tipoRecurso, String medioPago, Date fechaInicial, Date fechaFinal, boolean estaActivo) throws BibliotecaLogicException {
+    public PrestamoEntity createPrestamo(PrestamoEntity prestamo) throws BibliotecaLogicException {
          
-        UsuarioEntity usuario = usuarioPersistence.getUsuario(idUsuario);
-        BibliotecaEntity biblioteca = bibliotecaPersistence.find(idBiblioteca);
-        RecursoEntity recurso = null;
-        switch (tipoRecurso) {
-            case PrestamoEntity.LIBRO:
-                recurso = libroPersistence.find(idRecurso);
-                break;
-            case PrestamoEntity.VIDEO:
-                recurso = videoPersistence.find(idRecurso);
-                break;
-            case PrestamoEntity.SALA:
-                recurso = salaPersistence.find(idRecurso);
-                break;
-            default:
-                break;
-        }
-        
      
-        if(costo <= 0 )
+        if(prestamo.getCosto() <= 0 )
         {
             throw new BibliotecaLogicException("Costo inválido");
         }
         
-       
-                prestamo = new PrestamoEntity(usuario, biblioteca, recurso, costo,tipoRecurso, medioPago, fechaInicial, fechaFinal, estaActivo);
-        }
         return persistence.create(prestamo);
         
     }
@@ -136,35 +117,12 @@ public class PrestamoLogic implements IPrestamoLogic {
     
 
     @Override
-    public PrestamoEntity updatePrestamo(Long idPrestamo, Long idUsuario, Long idBiblioteca, Long idRecurso,  Double costo,String tipoRecurso, String medioPago, Date fechaInicial, Date fechaFinal, boolean estaActivo) {
+    public PrestamoEntity updatePrestamo(PrestamoEntity prestamo) throws BibliotecaLogicException {
        
-        PrestamoEntity prestamo = persistence.getPrestamo(idPrestamo);
-        UsuarioEntity usuario = usuarioPersistence.getUsuario(idUsuario);
-        BibliotecaEntity biblioteca = bibliotecaPersistence.find(idBiblioteca);
-        RecursoEntity recurso = null;
-        switch (tipoRecurso) {
-            case PrestamoEntity.LIBRO:
-                recurso = libroPersistence.find(idRecurso);
-                break;
-            case PrestamoEntity.VIDEO:
-                recurso = videoPersistence.find(idRecurso);
-                break;
-            case PrestamoEntity.SALA:
-                recurso = salaPersistence.find(idRecurso);
-                break;
-            default:
-                break;
+         if(prestamo.getCosto() <= 0 )
+        {
+            throw new BibliotecaLogicException("Costo inválido");
         }
-        prestamo.setUsuario(usuario);
-        prestamo.setBiblioteca(biblioteca);
-        prestamo.setRecurso(recurso);
-        prestamo.setCosto(costo);
-        prestamo.setTipoRecurso(tipoRecurso);
-        prestamo.setMedioPago(medioPago);
-        prestamo.setFechaFinal(fechaFinal);
-        prestamo.setFechaInicial(fechaInicial);
-        prestamo.setEstaActivo(estaActivo);
-        
         return persistence.update(prestamo);
         
     }

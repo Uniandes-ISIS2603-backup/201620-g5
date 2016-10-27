@@ -29,9 +29,9 @@ import java.util.Date;
 import java.util.List;
 
 public interface IPrestamoLogic {
-      public List<PrestamoEntity> getPrestamos();
+    public List<PrestamoEntity> getPrestamos();
     public PrestamoEntity getPrestamo(Long id);
-    public PrestamoEntity createPrestamo(Long usuario, Long biblioteca, Long idRecurso, Double costo,  String tipoRecurso,String medioPago, Date fechaInicial, Date fechaFinal, boolean estaActivo) throws BibliotecaLogicException; 
-    public PrestamoEntity updatePrestamo(Long idPrestamo,Long idUsuario, Long idBiblioteca, Long idRecurso,  Double costo,String tipoRecurso, String medioPago, Date fechaInicial, Date fechaFinal, boolean estaActivo);
+    public PrestamoEntity createPrestamo(PrestamoEntity prestamo) throws BibliotecaLogicException; 
+    public PrestamoEntity updatePrestamo(PrestamoEntity prestamo) throws BibliotecaLogicException;
     public PrestamoEntity deletePrestamo(Long id) throws Exception;
 }
