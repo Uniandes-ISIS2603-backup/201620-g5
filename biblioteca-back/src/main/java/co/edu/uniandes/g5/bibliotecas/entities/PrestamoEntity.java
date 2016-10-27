@@ -14,7 +14,6 @@ import javax.persistence.Entity;
 import java.util.Date;
 import javax.persistence.ManyToOne;
 import uk.co.jemos.podam.common.PodamExclude;
-import uk.co.jemos.podam.common.PodamStrategyValue;
 
 
 @Entity
@@ -54,6 +53,20 @@ public class PrestamoEntity extends BaseEntity implements Serializable {
     private boolean estaActivo;
 
     
+    public PrestamoEntity (UsuarioEntity usuario, BibliotecaEntity biblioteca, RecursoEntity recurso, Double costo, String tipoRecurso, String medioPago, Date fechaInicial, Date fechaFinal, boolean estaActivo){
+        
+     this.usuario = usuario;
+     this.biblioteca = biblioteca;
+     this.recurso = recurso;
+     this.costo = costo;
+     this.medioPago = medioPago;
+     this.fechaInicial = fechaInicial;
+     this.fechaFinal = fechaFinal;
+     this.estaActivo = estaActivo;
+     this.tipoRecurso = tipoRecurso;
+        
+        
+    }
 
     public UsuarioEntity getUsuario() {
         return usuario;
