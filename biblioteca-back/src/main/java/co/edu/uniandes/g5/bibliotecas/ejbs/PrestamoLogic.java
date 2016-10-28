@@ -89,15 +89,6 @@ public class PrestamoLogic implements IPrestamoLogic {
      * 
      * 
      * @param prestamo
-     * @param idUsuario
-     * @param idBiblioteca
-     * @param idRecurso
-     * @param costo
-     * @param tipoRecurso
-     * @param medioPago
-     * @param fechaInicial
-     * @param fechaFinal
-     * @param estaActivo
      * @return PrestamoEntity
      * @throws co.edu.uniandes.g5.bibliotecas.exceptions.BibliotecaLogicException
      */
@@ -131,14 +122,14 @@ public class PrestamoLogic implements IPrestamoLogic {
      *
      * @param idPrestamo
      * @return
-     * @throws Exception
+     * @throws co.edu.uniandes.g5.bibliotecas.exceptions.BibliotecaLogicException
      */
     @Override
-    public PrestamoEntity deletePrestamo(Long idPrestamo) throws Exception{
+    public PrestamoEntity deletePrestamo(Long idPrestamo) throws BibliotecaLogicException{
         PrestamoEntity prestamo = persistence.getPrestamo(idPrestamo);
         if(prestamo== null)
         {
-            throw new Exception ("Se esta tratando de remover un prestamo inexistente");
+            throw new BibliotecaLogicException ("Se esta tratando de remover un prestamo inexistente");
         }
         persistence.delete(idPrestamo);
         return prestamo;

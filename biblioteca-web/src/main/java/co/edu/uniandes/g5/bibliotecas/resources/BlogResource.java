@@ -3,11 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package co.edu.uniandes.rest.resources.resources;
+package co.edu.uniandes.g5.bibliotecas.resources;
 
 import co.edu.uniandes.rest.resources.dtos.BlogDTO;
 import co.edu.uniandes.rest.resources.exceptions.BibliotecaLogicException;
-import co.edu.uniandes.rest.resources.mocks.BlogLogicMock;
 import java.util.List;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;

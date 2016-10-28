@@ -3,13 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package co.edu.uniandes.rest.resources.dtos;
+package co.edu.uniandes.g5.bibliotecas.dtos;
 
+import co.edu.uniandes.g5.bibliotecas.entities.PrestamoEntity;
 import java.util.Date;
 
 /**
  *
- * @author sf.munera10
+ * @author ce.gonzalez13
  */
 public class PrestamoDTO {
     
@@ -20,12 +21,7 @@ public class PrestamoDTO {
     
     
     private Long id;
-    private UsuarioDTO usuario;
-    private Long idBiblioteca;
     private String tipoRecurso;
-
-    
-    private RecursoDTO recurso;
     private Double costo;
     private String medioPago;
     private Date fechaInicial;
@@ -37,21 +33,44 @@ public class PrestamoDTO {
      */
     public PrestamoDTO() {
     }
-
-    public PrestamoDTO(Long id, UsuarioDTO usuario, Long idBiblioteca,String tipoRecurso, RecursoDTO recurso, Double costo, String medioPago, Date fechaInicial, Date fechaFinal, boolean estaActivo) {
-        super();
-        this.id = id;
-        this.usuario = usuario;
-        this.idBiblioteca = idBiblioteca;
-        this.tipoRecurso = tipoRecurso;
-        this.recurso = recurso;
-        this.costo = costo;
-        this.medioPago = medioPago;
-        this.fechaInicial = fechaInicial;
-        this.fechaFinal = fechaFinal;
-        this.estaActivo = estaActivo;
+    
+    /**
+     * Crea un objeto PrestamoDTO a partir de un objeto PrestamoEntity.
+     *
+     * @param entity Entidad PrestamoEntity desde la cual se va a crear el
+     * nuevo objeto.
+     * 
+     */
+    public PrestamoDTO(PrestamoEntity entity) {
+        if (entity != null) {
+            this.id = entity.getId();
+            this.tipoRecurso = entity.getTipoRecurso();
+            this.costo = entity.getCosto();
+            this.medioPago = entity.getMedioPago();
+            this.fechaInicial = entity.getFechaInicial();
+            this.fechaFinal = entity.getFechaFinal();
+            this.estaActivo = entity.isEstaActivo();
+        }
     }
 
+    /**
+     * Convierte un objeto PrestamoDTO a PrestamoEntity.
+     *
+     * @return Nueva objeto PrestamoEntity.
+     * 
+     */
+    public PrestamoEntity toEntity() {
+        PrestamoEntity entity = new PrestamoEntity();
+        entity.setId(this.id);
+        entity.setTipoRecurso(this.tipoRecurso);
+        entity.setCosto(this.costo);
+        entity.setMedioPago(this.medioPago);
+        entity.setFechaFinal(this.fechaFinal);
+        entity.setFechaInicial(this.fechaInicial);
+        entity.setEstaActivo(this.estaActivo);
+        
+        return entity;
+    }
     /**
      * @return the id
      */
@@ -66,33 +85,6 @@ public class PrestamoDTO {
         this.id = id;
     }
 
-    /**
-     * @return the idUsuario
-     */
-    public UsuarioDTO getUsuario() {
-        return usuario;
-    }
-
-    /**
-     * @param usuario the idUsuario to set
-     */
-    public void setUsuario(UsuarioDTO usuario) {
-        this.usuario = usuario;
-    }
-
-    /**
-     * @return the idBiblioteca
-     */
-    public Long getIdBiblioteca() {
-        return idBiblioteca;
-    }
-
-    /**
-     * @param idBiblioteca the idBiblioteca to set
-     */
-    public void setIdBiblioteca(Long idBiblioteca) {
-        this.idBiblioteca = idBiblioteca;
-    }
 public void setTipoRecurso(String tipoRecurso) {
         this.tipoRecurso = tipoRecurso;
     }
@@ -100,20 +92,7 @@ public void setTipoRecurso(String tipoRecurso) {
     public String getTipoRecurso() {
         return tipoRecurso;
     }
-    /**
-     * @return the idRecurso
-     */
-    public RecursoDTO getRecurso() {
-        return recurso;
-    }
-
-    /**
-     * @param nombreRecurso the idRecurso to set
-     */
-    public void setRecurso(RecursoDTO recurso) {
-        this.recurso = recurso;
-    }
-
+    
     /**
      * @return the costo
      */
@@ -186,9 +165,10 @@ public void setTipoRecurso(String tipoRecurso) {
     
     /**
      * Convierte el objeto a una cadena
+     * @return 
      */
     @Override
     public String toString() {
-    	return "{ id : " + getId() + ", idUsuario : \"" + getUsuario()+ ", idBiblioteca : \"" + getIdBiblioteca() + ", idRecurso : \"" + getRecurso() + ", costo : \"" + getCosto() + ", medioPago : \"" + getMedioPago() + ", fechaInicial : \"" + getFechaInicial() + ", fechaFinal : \"" + getFechaFinal()  + ", estaActivo : \"" + isEstaActivo() + "\" }" ;  
+    	return "{ id : " + getId() + ", costo : \"" + getCosto() + ", medioPago : \"" + getMedioPago() + ", fechaInicial : \"" + getFechaInicial() + ", fechaFinal : \"" + getFechaFinal()  + ", estaActivo : \"" + isEstaActivo() + "\" }" ;  
     }
 }

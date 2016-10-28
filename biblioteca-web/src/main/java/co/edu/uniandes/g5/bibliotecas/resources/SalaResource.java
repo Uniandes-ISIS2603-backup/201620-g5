@@ -3,11 +3,10 @@
  * Clase que representa el recurso "/salas"
  * Implementa varios métodos para manipular las salas
  */
-package co.edu.uniandes.rest.resources.resources;
+package co.edu.uniandes.g5.bibliotecas.resources;
 
-import co.edu.uniandes.rest.resources.dtos.SalaDTO;
-import co.edu.uniandes.rest.resources.exceptions.BibliotecaLogicException;
-import co.edu.uniandes.rest.resources.mocks.SalaLogicMock;
+import co.edu.uniandes.g5.bibliotecas.dtos.SalaDTO;
+import co.edu.uniandes.g5.bibliotecas.exceptions.BibliotecaLogicException;
 
 import java.util.List;
 import javax.ws.rs.DELETE;

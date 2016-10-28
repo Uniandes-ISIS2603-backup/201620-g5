@@ -3,7 +3,7 @@
  * Objeto de transferencia de datos de Recursos.
  * Los DTO especifican los mensajes que se envían entre el cliente y el servidor.
  */
-package co.edu.uniandes.rest.resources.dtos;
+package co.edu.uniandes.g5.bibliotecas.dtos;
 
 /**
  * Objeto de transferencia de datos de Recursos.

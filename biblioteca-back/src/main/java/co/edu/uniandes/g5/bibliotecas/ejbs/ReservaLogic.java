@@ -7,13 +7,14 @@ package co.edu.uniandes.g5.bibliotecas.ejbs;
 
 import co.edu.uniandes.g5.bibliotecas.api.IReservaLogic;
 import co.edu.uniandes.g5.bibliotecas.entities.ReservaEntity;
+import co.edu.uniandes.g5.bibliotecas.exceptions.BibliotecaLogicException;
 import co.edu.uniandes.g5.bibliotecas.persistence.ReservaPersistence;
 import java.util.List;
 import javax.inject.Inject;
 
 /**
  *
- * @author js.prieto10
+ * @author ce.gonzalez13
  */
 public class ReservaLogic implements IReservaLogic {
     
@@ -31,18 +32,24 @@ public class ReservaLogic implements IReservaLogic {
     }
 
     @Override
-    public ReservaEntity createReserva(ReservaEntity entity) {
+    public ReservaEntity createReserva(ReservaEntity entity) throws BibliotecaLogicException {
         return persistence.create(entity);
     }
 
     @Override
-    public ReservaEntity updateReserva(ReservaEntity entity) {
+    public ReservaEntity updateReserva(ReservaEntity entity) throws BibliotecaLogicException {
         return persistence.update(entity);
     }
 
     @Override
-    public void deleteReserva(Long id) {
+    public ReservaEntity deleteReserva(Long id) throws BibliotecaLogicException{
+        ReservaEntity reserva = persistence.getReserva(id);
+        if(reserva== null)
+        {
+            throw new BibliotecaLogicException ("Se esta tratando de remover una reserva inexistente");
+        }
         persistence.delete(id);
+        return reserva;
     }
     
 }

@@ -3,10 +3,9 @@
  * Clase que representa el recurso "/videos"
  * Implementa varios métodos para manipular los videos
  */
-package co.edu.uniandes.rest.resources.resources;
-import co.edu.uniandes.rest.resources.dtos.VideoDTO;
-import co.edu.uniandes.rest.resources.exceptions.BibliotecaLogicException;
-import co.edu.uniandes.rest.resources.mocks.VideoLogicMock;
+package co.edu.uniandes.g5.bibliotecas.resources;
+import co.edu.uniandes.g5.bibliotecas.dtos.VideoDTO;
+import co.edu.uniandes.g5.bibliotecas.exceptions.BibliotecaLogicException;
 
 import java.util.List;
 

@@ -24,12 +24,13 @@ SOFTWARE.
 package co.edu.uniandes.g5.bibliotecas.api;
 
 import co.edu.uniandes.g5.bibliotecas.entities.ReservaEntity;
+import co.edu.uniandes.g5.bibliotecas.exceptions.BibliotecaLogicException;
 import java.util.List;
 
 public interface IReservaLogic {
       public List<ReservaEntity> getReservas();
     public ReservaEntity getReserva(Long id);
-    public ReservaEntity createReserva(ReservaEntity entity); 
-    public ReservaEntity updateReserva(ReservaEntity entity);
-    public void deleteReserva(Long id);
+    public ReservaEntity createReserva(ReservaEntity entity) throws BibliotecaLogicException; 
+    public ReservaEntity updateReserva(ReservaEntity entity) throws BibliotecaLogicException;
+    public ReservaEntity deleteReserva(Long id) throws BibliotecaLogicException;
 }

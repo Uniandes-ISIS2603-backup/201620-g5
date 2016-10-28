@@ -52,22 +52,11 @@ public class PrestamoEntity extends BaseEntity implements Serializable {
     private Date fechaFinal;
     private boolean estaActivo;
 
-    
-    public PrestamoEntity (UsuarioEntity usuario, BibliotecaEntity biblioteca, RecursoEntity recurso, Double costo, String tipoRecurso, String medioPago, Date fechaInicial, Date fechaFinal, boolean estaActivo){
-        
-     this.usuario = usuario;
-     this.biblioteca = biblioteca;
-     this.recurso = recurso;
-     this.costo = costo;
-     this.medioPago = medioPago;
-     this.fechaInicial = fechaInicial;
-     this.fechaFinal = fechaFinal;
-     this.estaActivo = estaActivo;
-     this.tipoRecurso = tipoRecurso;
-        
-        
+    public PrestamoEntity() {
     }
 
+    
+ 
     public UsuarioEntity getUsuario() {
         return usuario;
     }

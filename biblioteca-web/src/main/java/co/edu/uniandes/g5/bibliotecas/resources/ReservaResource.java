@@ -3,14 +3,11 @@
  * Clase que representa el recurso "/cities"
  * Implementa varios métodos para manipular las ciudades
  */
-package co.edu.uniandes.rest.resources.resources;
+package co.edu.uniandes.g5.bibliotecas.resources;
 
-import co.edu.uniandes.rest.resources.dtos.BiblioDTO;
-import co.edu.uniandes.rest.resources.dtos.ReservaDTO;
-import co.edu.uniandes.rest.resources.exceptions.BibliotecaLogicException;
-import co.edu.uniandes.rest.resources.mocks.BiblioLogicMock;
-import co.edu.uniandes.rest.resources.mocks.ReservaLogicMock;
-
+import co.edu.uniandes.g5.bibliotecas.dtos.BiblioDTO;
+import co.edu.uniandes.g5.bibliotecas.dtos.ReservaDTO;
+import co.edu.uniandes.g5.bibliotecas.exceptions.BibliotecaLogicException;
 import java.util.List;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
