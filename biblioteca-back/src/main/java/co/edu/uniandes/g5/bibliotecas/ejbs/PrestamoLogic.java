@@ -10,9 +10,9 @@ import co.edu.uniandes.g5.bibliotecas.entities.PrestamoEntity;
 import co.edu.uniandes.g5.bibliotecas.entities.RecursoEntity;
 import co.edu.uniandes.g5.bibliotecas.exceptions.BibliotecaLogicException;
 import co.edu.uniandes.g5.bibliotecas.persistence.PrestamoPersistence;
-import static com.sun.xml.internal.ws.spi.db.BindingContextFactory.LOGGER;
 import java.util.List;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.inject.Inject;
 import javax.persistence.NoResultException;
 
@@ -21,6 +21,8 @@ import javax.persistence.NoResultException;
  * @author ce.gonzalez13
  */
 public class PrestamoLogic implements IPrestamoLogic {
+    
+    private static final Logger LOGGER = Logger.getLogger(PrestamoLogic.class.getName());
     
     
     @Inject
