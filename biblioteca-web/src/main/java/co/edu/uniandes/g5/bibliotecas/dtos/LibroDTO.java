@@ -5,6 +5,7 @@
  */
 package co.edu.uniandes.g5.bibliotecas.dtos;
 
+import co.edu.uniandes.g5.bibliotecas.entities.LibroEntity;
 import java.util.ArrayList;
 
 /**
@@ -97,6 +98,10 @@ public class LibroDTO extends RecursoDTO {
     @Override
     public String toString() {
         return "{ id: " + id + ", isbn: " + isbn + ", titulo : \"" + name + "\" , numEjemplares: " + numEjemplares + " , online: \"" + online + "\" }";
+    }
+
+    LibroEntity toEntity() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

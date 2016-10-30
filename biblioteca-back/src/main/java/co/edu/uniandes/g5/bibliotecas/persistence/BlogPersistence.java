@@ -32,13 +32,6 @@ public class BlogPersistence {
         return em.find(BlogEntity.class, id);
     }
 
-    public BlogEntity findByName(String name) {
-        LOGGER.log(Level.INFO, "Consultando blog con name = {0}", name);
-        TypedQuery<BlogEntity> q
-                = em.createQuery("select u from BlogEntity u where u.name = :name", BlogEntity.class);
-        q = q.setParameter("name", name); 
-        return q.getSingleResult();
-    }
     public List<BlogEntity> findAll() {
         LOGGER.info("Consultando todos los blogs");
         Query q = em.createQuery("select u from BlogEntity u");

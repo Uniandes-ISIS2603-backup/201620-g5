@@ -6,6 +6,7 @@
 package co.edu.uniandes.g5.bibliotecas.api;
 
 import co.edu.uniandes.g5.bibliotecas.entities.BlogEntity;
+import co.edu.uniandes.g5.bibliotecas.exceptions.BibliotecaLogicException;
 import java.util.List;
 
 /**
@@ -13,9 +14,10 @@ import java.util.List;
  * @author js.prieto10
  */
 public interface IBlogLogic {
+    
     public List<BlogEntity> getBlogs();
     public BlogEntity getBlog(Long id);
-    public BlogEntity createBlog(BlogEntity entity); 
+    public BlogEntity createBlog(BlogEntity entity);
     public BlogEntity updateBlog(BlogEntity entity);
     public void deleteBlog(Long id);
 }

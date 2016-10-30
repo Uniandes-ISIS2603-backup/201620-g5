@@ -21,19 +21,10 @@ public class BlogEntity extends BaseEntity implements Serializable{
     @ManyToOne
     private co.edu.uniandes.g5.bibliotecas.entities.LibroEntity libro;
      
-    private String titulo;
     
     private String texto;
     
     private String nombreAutor;
-
-    public String getTitulo() {
-        return titulo;
-    }
-
-    public void setTitulo(String titulo) {
-        this.titulo = titulo;
-    }
 
     public LibroEntity getLibro()
     {

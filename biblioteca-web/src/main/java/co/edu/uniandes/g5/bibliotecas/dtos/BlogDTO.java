@@ -3,17 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package co.edu.uniandes.rest.resources.dtos;
+package co.edu.uniandes.g5.bibliotecas.dtos;
+
+import co.edu.uniandes.g5.bibliotecas.entities.BlogEntity;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
  * @author js.prieto10
  */
+@XmlRootElement
 public class BlogDTO {
     
-    private String titulo;
     private String nombre;
-    private Long idLibro;
     private String texto;
     private String nombreAutor;
     private Long id;
@@ -21,23 +23,22 @@ public class BlogDTO {
     public BlogDTO()
     {}
     
-    public BlogDTO(String pTitulo, String pNombre, Long pIdLibro, String pTexto, String pNombreAutor, Long pIdBlog)
+    public BlogDTO(BlogEntity entity)
     {
-        this.titulo= pTitulo;
-        this.nombre = pNombre;
-        this.idLibro = pIdLibro;
-        this.texto = pTexto;
-        this.nombreAutor = pNombreAutor;
-        this.id = pIdBlog;
+        this.nombre = entity.getName();
+        this.texto = entity.getTexto();
+        this.nombreAutor = entity.getNombreAutor();
+        this.id = entity.getId();    
+    }
     
-    }
-
-    public String getTitulo() {
-        return titulo;
-    }
-
-    public void setTitulo(String titulo) {
-        this.titulo = titulo;
+    public BlogEntity toEntity()
+    {
+        BlogEntity entity = new BlogEntity();
+        entity.setId(this.id);
+        entity.setName(this.nombre);
+        entity.setNombreAutor(this.nombreAutor);
+        entity.setTexto(this.texto);
+        return entity;
     }
 
     public String getNombre() {
@@ -46,14 +47,6 @@ public class BlogDTO {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
-    }
-
-    public Long getIdLibro() {
-        return idLibro;
-    }
-
-    public void setIdLibro(Long idLibro) {
-        this.idLibro = idLibro;
     }
 
     public String getTexto() {
@@ -79,10 +72,6 @@ public class BlogDTO {
     public void setId(Long id) {
         this.id = id;
     }
-    
-    
-    
-    
     
     
     
