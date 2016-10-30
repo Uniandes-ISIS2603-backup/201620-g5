@@ -14,8 +14,8 @@ import java.util.List;
  */
 public interface IVideoLogic {
      public List<VideoEntity> getVideos();
-    public VideoEntity getLibro(Long id);
-    public VideoEntity createLibro(VideoEntity entity); 
-    public VideoEntity updateLibro(VideoEntity entity);
-    public void deleteLibro(Long id);
+    public VideoEntity getVideo(Long id);
+    public VideoEntity createVideo(VideoEntity entity); 
+    public VideoEntity updateVideo(VideoEntity entity);
+    public void deleteVideo(Long id);
 }

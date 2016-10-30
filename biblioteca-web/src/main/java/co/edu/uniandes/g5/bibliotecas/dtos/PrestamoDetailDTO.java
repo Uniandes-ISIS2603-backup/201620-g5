@@ -55,9 +55,16 @@ public class PrestamoDetailDTO extends PrestamoDTO {
      */
     public PrestamoDetailDTO(PrestamoEntity entity) {
         super(entity);
-        if (entity.getUsuario() != null) {
+        if (entity.getUsuario() != null)
+        {
             this.usuario = new UsuarioDTO(entity.getUsuario());
+        }
+        if(entity.getBiblioteca() != null)
+        {
             this.biblioteca = new BiblioDTO(entity.getBiblioteca());
+        }
+        if(entity.getRecurso() != null)
+        {
             if (entity.getTipoRecurso().equals(entity.VIDEO))
             {
                 this.recurso = new VideoDTO(entity.getRecurso());
@@ -70,8 +77,9 @@ public class PrestamoDetailDTO extends PrestamoDTO {
             {
                 this.recurso = new SalaDTO(entity.getRecurso());
             }
-            
         }
+            
+        
 
     }
 

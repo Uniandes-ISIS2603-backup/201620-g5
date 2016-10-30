@@ -12,8 +12,15 @@ package co.edu.uniandes.g5.bibliotecas.dtos;
 public class RecursoDTO {
     protected Long id;
     protected String name;
-    protected boolean estaReservado;
-    protected boolean estaPrestado;
+    protected Long cantidadDisponible;
+
+    public Long getCantidadDisponible() {
+        return cantidadDisponible;
+    }
+
+    public void setCantidadDisponible(Long cantidadDisponible) {
+        this.cantidadDisponible = cantidadDisponible;
+    }
     protected BiblioDTO biblioteca;
 
     public BiblioDTO getBiblioteca() {
@@ -40,8 +47,6 @@ public class RecursoDTO {
 		super();
 		this.id = id;
 		this.name = name;
-                estaPrestado=false;
-                estaReservado=false;
                 this.biblioteca = biblioteca;
 	}
 
@@ -73,21 +78,6 @@ public class RecursoDTO {
         this.name = name;
     }
 
-    public boolean isEstaReservado() {
-        return estaReservado;
-    }
-
-    public void setEstaReservado(boolean estaReservado) {
-        this.estaReservado = estaReservado;
-    }
-
-    public boolean isEstaPrestado() {
-        return estaPrestado;
-    }
-
-    public void setEstaPrestado(boolean estaPrestado) {
-        this.estaPrestado = estaPrestado;
-    }
     
     /**
      * Convierte el objeto a una cadena

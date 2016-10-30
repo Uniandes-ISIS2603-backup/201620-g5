@@ -34,11 +34,12 @@ public class PrestamoPersistence {
         return em.find(PrestamoEntity.class, id);
     }
 
-    public List<PrestamoEntity> getPrestamosByUsuario(Long usuarioId) {
+    public List<PrestamoEntity> getPrestamosByUsuario(Long bibliotecaId, Long usuarioId) {
         LOGGER.log(Level.INFO, "Consultando todos los prestamos con usuario = {0}", usuarioId);
         TypedQuery<PrestamoEntity> q
-                = em.createQuery("select u from PrestamoEntity u where u.usuario.id = :usuarioId", PrestamoEntity.class);
+                = em.createQuery("select u from PrestamoEntity u where u.usuario.id = :usuarioId and d.biblioteca.id = :bibliotecaId", PrestamoEntity.class);
         q = q.setParameter("usuarioId", usuarioId); 
+        q = q.setParameter("bibliotecaId", bibliotecaId);
         return q.getResultList();
     }
     
@@ -49,10 +50,11 @@ public class PrestamoPersistence {
         return q.getResultList();
     }
      
-      public List<PrestamoEntity> getPrestamosByRecurso(Long recursoId) {
+      public List<PrestamoEntity> getPrestamosByRecurso(Long bibliotecaId, Long recursoId) {
         LOGGER.log(Level.INFO, "Consultando todos los prestamos del recurso con id={0}", recursoId);
-        TypedQuery q = em.createQuery("select d from PrestamoEntity d  where d.recurso.id = :recursoId", PrestamoEntity.class);
+        TypedQuery q = em.createQuery("select d from PrestamoEntity d  where d.recurso.id = :recursoId and d.biblioteca.id = :bibliotecaId", PrestamoEntity.class);
         q = q.setParameter("recursoId", recursoId);
+        q = q.setParameter("bibliotecaId", bibliotecaId);
         return q.getResultList();
     }
       

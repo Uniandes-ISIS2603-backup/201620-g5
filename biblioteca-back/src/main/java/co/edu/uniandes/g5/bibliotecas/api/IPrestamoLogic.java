@@ -25,12 +25,15 @@ package co.edu.uniandes.g5.bibliotecas.api;
 
 import co.edu.uniandes.g5.bibliotecas.entities.PrestamoEntity;
 import co.edu.uniandes.g5.bibliotecas.exceptions.BibliotecaLogicException;
-import java.util.Date;
 import java.util.List;
 
 public interface IPrestamoLogic {
     public List<PrestamoEntity> getPrestamos();
     public PrestamoEntity getPrestamo(Long id);
+    public List<PrestamoEntity> getPrestamosByUsuario(Long idBiblioteca, Long idUsuario);
+    public List<PrestamoEntity> getPrestamosByRecurso(Long idBiblioteca, Long idRecurso);
+    public List<PrestamoEntity> getPrestamosByBiblioteca(Long idBiblioteca);
+    
     public PrestamoEntity createPrestamo(PrestamoEntity prestamo) throws BibliotecaLogicException; 
     public PrestamoEntity updatePrestamo(PrestamoEntity prestamo) throws BibliotecaLogicException;
     public PrestamoEntity deletePrestamo(Long id) throws Exception;

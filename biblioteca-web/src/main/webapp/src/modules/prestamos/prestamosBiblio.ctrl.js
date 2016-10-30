@@ -41,13 +41,13 @@
 
                 $scope.alerts = [];
             }
-            $http.get(videosContext).then(function (response) {
+            $http.get(bibliotecasContext + "/" + $stateParams.bibliotecaId + videosContext).then(function (response) {
                 $scope.videos = response.data;
             });
-            $http.get(librosContext).then(function (response) {
+            $http.get(bibliotecasContext + "/" + $stateParams.bibliotecaId + librosContext).then(function (response) {
                 $scope.libros = response.data;
             });
-            $http.get(salasContext).then(function (response) {
+            $http.get(bibliotecasContext + "/" + $stateParams.bibliotecaId + salasContext).then(function (response) {
                 $scope.salas = response.data;
             });
             

@@ -209,7 +209,7 @@ public class PrestamoPersistenceTest {
      */
     @Test
     public void testGetPrestamosByUsuario() throws Exception {
-        List<PrestamoEntity> list = prestamoPersistence.getPrestamosByUsuario(usuarioEntity.getId());
+        List<PrestamoEntity> list = prestamoPersistence.getPrestamosByUsuario(bibliotecaEntity.getId(),usuarioEntity.getId());
         Assert.assertEquals(data.size(), list.size());
         for (PrestamoEntity ent : list) {
             boolean found = false;
@@ -251,7 +251,7 @@ public class PrestamoPersistenceTest {
     @Test
     public void testGetPrestamosByRecurso() throws Exception {
          
-       List<PrestamoEntity> list = prestamoPersistence.getPrestamosByRecurso(libroEntity.getId());
+       List<PrestamoEntity> list = prestamoPersistence.getPrestamosByRecurso(bibliotecaEntity.getId(),libroEntity.getId());
         Assert.assertEquals(data.size(), list.size());
         for (PrestamoEntity ent : list) {
             boolean found = false;

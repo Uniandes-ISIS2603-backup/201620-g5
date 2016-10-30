@@ -6,20 +6,13 @@
 package co.edu.uniandes.g5.bibliotecas.ejbs;
 
 import co.edu.uniandes.g5.bibliotecas.api.IPrestamoLogic;
-import co.edu.uniandes.g5.bibliotecas.entities.BibliotecaEntity;
 import co.edu.uniandes.g5.bibliotecas.entities.PrestamoEntity;
 import co.edu.uniandes.g5.bibliotecas.entities.RecursoEntity;
-import co.edu.uniandes.g5.bibliotecas.entities.UsuarioEntity;
 import co.edu.uniandes.g5.bibliotecas.exceptions.BibliotecaLogicException;
-import co.edu.uniandes.g5.bibliotecas.persistence.BibliotecaPersistence;
-import co.edu.uniandes.g5.bibliotecas.persistence.LibroPersistence;
 import co.edu.uniandes.g5.bibliotecas.persistence.PrestamoPersistence;
-import co.edu.uniandes.g5.bibliotecas.persistence.SalaPersistence;
-import co.edu.uniandes.g5.bibliotecas.persistence.UsuarioPersistence;
-import co.edu.uniandes.g5.bibliotecas.persistence.VideoPersistence;
-import java.util.Calendar;
-import java.util.Date;
+import static com.sun.xml.internal.ws.spi.db.BindingContextFactory.LOGGER;
 import java.util.List;
+import java.util.logging.Level;
 import javax.inject.Inject;
 import javax.persistence.NoResultException;
 
@@ -32,45 +25,36 @@ public class PrestamoLogic implements IPrestamoLogic {
     
     @Inject
     private PrestamoPersistence persistence;
-    
-    @Inject 
-    private UsuarioPersistence usuarioPersistence;
-    
-    @Inject 
-    private LibroPersistence libroPersistence;
-    
-    @Inject 
-    private VideoPersistence videoPersistence;
-    
-    @Inject 
-    private SalaPersistence salaPersistence;
-    
-    @Inject
-    private BibliotecaPersistence bibliotecaPersistence;
-    
 
-
-
-   @Override
+    @Override
     public List<PrestamoEntity> getPrestamos() {
         return persistence.getPrestamos();
     }
     
-    public List<PrestamoEntity> getPrestamosByBiblioteca(long idBiblioteca) {
+    @Override
+    public List<PrestamoEntity> getPrestamosByBiblioteca(Long idBiblioteca) {
         return persistence.getPrestamosByBiblioteca(idBiblioteca);
     }
-    
-    public List<PrestamoEntity> getPrestamosByUsuario(long idUsuario) {
-        return persistence.getPrestamosByUsuario(idUsuario);
+    @Override
+    public List<PrestamoEntity> getPrestamosByUsuario(Long idBiblioteca, Long idUsuario) {
+        return persistence.getPrestamosByUsuario(idBiblioteca,idUsuario);
     }
-    
-    public List<PrestamoEntity> getPrestamosByRecurso(long idRecurso) {
-        return persistence.getPrestamosByRecurso(idRecurso);
+ 
+    /**
+     *
+     * @param idBiblioteca
+     * @param idRecurso
+     * @return
+     */
+    @Override
+    public List<PrestamoEntity> getPrestamosByRecurso(Long idBiblioteca, Long idRecurso) {
+        return persistence.getPrestamosByRecurso(idBiblioteca, idRecurso);
     }
 
     
     @Override
     public PrestamoEntity getPrestamo(Long id) {
+        LOGGER.log(Level.INFO, "Consultando prestamo con id={0}", id);
         try {
             return persistence.getPrestamo(id);
         } catch (NoResultException e) {
@@ -79,13 +63,13 @@ public class PrestamoLogic implements IPrestamoLogic {
     }
 
     /**
-     * Pre: El idUsuario corresponde a un usuario existente
-     * El idBiblioteca corresponde a una biblioteca existente
-     * El idRecurso corresponde a un recurso existente
-     * tipoRecurso.equals("Libro")||tipoRecurso.equals("Video")||tipoRecurso.equals("Sala")
-     * fechaInicial < fechaFinal
-     * fechaInicial > Calendar.getInstance() (la fecha inicial es mayor a la fecha actual)
-     * medioPago.equals("Tarjeta de credito")||medioPago.equals("Efectivo")||medioPago.equals("Tarjeta de debito")
+     * Pre: prestamo.usuario corresponde a un usuario existente
+     * El prestamo.biblioteca corresponde a una biblioteca existente
+     * El prestamo.recurso corresponde a un recurso existente en la biblioteca actual.
+     * prestamo.tipoRecurso.equals("Libro")||prestamo.tipoRecurso.equals("Video")||prestamo.tipoRecurso.equals("Sala")
+     * prestamo.fechaInicial < prestamo.fechaFinal
+     * prestamo.fechaInicial > Calendar.getInstance() (la fecha inicial es mayor a la fecha actual)
+     * prestamo.medioPago.equals("Tarjeta de credito")||prestamo.medioPago.equals("Efectivo")||prestamo.medioPago.equals("Tarjeta de debito")
      * 
      * 
      * @param prestamo
@@ -95,13 +79,26 @@ public class PrestamoLogic implements IPrestamoLogic {
     @Override
     public PrestamoEntity createPrestamo(PrestamoEntity prestamo) throws BibliotecaLogicException {
          
-     
+     PrestamoEntity alreadyExist = getPrestamo(prestamo.getId());
+        if (alreadyExist != null) 
+        {
+            throw new BibliotecaLogicException("Ya existe un prestamo con ese id");
+        } 
         if(prestamo.getCosto() <= 0 )
         {
-            throw new BibliotecaLogicException("Costo inválido");
+            throw new BibliotecaLogicException("Costo inválido. El costo no puede ser menor o igual a 0");
+        }
+        if(prestamo.getRecurso().getCantidadDisponible() == 0)
+        {
+            throw new BibliotecaLogicException("No hay "+prestamo.getTipoRecurso()+"s disponibles para prestar.");
         }
         
-        return persistence.create(prestamo);
+        prestamo = persistence.create(prestamo);
+
+        
+        return prestamo;
+        
+        
         
     }
 
@@ -113,6 +110,24 @@ public class PrestamoLogic implements IPrestamoLogic {
          if(prestamo.getCosto() <= 0 )
         {
             throw new BibliotecaLogicException("Costo inválido");
+        }
+         if(prestamo.getRecurso().getCantidadDisponible() == 0)
+        {
+            throw new BibliotecaLogicException("No hay "+prestamo.getTipoRecurso()+"s disponibles para prestar.");
+        }
+        List<RecursoEntity> recursos = prestamo.getBiblioteca().getRecursos();
+        RecursoEntity recurso = null;
+        for(int i = 0;i<recursos.size(); i++)
+        {
+            if(recursos.get(i).equals(prestamo.getRecurso()))
+            {
+                recurso = recursos.get(i);
+                break;
+            }
+        }
+        if(recurso == null)
+        {
+            throw new BibliotecaLogicException("El recurso que se quiere prestar no se encuentra en la biblioteca del préstamo");
         }
         return persistence.update(prestamo);
         

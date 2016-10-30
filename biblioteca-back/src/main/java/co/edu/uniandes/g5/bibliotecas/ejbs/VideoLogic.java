@@ -28,23 +28,23 @@ public class VideoLogic implements IVideoLogic {
     }
 
     @Override
-    public VideoEntity getLibro(Long id) {
+    public VideoEntity getVideo(Long id) {
         return persistence.find(id);
     }
 
     @Override
-    public VideoEntity createLibro(VideoEntity entity) {
+    public VideoEntity createVideo(VideoEntity entity) {
         persistence.create(entity);
         return entity;
     }
 
     @Override
-    public VideoEntity updateLibro(VideoEntity entity) {
+    public VideoEntity updateVideo(VideoEntity entity) {
         return persistence.update(entity);
     }
 
     @Override
-    public void deleteLibro(Long id) {
+    public void deleteVideo(Long id) {
         persistence.delete(id);
     }
 

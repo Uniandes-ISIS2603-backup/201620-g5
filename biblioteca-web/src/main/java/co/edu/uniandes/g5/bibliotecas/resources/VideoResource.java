@@ -4,8 +4,11 @@
  * Implementa varios métodos para manipular los videos
  */
 package co.edu.uniandes.g5.bibliotecas.resources;
+import co.edu.uniandes.g5.bibliotecas.dtos.PrestamoDTO;
 import co.edu.uniandes.g5.bibliotecas.dtos.VideoDTO;
 import co.edu.uniandes.g5.bibliotecas.exceptions.BibliotecaLogicException;
+import java.text.ParseException;
+import java.util.ArrayList;
 
 import java.util.List;
 
@@ -56,6 +59,12 @@ public class VideoResource
     @Path("{id: \\d+}")
     public VideoDTO getVideo(@PathParam("id") Long id) throws BibliotecaLogicException {
         return videoLogic.getVideo(id);
+    }
+    
+    @GET
+    @Path("bibliotecas/{idBiblioteca: \\d+}/videos")
+    public ArrayList<VideoDTO> getVideosBiblioteca(@PathParam("idBiblioteca") Long idBiblioteca) throws BibliotecaLogicException, ParseException {
+        return videoLogic.getVideosBiblioteca(idBiblioteca);
     }
 
 

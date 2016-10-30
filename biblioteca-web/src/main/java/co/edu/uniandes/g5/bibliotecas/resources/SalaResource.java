@@ -6,7 +6,10 @@
 package co.edu.uniandes.g5.bibliotecas.resources;
 
 import co.edu.uniandes.g5.bibliotecas.dtos.SalaDTO;
+import co.edu.uniandes.g5.bibliotecas.dtos.VideoDTO;
 import co.edu.uniandes.g5.bibliotecas.exceptions.BibliotecaLogicException;
+import java.text.ParseException;
+import java.util.ArrayList;
 
 import java.util.List;
 import javax.ws.rs.DELETE;
@@ -47,6 +50,12 @@ public class SalaResource {
         return salaLogic.getAllSalas();
     }
     
+     @GET
+    @Path("bibliotecas/{idBiblioteca: \\d+}/salas")
+    public ArrayList<SalaDTO> getSalasBiblioteca(@PathParam("idBiblioteca") Long idBiblioteca) throws BibliotecaLogicException, ParseException {
+        return salaLogic.getSalasBiblioteca(idBiblioteca);
+    }
+
     @Path("salas/{id: \\d+}")
     @GET
     public SalaDTO getSala(@PathParam("id")Long id) throws BibliotecaLogicException {

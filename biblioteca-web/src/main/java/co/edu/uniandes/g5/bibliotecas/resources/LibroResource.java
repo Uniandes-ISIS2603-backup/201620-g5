@@ -16,7 +16,10 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 
 import co.edu.uniandes.g5.bibliotecas.dtos.LibroDTO;
+import co.edu.uniandes.g5.bibliotecas.dtos.VideoDTO;
 import co.edu.uniandes.g5.bibliotecas.exceptions.BibliotecaLogicException;
+import java.text.ParseException;
+import java.util.ArrayList;
 
 /**
  * Clase que implementa el recurso REST correspondiente a "libros".
@@ -42,6 +45,12 @@ public class LibroResource {
     @Path("libros")
     public List<LibroDTO> getLibros() throws BibliotecaLogicException {
         return libroLogic.getLibros();
+    }
+
+     @GET
+    @Path("bibliotecas/{idBiblioteca: \\d+}/libros")
+    public ArrayList<LibroDTO> getLibrosBiblioteca(@PathParam("idBiblioteca") Long idBiblioteca) throws BibliotecaLogicException, ParseException {
+        return libroLogic.getLibrosBiblioteca(idBiblioteca);
     }
 
     /**
