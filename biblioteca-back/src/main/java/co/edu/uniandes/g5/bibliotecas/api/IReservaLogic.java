@@ -28,9 +28,13 @@ import co.edu.uniandes.g5.bibliotecas.exceptions.BibliotecaLogicException;
 import java.util.List;
 
 public interface IReservaLogic {
-      public List<ReservaEntity> getReservas();
+    public List<ReservaEntity> getReservas();
     public ReservaEntity getReserva(Long id);
-    public ReservaEntity createReserva(ReservaEntity entity) throws BibliotecaLogicException; 
-    public ReservaEntity updateReserva(ReservaEntity entity) throws BibliotecaLogicException;
-    public ReservaEntity deleteReserva(Long id) throws BibliotecaLogicException;
+    public List<ReservaEntity> getReservasByUsuario(Long idBiblioteca, Long idUsuario);
+    public List<ReservaEntity> getReservasByRecurso(Long idBiblioteca, Long idRecurso);
+    public List<ReservaEntity> getReservasByBiblioteca(Long idBiblioteca);
+    
+    public ReservaEntity createReserva(ReservaEntity prestamo) throws BibliotecaLogicException; 
+    public ReservaEntity updateReserva(ReservaEntity prestamo) throws BibliotecaLogicException;
+    public ReservaEntity deleteReserva(Long id) throws Exception;
 }

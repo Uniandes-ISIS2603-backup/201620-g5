@@ -46,8 +46,23 @@ public class ReservaEntity extends BaseEntity implements Serializable {
     @ManyToOne
     private co.edu.uniandes.g5.bibliotecas.entities.RecursoEntity   recurso;
 
-    private Date fechaInicial;
-    private Date fechaFinal;
+    private Date fecha;
+
+    public Date getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
+    }
+
+    public boolean isEstaA() {
+        return estaA;
+    }
+
+    public void setEstaA(boolean estaA) {
+        this.estaA = estaA;
+    }
     private boolean estaA;
 
     
@@ -84,21 +99,7 @@ public class ReservaEntity extends BaseEntity implements Serializable {
         this.recurso = recurso;
     }
 
-       public Date getFechaInicial() {
-        return fechaInicial;
-    }
 
-    public void setFechaInicial(Date fechaInicial) {
-        this.fechaInicial = fechaInicial;
-    }
-
-    public Date getFechaFinal() {
-        return fechaFinal;
-    }
-
-    public void setFechaFinal(Date fechaFinal) {
-        this.fechaFinal = fechaFinal;
-    }
 
     public boolean isEstaActivo() {
         return estaA;

@@ -5,6 +5,7 @@
  */
 package co.edu.uniandes.g5.bibliotecas.dtos;
 
+import co.edu.uniandes.g5.bibliotecas.entities.ReservaEntity;
 import java.util.Date;
 
 
@@ -19,13 +20,19 @@ public class ReservaDTO {
     public static final String SALA = "Sala";
     
     private Long id;
-    private UsuarioDTO usuario;
-    private BiblioDTO biblioteca;
     private boolean estaA;
-    private RecursoDTO recurso;
     private String tipoRecurso;
-    private Date fechaInicial;
-    private Date fechaFinal;
+    private Date fecha;
+
+    
+
+    public Date getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
+    }
 
     /**
      * Constructor por defecto
@@ -38,40 +45,37 @@ public class ReservaDTO {
      * @param id identificador de la ciudad
      * @param name nombre de la ciudad
      */
-    public ReservaDTO(Long id, UsuarioDTO idUsuario, BiblioDTO idBiblioteca, boolean estaA,String tipoRecurso, RecursoDTO idRecurso, Date fechaInicial, Date fechaFinal) {
-		super();
-		this.id = id;
-                this.usuario = idUsuario;
-		this.biblioteca = idBiblioteca;
-                this.estaA = estaA;
-                this.recurso = idRecurso;
-                this.tipoRecurso = tipoRecurso;
-                this.fechaInicial = fechaInicial;
-                this.fechaFinal = fechaFinal;
+    public ReservaDTO(ReservaEntity entity) {
+	if (entity != null) 
+        {
+            this.id = entity.getId();
+            this.tipoRecurso = entity.getTipoRecurso();
+            this.fecha = entity.getFecha();
+            this.estaA = entity.isEstaActivo();
+        }
 	}
 
+     /**
+     * Convierte un objeto ReservaDTO a ReservaEntity.
+     *
+     * @return Nueva objeto ReservaEntity.
+     * 
+     */
+    public ReservaEntity toEntity() {
+        ReservaEntity entity = new ReservaEntity();
+        entity.setId(this.id);
+        entity.setTipoRecurso(this.tipoRecurso);
+        entity.setFecha(this.fecha);
+        entity.setEstaActivo(this.estaA);
+        
+        return entity;
+    }
     public Long getId() {
         return id;
     }
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public UsuarioDTO getIdUsuario() {
-        return usuario;
-    }
-
-    public void setIdUsuario(UsuarioDTO idUsuario) {
-        this.usuario = idUsuario;
-    }
-
-    public BiblioDTO getIdBiblioteca() {
-        return biblioteca;
-    }
-
-    public void setIdBiblioteca(BiblioDTO idBiblioteca) {
-        this.biblioteca = idBiblioteca;
     }
 
     public boolean isEstaA() {
@@ -83,14 +87,6 @@ public class ReservaDTO {
     }
 
   
-    public RecursoDTO getRecurso() {
-        return recurso;
-    }
-
-    public void setRecurso(RecursoDTO recurso) {
-        this.recurso = recurso;
-    }
-
     public String getTipoRecurso() {
         return tipoRecurso;
     }
@@ -99,26 +95,11 @@ public class ReservaDTO {
         this.tipoRecurso = tipoRecurso;
     }
 
-    public Date getFechaInicial() {
-        return fechaInicial;
-    }
-
-    public void setFechaInicial(Date fechaInicial) {
-        this.fechaInicial = fechaInicial;
-    }
-
-    public Date getFechaFinal() {
-        return fechaFinal;
-    }
-
-    public void setFechaFinal(Date fechaFinal) {
-        this.fechaFinal = fechaFinal;
-    }
-    
+   
     
 	
     @Override
     public String toString() {
-    	return "{ id : " + getId() + ", idUsuario : \"" + getIdUsuario()+ ", idBiblioteca : \"" + getIdBiblioteca()+ ", Esta Activo : \"" + isEstaA()+ ",idRecurso : \"" + getRecurso().getId() + "\" }" ;  
+    	return "{ id : " + getId() + ", Esta Activo : \"" + isEstaA()+ ",tipo de recurso : \"" + getTipoRecurso()+ "\" }" ;  
     }
 }

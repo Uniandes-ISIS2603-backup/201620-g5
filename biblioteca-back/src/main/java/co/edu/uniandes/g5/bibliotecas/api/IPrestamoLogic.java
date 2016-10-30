@@ -36,5 +36,5 @@ public interface IPrestamoLogic {
     
     public PrestamoEntity createPrestamo(PrestamoEntity prestamo) throws BibliotecaLogicException; 
     public PrestamoEntity updatePrestamo(PrestamoEntity prestamo) throws BibliotecaLogicException;
-    public PrestamoEntity deletePrestamo(Long id) throws Exception;
+    public PrestamoEntity deletePrestamo(Long id) throws BibliotecaLogicException;
 }

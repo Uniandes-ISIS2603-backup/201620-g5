@@ -209,7 +209,7 @@ public class ReservaPersistenceTest {
      */
     @Test
     public void testGetReservasByUsuario() throws Exception {
-        List<ReservaEntity> list = reservaPersistence.getReservasByUsuario(usuarioEntity.getId());
+        List<ReservaEntity> list = reservaPersistence.getReservasByUsuario(bibliotecaEntity.getId(), usuarioEntity.getId());
         Assert.assertEquals(data.size(), list.size());
         for (ReservaEntity ent : list) {
             boolean found = false;
@@ -251,7 +251,7 @@ public class ReservaPersistenceTest {
     @Test
     public void testGetReservasByRecurso() throws Exception {
          
-       List<ReservaEntity> list = reservaPersistence.getReservasByRecurso(libroEntity.getId());
+       List<ReservaEntity> list = reservaPersistence.getReservasByRecurso(bibliotecaEntity.getId(), libroEntity.getId());
         Assert.assertEquals(data.size(), list.size());
         for (ReservaEntity ent : list) {
             boolean found = false;

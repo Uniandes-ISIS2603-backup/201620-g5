@@ -7,16 +7,21 @@ package co.edu.uniandes.g5.bibliotecas.ejbs;
 
 import co.edu.uniandes.g5.bibliotecas.api.IReservaLogic;
 import co.edu.uniandes.g5.bibliotecas.entities.ReservaEntity;
+import co.edu.uniandes.g5.bibliotecas.entities.RecursoEntity;
 import co.edu.uniandes.g5.bibliotecas.exceptions.BibliotecaLogicException;
 import co.edu.uniandes.g5.bibliotecas.persistence.ReservaPersistence;
+import static com.sun.xml.internal.ws.spi.db.BindingContextFactory.LOGGER;
 import java.util.List;
+import java.util.logging.Level;
 import javax.inject.Inject;
+import javax.persistence.NoResultException;
 
 /**
  *
  * @author ce.gonzalez13
  */
 public class ReservaLogic implements IReservaLogic {
+    
     
     @Inject
     private ReservaPersistence persistence;
@@ -25,31 +30,119 @@ public class ReservaLogic implements IReservaLogic {
     public List<ReservaEntity> getReservas() {
         return persistence.getReservas();
     }
+    
+    @Override
+    public List<ReservaEntity> getReservasByBiblioteca(Long idBiblioteca) {
+        return persistence.getReservasByBiblioteca(idBiblioteca);
+    }
+    @Override
+    public List<ReservaEntity> getReservasByUsuario(Long idBiblioteca, Long idUsuario) {
+        return persistence.getReservasByUsuario(idBiblioteca,idUsuario);
+    }
+ 
+    /**
+     *
+     * @param idBiblioteca
+     * @param idRecurso
+     * @return
+     */
+    @Override
+    public List<ReservaEntity> getReservasByRecurso(Long idBiblioteca, Long idRecurso) {
+        return persistence.getReservasByRecurso(idBiblioteca, idRecurso);
+    }
 
+    
     @Override
     public ReservaEntity getReserva(Long id) {
-        return persistence.getReserva(id);
+        LOGGER.log(Level.INFO, "Consultando reserva con id={0}", id);
+        try {
+            return persistence.getReserva(id);
+        } catch (NoResultException e) {
+            throw new IllegalArgumentException("El reserva no existe");
+        }
     }
 
+    /**
+     * Pre: reserva.usuario corresponde a un usuario existente
+     * El reserva.biblioteca corresponde a una biblioteca existente
+     * El reserva.recurso corresponde a un recurso existente en la biblioteca actual.
+     * reserva.tipoRecurso.equals("Libro")||reserva.tipoRecurso.equals("Video")||reserva.tipoRecurso.equals("Sala")
+     * reserva.fechaInicial < reserva.fechaFinal
+     * reserva.fechaInicial > Calendar.getInstance() (la fecha inicial es mayor a la fecha actual)
+     * reserva.medioPago.equals("Tarjeta de credito")||reserva.medioPago.equals("Efectivo")||reserva.medioPago.equals("Tarjeta de debito")
+     * 
+     * 
+     * @param reserva
+     * @return ReservaEntity
+     * @throws co.edu.uniandes.g5.bibliotecas.exceptions.BibliotecaLogicException
+     */
     @Override
-    public ReservaEntity createReserva(ReservaEntity entity) throws BibliotecaLogicException {
-        return persistence.create(entity);
+    public ReservaEntity createReserva(ReservaEntity reserva) throws BibliotecaLogicException {
+         
+     ReservaEntity alreadyExist = getReserva(reserva.getId());
+        if (alreadyExist != null) 
+        {
+            throw new BibliotecaLogicException("Ya existe un reserva con ese id");
+        } 
+        if(reserva.getRecurso().getCantidadDisponible() == 0)
+        {
+            throw new BibliotecaLogicException("No hay "+reserva.getTipoRecurso()+"s disponibles para prestar.");
+        }
+        
+        reserva = persistence.create(reserva);
+
+        
+        return reserva;
+        
+        
+        
     }
 
-    @Override
-    public ReservaEntity updateReserva(ReservaEntity entity) throws BibliotecaLogicException {
-        return persistence.update(entity);
-    }
+    
 
     @Override
-    public ReservaEntity deleteReserva(Long id) throws BibliotecaLogicException{
-        ReservaEntity reserva = persistence.getReserva(id);
+    public ReservaEntity updateReserva(ReservaEntity reserva) throws BibliotecaLogicException {
+       
+        
+         if(reserva.getRecurso().getCantidadDisponible() == 0)
+        {
+            throw new BibliotecaLogicException("No hay "+reserva.getTipoRecurso()+"s disponibles para prestar.");
+        }
+        List<RecursoEntity> recursos = reserva.getBiblioteca().getRecursos();
+        RecursoEntity recurso = null;
+        for(int i = 0;i<recursos.size(); i++)
+        {
+            if(recursos.get(i).equals(reserva.getRecurso()))
+            {
+                recurso = recursos.get(i);
+                break;
+            }
+        }
+        if(recurso == null)
+        {
+            throw new BibliotecaLogicException("El recurso que se quiere prestar no se encuentra en la biblioteca del préstamo");
+        }
+        return persistence.update(reserva);
+        
+    }
+
+    /**
+     *
+     * @param idReserva
+     * @return
+     * @throws co.edu.uniandes.g5.bibliotecas.exceptions.BibliotecaLogicException
+     */
+    @Override
+    public ReservaEntity deleteReserva(Long idReserva) throws BibliotecaLogicException{
+        ReservaEntity reserva = persistence.getReserva(idReserva);
         if(reserva== null)
         {
-            throw new BibliotecaLogicException ("Se esta tratando de remover una reserva inexistente");
+            throw new BibliotecaLogicException ("Se esta tratando de remover un reserva inexistente");
         }
-        persistence.delete(id);
+        persistence.delete(idReserva);
         return reserva;
     }
+    
+
     
 }
