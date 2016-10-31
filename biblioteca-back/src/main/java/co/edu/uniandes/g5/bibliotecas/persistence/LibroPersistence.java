@@ -39,6 +39,13 @@ public class LibroPersistence {
         q = q.setParameter("name", name); 
         return q.getSingleResult();
     }
+    
+        LOGGER.log(Level.INFO, "Consultando libro con isbn = {0}", isbn);
+        TypedQuery<LibroEntity> q
+                = em.createQuery("select u from LibroEntity u where u.isbn = :isbn", LibroEntity.class);
+        q = q.setParameter("isbn", isbn); 
+        return q.getSingleResult();
+    }
 
     public List<LibroEntity> findAll() {
         LOGGER.info("Consultando todos los libros");

@@ -5,6 +5,7 @@
  */
 package co.edu.uniandes.g5.bibliotecas.api;
 
+import co.edu.uniandes.g5.bibliotecas.entities.BlogEntity;
 import co.edu.uniandes.g5.bibliotecas.entities.LibroEntity;
 import java.util.List;
 
@@ -14,8 +15,16 @@ import java.util.List;
  */
 public interface ILibroLogic {
     public List<LibroEntity> getLibros();
+    
     public LibroEntity getLibro(Long id);
+    
+    public LibroEntity getLibroByISBN(Long isbn);
+    
     public LibroEntity createLibro(LibroEntity entity); 
+    
     public LibroEntity updateLibro(LibroEntity entity);
+    
     public void deleteLibro(Long id);
+    
+    public List<BlogEntity> getBlogsByLibro(Long idLibro);
 }
