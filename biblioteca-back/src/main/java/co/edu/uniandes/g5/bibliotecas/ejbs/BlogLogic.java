@@ -48,5 +48,10 @@ public class BlogLogic implements IBlogLogic {
     public void deleteBlog(Long id) {
         persistence.delete(id);
     }
+
+    @Override
+    public List<BlogEntity> getBlogsLibro(Long idLibro) {
+        return persistence.getBlogsLibros(idLibro);
+    }
     
 }

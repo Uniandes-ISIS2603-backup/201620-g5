@@ -16,6 +16,7 @@ import java.util.List;
 public interface IBlogLogic {
     
     public List<BlogEntity> getBlogs();
+    public List<BlogEntity> getBlogsLibro(Long idLibro);
     public BlogEntity getBlog(Long id);
     public BlogEntity createBlog(BlogEntity entity);
     public BlogEntity updateBlog(BlogEntity entity);

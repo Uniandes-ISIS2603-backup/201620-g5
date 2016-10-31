@@ -5,15 +5,22 @@
  */
 package co.edu.uniandes.g5.bibliotecas.resources;
 
-import co.edu.uniandes.rest.resources.dtos.BlogDTO;
-import co.edu.uniandes.rest.resources.exceptions.BibliotecaLogicException;
+import co.edu.uniandes.g5.bibliotecas.api.IBlogLogic;
+import co.edu.uniandes.g5.bibliotecas.dtos.BlogDTO;
+import co.edu.uniandes.g5.bibliotecas.dtos.BlogDetailDTO;
+import co.edu.uniandes.g5.bibliotecas.entities.BlogEntity;
+import co.edu.uniandes.g5.bibliotecas.exceptions.BibliotecaLogicException;
+import java.util.ArrayList;
 import java.util.List;
+import javax.inject.Inject;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 
 /**
  *
@@ -21,50 +28,62 @@ import javax.ws.rs.Produces;
  */
     
 @Path("")
-@Produces("application/json")
+@Consumes(MediaType.APPLICATION_JSON)
+@Produces(MediaType.APPLICATION_JSON)
 public class BlogResource
 {
     
-    BlogLogicMock blogLogic = new BlogLogicMock();
+    @Inject
+    private IBlogLogic blogLogic;
+    
+    
+    private List<BlogDetailDTO> listEntity2DTO(List<BlogEntity> entityList) {
+        List<BlogDetailDTO> list = new ArrayList<>();
+        for (BlogEntity entity : entityList) {
+            list.add(new BlogDetailDTO(entity));
+        }
+        return list;
+    } 
     
     
     
     @GET
-    @Path("blogs")
-    public List<BlogDTO> getBlogs() throws BibliotecaLogicException 
+    public List<BlogDetailDTO> getBlogs() throws BibliotecaLogicException 
     {
-        return blogLogic.getBlogs();
+        return listEntity2DTO(blogLogic.getBlogs());
     }
     
     @GET
     @Path("blogs/{id: \\d+}/")
-    public BlogDTO getBlog(@PathParam("id") Long id) throws BibliotecaLogicException 
+    public BlogDetailDTO getBlog(@PathParam("id") Long id) throws BibliotecaLogicException 
     {
-        return blogLogic.getBlog(id);
+        return new BlogDetailDTO(blogLogic.getBlog(id));
     }
     @GET
-    @Path("libros/{libro: \\d+}/blogs/{id: \\d+}")
-    public BlogDTO getBlogLibro(@PathParam("idLibro") Long idLibro, @PathParam("id") Long id) throws BibliotecaLogicException
+    @Path("libros/{idlibro: \\d+}/blogs/{id: \\d+}")
+    public BlogDetailDTO getBlogLibro(@PathParam("id") Long id) throws BibliotecaLogicException
     {
-        return blogLogic.getBlogLibro(idLibro, id);
+        return new BlogDetailDTO(blogLogic.getBlog(id));
     }
     
     
     @GET
     @Path("libros/{idLibro: \\d+}/blogs")
-    public List<BlogDTO> getBlogsLibro(@PathParam("idLibro") Long idLibro) throws BibliotecaLogicException
+    public List<BlogDetailDTO> getBlogsLibro(@PathParam("idLibro") Long idLibro) throws BibliotecaLogicException
     {
-        return blogLogic.getBlogsLibro(idLibro);
+        return listEntity2DTO(blogLogic.getBlogsLibro(idLibro));
     }
     @POST
     @Path("libros/{idLibro: \\d+}/blogs")
-    public BlogDTO createLibro(@PathParam("idLibro") Long libro, BlogDTO blog) throws BibliotecaLogicException {
-            return blogLogic.createBlog(blog, libro);
+    public BlogDetailDTO createLibro(BlogDetailDTO blog) throws BibliotecaLogicException {
+            return new BlogDetailDTO(blogLogic.createBlog(blog.toEntity()));
     }
     @PUT
     @Path("libros/{idLibro: \\d+}/blogs/{id: \\d+}")
-    public BlogDTO updateBlog(@PathParam("id") Long id, BlogDTO blog) throws BibliotecaLogicException {
-        return blogLogic.updateBlog(id, blog);
+    public BlogDTO updateBlog(@PathParam("idLibro") Long id, BlogDTO blog) throws BibliotecaLogicException {
+        BlogEntity entity = blog.toEntity();
+        entity.setId(id);
+        return new BlogDetailDTO(blogLogic.updateBlog(entity));
     }
     
 }

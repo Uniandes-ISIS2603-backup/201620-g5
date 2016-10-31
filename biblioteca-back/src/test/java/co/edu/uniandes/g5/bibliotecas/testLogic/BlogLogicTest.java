@@ -1,11 +1,10 @@
-package co.edu.uniandes.g5.bibliotecas.ejbs;
+package co.edu.uniandes.g5.bibliotecas.testLogic;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
+
+ /* To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-/*package co.edu.uniandes.g5.bibliotecas.logic;
 import co.edu.uniandes.g5.bibliotecas.api.IBlogLogic;
 import co.edu.uniandes.g5.bibliotecas.ejbs.BlogLogic;
 import co.edu.uniandes.g5.bibliotecas.entities.BlogEntity;
@@ -33,6 +32,7 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
 /**
  *
  * @author js.prieto10
+ * */
 @RunWith(Arquillian.class)
 public class BlogLogicTest {
     
@@ -166,4 +166,3 @@ public class BlogLogicTest {
     }
     
 }
-*/
