@@ -7,7 +7,10 @@
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     
-    <modules></modules>
+    <modules>
+        <module>biblioteca-back</module>
+        <module>biblioteca-web</module>
+    </modules>
 	
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

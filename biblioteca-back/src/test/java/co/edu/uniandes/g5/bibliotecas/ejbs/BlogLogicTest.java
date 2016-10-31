@@ -1,4 +1,4 @@
-package co.edu.uniandes.g5.bibliotecas.testLogic;
+package co.edu.uniandes.g5.bibliotecas.ejbs;
 
 /*
  * To change this license header, choose License Headers in Project Properties.

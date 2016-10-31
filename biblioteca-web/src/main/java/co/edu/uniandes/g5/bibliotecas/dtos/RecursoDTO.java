@@ -5,52 +5,32 @@
  */
 package co.edu.uniandes.g5.bibliotecas.dtos;
 
+import java.util.ArrayList;
+import java.util.List;
+import javax.xml.bind.annotation.XmlRootElement;
+import uk.co.jemos.podam.common.PodamExclude;
+
 /**
  * Objeto de transferencia de datos de Recursos.
+ *
  * @author sf.munera10
  */
+@XmlRootElement
 public class RecursoDTO {
+
     protected Long id;
     protected String name;
-    protected Long cantidadDisponible;
 
-    public Long getCantidadDisponible() {
-        return cantidadDisponible;
-    }
-
-    public void setCantidadDisponible(Long cantidadDisponible) {
-        this.cantidadDisponible = cantidadDisponible;
-    }
+    @PodamExclude
     protected BiblioDTO biblioteca;
-
-    public BiblioDTO getBiblioteca() {
-        return biblioteca;
-    }
-
-    public void setBiblioteca(BiblioDTO biblioteca) {
-        this.biblioteca = biblioteca;
-    }
+    
+    private List<PrestamoDTO> prestamos = new ArrayList<>();
+    
+    private List<MultaDTO> multas = new ArrayList<>();
+    
+    private List<ReservaDTO> reservas = new ArrayList<>();
 
     /**
-     * Constructor por defecto
-     */
-    public RecursoDTO() {
-	}
-
-    /**
-     * Constructor con parámetros.
-     * @param id identificador de la recurso
-     * @param name nombre de la recurso
-     * @param biblioteca biblioteca donde está el recurso
-     */
-    public RecursoDTO(Long id, String name, BiblioDTO biblioteca) {
-		super();
-		this.id = id;
-		this.name = name;
-                this.biblioteca = biblioteca;
-	}
-
-	/**
      * @return the id
      */
     public Long getId() {
@@ -78,12 +58,53 @@ public class RecursoDTO {
         this.name = name;
     }
 
-    
+    public BiblioDTO getBiblioteca() {
+        return biblioteca;
+    }
+
+    public void setBiblioteca(BiblioDTO biblioteca) {
+        this.biblioteca = biblioteca;
+    }
+
     /**
-     * Convierte el objeto a una cadena
+     * @return the prestamos
      */
-    @Override
-    public String toString() {
-    	return getName() ;  
+    public List<PrestamoDTO> getPrestamos() {
+        return prestamos;
+    }
+
+    /**
+     * @param prestamos the prestamos to set
+     */
+    public void setPrestamos(List<PrestamoDTO> prestamos) {
+        this.prestamos = prestamos;
+    }
+
+    /**
+     * @return the multas
+     */
+    public List<MultaDTO> getMultas() {
+        return multas;
+    }
+
+    /**
+     * @param multas the multas to set
+     */
+    public void setMultas(List<MultaDTO> multas) {
+        this.multas = multas;
+    }
+
+    /**
+     * @return the reservas
+     */
+    public List<ReservaDTO> getReservas() {
+        return reservas;
+    }
+
+    /**
+     * @param reservas the reservas to set
+     */
+    public void setReservas(List<ReservaDTO> reservas) {
+        this.reservas = reservas;
     }
 }

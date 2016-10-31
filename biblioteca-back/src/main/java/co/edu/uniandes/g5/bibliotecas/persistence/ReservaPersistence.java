@@ -35,7 +35,7 @@ public class ReservaPersistence {
         return em.find(ReservaEntity.class, id);
     }
 
-    public List<ReservaEntity> getReservasByUsuario(Long idBiblioteca,Long usuarioId) {
+    public List<ReservaEntity> getReservasByUsuario(Long idBiblioteca, Long usuarioId) {
         LOGGER.log(Level.INFO, "Consultando todas las reservas con usuario = {0}", usuarioId);
         TypedQuery<ReservaEntity> q
                 = em.createQuery("select u from ReservaEntity u where u.usuario.id = :usuarioId and d.biblioteca.id = :bibliotecaId", ReservaEntity.class);

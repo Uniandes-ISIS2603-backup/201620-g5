@@ -31,17 +31,6 @@ public abstract class RecursoEntity extends BaseEntity implements Serializable{
     @PodamExclude
     @ManyToOne
     private co.edu.uniandes.g5.bibliotecas.entities.BibliotecaEntity biblioteca;
-    
-
-    private Long cantidadDisponible;
-
-    public Long getCantidadDisponible() {
-        return cantidadDisponible;
-    }
-
-    public void setCantidadDisponible(Long cantidadDisponible) {
-        this.cantidadDisponible = cantidadDisponible;
-    }
    
 
     /**

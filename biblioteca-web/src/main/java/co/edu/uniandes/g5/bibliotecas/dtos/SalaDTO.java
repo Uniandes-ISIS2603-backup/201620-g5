@@ -5,11 +5,16 @@
  */
 package co.edu.uniandes.g5.bibliotecas.dtos;
 
+import co.edu.uniandes.g5.bibliotecas.entities.SalaEntity;
+
 /**
  * Objeto de transferencia de datos de Salas.
  * @author sf.munera10
  */
 public class SalaDTO extends RecursoDTO {
+    
+    private boolean estaOcupada;
+    
     private Integer capacidad;
     
     /**
@@ -18,13 +23,36 @@ public class SalaDTO extends RecursoDTO {
     public SalaDTO() {
     }
     
-    public SalaDTO(Long idRecurso, BiblioDTO biblioteca, String nombre, Integer capacidad) {
-		super(idRecurso, nombre, biblioteca);
-                this.capacidad = capacidad;
-                
-
-   
+    /**
+     * Constructor con parámetros.
+     *
+     * @param id identificador de la ciudad
+     * @param name nombre de la ciudad
+     */
+    public SalaDTO(SalaEntity entity) {
+        if (entity != null) {
+            this.id = entity.getId();
+            this.name = entity.getName();
+            this.estaOcupada = entity.isEstaOcupada();
+            this.capacidad = entity.getCapacidad();
+        }
     }
+    
+    /**
+     * Convierte un objeto SalaDTO a SalaEntity.
+     *
+     * @return Nueva objeto SalaEntity.
+     * 
+     */
+    public SalaEntity toEntity() {
+        SalaEntity entity = new SalaEntity();
+        entity.setId(this.id);
+        entity.setName(this.name);
+        entity.setEstaOcupada(this.estaOcupada);
+        entity.setCapacidad(this.capacidad);
+        return entity;
+    }
+    
     /**
      * @return the capacidad
      */
@@ -38,13 +66,18 @@ public class SalaDTO extends RecursoDTO {
     public void setCapacidad(Integer capacidad) {
         this.capacidad = capacidad;
     }
-    
-   
-     /**
-     * Convierte el objeto a una cadena
+
+    /**
+     * @return the estaOcupada
      */
-    @Override
-    public String toString() {
-    	return "{ id : " + getId() + ", idBiblioteca : \"" + getBiblioteca().getId()+  ", nombre : \"" + getName() + ", capacidad : \"" + getCapacidad() + "\" }" ;  
+    public boolean isEstaOcupada() {
+        return estaOcupada;
+    }
+
+    /**
+     * @param estaOcupada the estaOcupada to set
+     */
+    public void setEstaOcupada(boolean estaOcupada) {
+        this.estaOcupada = estaOcupada;
     }
 }
