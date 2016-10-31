@@ -50,12 +50,22 @@ public class LibroLogic implements ILibroLogic {
     }
 
     @Override
-    public LibroEntity getLibroByISBN(Long isbn) {
+    public LibroEntity getLibroByISBN(Integer isbn, Long idBiblioteca) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public List<BlogEntity> getBlogsByLibro(Long idLibro) {
+    public List<BlogEntity> getBlogsFromLibro(Long id) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public LibroEntity getLibroByName(String name, Long idBiblioteca) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<LibroEntity> getLibros(Long idBiblioteca) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

@@ -201,8 +201,9 @@ public class VideoPersistenceTest {
     @Test
     public void testFindByName() {
         VideoEntity entity = data.get(0);
-        VideoEntity newEntity = videoPersistence.findByName(entity.getName());
+        VideoEntity newEntity = videoPersistence.findByName(entity.getName(), fatherEntity.getId());
         Assert.assertNotNull(newEntity);
+        Assert.assertEquals(fatherEntity.getId(), newEntity.getBiblioteca().getId());
         Assert.assertEquals(entity.getName(), newEntity.getName());
     }
     

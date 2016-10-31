@@ -1,10 +1,10 @@
-package co.edu.uniandes.rest.resources.mappers;
+package co.edu.uniandes.g5.bibliotecas.mappers;
 
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
 
-import co.edu.uniandes.rest.resources.exceptions.BibliotecaLogicException;
+import co.edu.uniandes.g5.bibliotecas.exceptions.BibliotecaLogicException;
 
 /**
  * Convertidor de Excepciones CityLogicException a mensajes REST.

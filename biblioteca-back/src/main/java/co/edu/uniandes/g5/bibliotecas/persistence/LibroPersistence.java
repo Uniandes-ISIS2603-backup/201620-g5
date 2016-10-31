@@ -21,7 +21,7 @@ import javax.persistence.TypedQuery;
  */
 @Stateless
 public class LibroPersistence {
-    
+
     private static final Logger LOGGER = Logger.getLogger(LibroPersistence.class.getName());
 
     @PersistenceContext(unitName = "G5PU")
@@ -32,18 +32,20 @@ public class LibroPersistence {
         return em.find(LibroEntity.class, id);
     }
 
-    public LibroEntity findByName(String name) {
+    public LibroEntity findByName(String name, Long idBiblioteca) {
         LOGGER.log(Level.INFO, "Consultando libro con name = {0}", name);
         TypedQuery<LibroEntity> q
-                = em.createQuery("select u from LibroEntity u where u.name = :name", LibroEntity.class);
-        q = q.setParameter("name", name); 
+                = em.createQuery("select u from LibroEntity u where u.name = :name and u.biblioteca.id = :idBiblioteca", LibroEntity.class);
+        q = q.setParameter("name", name);
+        q = q.setParameter("idBiblioteca", idBiblioteca);
         return q.getSingleResult();
     }
-    
+
+    public LibroEntity findByISBN(Integer isbn, Long idBiblioteca) {
         LOGGER.log(Level.INFO, "Consultando libro con isbn = {0}", isbn);
-        TypedQuery<LibroEntity> q
-                = em.createQuery("select u from LibroEntity u where u.isbn = :isbn", LibroEntity.class);
-        q = q.setParameter("isbn", isbn); 
+        TypedQuery<LibroEntity> q = em.createQuery("select u from LibroEntity u where u.isbn = :isbn and u.biblioteca.id = :idBiblioteca", LibroEntity.class);
+        q = q.setParameter("isbn", isbn);
+        q = q.setParameter("idBiblioteca", idBiblioteca);
         return q.getSingleResult();
     }
 
@@ -52,13 +54,13 @@ public class LibroPersistence {
         Query q = em.createQuery("select u from LibroEntity u");
         return q.getResultList();
     }
-    
-    public List<LibroEntity> findAllInBiblioteca(Long idBiblioteca){
+
+    public List<LibroEntity> findAllInBiblioteca(Long idBiblioteca) {
         LOGGER.log(Level.INFO, "Consultando todos los libros de la biblioteca id={0}", idBiblioteca);
-        TypedQuery q = em.createQuery("select u from LibroEntity u where u.biblioteca.id= :idBiblioteca",LibroEntity.class);
+        TypedQuery q = em.createQuery("select u from LibroEntity u where u.biblioteca.id= :idBiblioteca", LibroEntity.class);
         q = q.setParameter("idBiblioteca", idBiblioteca);
         return q.getResultList();
-        
+
     }
 
     public LibroEntity create(LibroEntity entity) {

@@ -5,7 +5,10 @@
  */
 package co.edu.uniandes.g5.bibliotecas.api;
 
+import co.edu.uniandes.g5.bibliotecas.entities.BlogEntity;
 import co.edu.uniandes.g5.bibliotecas.entities.VideoEntity;
+import co.edu.uniandes.g5.bibliotecas.entities.VideoEntity;
+import co.edu.uniandes.g5.bibliotecas.exceptions.BibliotecaLogicException;
 import java.util.List;
 
 /**
@@ -14,8 +17,17 @@ import java.util.List;
  */
 public interface IVideoLogic {
      public List<VideoEntity> getVideos();
+    
+    public List<VideoEntity> getVideos(Long idBiblioteca);
+    
     public VideoEntity getVideo(Long id);
-    public VideoEntity createVideo(VideoEntity entity); 
-    public VideoEntity updateVideo(VideoEntity entity);
+        
+    public VideoEntity getVideoByName(String name, Long idBiblioteca);
+    
+    public VideoEntity createVideo(VideoEntity entity) throws BibliotecaLogicException; 
+    
+    public VideoEntity updateVideo(VideoEntity entity) throws BibliotecaLogicException;
+    
     public void deleteVideo(Long id);
+     
 }

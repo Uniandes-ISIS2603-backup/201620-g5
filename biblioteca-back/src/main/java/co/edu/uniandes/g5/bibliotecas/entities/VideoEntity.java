@@ -21,7 +21,7 @@ public class VideoEntity extends RecursoEntity implements Serializable{
     
     private Integer numEjemplares;
     
-    private Integer EjemplaresDisponibles;
+    private Integer ejemplaresDisponibles;
 
     public String getDirector() {
         return director;
@@ -48,11 +48,11 @@ public class VideoEntity extends RecursoEntity implements Serializable{
     }
 
     public Integer getEjemplaresDisponibles() {
-        return EjemplaresDisponibles;
+        return ejemplaresDisponibles;
     }
 
-    public void setEjemplaresDisponibles(Integer EjemplaresDisponibles) {
-        this.EjemplaresDisponibles = EjemplaresDisponibles;
+    public void setEjemplaresDisponibles(Integer ejemplaresDisponibles) {
+        this.ejemplaresDisponibles = ejemplaresDisponibles;
     }
     
     

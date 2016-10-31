@@ -4,6 +4,7 @@
  * Implementa varios métodos para manipular los videos
  */
 package co.edu.uniandes.g5.bibliotecas.resources;
+import co.edu.uniandes.g5.bibliotecas.api.IVideoLogic;
 import co.edu.uniandes.g5.bibliotecas.dtos.PrestamoDTO;
 import co.edu.uniandes.g5.bibliotecas.dtos.VideoDTO;
 import co.edu.uniandes.g5.bibliotecas.exceptions.BibliotecaLogicException;
@@ -11,6 +12,7 @@ import java.text.ParseException;
 import java.util.ArrayList;
 
 import java.util.List;
+import javax.inject.Inject;
 
 
 import javax.ws.rs.GET;
@@ -30,12 +32,13 @@ import javax.ws.rs.Produces;
  *
  * @author ce.gonzalez13
  */
-@Path("videos")
+@Path("")
 @Produces("application/json")
 public class VideoResource
 {
 
-    VideoLogicMock videoLogic = new VideoLogicMock();
+    @Inject
+    IVideoLogic videoLogic;
 
     /**
      * Obtiene el listado de videos.
@@ -44,6 +47,7 @@ public class VideoResource
      * @throws BibliotecaLogicException excepción retornada por la lógica
      */
     @GET
+    @Path("videos")
     public List<VideoDTO> getVideos() throws BibliotecaLogicException {
         return videoLogic.getVideos();
     }
@@ -56,7 +60,7 @@ public class VideoResource
      * @throws BibliotecaLogicException excepción retornada por la lógica
      */
     @GET
-    @Path("{id: \\d+}")
+    @Path("videos/{id: \\d+}")
     public VideoDTO getVideo(@PathParam("id") Long id) throws BibliotecaLogicException {
         return videoLogic.getVideo(id);
     }
@@ -64,7 +68,7 @@ public class VideoResource
     @GET
     @Path("bibliotecas/{idBiblioteca: \\d+}/videos")
     public ArrayList<VideoDTO> getVideosBiblioteca(@PathParam("idBiblioteca") Long idBiblioteca) throws BibliotecaLogicException, ParseException {
-        return videoLogic.getVideosBiblioteca(idBiblioteca);
+        return videoLogic.getVideos(idBiblioteca);
     }
 
 
@@ -78,6 +82,7 @@ public class VideoResource
      * suministrado
      */
     @POST
+    @Path("videos")
     public VideoDTO createVideo(VideoDTO video) throws BibliotecaLogicException {
         return videoLogic.createVideo(video);
     }
@@ -91,7 +96,7 @@ public class VideoResource
      * @return datos del video a actualizar
      */
     @PUT
-    @Path("{id: \\d+}")
+    @Path("videos/{id: \\d+}")
     public VideoDTO updateVideo(@PathParam("id") Long id, VideoDTO newVideo) throws BibliotecaLogicException 
     {
         return videoLogic.updateVideo(id, newVideo);
@@ -104,7 +109,7 @@ public class VideoResource
      * @throws BibliotecaLogicException cuando no existe el video que se quiere eliminar
      */
     @DELETE
-    @Path("{id: \\d+}")
+    @Path("videos/{id: \\d+}")
     public void deleteVideo(@PathParam("id") Long id) throws BibliotecaLogicException 
     {
         videoLogic.deleteVideo(id);

@@ -7,92 +7,42 @@ package co.edu.uniandes.g5.bibliotecas.dtos;
 
 import co.edu.uniandes.g5.bibliotecas.entities.LibroEntity;
 import java.util.ArrayList;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
  * @author s.rojas19
  */
-public class LibroDTO extends RecursoDTO {
+@XmlRootElement
+public class LibroDTO {
 
-    private Long isbn;
-    private Long numEjemplares;
+    private Long id;
+    private String name;
+    
+    
+    private Integer isbn;
+    private String autor;
+    private Integer numEjemplares;
+    private Integer ejemplaresDisponibles; 
     private boolean online;
 
     /**
      * Crea un libroDTO vacio.
      */
     public LibroDTO() {
-    }
-
-    /**
-     * Crea in objeto de tipo LibroDTO con los parametros de entrada.
-     *
-     * @param id numero identificador del libro
-     * @param isbn codigo isbn10 del libro
-     * @param titulo titulo del libro
-     * @param numEjemplares cantidad de ejemplares disponibles
-     * @param esOnline define si el libro es disponible digitalmente
-     */
-    public LibroDTO( Long id, Long isbn, String titulo, Long numEjemplares, boolean esOnline, BiblioDTO biblioteca) {
-        super(id, titulo, biblioteca);
-        this.isbn = isbn;
-        this.numEjemplares = numEjemplares;
-        this.online = esOnline;
         
     }
-
     
-    /**
-     * Devuelve el codigo isbn del libro
-     *
-     * @return isbn del libro
-     */
-    public Long getIsbn() {
-        return isbn;
-    }
-
-    /**
-     * Cambia el codigo isbn del libro por el que entra por parametro
-     *
-     * @param isbn nuevo codigo isbn del libro
-     */
-    public void setIsbn(Long isbn) {
-        this.isbn = isbn;
-    }
-
-   
-    /**
-     * Devuelve el numero de ejemplares disponibles del libro.
-     *
-     * @return numero de ejemplares del libro.
-     */
-    public Long getNumEjemplares() {
-        return numEjemplares;
-    }
-
-    /**
-     * Cambia el numero de ejemplares del libro por el que entra por parametro
-     *
-     * @param numEjemplares nuevo numero de ejemplares disponibles.
-     */
-    public void setNumEjemplares(Long numEjemplares) {
-        this.numEjemplares = numEjemplares;
-    }
-
-    /**
-     * Responde si el libro es disponible digitalmente
-     * @return true si el libro es disponible digitalmente, false de lo contrario.
-     */
-    public boolean isOnline() {
-        return online;
-    }
-
-    /**
-     * Cambia el estado de disponibilidad digital del libro
-     * @param online true si se dispone del libro digitalmente, false de lo contrario
-     */
-    public void setOnline(boolean online) {
-        this.online = online;
+    public LibroDTO(LibroEntity entity) {
+        if(entity!=null){
+            this.id = entity.getId();
+            this.name = entity.getName();
+            this.isbn = entity.getIsbn();
+            this.autor = entity.getAutor();
+            this.numEjemplares = entity.getNumEjemplares();
+            this.ejemplaresDisponibles = entity.getEjemplaresDisponibles();
+            this.online = entity.isOnline();
+        }
     }
 
     @Override
@@ -100,8 +50,74 @@ public class LibroDTO extends RecursoDTO {
         return "{ id: " + id + ", isbn: " + isbn + ", titulo : \"" + name + "\" , numEjemplares: " + numEjemplares + " , online: \"" + online + "\" }";
     }
 
-    LibroEntity toEntity() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public LibroEntity toEntity() {
+        LibroEntity entity = new LibroEntity();
+        entity.setId(id);
+        entity.setName(name);
+        entity.setIsbn(isbn);
+        entity.setAutor(autor);
+        entity.setNumEjemplares(numEjemplares);
+        entity.setEjemplaresDisponibles(ejemplaresDisponibles);
+        entity.setOnline(online);
+        return entity;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Integer getIsbn() {
+        return isbn;
+    }
+
+    public void setIsbn(Integer isbn) {
+        this.isbn = isbn;
+    }
+
+    public Integer getNumEjemplares() {
+        return numEjemplares;
+    }
+
+    public void setNumEjemplares(Integer numEjemplares) {
+        this.numEjemplares = numEjemplares;
+    }
+
+    public Integer getEjemplaresDisponibles() {
+        return ejemplaresDisponibles;
+    }
+
+    public void setEjemplaresDisponibles(Integer ejemplaresDisponibles) {
+        this.ejemplaresDisponibles = ejemplaresDisponibles;
+    }
+
+    public boolean getOnline() {
+        return online;
+    }
+
+    public void setOnline(boolean online) {
+        this.online = online;
+    }
+
+    public String getAutor() {
+        return autor;
+    }
+
+    public void setAutor(String autor) {
+        this.autor = autor;
+    }
+
+    
+    
 }

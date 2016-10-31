@@ -31,11 +31,12 @@ public class VideoPersistence {
         return em.find(VideoEntity.class, id);
     }
 
-    public VideoEntity findByName(String name) {
+    public VideoEntity findByName(String name, Long idBiblioteca) {
         LOGGER.log(Level.INFO, "Consultando video con name = {0}", name);
         TypedQuery<VideoEntity> q
-                = em.createQuery("select u from VideoEntity u where u.name = :name", VideoEntity.class);
-        q = q.setParameter("name", name); 
+                = em.createQuery("select u from VideoEntity u where u.name = :name and u.biblioteca.id = :idBiblioteca", VideoEntity.class);
+        q = q.setParameter("name", name);
+        q = q.setParameter("idBiblioteca", idBiblioteca);
         return q.getSingleResult();
     }
 

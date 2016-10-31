@@ -61,14 +61,14 @@ public class LibroPersistenceTest {
     }
 
     /**
-     * Biblioteca que contiene los libros. La relación entre Biblioteca y
-     * Libro es "composite"
+     * Biblioteca que contiene los libros. La relación entre Biblioteca y Libro
+     * es "composite"
      */
     BibliotecaEntity fatherEntity;
 
     /**
-     * Lista de los libros que serán utilizados en las pruebas. La
-     * relación entre Biblioteca y Libro es "composite"
+     * Lista de los libros que serán utilizados en las pruebas. La relación
+     * entre Biblioteca y Libro es "composite"
      */
     private List<LibroEntity> data = new ArrayList<>();
 
@@ -169,7 +169,7 @@ public class LibroPersistenceTest {
             Assert.assertTrue(found);
         }
     }
-    
+
     @Test
     public void testFindAll() {
         List<LibroEntity> list = libroPersistence.findAll();
@@ -201,19 +201,21 @@ public class LibroPersistenceTest {
     @Test
     public void testFindByName() {
         LibroEntity entity = data.get(0);
-        LibroEntity newEntity = libroPersistence.findByName(entity.getName());
+        LibroEntity newEntity = libroPersistence.findByName(entity.getName(), fatherEntity.getId());
         Assert.assertNotNull(newEntity);
+        Assert.assertEquals(fatherEntity.getId(), newEntity.getBiblioteca().getId());
         Assert.assertEquals(entity.getName(), newEntity.getName());
     }
-    
+
     @Test
     public void testFindByISBN() {
         LibroEntity entity = data.get(0);
-        LibroEntity newEntity = libroPersistence.findByISBN(entity.getIsbn());
+        LibroEntity newEntity = libroPersistence.findByISBN(entity.getIsbn(), fatherEntity.getId());
         Assert.assertNotNull(newEntity);
+        Assert.assertEquals(fatherEntity.getId(), newEntity.getBiblioteca().getId());
         Assert.assertEquals(entity.getName(), newEntity.getName());
     }
-    
+
     /**
      * Prueba para eliminar un Libro.
      *

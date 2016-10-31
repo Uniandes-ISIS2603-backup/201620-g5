@@ -5,6 +5,8 @@
  */
 package co.edu.uniandes.g5.bibliotecas.resources;
 
+import co.edu.uniandes.g5.bibliotecas.api.IBlogLogic;
+import co.edu.uniandes.g5.bibliotecas.api.ILibroLogic;
 import java.util.List;
 
 import javax.ws.rs.GET;
@@ -16,10 +18,10 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 
 import co.edu.uniandes.g5.bibliotecas.dtos.LibroDTO;
-import co.edu.uniandes.g5.bibliotecas.dtos.VideoDTO;
 import co.edu.uniandes.g5.bibliotecas.exceptions.BibliotecaLogicException;
 import java.text.ParseException;
 import java.util.ArrayList;
+import javax.inject.Inject;
 
 /**
  * Clase que implementa el recurso REST correspondiente a "libros".
@@ -33,7 +35,11 @@ public class LibroResource {
     /**
      * Mock del modelo de datos para la clase Libro
      */
-    LibroLogicMock libroLogic = new LibroLogicMock();
+    @Inject
+    private ILibroLogic libroLogic;
+    
+    @Inject
+    private IBlogLogic blogLogic;
 
     /**
      * Obtiene el listado de libros.
@@ -50,7 +56,7 @@ public class LibroResource {
      @GET
     @Path("bibliotecas/{idBiblioteca: \\d+}/libros")
     public ArrayList<LibroDTO> getLibrosBiblioteca(@PathParam("idBiblioteca") Long idBiblioteca) throws BibliotecaLogicException, ParseException {
-        return libroLogic.getLibrosBiblioteca(idBiblioteca);
+        return libroLogic.getLibros(idBiblioteca);
     }
 
     /**
