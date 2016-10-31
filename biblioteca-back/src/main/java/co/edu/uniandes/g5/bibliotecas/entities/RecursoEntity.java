@@ -28,6 +28,8 @@ public abstract class RecursoEntity extends BaseEntity implements Serializable{
     @OneToMany(mappedBy = "recurso")
     private List<ReservaEntity> reservas = new ArrayList<>();
     
+    private int cantidadDisponible;
+    
     @PodamExclude
     @ManyToOne
     private co.edu.uniandes.g5.bibliotecas.entities.BibliotecaEntity biblioteca;
@@ -94,4 +96,16 @@ public abstract class RecursoEntity extends BaseEntity implements Serializable{
     public void setReservas(List<ReservaEntity> reservas) {
         this.reservas = reservas;
     }
+    
+    
+    public int getCantidadDisponible()
+    {
+        return cantidadDisponible;
+    }
+    
+    public void setCantidadDisponible(int pCantidad)
+    {
+        this.cantidadDisponible = pCantidad;
+    }
+    
 }
