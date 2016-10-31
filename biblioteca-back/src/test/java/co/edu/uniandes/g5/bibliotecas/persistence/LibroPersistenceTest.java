@@ -206,6 +206,14 @@ public class LibroPersistenceTest {
         Assert.assertEquals(entity.getName(), newEntity.getName());
     }
     
+    @Test
+    public void testFindByISBN() {
+        LibroEntity entity = data.get(0);
+        LibroEntity newEntity = libroPersistence.findByISBN(entity.getIsbn());
+        Assert.assertNotNull(newEntity);
+        Assert.assertEquals(entity.getName(), newEntity.getName());
+    }
+    
     /**
      * Prueba para eliminar un Libro.
      *

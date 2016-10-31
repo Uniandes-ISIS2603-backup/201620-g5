@@ -6,6 +6,7 @@
 package co.edu.uniandes.g5.bibliotecas.ejbs;
 
 import co.edu.uniandes.g5.bibliotecas.api.ILibroLogic;
+import co.edu.uniandes.g5.bibliotecas.entities.BlogEntity;
 import co.edu.uniandes.g5.bibliotecas.entities.LibroEntity;
 import co.edu.uniandes.g5.bibliotecas.persistence.LibroPersistence;
 import java.util.List;
@@ -46,6 +47,16 @@ public class LibroLogic implements ILibroLogic {
     @Override
     public void deleteLibro(Long id) {
         persistence.delete(id);
+    }
+
+    @Override
+    public LibroEntity getLibroByISBN(Long isbn) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<BlogEntity> getBlogsByLibro(Long idLibro) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }
