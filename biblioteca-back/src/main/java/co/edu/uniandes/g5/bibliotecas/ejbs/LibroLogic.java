@@ -25,8 +25,9 @@ public class LibroLogic implements ILibroLogic {
 
     @Inject
     private LibroPersistence persistence;
-    
-    @Inject BibliotecaPersistence bibliotecaPersistence;
+
+    @Inject
+    BibliotecaPersistence bibliotecaPersistence;
 
     @Override
     public List<LibroEntity> getLibros() {
@@ -48,10 +49,9 @@ public class LibroLogic implements ILibroLogic {
             throw new BibliotecaLogicException("Ya existe un libro con el mismo isbn en la misma biblioteca");
         } else if (entity.getNumEjemplares() < entity.getEjemplaresDisponibles()) {
             throw new BibliotecaLogicException("Un libro no puede tener mas ejemplares disponibles que su cantidad total");
-        } else if (entity.getIsbn()>9790000000000L||entity.getIsbn()<9780000000000L){
+        } else if (entity.getIsbn() > 9790000000000L || entity.getIsbn() < 9780000000000L) {
             throw new BibliotecaLogicException("ISBN invalido");
-        }
-        else {
+        } else {
             persistence.create(entity);
         }
         return entity;
@@ -76,12 +76,12 @@ public class LibroLogic implements ILibroLogic {
 
     @Override
     public LibroEntity getLibroByISBN(Long isbn, Long idBiblioteca) {
-       return persistence.findByISBN(isbn, idBiblioteca);
+        return persistence.findByISBN(isbn, idBiblioteca);
     }
 
     @Override
     public LibroEntity getLibroByName(String name, Long idBiblioteca) {
-       return persistence.findByName(name, idBiblioteca);
+        return persistence.findByName(name, idBiblioteca);
     }
 
     @Override
