@@ -18,7 +18,7 @@ import java.util.List;
 public interface IVideoLogic {
      public List<VideoEntity> getVideos();
     
-    public List<VideoEntity> getVideos(Long idBiblioteca);
+    public List<VideoEntity> getVideosByBiblioteca(Long idBiblioteca);
     
     public VideoEntity getVideo(Long id);
         

@@ -21,7 +21,7 @@ import uk.co.jemos.podam.common.PodamExclude;
 @Entity
 public class LibroEntity extends RecursoEntity implements Serializable {
     
-    private Integer isbn;
+    private Long isbn;
     
     private String autor;
     
@@ -35,11 +35,11 @@ public class LibroEntity extends RecursoEntity implements Serializable {
     @OneToMany(mappedBy = "libro", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<BlogEntity> blogs = new ArrayList<>();
 
-    public Integer getIsbn() {
+    public Long getIsbn() {
         return isbn;
     }
 
-    public void setIsbn(Integer isbn) {
+    public void setIsbn(Long isbn) {
         this.isbn = isbn;
     }
 

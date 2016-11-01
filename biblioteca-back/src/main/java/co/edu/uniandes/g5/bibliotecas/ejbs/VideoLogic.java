@@ -67,20 +67,17 @@ public class VideoLogic implements IVideoLogic {
     }
 
     @Override
-    public void deleteVideo(Long id
-    ) {
+    public void deleteVideo(Long id) {
         persistence.delete(id);
     }
 
     @Override
-    public List<VideoEntity> getVideos(Long idBiblioteca
-    ) {
+    public List<VideoEntity> getVideosByBiblioteca(Long idBiblioteca) {
         return persistence.findAllInBiblioteca(idBiblioteca);
     }
 
     @Override
-    public VideoEntity getVideoByName(String name, Long idBiblioteca
-    ) {
+    public VideoEntity getVideoByName(String name, Long idBiblioteca) {
         return persistence.findByName(name, idBiblioteca);
     }
 
