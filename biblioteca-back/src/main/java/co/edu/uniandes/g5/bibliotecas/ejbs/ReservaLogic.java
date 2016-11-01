@@ -127,20 +127,7 @@ public class ReservaLogic implements IReservaLogic {
             if(video.getEjemplaresDisponibles() == 0)
             throw new BibliotecaLogicException("No hay videos disponibles para prestar.");
         }
-        List<RecursoEntity> recursos = reserva.getBiblioteca().getRecursos();
-        RecursoEntity recurso = null;
-        for(int i = 0;i<recursos.size(); i++)
-        {
-            if(recursos.get(i).equals(reserva.getRecurso()))
-            {
-                recurso = recursos.get(i);
-                break;
-            }
-        }
-        if(recurso == null)
-        {
-            throw new BibliotecaLogicException("El recurso que se quiere prestar no se encuentra en la biblioteca del préstamo");
-        }
+        
         return persistence.update(reserva);
         
     }

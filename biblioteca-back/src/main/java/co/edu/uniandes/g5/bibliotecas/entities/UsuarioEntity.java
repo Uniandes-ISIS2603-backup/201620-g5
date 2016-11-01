@@ -33,6 +33,8 @@ public class UsuarioEntity extends BaseEntity implements Serializable {
     @PodamExclude
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ReservaEntity> reservas = new ArrayList<>();
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ReservaEntity> blogs = new ArrayList<>();
     
     private String clave;
     

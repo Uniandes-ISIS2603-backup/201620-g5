@@ -36,7 +36,7 @@ public class PrestamoEntity extends BaseEntity implements Serializable {
     @ManyToOne
     private co.edu.uniandes.g5.bibliotecas.entities.BibliotecaEntity biblioteca;
     
-    private String tipoRecurso;
+    private int tipoRecurso;
 
      @PodamExclude
     @ManyToOne
@@ -73,11 +73,11 @@ public class PrestamoEntity extends BaseEntity implements Serializable {
         this.biblioteca = biblioteca;
     }
 
-    public String getTipoRecurso() {
+    public int getTipoRecurso() {
         return tipoRecurso;
     }
 
-    public void setTipoRecurso(String tipoRecurso) {
+    public void setTipoRecurso(int tipoRecurso) {
         this.tipoRecurso = tipoRecurso;
     }
 
@@ -87,6 +87,7 @@ public class PrestamoEntity extends BaseEntity implements Serializable {
 
     public void setRecurso(RecursoEntity recurso) {
         this.recurso = recurso;
+        this.tipoRecurso = recurso.getTipoRecurso();
     }
 
     public Double getCosto() {

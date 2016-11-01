@@ -21,6 +21,18 @@ public class BlogEntity extends BaseEntity implements Serializable{
     @ManyToOne
     private co.edu.uniandes.g5.bibliotecas.entities.LibroEntity libro;
      
+    @PodamExclude
+    @ManyToOne
+    private co.edu.uniandes.g5.bibliotecas.entities.UsuarioEntity usuario;
+
+    public UsuarioEntity getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(UsuarioEntity usuario) {
+        this.usuario = usuario;
+    }
+     
     
     private String texto;
     

@@ -92,11 +92,14 @@ public class PrestamoLogic implements IPrestamoLogic {
         {
             throw new BibliotecaLogicException("Costo inválido. El costo no puede ser menor o igual a 0");
         }
+
         if(prestamo.getRecurso().getTipoRecurso() == RecursoEntity.LIBRO)
         {
             LibroEntity libro = (LibroEntity) prestamo.getRecurso();
-            if(libro.getEjemplaresDisponibles() == 0)
+            if(libro.getEjemplaresDisponibles() <= 0)
+            {
             throw new BibliotecaLogicException("No hay libros disponibles para prestar.");
+            }
         }
         else if(prestamo.getRecurso().getTipoRecurso() == RecursoEntity.VIDEO)
         {
@@ -135,20 +138,7 @@ public class PrestamoLogic implements IPrestamoLogic {
             if(video.getEjemplaresDisponibles() == 0)
             throw new BibliotecaLogicException("No hay videos disponibles para prestar.");
         }
-        List<RecursoEntity> recursos = prestamo.getBiblioteca().getRecursos();
-        RecursoEntity recurso = null;
-        for(int i = 0;i<recursos.size(); i++)
-        {
-            if(recursos.get(i).equals(prestamo.getRecurso()))
-            {
-                recurso = recursos.get(i);
-                break;
-            }
-        }
-        if(recurso == null)
-        {
-            throw new BibliotecaLogicException("El recurso que se quiere prestar no se encuentra en la biblioteca del préstamo");
-        }
+        
         return persistence.update(prestamo);
         
     }

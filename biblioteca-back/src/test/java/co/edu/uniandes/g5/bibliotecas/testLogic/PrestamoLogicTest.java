@@ -14,6 +14,8 @@ import co.edu.uniandes.g5.bibliotecas.entities.SalaEntity;
 import co.edu.uniandes.g5.bibliotecas.exceptions.BibliotecaLogicException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -83,6 +85,7 @@ public class PrestamoLogicTest {
     private List<VideoEntity> videoData = new ArrayList<>();
     
     private List<SalaEntity> salaData = new ArrayList<>();
+
 
     /**
      *
@@ -176,6 +179,7 @@ public class PrestamoLogicTest {
     @Test
     public void createPrestamoTest1() throws BibliotecaLogicException{
         PrestamoEntity newEntity = factory.manufacturePojo(PrestamoEntity.class);
+        newEntity.setRecurso(libroEntity);
         PrestamoEntity result = prestamoLogic.createPrestamo(newEntity);
         Assert.assertNotNull(result);
         PrestamoEntity entity = em.find(PrestamoEntity.class, result.getId());
@@ -196,15 +200,18 @@ public class PrestamoLogicTest {
     }
     /**
      * Prueba para crear un Prestamo con un recurso con 0 unidades disponibles.
+     * @throws co.edu.uniandes.g5.bibliotecas.exceptions.BibliotecaLogicException
      */
     @Test(expected = BibliotecaLogicException.class)
     public void createPrestamoTest3() throws BibliotecaLogicException {
         PrestamoEntity prest = factory.manufacturePojo(PrestamoEntity.class);
         prest.setBiblioteca(bibliotecaEntity);
+        libroEntity.setTipoRecurso(LibroEntity.LIBRO);
         libroEntity.setEjemplaresDisponibles(0);
         prest.setRecurso(libroEntity);
         prest.setUsuario(usuarioEntity);
-        
+
+
         PrestamoEntity result = prestamoLogic.createPrestamo(prest);
     }
    
@@ -266,6 +273,9 @@ public class PrestamoLogicTest {
         PrestamoEntity pojoEntity = factory.manufacturePojo(PrestamoEntity.class);
 
         pojoEntity.setId(entity.getId());
+        pojoEntity.setRecurso(libroEntity);
+        pojoEntity.setBiblioteca(bibliotecaEntity);
+        pojoEntity.setUsuario(usuarioEntity);
 
         prestamoLogic.updatePrestamo(pojoEntity);
 
