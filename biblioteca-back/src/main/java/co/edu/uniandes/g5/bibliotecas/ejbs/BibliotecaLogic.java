@@ -15,8 +15,6 @@ public class BibliotecaLogic implements IBibliotecaLogic {
     @Inject
     private BibliotecaPersistence persistence;
     
-    @Inject
-    private IBibliotecaLogic bibliotecaLogic;
 
     @Override
     public List<BibliotecaEntity> getBibliotecas() {
@@ -65,7 +63,7 @@ public class BibliotecaLogic implements IBibliotecaLogic {
     @Override
     public RecursoEntity addRecurso(Long bibliotecaId, Long recursoId) {
         BibliotecaEntity bibliotecaEntity = persistence.find(bibliotecaId);
-        RecursoEntity recursoEntity = bibliotecaLogic.getRecurso(bibliotecaId, recursoId);
+        RecursoEntity recursoEntity = getRecurso(bibliotecaId, recursoId);
         recursoEntity.setBiblioteca(bibliotecaEntity);
         return recursoEntity;
     }
@@ -79,7 +77,7 @@ public class BibliotecaLogic implements IBibliotecaLogic {
 
     @Override
     public void removeRecurso(Long bibliotecaId, Long recursoId) {
-        RecursoEntity entity = bibliotecaLogic.getRecurso(bibliotecaId, recursoId);
+        RecursoEntity entity = getRecurso(bibliotecaId, recursoId);
         entity.setBiblioteca(null);
     }
 }
