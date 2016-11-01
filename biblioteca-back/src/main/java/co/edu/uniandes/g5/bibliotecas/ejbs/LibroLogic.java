@@ -6,8 +6,11 @@
 package co.edu.uniandes.g5.bibliotecas.ejbs;
 
 import co.edu.uniandes.g5.bibliotecas.api.ILibroLogic;
+import co.edu.uniandes.g5.bibliotecas.entities.BibliotecaEntity;
 import co.edu.uniandes.g5.bibliotecas.entities.BlogEntity;
 import co.edu.uniandes.g5.bibliotecas.entities.LibroEntity;
+import co.edu.uniandes.g5.bibliotecas.exceptions.BibliotecaLogicException;
+import co.edu.uniandes.g5.bibliotecas.persistence.BibliotecaPersistence;
 import co.edu.uniandes.g5.bibliotecas.persistence.LibroPersistence;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -22,6 +25,8 @@ public class LibroLogic implements ILibroLogic {
 
     @Inject
     private LibroPersistence persistence;
+    
+    @Inject BibliotecaPersistence bibliotecaPersistence;
 
     @Override
     public List<LibroEntity> getLibros() {
@@ -34,14 +39,34 @@ public class LibroLogic implements ILibroLogic {
     }
 
     @Override
-    public LibroEntity createLibro(LibroEntity entity) {
-        persistence.create(entity);
+    public LibroEntity createLibro(LibroEntity entity) throws BibliotecaLogicException {
+        LibroEntity alreadyExists = getLibroByISBN(entity.getIsbn(), entity.getBiblioteca().getId());
+        BibliotecaEntity bibliotecaExiste = bibliotecaPersistence.find(entity.getBiblioteca().getId());
+        if (bibliotecaExiste == null) {
+            throw new BibliotecaLogicException("La biblioteca a la que el libro pertenece no existe");
+        } else if (alreadyExists != null) {
+            throw new BibliotecaLogicException("Ya existe un libro con el mismo isbn en la misma biblioteca");
+        } else if (entity.getNumEjemplares() < entity.getEjemplaresDisponibles()) {
+            throw new BibliotecaLogicException("Un libro no puede tener mas ejemplares disponibles que su cantidad total");
+        } else if (entity.getIsbn()>9790000000000L||entity.getIsbn()<9780000000000L){
+            throw new BibliotecaLogicException("ISBN invalido");
+        }
+        else {
+            persistence.create(entity);
+        }
         return entity;
     }
 
     @Override
-    public LibroEntity updateLibro(LibroEntity entity) {
-        return persistence.update(entity);
+    public LibroEntity updateLibro(LibroEntity entity) throws BibliotecaLogicException {
+        BibliotecaEntity bibliotecaExiste = bibliotecaPersistence.find(entity.getBiblioteca().getId());
+        if (bibliotecaExiste == null) {
+            throw new BibliotecaLogicException("La biblioteca a la que el video pertenece no existe");
+        } else if (entity.getNumEjemplares() < entity.getEjemplaresDisponibles()) {
+            throw new BibliotecaLogicException("Un video no puede tener mas ejemplares disponibles que su cantidad total");
+        } else {
+            return persistence.update(entity);
+        }
     }
 
     @Override
@@ -50,23 +75,18 @@ public class LibroLogic implements ILibroLogic {
     }
 
     @Override
-    public LibroEntity getLibroByISBN(Integer isbn, Long idBiblioteca) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public List<BlogEntity> getBlogsFromLibro(Long id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public LibroEntity getLibroByISBN(Long isbn, Long idBiblioteca) {
+       return persistence.findByISBN(isbn, idBiblioteca);
     }
 
     @Override
     public LibroEntity getLibroByName(String name, Long idBiblioteca) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       return persistence.findByName(name, idBiblioteca);
     }
 
     @Override
-    public List<LibroEntity> getLibros(Long idBiblioteca) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public List<LibroEntity> getLibrosByBiblioteca(Long idBiblioteca) {
+        return persistence.findAllInBiblioteca(idBiblioteca);
     }
 
 }

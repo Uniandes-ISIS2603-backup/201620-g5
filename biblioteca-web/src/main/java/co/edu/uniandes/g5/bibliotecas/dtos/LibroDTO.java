@@ -20,7 +20,7 @@ public class LibroDTO extends RecursoDTO{
     private String name;
     
     
-    private Integer isbn;
+    private Long isbn;
     private String autor;
     private Integer numEjemplares;
     private Integer ejemplaresDisponibles; 
@@ -78,11 +78,11 @@ public class LibroDTO extends RecursoDTO{
         this.name = name;
     }
 
-    public Integer getIsbn() {
+    public Long getIsbn() {
         return isbn;
     }
 
-    public void setIsbn(Integer isbn) {
+    public void setIsbn(Long isbn) {
         this.isbn = isbn;
     }
 

@@ -72,6 +72,7 @@ public class VideoDetailDTO extends VideoDTO {
         entity.setMultas(m);
         
         return entity;
+        
     }
 
     public BiblioDTO getBiblioteca() {

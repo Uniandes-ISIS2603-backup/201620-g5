@@ -17,11 +17,11 @@ import java.util.List;
 public interface ILibroLogic {
     public List<LibroEntity> getLibros();
     
-    public List<LibroEntity> getLibros(Long idBiblioteca);
+    public List<LibroEntity> getLibrosByBiblioteca(Long idBiblioteca);
     
     public LibroEntity getLibro(Long id);
     
-    public LibroEntity getLibroByISBN(Integer isbn, Long idBiblioteca);
+    public LibroEntity getLibroByISBN(Long isbn, Long idBiblioteca);
     
     public LibroEntity getLibroByName(String name, Long idBiblioteca);
     
@@ -30,7 +30,5 @@ public interface ILibroLogic {
     public LibroEntity updateLibro(LibroEntity entity) throws BibliotecaLogicException;
     
     public void deleteLibro(Long id);
-    
-    public List<BlogEntity> getBlogsFromLibro(Long id);
- 
+     
 }
