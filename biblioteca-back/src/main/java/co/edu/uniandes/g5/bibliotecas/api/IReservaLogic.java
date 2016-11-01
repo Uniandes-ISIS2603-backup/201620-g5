@@ -36,5 +36,5 @@ public interface IReservaLogic {
     
     public ReservaEntity createReserva(ReservaEntity prestamo) throws BibliotecaLogicException; 
     public ReservaEntity updateReserva(ReservaEntity prestamo) throws BibliotecaLogicException;
-    public ReservaEntity deleteReserva(Long id) throws Exception;
+    public ReservaEntity deleteReserva(Long id) throws BibliotecaLogicException;
 }
