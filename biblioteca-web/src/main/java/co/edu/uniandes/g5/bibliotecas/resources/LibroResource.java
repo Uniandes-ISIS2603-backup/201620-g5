@@ -5,8 +5,10 @@
  */
 package co.edu.uniandes.g5.bibliotecas.resources;
 
+import co.edu.uniandes.g5.bibliotecas.api.IBibliotecaLogic;
 import co.edu.uniandes.g5.bibliotecas.api.IBlogLogic;
 import co.edu.uniandes.g5.bibliotecas.api.ILibroLogic;
+import co.edu.uniandes.g5.bibliotecas.dtos.BiblioDetailDTO;
 import java.util.List;
 
 import javax.ws.rs.GET;
@@ -18,18 +20,24 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 
 import co.edu.uniandes.g5.bibliotecas.dtos.LibroDTO;
+import co.edu.uniandes.g5.bibliotecas.dtos.LibroDetailDTO;
+import co.edu.uniandes.g5.bibliotecas.entities.LibroEntity;
 import co.edu.uniandes.g5.bibliotecas.exceptions.BibliotecaLogicException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import javax.inject.Inject;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.core.MediaType;
 
 /**
  * Clase que implementa el recurso REST correspondiente a "libros".
  *
  * @author s.rojas19
  */
+@Consumes(MediaType.APPLICATION_JSON)
+@Produces(MediaType.APPLICATION_JSON)
 @Path("")
-@Produces("application/json")
 public class LibroResource {
 
     /**
@@ -37,9 +45,39 @@ public class LibroResource {
      */
     @Inject
     private ILibroLogic libroLogic;
-    
+
     @Inject
-    private IBlogLogic blogLogic;
+    private IBibliotecaLogic bibliotecaLogic;
+
+    private List<LibroDetailDTO> listEntity2DetailDTO(List<LibroEntity> entityList) {
+        List<LibroDetailDTO> list = new ArrayList<>();
+        for (LibroEntity entity : entityList) {
+            list.add(new LibroDetailDTO(entity));
+        }
+        return list;
+    }
+
+    private List<LibroDTO> listEntity2DTO(List<LibroEntity> entityList) {
+        List<LibroDTO> list = new ArrayList<>();
+        for (LibroEntity entity : entityList) {
+            list.add(new LibroDTO(entity));
+        }
+        return list;
+    }
+
+    public void existsBiblioteca(Long bibliotecaId) {
+        BiblioDetailDTO biblioteca = new BiblioDetailDTO(bibliotecaLogic.getBiblioteca(bibliotecaId));
+        if (biblioteca == null) {
+            throw new WebApplicationException("La biblioteca no existe", 404);
+        }
+    }
+
+    public void existsLibro(Long libroId) {
+        LibroDetailDTO libro = new LibroDetailDTO(libroLogic.getLibro(libroId));
+        if (libro == null) {
+            throw new WebApplicationException("El libro no existe", 404);
+        }
+    }
 
     /**
      * Obtiene el listado de libros.
@@ -49,14 +87,16 @@ public class LibroResource {
      */
     @GET
     @Path("libros")
-    public List<LibroDTO> getLibros() throws BibliotecaLogicException {
-        return libroLogic.getLibros();
+    public List<LibroDTO> getLibros() {
+        List<LibroEntity> libros = libroLogic.getLibros();
+        return listEntity2DTO(libros);
     }
 
-     @GET
+    @GET
     @Path("bibliotecas/{idBiblioteca: \\d+}/libros")
-    public ArrayList<LibroDTO> getLibrosBiblioteca(@PathParam("idBiblioteca") Long idBiblioteca) throws BibliotecaLogicException, ParseException {
-        return libroLogic.getLibros(idBiblioteca);
+    public List<LibroDTO> getLibrosBiblioteca(@PathParam("idBiblioteca") Long idBiblioteca) {
+        List<LibroEntity> libros = libroLogic.getLibrosByBiblioteca(idBiblioteca);
+        return listEntity2DTO(libros);
     }
 
     /**
@@ -64,12 +104,15 @@ public class LibroResource {
      *
      * @param id id del libro a retornar
      * @return Libro con id dado por parametro
-     * @throws BibliotecaLogicException Si no se encuentra el libro.
      */
     @GET
     @Path("libros/{id: \\d+}")
-    public LibroDTO getLibro(@PathParam("id") Long id) throws BibliotecaLogicException {
-        return libroLogic.getLibro(id);
+    public LibroDetailDTO getLibro(@PathParam("id") Long id) {
+        LibroEntity resultado = libroLogic.getLibro(id);
+        if (resultado == null) {
+            throw new WebApplicationException(404);
+        }
+        return new LibroDetailDTO(resultado);
     }
 
     /**
@@ -77,12 +120,17 @@ public class LibroResource {
      *
      * @param libro libro a agregar
      * @return libtro agregado
-     * @throws BibliotecaLogicException Si no es posible adicionar el libro
      */
     @POST
     @Path("libros")
-    public LibroDTO createLibro(LibroDTO libro) throws BibliotecaLogicException {
-        return libroLogic.createLibro(libro);
+    public LibroDTO createLibro(LibroDetailDTO libro) {
+        try {
+            LibroEntity entity = libro.toEntity();
+            LibroEntity respuesta = libroLogic.createLibro(entity);
+            return new LibroDetailDTO(respuesta);
+        } catch (BibliotecaLogicException e) {
+            throw new WebApplicationException(404);
+        }
     }
 
     /**
@@ -95,19 +143,24 @@ public class LibroResource {
      */
     @PUT
     @Path("libros/{id: \\d+}")
-    public LibroDTO updateLibro(@PathParam("id") Long id, LibroDTO libro) throws BibliotecaLogicException {
-        return libroLogic.updateLibro(id, libro);
+    public LibroDetailDTO updateLibro(@PathParam("id") Long id, LibroDetailDTO libro) throws BibliotecaLogicException {
+        existsBiblioteca(libro.getBiblioteca().getId());
+        existsLibro(id);
+        LibroEntity entity = libro.toEntity();
+        entity.setId(id);
+        return new LibroDetailDTO(libroLogic.updateLibro(entity));
+        
     }
 
     /**
      * Elimina un libro
      *
      * @param id id del libro a eliminar
-     * @throws BibliotecaLogicException Si no es posible eliminar el libro.
      */
     @DELETE
     @Path("libros/{id: \\d+}")
-    public void deleteLibro(@PathParam("id") Long id) throws BibliotecaLogicException {
+    public void deleteLibro(@PathParam("id") Long id){
+        existsLibro(id);
         libroLogic.deleteLibro(id);
     }
 }

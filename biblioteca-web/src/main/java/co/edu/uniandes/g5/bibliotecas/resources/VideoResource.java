@@ -1,19 +1,14 @@
 /*
- * VideoResource.java
- * Clase que representa el recurso "/videos"
- * Implementa varios métodos para manipular los videos
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
  */
 package co.edu.uniandes.g5.bibliotecas.resources;
+
+import co.edu.uniandes.g5.bibliotecas.api.IBibliotecaLogic;
 import co.edu.uniandes.g5.bibliotecas.api.IVideoLogic;
-import co.edu.uniandes.g5.bibliotecas.dtos.PrestamoDTO;
-import co.edu.uniandes.g5.bibliotecas.dtos.VideoDTO;
-import co.edu.uniandes.g5.bibliotecas.exceptions.BibliotecaLogicException;
-import java.text.ParseException;
-import java.util.ArrayList;
-
+import co.edu.uniandes.g5.bibliotecas.dtos.BiblioDetailDTO;
 import java.util.List;
-import javax.inject.Inject;
-
 
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -23,99 +18,147 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 
+import co.edu.uniandes.g5.bibliotecas.dtos.VideoDTO;
+import co.edu.uniandes.g5.bibliotecas.dtos.VideoDetailDTO;
+import co.edu.uniandes.g5.bibliotecas.entities.VideoEntity;
+import co.edu.uniandes.g5.bibliotecas.exceptions.BibliotecaLogicException;
+import java.util.ArrayList;
+import javax.inject.Inject;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.core.MediaType;
+
 /**
  * Clase que implementa el recurso REST correspondiente a "videos".
  *
- * Note que la aplicación (definida en RestConfig.java) define la ruta "/api" y
- * este recurso tiene la ruta "videos". Al ejecutar la aplicación, el recurse
- * será accesibe a través de la ruta "/api/videos"
- *
- * @author ce.gonzalez13
+ * @author s.rojas19
  */
+@Consumes(MediaType.APPLICATION_JSON)
+@Produces(MediaType.APPLICATION_JSON)
 @Path("")
-@Produces("application/json")
-public class VideoResource
-{
+public class VideoResource {
+
+    /**
+     * Mock del modelo de datos para la clase Video
+     */
+    @Inject
+    private IVideoLogic videoLogic;
 
     @Inject
-    IVideoLogic videoLogic;
+    private IBibliotecaLogic bibliotecaLogic;
+
+    private List<VideoDetailDTO> listEntity2DetailDTO(List<VideoEntity> entityList) {
+        List<VideoDetailDTO> list = new ArrayList<>();
+        for (VideoEntity entity : entityList) {
+            list.add(new VideoDetailDTO(entity));
+        }
+        return list;
+    }
+
+    private List<VideoDTO> listEntity2DTO(List<VideoEntity> entityList) {
+        List<VideoDTO> list = new ArrayList<>();
+        for (VideoEntity entity : entityList) {
+            list.add(new VideoDTO(entity));
+        }
+        return list;
+    }
+
+    public void existsBiblioteca(Long bibliotecaId) {
+        BiblioDetailDTO biblioteca = new BiblioDetailDTO(bibliotecaLogic.getBiblioteca(bibliotecaId));
+        if (biblioteca == null) {
+            throw new WebApplicationException("La biblioteca no existe", 404);
+        }
+    }
+
+    public void existsVideo(Long videoId) {
+        VideoDetailDTO video = new VideoDetailDTO(videoLogic.getVideo(videoId));
+        if (video == null) {
+            throw new WebApplicationException("El video no existe", 404);
+        }
+    }
 
     /**
      * Obtiene el listado de videos.
      *
      * @return lista de videos
-     * @throws BibliotecaLogicException excepción retornada por la lógica
+     * @throws BibliotecaLogicException retornada por logica.
      */
     @GET
     @Path("videos")
-    public List<VideoDTO> getVideos() throws BibliotecaLogicException {
-        return videoLogic.getVideos();
+    public List<VideoDTO> getVideos() {
+        List<VideoEntity> videos = videoLogic.getVideos();
+        return listEntity2DTO(videos);
     }
-    
+
+    @GET
+    @Path("bibliotecas/{idBiblioteca: \\d+}/videos")
+    public List<VideoDTO> getVideosBiblioteca(@PathParam("idBiblioteca") Long idBiblioteca) {
+        List<VideoEntity> videos = videoLogic.getVideosByBiblioteca(idBiblioteca);
+        return listEntity2DTO(videos);
+    }
+
     /**
-     * Obtiene el video especificado
+     * Obtiene el video con id por parametro
      *
-     * @param id video a buscar
-     * @return el video buscado
-     * @throws BibliotecaLogicException excepción retornada por la lógica
+     * @param id id del video a retornar
+     * @return Video con id dado por parametro
      */
     @GET
     @Path("videos/{id: \\d+}")
-    public VideoDTO getVideo(@PathParam("id") Long id) throws BibliotecaLogicException {
-        return videoLogic.getVideo(id);
-    }
-    
-    @GET
-    @Path("bibliotecas/{idBiblioteca: \\d+}/videos")
-    public ArrayList<VideoDTO> getVideosBiblioteca(@PathParam("idBiblioteca") Long idBiblioteca) throws BibliotecaLogicException, ParseException {
-        return videoLogic.getVideos(idBiblioteca);
+    public VideoDetailDTO getVideo(@PathParam("id") Long id) {
+        VideoEntity resultado = videoLogic.getVideo(id);
+        if (resultado == null) {
+            throw new WebApplicationException(404);
+        }
+        return new VideoDetailDTO(resultado);
     }
 
-
-   
     /**
-     * Agrega un video
+     * Crea un video
      *
      * @param video video a agregar
-     * @return datos del video a agregar
-     * @throws BibliotecaLogicException cuando ya existe un video con el id
-     * suministrado
+     * @return libtro agregado
      */
     @POST
     @Path("videos")
-    public VideoDTO createVideo(VideoDTO video) throws BibliotecaLogicException {
-        return videoLogic.createVideo(video);
+    public VideoDTO createVideo(VideoDetailDTO video) {
+        try {
+            VideoEntity entity = video.toEntity();
+            VideoEntity respuesta = videoLogic.createVideo(entity);
+            return new VideoDetailDTO(respuesta);
+        } catch (BibliotecaLogicException e) {
+            throw new WebApplicationException(404);
+        }
     }
-    
+
     /**
      * Actualiza un video
      *
-     * @param id video a actualizar
-     * @param newVideo video actualizado
-     * @throws BibliotecaLogicException cuando el id no se encuentra
-     * @return datos del video a actualizar
+     * @param id id del video a actualizar
+     * @param video objeto con atributos a cambiar del video
+     * @return video actualizado
+     * @throws BibliotecaLogicException Si no es posible actualizar el video
      */
     @PUT
     @Path("videos/{id: \\d+}")
-    public VideoDTO updateVideo(@PathParam("id") Long id, VideoDTO newVideo) throws BibliotecaLogicException 
-    {
-        return videoLogic.updateVideo(id, newVideo);
+    public VideoDetailDTO updateVideo(@PathParam("id") Long id, VideoDetailDTO video) throws BibliotecaLogicException {
+        existsBiblioteca(video.getBiblioteca().getId());
+        existsVideo(id);
+        VideoEntity entity = video.toEntity();
+        entity.setId(id);
+        return new VideoDetailDTO(videoLogic.updateVideo(entity));
+        
     }
-    
-     /**
+
+    /**
      * Elimina un video
      *
      * @param id id del video a eliminar
-     * @throws BibliotecaLogicException cuando no existe el video que se quiere eliminar
      */
     @DELETE
     @Path("videos/{id: \\d+}")
-    public void deleteVideo(@PathParam("id") Long id) throws BibliotecaLogicException 
-    {
+    public void deleteVideo(@PathParam("id") Long id){
+        existsVideo(id);
         videoLogic.deleteVideo(id);
     }
-    
-    
-
-  
 }

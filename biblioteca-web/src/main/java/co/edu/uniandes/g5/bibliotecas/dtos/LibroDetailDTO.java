@@ -22,8 +22,6 @@ import uk.co.jemos.podam.common.PodamExclude;
 @XmlRootElement
 public class LibroDetailDTO extends LibroDTO {
 
-    
-
     @PodamExclude
     private List<BlogDTO> blogs = new ArrayList<>();
 
@@ -35,14 +33,18 @@ public class LibroDetailDTO extends LibroDTO {
         super(entity);
         if (entity != null) {
             biblioteca = new BiblioDTO(entity.getBiblioteca());
-            for (BlogEntity blog : entity.getBlogs())
+            for (BlogEntity blog : entity.getBlogs()) {
                 blogs.add(new BlogDTO(blog));
-            for (PrestamoEntity prestamo : entity.getPrestamos())
+            }
+            for (PrestamoEntity prestamo : entity.getPrestamos()) {
                 prestamos.add(new PrestamoDTO(prestamo));
-            for (ReservaEntity reserva : entity.getReservas())
+            }
+            for (ReservaEntity reserva : entity.getReservas()) {
                 reservas.add(new ReservaDTO(reserva));
-            for (MultaEntity multa : entity.getMultas())
+            }
+            for (MultaEntity multa : entity.getMultas()) {
                 multas.add(new MultaDTO(multa));
+            }
         }
     }
 
@@ -53,8 +55,9 @@ public class LibroDetailDTO extends LibroDTO {
         List<PrestamoEntity> p = new ArrayList<>();
         List<ReservaEntity> r = new ArrayList<>();
         List<MultaEntity> m = new ArrayList<>();
-        if(biblioteca != null)
+        if (biblioteca != null) {
             entity.setBiblioteca(biblioteca.toEntity());
+        }
         for (BlogDTO blog : blogs) {
             b.add(blog.toEntity());
         }
