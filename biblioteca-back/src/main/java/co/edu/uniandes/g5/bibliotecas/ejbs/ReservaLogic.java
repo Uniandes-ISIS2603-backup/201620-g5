@@ -6,8 +6,10 @@
 package co.edu.uniandes.g5.bibliotecas.ejbs;
 
 import co.edu.uniandes.g5.bibliotecas.api.IReservaLogic;
+import co.edu.uniandes.g5.bibliotecas.entities.LibroEntity;
 import co.edu.uniandes.g5.bibliotecas.entities.ReservaEntity;
 import co.edu.uniandes.g5.bibliotecas.entities.RecursoEntity;
+import co.edu.uniandes.g5.bibliotecas.entities.VideoEntity;
 import co.edu.uniandes.g5.bibliotecas.exceptions.BibliotecaLogicException;
 import co.edu.uniandes.g5.bibliotecas.persistence.ReservaPersistence;
 import java.util.List;
@@ -86,11 +88,18 @@ public class ReservaLogic implements IReservaLogic {
         {
             throw new BibliotecaLogicException("Ya existe un reserva con ese id");
         } 
-        if(reserva.getRecurso().getCantidadDisponible() == 0)
+        if(reserva.getRecurso().getTipoRecurso() == RecursoEntity.LIBRO)
         {
-            throw new BibliotecaLogicException("No hay "+reserva.getTipoRecurso()+"s disponibles para prestar.");
+            LibroEntity libro = (LibroEntity) reserva.getRecurso();
+            if(libro.getEjemplaresDisponibles() == 0)
+            throw new BibliotecaLogicException("No hay libros disponibles para prestar.");
         }
-        
+        else if(reserva.getRecurso().getTipoRecurso() == RecursoEntity.VIDEO)
+        {
+            VideoEntity video = (VideoEntity) reserva.getRecurso();
+            if(video.getEjemplaresDisponibles() == 0)
+            throw new BibliotecaLogicException("No hay videos disponibles para prestar.");
+        }
         reserva = persistence.create(reserva);
 
         
@@ -106,9 +115,17 @@ public class ReservaLogic implements IReservaLogic {
     public ReservaEntity updateReserva(ReservaEntity reserva) throws BibliotecaLogicException {
        
         
-         if(reserva.getRecurso().getCantidadDisponible() == 0)
+        if(reserva.getRecurso().getTipoRecurso() == RecursoEntity.LIBRO)
         {
-            throw new BibliotecaLogicException("No hay "+reserva.getTipoRecurso()+"s disponibles para prestar.");
+            LibroEntity libro = (LibroEntity) reserva.getRecurso();
+            if(libro.getEjemplaresDisponibles() == 0)
+            throw new BibliotecaLogicException("No hay libros disponibles para prestar.");
+        }
+        else if(reserva.getRecurso().getTipoRecurso() == RecursoEntity.VIDEO)
+        {
+            VideoEntity video = (VideoEntity) reserva.getRecurso();
+            if(video.getEjemplaresDisponibles() == 0)
+            throw new BibliotecaLogicException("No hay videos disponibles para prestar.");
         }
         List<RecursoEntity> recursos = reserva.getBiblioteca().getRecursos();
         RecursoEntity recurso = null;

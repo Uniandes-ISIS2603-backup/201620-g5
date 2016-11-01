@@ -21,9 +21,9 @@ public class PrestamoEntity extends BaseEntity implements Serializable {
 
     
     
-    public static final String LIBRO = "Libro";
-    public static final String VIDEO = "Video";
-    public static final String SALA = "Sala";
+    public static final int VIDEO = 1;
+    public static final int LIBRO = 2;
+    public static final int SALA = 3;
 
     
     

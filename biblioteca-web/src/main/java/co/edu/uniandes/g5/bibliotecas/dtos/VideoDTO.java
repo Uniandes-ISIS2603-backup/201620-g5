@@ -12,7 +12,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * Objeto de transferencia de datos de videos.
  */
 @XmlRootElement
-public class VideoDTO{
+public class VideoDTO extends RecursoDTO{
     private Long id;
     private String name;
     

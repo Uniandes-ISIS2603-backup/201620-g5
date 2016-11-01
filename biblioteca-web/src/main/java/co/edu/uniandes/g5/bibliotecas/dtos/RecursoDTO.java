@@ -21,14 +21,27 @@ public class RecursoDTO {
     protected Long id;
     protected String name;
 
+    public static final int VIDEO = 1;
+    public static final int LIBRO = 2;
+    public static final  int SALA =3;
     @PodamExclude
     protected BiblioDTO biblioteca;
     
-    private List<PrestamoDTO> prestamos = new ArrayList<>();
+    protected List<PrestamoDTO> prestamos = new ArrayList<>();
     
-    private List<MultaDTO> multas = new ArrayList<>();
+    protected List<MultaDTO> multas = new ArrayList<>();
     
-    private List<ReservaDTO> reservas = new ArrayList<>();
+    protected List<ReservaDTO> reservas = new ArrayList<>();
+    
+    private int tipoRecurso;
+
+    public int getTipoRecurso() {
+        return tipoRecurso;
+    }
+
+    public void setTipoRecurso(int tipoRecurso) {
+        this.tipoRecurso = tipoRecurso;
+    }
 
     /**
      * @return the id

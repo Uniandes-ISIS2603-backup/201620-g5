@@ -6,8 +6,10 @@
 package co.edu.uniandes.g5.bibliotecas.ejbs;
 
 import co.edu.uniandes.g5.bibliotecas.api.IPrestamoLogic;
+import co.edu.uniandes.g5.bibliotecas.entities.LibroEntity;
 import co.edu.uniandes.g5.bibliotecas.entities.PrestamoEntity;
 import co.edu.uniandes.g5.bibliotecas.entities.RecursoEntity;
+import co.edu.uniandes.g5.bibliotecas.entities.VideoEntity;
 import co.edu.uniandes.g5.bibliotecas.exceptions.BibliotecaLogicException;
 import co.edu.uniandes.g5.bibliotecas.persistence.PrestamoPersistence;
 import java.util.List;
@@ -90,9 +92,17 @@ public class PrestamoLogic implements IPrestamoLogic {
         {
             throw new BibliotecaLogicException("Costo inválido. El costo no puede ser menor o igual a 0");
         }
-        if(prestamo.getRecurso().getCantidadDisponible() == 0)
+        if(prestamo.getRecurso().getTipoRecurso() == RecursoEntity.LIBRO)
         {
-            throw new BibliotecaLogicException("No hay "+prestamo.getTipoRecurso()+"s disponibles para prestar.");
+            LibroEntity libro = (LibroEntity) prestamo.getRecurso();
+            if(libro.getEjemplaresDisponibles() == 0)
+            throw new BibliotecaLogicException("No hay libros disponibles para prestar.");
+        }
+        else if(prestamo.getRecurso().getTipoRecurso() == RecursoEntity.VIDEO)
+        {
+            VideoEntity video = (VideoEntity) prestamo.getRecurso();
+            if(video.getEjemplaresDisponibles() == 0)
+            throw new BibliotecaLogicException("No hay videos disponibles para prestar.");
         }
         
         prestamo = persistence.create(prestamo);
@@ -113,9 +123,17 @@ public class PrestamoLogic implements IPrestamoLogic {
         {
             throw new BibliotecaLogicException("Costo inválido");
         }
-         if(prestamo.getRecurso().getCantidadDisponible() == 0)
+       if(prestamo.getRecurso().getTipoRecurso() == RecursoEntity.LIBRO)
         {
-            throw new BibliotecaLogicException("No hay "+prestamo.getTipoRecurso()+"s disponibles para prestar.");
+            LibroEntity libro = (LibroEntity) prestamo.getRecurso();
+            if(libro.getEjemplaresDisponibles() == 0)
+            throw new BibliotecaLogicException("No hay libros disponibles para prestar.");
+        }
+        else if(prestamo.getRecurso().getTipoRecurso() == RecursoEntity.VIDEO)
+        {
+            VideoEntity video = (VideoEntity) prestamo.getRecurso();
+            if(video.getEjemplaresDisponibles() == 0)
+            throw new BibliotecaLogicException("No hay videos disponibles para prestar.");
         }
         List<RecursoEntity> recursos = prestamo.getBiblioteca().getRecursos();
         RecursoEntity recurso = null;

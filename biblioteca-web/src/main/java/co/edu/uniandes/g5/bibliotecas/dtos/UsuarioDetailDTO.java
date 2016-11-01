@@ -12,6 +12,7 @@ import co.edu.uniandes.g5.bibliotecas.entities.PrestamoEntity;
 import co.edu.uniandes.g5.bibliotecas.entities.RecursoEntity;
 import co.edu.uniandes.g5.bibliotecas.entities.ReservaEntity;
 import co.edu.uniandes.g5.bibliotecas.entities.SalaEntity;
+import co.edu.uniandes.g5.bibliotecas.entities.UsuarioEntity;
 import co.edu.uniandes.g5.bibliotecas.entities.VideoEntity;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,11 +23,9 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author sf.munera10
  */
 @XmlRootElement
-public class BiblioDetailDTO extends BiblioDTO{
+public class UsuarioDetailDTO extends UsuarioDTO{
     
-    private List<SalaDTO> salas = new ArrayList<>();
     
-    private List<RecursoDTO> recursos = new ArrayList<>();
     
     private List<PrestamoDTO> prestamos = new ArrayList<>();
     
@@ -34,7 +33,7 @@ public class BiblioDetailDTO extends BiblioDTO{
     
     private List<ReservaDTO> reservas = new ArrayList<>();
 
-    public BiblioDetailDTO() {
+    public UsuarioDetailDTO() {
         super();
     }
 
@@ -46,34 +45,14 @@ public class BiblioDetailDTO extends BiblioDTO{
      * objeto.
      *
      */
-    public BiblioDetailDTO(BibliotecaEntity entity) {
+    public UsuarioDetailDTO(UsuarioEntity entity) {
         super(entity);
-        List<SalaEntity> salasList = entity.getSalas();
-        List<RecursoEntity> recursosList = entity.getRecursos();
+       
         List<PrestamoEntity> prestamosList = entity.getPrestamos();
         List<MultaEntity> multasList = entity.getMultas();
         List<ReservaEntity> reservasList = entity.getReservas();
-        for (SalaEntity dept : salasList) {
-            this.salas.add(new SalaDTO(dept));
-        }
-        for (RecursoEntity dept : recursosList) {
-            
-            if(dept.getTipoRecurso() == RecursoDTO.LIBRO)
-            {
-                LibroDTO libro = new LibroDTO((LibroEntity) dept);
-                this.recursos.add(libro);
-            }
-            else if(dept.getTipoRecurso() == RecursoDTO.VIDEO)
-            {
-                VideoDTO video = new VideoDTO((VideoEntity) dept);
-                this.recursos.add(video);
-            }
-            if(dept.getTipoRecurso() == RecursoDTO.SALA)
-            {
-                SalaDTO sala = new SalaDTO((SalaEntity) dept);
-                this.recursos.add(sala);
-            }
-        }
+        
+        
         for (PrestamoEntity dept : prestamosList) {
             this.prestamos.add(new PrestamoDTO(dept));
         }
@@ -86,40 +65,19 @@ public class BiblioDetailDTO extends BiblioDTO{
     }
 
     /**
-     * Convierte un objeto BibliotecaDetailDTO a BibliotecaEntity incluyendo los
-     * atributos de BibliotecaDTO.
+     * Convierte un objeto UsuarioDetailDTO a UsuarioEntity incluyendo los
+     * atributos de UsuarioDTO.
      *
      * @return objeto BibliotecaEntity.
      *
      */
     @Override
-    public BibliotecaEntity toEntity() {
-        BibliotecaEntity entity = super.toEntity();
-         List<SalaDTO> salas = this.getSalas();
-         List<RecursoDTO> recursos = this.getRecursos();
+    public UsuarioEntity toEntity() {
+        UsuarioEntity entity = super.toEntity();
+         
          List<PrestamoDTO> prestamos = this.getPrestamos();
          List<MultaDTO> multas = this.getMultas();
          List<ReservaDTO> reservas = this.getReservas();
-        for (SalaDTO dept : this.getSalas()) {         
-            entity.getSalas().add(dept.toEntity());
-        }
-        for (RecursoDTO dept : this.getRecursos()) {
-             if(dept.getTipoRecurso() == RecursoDTO.LIBRO)
-                {
-                    LibroDTO lib = (LibroDTO) dept;
-                    entity.getRecursos().add(lib.toEntity());
-                }
-                else if(dept.getTipoRecurso() == RecursoDTO.VIDEO)
-                {
-                    VideoDTO vid = (VideoDTO) dept;
-                    entity.getRecursos().add(vid.toEntity());
-                }
-                else if(dept.getTipoRecurso() == RecursoDTO.SALA)
-                {
-                    SalaDTO sal = (SalaDTO) dept;
-                    entity.getRecursos().add(sal.toEntity());
-                }
-        }
         for (PrestamoDTO dept : this.getPrestamos()) {         
             entity.getPrestamos().add(dept.toEntity());
         }
@@ -132,34 +90,7 @@ public class BiblioDetailDTO extends BiblioDTO{
         return entity;
     }
 
-    /**
-     * @return the salas
-     */
-    public List<SalaDTO> getSalas() {
-        return salas;
-    }
-
-    /**
-     * @param salas the salas to set
-     */
-    public void setSalas(List<SalaDTO> salas) {
-        this.salas = salas;
-    }
-
-    /**
-     * @return the recursos
-     */
-    public List<RecursoDTO> getRecursos() {
-        return recursos;
-    }
-
-    /**
-     * @param recursos the recursos to set
-     */
-    public void setRecursos(List<RecursoDTO> recursos) {
-        this.recursos = recursos;
-    }
-
+    
     /**
      * @return the prestamos
      */

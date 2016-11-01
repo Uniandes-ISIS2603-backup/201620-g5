@@ -1,7 +1,10 @@
 
 package co.edu.uniandes.g5.bibliotecas.dtos;
 
+import co.edu.uniandes.g5.bibliotecas.entities.LibroEntity;
 import co.edu.uniandes.g5.bibliotecas.entities.ReservaEntity;
+import co.edu.uniandes.g5.bibliotecas.entities.SalaEntity;
+import co.edu.uniandes.g5.bibliotecas.entities.VideoEntity;
 import javax.xml.bind.annotation.XmlRootElement;
 import uk.co.jemos.podam.common.PodamExclude;
 
@@ -67,15 +70,15 @@ public class ReservaDetailDTO extends ReservaDTO {
         {
             if (entity.getTipoRecurso().equals(entity.VIDEO))
             {
-                this.recurso = new VideoDTO(entity.getRecurso());
+                this.recurso = new VideoDTO((VideoEntity)entity.getRecurso());
             }
             else if (entity.getTipoRecurso().equals(entity.LIBRO))
             {
-                this.recurso = new LibroDTO(entity.getRecurso());
+                this.recurso = new LibroDTO((LibroEntity)entity.getRecurso());
             }
             else if (entity.getTipoRecurso().equals(entity.SALA))
             {
-                this.recurso = new SalaDTO(entity.getRecurso());
+                this.recurso = new SalaDTO((SalaEntity)entity.getRecurso());
             }
         }
             
@@ -101,7 +104,21 @@ public class ReservaDetailDTO extends ReservaDTO {
         }
         if (getRecurso() != null)
             {
-                entity.setRecurso(getRecurso().toEntity);
+                if(getRecurso().getTipoRecurso() == RecursoDTO.LIBRO)
+                {
+                    LibroDTO lib = (LibroDTO) getRecurso();
+                    entity.setRecurso(lib.toEntity());
+                }
+                else if(getRecurso().getTipoRecurso() == RecursoDTO.VIDEO)
+                {
+                    VideoDTO lib = (VideoDTO) getRecurso();
+                    entity.setRecurso(lib.toEntity());
+                }
+                else if(getRecurso().getTipoRecurso() == RecursoDTO.SALA)
+                {
+                    SalaDTO lib = (SalaDTO) getRecurso();
+                    entity.setRecurso(lib.toEntity());
+                }
             }
         return entity;
     }

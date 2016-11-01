@@ -5,7 +5,6 @@
  */
 package co.edu.uniandes.g5.bibliotecas.dtos;
 
-import co.edu.uniandes.g5.bibliotecas.entities.BibliotecaEntity;
 import co.edu.uniandes.g5.bibliotecas.entities.BlogEntity;
 import co.edu.uniandes.g5.bibliotecas.entities.LibroEntity;
 import co.edu.uniandes.g5.bibliotecas.entities.MultaEntity;
@@ -23,20 +22,10 @@ import uk.co.jemos.podam.common.PodamExclude;
 @XmlRootElement
 public class LibroDetailDTO extends LibroDTO {
 
-    @PodamExclude
-    private BiblioDTO biblioteca;
+    
 
     @PodamExclude
     private List<BlogDTO> blogs = new ArrayList<>();
-
-    @PodamExclude
-    private List<PrestamoDTO> prestamos = new ArrayList<>();
-
-    @PodamExclude
-    private List<ReservaDTO> reservas = new ArrayList<>();
-
-    @PodamExclude
-    private List<MultaDTO> multas = new ArrayList<>();
 
     public LibroDetailDTO() {
         super();
@@ -82,6 +71,7 @@ public class LibroDetailDTO extends LibroDTO {
         entity.setPrestamos(p);
         entity.setReservas(r);
         entity.setMultas(m);
+        return entity;
     }
 
     public BiblioDTO getBiblioteca() {

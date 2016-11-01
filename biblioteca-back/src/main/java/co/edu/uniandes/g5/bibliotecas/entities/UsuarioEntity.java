@@ -34,11 +34,29 @@ public class UsuarioEntity extends BaseEntity implements Serializable {
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ReservaEntity> reservas = new ArrayList<>();
     
-    private List<Integer> clave = new ArrayList<>();
+    private String clave;
     
     private String direccion;
      
-   private String medioDePago;
+   private String apellido;
+   
+   private String login;
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public String getApellido() {
+        return apellido;
+    }
+
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
+    }
 
     public List<PrestamoEntity> getPrestamos() {
         return prestamos;
@@ -64,11 +82,11 @@ public class UsuarioEntity extends BaseEntity implements Serializable {
         this.reservas = reservas;
     }
 
-    public List<Integer> getClave() {
+    public String getClave() {
         return clave;
     }
 
-    public void setClave(List<Integer> clave) {
+    public void setClave(String clave) {
         this.clave = clave;
     }
 
@@ -80,13 +98,7 @@ public class UsuarioEntity extends BaseEntity implements Serializable {
         this.direccion = direccion;
     }
 
-    public String getMedioDePago() {
-        return medioDePago;
-    }
-
-    public void setMedioDePago(String medioDePago) {
-        this.medioDePago = medioDePago;
-    }
+    
    
    
 

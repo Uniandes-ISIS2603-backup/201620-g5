@@ -5,6 +5,8 @@
  */
 package co.edu.uniandes.g5.bibliotecas.dtos;
 
+import co.edu.uniandes.g5.bibliotecas.entities.UsuarioEntity;
+
 /**
  *
  * @author js.prieto10
@@ -30,16 +32,38 @@ public class UsuarioDTO {
  
     }
     
-    public UsuarioDTO(String pNombre, String pApellido, String pLogin, Long pId, String pContrasenha, String pDireccion)
+    public UsuarioDTO(UsuarioEntity entity)
     {
-        this.nombre = pNombre;
-        this.apellido = pApellido;
-        this.login = pLogin;
-        this.id = pId;
-        this.contrasenha = pContrasenha;
-        this.direccion = pDireccion;       
+        if(entity != null)
+        {
+            this.id = entity.getId();
+            this.nombre = entity.getName();
+            this.apellido = entity.getApellido();
+            this.login = entity.getLogin();
+            this.contrasenha = entity.getClave();
+            this.direccion = entity.getDireccion();
+            
+                
+        }  
     }
-
+    
+    /**
+     * Convierte un objeto PrestamoDTO a PrestamoEntity.
+     *
+     * @return Nueva objeto PrestamoEntity.
+     * 
+     */
+    public UsuarioEntity toEntity() {
+        UsuarioEntity entity = new UsuarioEntity();
+        entity.setId(this.id);
+        entity.setName(this.nombre);
+        entity.setApellido(this.apellido);
+        entity.setLogin(this.login);
+        entity.setClave(this.contrasenha);
+        entity.setDireccion(this.direccion);
+        
+        return entity;
+    }
     public String getNombre() {
         return nombre;
     }

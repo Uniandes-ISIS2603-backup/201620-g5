@@ -14,7 +14,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author s.rojas19
  */
 @XmlRootElement
-public class LibroDTO {
+public class LibroDTO extends RecursoDTO{
 
     private Long id;
     private String name;

@@ -16,6 +16,10 @@ import uk.co.jemos.podam.common.PodamExclude;
 @Entity
 public abstract class RecursoEntity extends BaseEntity implements Serializable{
     
+    public static final int VIDEO = 1;
+    public static final int LIBRO = 2;
+    public static final int SALA = 3;
+    
     @PodamExclude
     @OneToMany(mappedBy = "recurso")
     private List<PrestamoEntity> prestamos = new ArrayList<>();
@@ -28,12 +32,20 @@ public abstract class RecursoEntity extends BaseEntity implements Serializable{
     @OneToMany(mappedBy = "recurso")
     private List<ReservaEntity> reservas = new ArrayList<>();
     
-    private int cantidadDisponible;
     
     @PodamExclude
     @ManyToOne
     private co.edu.uniandes.g5.bibliotecas.entities.BibliotecaEntity biblioteca;
    
+    private int tipoRecurso;
+
+    public int getTipoRecurso() {
+        return tipoRecurso;
+    }
+
+    public void setTipoRecurso(int tipoRecurso) {
+        this.tipoRecurso = tipoRecurso;
+    }
 
     /**
      * Obtiene el atributo biblioteca.
@@ -97,15 +109,5 @@ public abstract class RecursoEntity extends BaseEntity implements Serializable{
         this.reservas = reservas;
     }
     
-    
-    public int getCantidadDisponible()
-    {
-        return cantidadDisponible;
-    }
-    
-    public void setCantidadDisponible(int pCantidad)
-    {
-        this.cantidadDisponible = pCantidad;
-    }
     
 }

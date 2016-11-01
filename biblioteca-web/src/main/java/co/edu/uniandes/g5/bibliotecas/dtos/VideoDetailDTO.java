@@ -70,6 +70,8 @@ public class VideoDetailDTO extends VideoDTO {
         entity.setPrestamos(p);
         entity.setReservas(r);
         entity.setMultas(m);
+        
+        return entity;
     }
 
     public BiblioDTO getBiblioteca() {

@@ -2,6 +2,7 @@
 package co.edu.uniandes.g5.bibliotecas.dtos;
 
 import co.edu.uniandes.g5.bibliotecas.entities.LibroEntity;
+import co.edu.uniandes.g5.bibliotecas.entities.MultaEntity;
 import co.edu.uniandes.g5.bibliotecas.entities.PrestamoEntity;
 import co.edu.uniandes.g5.bibliotecas.entities.SalaEntity;
 import co.edu.uniandes.g5.bibliotecas.entities.VideoEntity;
@@ -13,13 +14,16 @@ import uk.co.jemos.podam.common.PodamExclude;
  * @author ce.gonzalez13
  */
 @XmlRootElement
-public class PrestamoDetailDTO extends PrestamoDTO {
+public class MultaDetailDTO extends MultaDTO {
 
     @PodamExclude
     private UsuarioDTO usuario;
     
      @PodamExclude
     private RecursoDTO recurso;
+     
+     @PodamExclude
+     private BiblioDTO biblioteca;
 
     public RecursoDTO getRecurso() {
         return recurso;
@@ -36,15 +40,13 @@ public class PrestamoDetailDTO extends PrestamoDTO {
     public void setBiblioteca(BiblioDTO biblioteca) {
         this.biblioteca = biblioteca;
     }
-     
-      @PodamExclude
-    private BiblioDTO biblioteca;
+
 
  
     /**
      *
      */
-    public PrestamoDetailDTO() {
+    public MultaDetailDTO() {
         super();
     }
 
@@ -56,7 +58,7 @@ public class PrestamoDetailDTO extends PrestamoDTO {
      * nuevo objeto.
      *
      */
-    public PrestamoDetailDTO(PrestamoEntity entity) {
+    public MultaDetailDTO(MultaEntity entity) {
         super(entity);
         if (entity.getUsuario() != null)
         {
@@ -94,8 +96,8 @@ public class PrestamoDetailDTO extends PrestamoDTO {
      *
      */
     @Override
-    public PrestamoEntity toEntity() {
-        PrestamoEntity entity = super.toEntity();
+    public MultaEntity toEntity() {
+        MultaEntity entity = super.toEntity();
         if (this.getUsuario()!= null) {
             entity.setUsuario(this.getUsuario().toEntity());
         }

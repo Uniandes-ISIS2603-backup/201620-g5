@@ -5,6 +5,7 @@
  */
 package co.edu.uniandes.g5.bibliotecas.dtos;
 
+import co.edu.uniandes.g5.bibliotecas.entities.MultaEntity;
 import java.util.Date;
 
 /**
@@ -15,9 +16,15 @@ import java.util.Date;
 public class MultaDTO {
 
     private Long id;
-    private Long idUsuario;
-    private Long idBiblioteca;
-    private Long idRecurso;
+    private String name;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
     private double costo;
     private Date fecha;
 
@@ -33,14 +40,28 @@ public class MultaDTO {
      * @param id identificador de la ciudad
      * @param name nombre de la ciudad
      */
-    public MultaDTO(Long id, Long idUsuario, Long idBiblioteca, Long idRecurso, double costo, Date fecha) {
-        super();
-        this.id = id;
-        this.idUsuario = idUsuario;
-        this.idBiblioteca = idBiblioteca;
-        this.idRecurso = idRecurso;
-        this.costo = costo;
-        this.fecha = fecha;
+    public MultaDTO(MultaEntity entity) {
+      
+        if(entity!= null)
+        {
+            this.id = entity.getId();
+            this.name = entity.getName();
+            this.costo = entity.getCosto();
+            this.fecha = entity.getFecha();
+        }
+        
+    }
+    
+    public MultaEntity toEntity()
+    {
+         MultaEntity entity = new MultaEntity();
+        entity.setId(this.id);
+        entity.setName(this.name);
+        entity.setCosto(this.costo);
+        entity.setFecha(this.fecha);
+        
+        return entity;
+        
     }
 
     /**
@@ -57,48 +78,7 @@ public class MultaDTO {
         this.id = id;
     }
 
-    /**
-     * @return the idUsuario
-     */
-    public Long getIdUsuario() {
-        return idUsuario;
-    }
-
-    /**
-     * @param idUsuario the idUsuario to set
-     */
-    public void setIdUsuario(Long idUsuario) {
-        this.idUsuario = idUsuario;
-    }
-
-    /**
-     * @return the idBiblioteca
-     */
-    public Long getIdBiblioteca() {
-        return idBiblioteca;
-    }
-
-    /**
-     * @param idBiblioteca the idBiblioteca to set
-     */
-    public void setIdBiblioteca(Long idBiblioteca) {
-        this.idBiblioteca = idBiblioteca;
-    }
-
-    /**
-     * @return the idRecurso
-     */
-    public Long getIdRecurso() {
-        return idRecurso;
-    }
-
-    /**
-     * @param idRecurso the idRecurso to set
-     */
-    public void setIdRecurso(Long idRecurso) {
-        this.idRecurso = idRecurso;
-    }
-
+   
     /**
      * @return the costo
      */
@@ -135,6 +115,6 @@ public class MultaDTO {
      */
     @Override
     public String toString() {
-    	return "{ id : " + getId() + ", idUsuario : \"" + getIdUsuario()+ ", idBiblioteca : \"" + getIdBiblioteca() + ", idRecurso : \"" + getIdRecurso() + ", costo : \"" + getCosto() + ", fecha : \"" + getFecha() + "\" }" ;  
+    	return "{ id : " + getId() +  ", costo : \"" + getCosto() + ", fecha : \"" + getFecha() + "\" }" ;  
     }
 }
