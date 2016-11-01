@@ -71,8 +71,8 @@ public class VideoResource {
     }
 
     public void existsVideo(Long videoId) {
-        VideoDetailDTO video = new VideoDetailDTO(videoLogic.getVideo(videoId));
-        if (video == null) {
+        VideoEntity entity = videoLogic.getVideo(videoId);
+        if (entity == null) {
             throw new WebApplicationException("El video no existe", 404);
         }
     }
