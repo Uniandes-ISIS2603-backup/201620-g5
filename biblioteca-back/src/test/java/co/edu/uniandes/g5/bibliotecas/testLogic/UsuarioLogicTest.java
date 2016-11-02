@@ -130,9 +130,6 @@ public class UsuarioLogicTest {
      */
     private void insertData() {
 
-        usuarioEntity = factory.manufacturePojo(UsuarioEntity.class);
-        usuarioEntity.setId(1L);
-        em.persist(usuarioEntity);
         bibliotecaEntity = factory.manufacturePojo(BibliotecaEntity.class);
         bibliotecaEntity.setId(1L);
         em.persist(bibliotecaEntity);

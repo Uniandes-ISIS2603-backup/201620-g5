@@ -1,15 +1,15 @@
 
 package co.edu.uniandes.g5.bibliotecas.testLogic;
 
-import co.edu.uniandes.g5.bibliotecas.ejbs.PrestamoLogic;
-import co.edu.uniandes.g5.bibliotecas.api.IPrestamoLogic;
-import co.edu.uniandes.g5.bibliotecas.ejbs.PrestamoLogic;
-import co.edu.uniandes.g5.bibliotecas.entities.PrestamoEntity;
-import co.edu.uniandes.g5.bibliotecas.persistence.PrestamoPersistence;
+import co.edu.uniandes.g5.bibliotecas.ejbs.MultaLogic;
+import co.edu.uniandes.g5.bibliotecas.api.IMultaLogic;
+import co.edu.uniandes.g5.bibliotecas.ejbs.MultaLogic;
+import co.edu.uniandes.g5.bibliotecas.entities.MultaEntity;
+import co.edu.uniandes.g5.bibliotecas.persistence.MultaPersistence;
 import co.edu.uniandes.g5.bibliotecas.entities.UsuarioEntity;
 import co.edu.uniandes.g5.bibliotecas.entities.BibliotecaEntity;
 import co.edu.uniandes.g5.bibliotecas.entities.LibroEntity;
-import co.edu.uniandes.g5.bibliotecas.entities.VideoEntity;
+import co.edu.uniandes.g5.bibliotecas.entities.BibliotecaEntity;
 import co.edu.uniandes.g5.bibliotecas.entities.SalaEntity;
 import co.edu.uniandes.g5.bibliotecas.exceptions.BibliotecaLogicException;
 import java.util.ArrayList;
@@ -36,7 +36,7 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
  *
  */
 @RunWith(Arquillian.class)
-public class PrestamoLogicTest {
+public class MultaLogicTest {
 
 
     UsuarioEntity usuarioEntity;
@@ -44,7 +44,8 @@ public class PrestamoLogicTest {
     BibliotecaEntity bibliotecaEntity;
 
     LibroEntity libroEntity;
-
+    
+    
 
     /**
      *
@@ -55,7 +56,7 @@ public class PrestamoLogicTest {
      *
      */
     @Inject
-    private IPrestamoLogic prestamoLogic;
+    private IMultaLogic multaLogic;
 
     /**
      *
@@ -72,8 +73,7 @@ public class PrestamoLogicTest {
     /**
      *
      */
-    private List<PrestamoEntity> prestamoData = new ArrayList<PrestamoEntity>();
-
+    private List<MultaEntity> multaData = new ArrayList<MultaEntity>();
 
 
 
@@ -83,14 +83,14 @@ public class PrestamoLogicTest {
     @Deployment
     public static JavaArchive createDeployment() {
         return ShrinkWrap.create(JavaArchive.class)
-                .addPackage(PrestamoEntity.class.getPackage())
-                .addPackage(PrestamoLogic.class.getPackage())
-                .addPackage(IPrestamoLogic.class.getPackage())
-                .addPackage(PrestamoPersistence.class.getPackage())
+                .addPackage(MultaEntity.class.getPackage())
+                .addPackage(MultaLogic.class.getPackage())
+                .addPackage(IMultaLogic.class.getPackage())
+                .addPackage(MultaPersistence.class.getPackage())
                 .addPackage(UsuarioEntity.class.getPackage())
                 .addPackage(BibliotecaEntity.class.getPackage())
                 .addPackage(SalaEntity.class.getPackage())
-                .addPackage(VideoEntity.class.getPackage())
+                .addPackage(BibliotecaEntity.class.getPackage())
                 .addPackage(LibroEntity.class.getPackage())
 
                 .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
@@ -126,7 +126,7 @@ public class PrestamoLogicTest {
      */
     private void clearData() {
 
-        em.createQuery("delete from PrestamoEntity").executeUpdate();
+        em.createQuery("delete from MultaEntity").executeUpdate();
         em.createQuery("delete from LibroEntity").executeUpdate();
         em.createQuery("delete from BibliotecaEntity").executeUpdate();
         em.createQuery("delete from UsuarioEntity").executeUpdate();
@@ -150,12 +150,12 @@ public class PrestamoLogicTest {
         libroEntity.setId(1L);
         em.persist(libroEntity);
         for (int i = 0; i < 3; i++) {
-            PrestamoEntity entity = factory.manufacturePojo(PrestamoEntity.class);
+            MultaEntity entity = factory.manufacturePojo(MultaEntity.class);
             entity.setBiblioteca(bibliotecaEntity);
             entity.setUsuario(usuarioEntity);
             entity.setRecurso(libroEntity);
             em.persist(entity);
-            prestamoData.add(entity);
+            multaData.add(entity);
 
             
         }
@@ -167,34 +167,34 @@ public class PrestamoLogicTest {
      *
      */
     @Test
-    public void createPrestamoTest1() throws BibliotecaLogicException{
-        PrestamoEntity newEntity = factory.manufacturePojo(PrestamoEntity.class);
+    public void createMultaTest1() throws BibliotecaLogicException{
+        MultaEntity newEntity = factory.manufacturePojo(MultaEntity.class);
         newEntity.setRecurso(libroEntity);
-        PrestamoEntity result = prestamoLogic.createPrestamo(newEntity);
+        MultaEntity result = multaLogic.createMulta(newEntity);
         Assert.assertNotNull(result);
-        PrestamoEntity entity = em.find(PrestamoEntity.class, result.getId());
+        MultaEntity entity = em.find(MultaEntity.class, result.getId());
         Assert.assertEquals(newEntity.getName(), entity.getName());
         Assert.assertEquals(newEntity.getId(), entity.getId());
     }
     /**
-     * Prueba para crear un Prestamo con un costo negativo.
+     * Prueba para crear un Multa con un costo negativo.
      */
     @Test(expected = BibliotecaLogicException.class)
-    public void createPrestamoTest2() throws BibliotecaLogicException {
-        PrestamoEntity prest = factory.manufacturePojo(PrestamoEntity.class);
+    public void createMultaTest2() throws BibliotecaLogicException {
+        MultaEntity prest = factory.manufacturePojo(MultaEntity.class);
         prest.setBiblioteca(bibliotecaEntity);
         prest.setRecurso(libroEntity);
         prest.setUsuario(usuarioEntity);
         prest.setCosto(-2.0);
-        PrestamoEntity result = prestamoLogic.createPrestamo(prest);
+        MultaEntity result = multaLogic.createMulta(prest);
     }
     /**
-     * Prueba para crear un Prestamo con un recurso con 0 unidades disponibles.
+     * Prueba para crear un Multa con un recurso con 0 unidades disponibles.
      * @throws co.edu.uniandes.g5.bibliotecas.exceptions.BibliotecaLogicException
      */
     @Test(expected = BibliotecaLogicException.class)
-    public void createPrestamoTest3() throws BibliotecaLogicException {
-        PrestamoEntity prest = factory.manufacturePojo(PrestamoEntity.class);
+    public void createMultaTest3() throws BibliotecaLogicException {
+        MultaEntity prest = factory.manufacturePojo(MultaEntity.class);
         prest.setBiblioteca(bibliotecaEntity);
         libroEntity.setTipoRecurso(LibroEntity.LIBRO);
         libroEntity.setEjemplaresDisponibles(0);
@@ -202,7 +202,7 @@ public class PrestamoLogicTest {
         prest.setUsuario(usuarioEntity);
 
 
-        PrestamoEntity result = prestamoLogic.createPrestamo(prest);
+        MultaEntity result = multaLogic.createMulta(prest);
     }
    
     /**
@@ -211,12 +211,12 @@ public class PrestamoLogicTest {
      *
      */
     @Test
-    public void getPrestamosTest() {
-        List<PrestamoEntity> list = prestamoLogic.getPrestamos();
-        Assert.assertEquals(prestamoData.size(), list.size());
-        for (PrestamoEntity entity : list) {
+    public void getMultasTest() {
+        List<MultaEntity> list = multaLogic.getMultas();
+        Assert.assertEquals(multaData.size(), list.size());
+        for (MultaEntity entity : list) {
             boolean found = false;
-            for (PrestamoEntity storedEntity : prestamoData) {
+            for (MultaEntity storedEntity : multaData) {
                 if (entity.getId().equals(storedEntity.getId())) {
                     found = true;
                 }
@@ -226,29 +226,29 @@ public class PrestamoLogicTest {
     }
 
     /**
-     * Prueba para consultar un prestamo
+     * Prueba para consultar un multa
      *
      *
      */
     @Test
-    public void getPrestamoTest() {
-        PrestamoEntity entity = prestamoData.get(0);
-        PrestamoEntity resultEntity = prestamoLogic.getPrestamo(entity.getId());
+    public void getMultaTest() {
+        MultaEntity entity = multaData.get(0);
+        MultaEntity resultEntity = multaLogic.getMulta(entity.getId());
         Assert.assertNotNull(resultEntity);
         Assert.assertEquals(entity.getName(), resultEntity.getName());
         Assert.assertEquals(entity.getId(), resultEntity.getId());
     }
 
     /**
-     * Prueba para eliminar un prestamo
+     * Prueba para eliminar un multa
      *
      *
      */
     @Test
-    public void deletePrestamoTest() throws BibliotecaLogicException, Exception {
-        PrestamoEntity entity = prestamoData.get(1);
-        prestamoLogic.deletePrestamo(entity.getId());
-        PrestamoEntity deleted = em.find(PrestamoEntity.class, entity.getId());
+    public void deleteMultaTest() throws BibliotecaLogicException, Exception {
+        MultaEntity entity = multaData.get(1);
+        multaLogic.deleteMulta(entity.getId());
+        MultaEntity deleted = em.find(MultaEntity.class, entity.getId());
         Assert.assertNull(deleted);
     }
 
@@ -259,17 +259,17 @@ public class PrestamoLogicTest {
      */
     @Test
     public void updateReservaTest() throws BibliotecaLogicException {
-        PrestamoEntity entity = prestamoData.get(0);
-        PrestamoEntity pojoEntity = factory.manufacturePojo(PrestamoEntity.class);
+        MultaEntity entity = multaData.get(0);
+        MultaEntity pojoEntity = factory.manufacturePojo(MultaEntity.class);
 
         pojoEntity.setId(entity.getId());
         pojoEntity.setRecurso(libroEntity);
         pojoEntity.setBiblioteca(bibliotecaEntity);
         pojoEntity.setUsuario(usuarioEntity);
 
-        prestamoLogic.updatePrestamo(pojoEntity);
+        multaLogic.updateMulta(pojoEntity);
 
-        PrestamoEntity resp = em.find(PrestamoEntity.class, entity.getId());
+        MultaEntity resp = em.find(MultaEntity.class, entity.getId());
 
         Assert.assertEquals(pojoEntity.getName(), resp.getName());
         Assert.assertEquals(pojoEntity.getId(), resp.getId());

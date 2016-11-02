@@ -6,6 +6,7 @@
 package co.edu.uniandes.g5.bibliotecas.dtos;
 
 import co.edu.uniandes.g5.bibliotecas.entities.BibliotecaEntity;
+import co.edu.uniandes.g5.bibliotecas.entities.BlogEntity;
 import co.edu.uniandes.g5.bibliotecas.entities.LibroEntity;
 import co.edu.uniandes.g5.bibliotecas.entities.MultaEntity;
 import co.edu.uniandes.g5.bibliotecas.entities.PrestamoEntity;
@@ -17,6 +18,7 @@ import co.edu.uniandes.g5.bibliotecas.entities.VideoEntity;
 import java.util.ArrayList;
 import java.util.List;
 import javax.xml.bind.annotation.XmlRootElement;
+import uk.co.jemos.podam.common.PodamExclude;
 
 /**
  *
@@ -32,6 +34,28 @@ public class UsuarioDetailDTO extends UsuarioDTO{
     private List<MultaDTO> multas = new ArrayList<>();
     
     private List<ReservaDTO> reservas = new ArrayList<>();
+    
+    @PodamExclude
+    private BiblioDTO biblioteca;
+    
+    @PodamExclude
+    private List<BlogDTO> blogs = new ArrayList<>();
+
+    public List<BlogDTO> getBlogs() {
+        return blogs;
+    }
+
+    public void setBlogs(List<BlogDTO> blogs) {
+        this.blogs = blogs;
+    }
+
+    public BiblioDTO getBiblioteca() {
+        return biblioteca;
+    }
+
+    public void setBiblioteca(BiblioDTO biblioteca) {
+        this.biblioteca = biblioteca;
+    }
 
     public UsuarioDetailDTO() {
         super();
@@ -51,7 +75,7 @@ public class UsuarioDetailDTO extends UsuarioDTO{
         List<PrestamoEntity> prestamosList = entity.getPrestamos();
         List<MultaEntity> multasList = entity.getMultas();
         List<ReservaEntity> reservasList = entity.getReservas();
-        
+        List<BlogEntity> blogsList = entity.getBlogs();
         
         for (PrestamoEntity dept : prestamosList) {
             this.prestamos.add(new PrestamoDTO(dept));
@@ -61,6 +85,13 @@ public class UsuarioDetailDTO extends UsuarioDTO{
         }
         for (ReservaEntity dept : reservasList) {
             this.reservas.add(new ReservaDTO(dept));
+        }
+        for (BlogEntity dept : blogsList) {
+            this.blogs.add(new BlogDTO(dept));
+        }
+        if(entity.getBiblioteca() != null)
+        {
+            this.biblioteca = new BiblioDTO(entity.getBiblioteca());
         }
     }
 
@@ -78,6 +109,7 @@ public class UsuarioDetailDTO extends UsuarioDTO{
          List<PrestamoDTO> prestamos = this.getPrestamos();
          List<MultaDTO> multas = this.getMultas();
          List<ReservaDTO> reservas = this.getReservas();
+         List<BlogDTO> blogs = this.getBlogs();
         for (PrestamoDTO dept : this.getPrestamos()) {         
             entity.getPrestamos().add(dept.toEntity());
         }
@@ -86,6 +118,12 @@ public class UsuarioDetailDTO extends UsuarioDTO{
         }
         for (ReservaDTO dept : this.getReservas()) {         
             entity.getReservas().add(dept.toEntity());
+        }
+        for (BlogDTO dept : this.getBlogs()) {         
+            entity.getBlogs().add(dept.toEntity());
+        }
+        if (getBiblioteca()!= null) {
+            entity.setBiblioteca(this.getBiblioteca().toEntity());
         }
         return entity;
     }
