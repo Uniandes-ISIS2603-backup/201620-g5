@@ -38,17 +38,9 @@ public class UsuarioEntity extends BaseEntity implements Serializable {
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<BlogEntity> blogs = new ArrayList<>();
     
-    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<PrestamoEntity> historialPrestamos = new ArrayList<>();
+   
 
-    public List<PrestamoEntity> getHistorialPrestamos() {
-        return historialPrestamos;
-    }
-
-    public void setHistorialPrestamos(List<PrestamoEntity> historial) {
-        this.historialPrestamos = historial;
-    }
-    
+  
     @PodamExclude
     @ManyToOne
     private co.edu.uniandes.g5.bibliotecas.entities.BibliotecaEntity   biblioteca;

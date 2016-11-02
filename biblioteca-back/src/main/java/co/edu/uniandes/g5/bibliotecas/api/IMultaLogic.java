@@ -30,9 +30,9 @@ import java.util.List;
 public interface IMultaLogic {
     public List<MultaEntity> getMultas();
     public MultaEntity getMulta(Long id);
-    public List<MultaEntity> getMultasByUsuario(Long idBiblioteca, Long idUsuario);
-    public List<MultaEntity> getMultasByRecurso(Long idBiblioteca, Long idRecurso);
-    public List<MultaEntity> getMultasByBiblioteca(Long idBiblioteca);
+    public List<MultaEntity> getMultasByUsuario(Long idUsuario);
+    public List<MultaEntity> getMultasByRecurso(Long idUsuario, Long idRecurso);
+    public List<MultaEntity> getMultasByBiblioteca(Long idUsuario, Long idBiblioteca);
     
     public MultaEntity createMulta(MultaEntity multa) throws BibliotecaLogicException; 
     public MultaEntity updateMulta(MultaEntity multa) throws BibliotecaLogicException;

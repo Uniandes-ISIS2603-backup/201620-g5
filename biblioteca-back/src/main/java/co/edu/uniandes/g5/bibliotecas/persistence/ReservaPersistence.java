@@ -50,7 +50,7 @@ public class ReservaPersistence {
         return q.getResultList();
     }
      
-      public List<ReservaEntity> getReservasByRecurso(Long idBiblioteca, Long recursoId) {
+      public List<ReservaEntity> getReservasByRecurso(Long bibliotecaId, Long recursoId) {
         LOGGER.log(Level.INFO, "Consultando todas las reservas del recurso con id={0}", recursoId);
         TypedQuery q = em.createQuery("select d from ReservaEntity d  where d.recurso.id = :recursoId and d.biblioteca.id = :bibliotecaId", PrestamoEntity.class);
         q = q.setParameter("recursoId", recursoId);

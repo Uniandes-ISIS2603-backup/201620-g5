@@ -36,12 +36,12 @@ public class MultaLogic implements IMultaLogic {
     }
     
     @Override
-    public List<MultaEntity> getMultasByBiblioteca(Long idBiblioteca) {
-        return persistence.getMultasByBiblioteca(idBiblioteca);
+    public List<MultaEntity> getMultasByBiblioteca(Long idUsuario, Long idBiblioteca) {
+        return persistence.getMultasByBiblioteca(idUsuario, idBiblioteca);
     }
     @Override
-    public List<MultaEntity> getMultasByUsuario(Long idBiblioteca, Long idUsuario) {
-        return persistence.getMultasByUsuario(idBiblioteca,idUsuario);
+    public List<MultaEntity> getMultasByUsuario( Long idUsuario) {
+        return persistence.getMultasByUsuario(idUsuario);
     }
  
     /**
@@ -51,8 +51,8 @@ public class MultaLogic implements IMultaLogic {
      * @return
      */
     @Override
-    public List<MultaEntity> getMultasByRecurso(Long idBiblioteca, Long idRecurso) {
-        return persistence.getMultasByRecurso(idBiblioteca, idRecurso);
+    public List<MultaEntity> getMultasByRecurso(Long idUsuario, Long idRecurso) {
+        return persistence.getMultasByRecurso(idUsuario, idRecurso);
     }
 
     

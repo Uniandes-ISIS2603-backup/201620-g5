@@ -21,10 +21,11 @@ import uk.co.jemos.podam.common.PodamExclude;
 @Entity
 public class BibliotecaEntity extends BaseEntity implements Serializable {
 
-    
+    @PodamExclude
     @OneToMany(mappedBy = "biblioteca", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<SalaEntity> salas = new ArrayList<>();
     
+    @PodamExclude
     @OneToMany(mappedBy = "biblioteca")
     private List<RecursoEntity> recursos = new ArrayList<>();
     
