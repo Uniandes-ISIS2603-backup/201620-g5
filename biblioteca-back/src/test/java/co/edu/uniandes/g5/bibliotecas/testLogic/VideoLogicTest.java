@@ -32,6 +32,8 @@ import co.edu.uniandes.g5.bibliotecas.persistence.BibliotecaPersistence;
 import co.edu.uniandes.g5.bibliotecas.persistence.VideoPersistence;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -86,11 +88,6 @@ public class VideoLogicTest {
      *
      */
     private List<VideoEntity> videoData = new ArrayList<VideoEntity>();
-
-    /**
-     *
-     */
-    private List<BibliotecaEntity> bibliotecaData = new ArrayList<>();
 
     /**
      *
@@ -153,6 +150,7 @@ public class VideoLogicTest {
         for (int i = 0; i < 3; i++) {
             VideoEntity entity = factory.manufacturePojo(VideoEntity.class);
             entity.setBiblioteca(fatherEntity);
+            entity.setNumEjemplares(Math.abs(entity.getNumEjemplares()));
             entity.setEjemplaresDisponibles(entity.getNumEjemplares());
             em.persist(entity);
             videoData.add(entity);
@@ -165,47 +163,88 @@ public class VideoLogicTest {
      *
      */
     @Test
-    public void testCreateVideo1() throws BibliotecaLogicException {
-        VideoEntity newEntity = factory.manufacturePojo(VideoEntity.class);
-        VideoEntity result = videoLogic.createVideo(newEntity);
-        Assert.assertNotNull(result);
-        VideoEntity entity = em.find(VideoEntity.class, result.getId());
-        Assert.assertEquals(newEntity.getName(), entity.getName());
-        Assert.assertEquals(newEntity.getId(), entity.getId());
+    public void testCreateVideo1() {
+        try {
+            VideoEntity newEntity = factory.manufacturePojo(VideoEntity.class);
+            newEntity.setBiblioteca(fatherEntity);
+            newEntity.setNumEjemplares(Math.abs(newEntity.getNumEjemplares()));
+            newEntity.setEjemplaresDisponibles(newEntity.getNumEjemplares());
+            VideoEntity result = videoLogic.createVideo(newEntity);
+            Assert.assertNotNull(result);
+            VideoEntity entity = em.find(VideoEntity.class, result.getId());
+            Assert.assertEquals(newEntity.getName(), entity.getName());
+            Assert.assertEquals(newEntity.getId(), entity.getId());
+        } catch (BibliotecaLogicException ex) {
+            Assert.fail("No deberia fallar");
+        }
     }
 
     /**
-     * Prueba para crear un video con una biblioteca que no existe
+     * Prueba para crear un video con un id que ya existe
      */
-    @Test(expected = BibliotecaLogicException.class)
-    public void testCreateVideo2() throws Exception {
-        VideoEntity entity = factory.manufacturePojo(VideoEntity.class);
-        BibliotecaEntity noExiste = factory.manufacturePojo(BibliotecaEntity.class);
-        entity.setBiblioteca(noExiste);
-        VideoEntity result = videoLogic.createVideo(entity);
+    @Test
+    public void testCreateVideo2() {
+        try {
+            VideoEntity entity = factory.manufacturePojo(VideoEntity.class);
+            entity.setBiblioteca(fatherEntity);
+            entity.setNumEjemplares(Math.abs(entity.getNumEjemplares()));
+            entity.setEjemplaresDisponibles(entity.getNumEjemplares());
+            entity.setId(videoData.get(0).getId());
+            VideoEntity result = videoLogic.createVideo(entity);
+            Assert.fail("Deberia fallar");
+        } catch (BibliotecaLogicException ex) {
+            Assert.assertEquals("Ya existe un video con el mismo id", ex.getMessage());
+        }
     }
 
     /**
-     * Prueba para crear un video con un nombre que ya existe
+     * Prueba para crear un video que tiene un numero de unidades disponibles
+     * negativo
      */
-    @Test(expected = BibliotecaLogicException.class)
-    public void testCreateVideo3() throws Exception {
-        VideoEntity entity = factory.manufacturePojo(VideoEntity.class);
-        entity.setBiblioteca(fatherEntity);
-        entity.setName(videoData.get(0).getName());
-        VideoEntity result = videoLogic.createVideo(entity);
+    @Test
+    public void testCreateVideo3() {
+        try {
+            VideoEntity entity = factory.manufacturePojo(VideoEntity.class);
+            entity.setBiblioteca(fatherEntity);
+            entity.setNumEjemplares(-1);
+            entity.setEjemplaresDisponibles(-1);
+            VideoEntity result = videoLogic.createVideo(entity);
+            Assert.fail("Deberia fallar");
+        } catch (BibliotecaLogicException ex) {
+            Assert.assertEquals("Un video no puede tener un numero negativo de ejemplares", ex.getMessage());
+        }
     }
 
     /**
      * Prueba para crear un video que tiene mas unidades disponibles que su
      * cantidad total
      */
-    @Test(expected = BibliotecaLogicException.class)
-    public void testCreateVideo4() throws Exception {
-        VideoEntity entity = factory.manufacturePojo(VideoEntity.class);
-        entity.setBiblioteca(fatherEntity);
-        entity.setEjemplaresDisponibles(entity.getNumEjemplares() + 1);
-        VideoEntity result = videoLogic.createVideo(entity);
+    @Test
+    public void testCreateVideo4() {
+        try {
+            VideoEntity entity = factory.manufacturePojo(VideoEntity.class);
+            entity.setBiblioteca(fatherEntity);
+            entity.setNumEjemplares(Math.abs(entity.getNumEjemplares()));
+            entity.setEjemplaresDisponibles(entity.getNumEjemplares() + 1);
+            VideoEntity result = videoLogic.createVideo(entity);
+            Assert.fail("Deberia fallar");
+        } catch (BibliotecaLogicException ex) {
+            Assert.assertEquals("Un video no puede tener mas ejemplares disponibles que su cantidad total", ex.getMessage());
+        }
+    }
+
+    @Test
+    public void testCreateVideo5() {
+        try {
+            VideoEntity entity = factory.manufacturePojo(VideoEntity.class);
+            entity.setBiblioteca(factory.manufacturePojo(BibliotecaEntity.class));
+            entity.setNumEjemplares(Math.abs(entity.getNumEjemplares()));
+            entity.setEjemplaresDisponibles(entity.getNumEjemplares() + 1);
+            VideoEntity result = videoLogic.createVideo(entity);
+            Assert.fail("Deberia fallar");
+        } catch (BibliotecaLogicException ex) {
+            Assert.assertEquals("No existe la biblioteca", ex.getMessage());
+        }
     }
 
     /**
@@ -261,40 +300,56 @@ public class VideoLogicTest {
      *
      */
     @Test
-    public void testUpdateVideo1() throws BibliotecaLogicException {
-        VideoEntity entity = videoData.get(0);
-        VideoEntity pojoEntity = factory.manufacturePojo(VideoEntity.class);
-
-        pojoEntity.setId(entity.getId());
-
-        videoLogic.updateVideo(pojoEntity);
-
-        VideoEntity resp = em.find(VideoEntity.class, entity.getId());
-
-        Assert.assertEquals(pojoEntity.getName(), resp.getName());
-        Assert.assertEquals(pojoEntity.getId(), resp.getId());
+    public void testUpdateVideo1() {
+        try {
+            VideoEntity entity = videoData.get(0);
+            VideoEntity pojoEntity = factory.manufacturePojo(VideoEntity.class);
+            pojoEntity.setId(entity.getId());
+            pojoEntity.setBiblioteca(fatherEntity);
+            pojoEntity.setNumEjemplares(Math.abs(pojoEntity.getNumEjemplares()));
+            pojoEntity.setEjemplaresDisponibles(pojoEntity.getNumEjemplares());
+            videoLogic.updateVideo(pojoEntity);
+            VideoEntity resp = em.find(VideoEntity.class, entity.getId());
+            Assert.assertEquals(pojoEntity.getName(), resp.getName());
+            Assert.assertEquals(pojoEntity.getId(), resp.getId());
+        } catch (BibliotecaLogicException ex) {
+            Assert.fail("No deberia fallar");
+        }
     }
 
-    @Test(expected = BibliotecaLogicException.class)
-    public void testUpdateVideo2() throws BibliotecaLogicException {
-        VideoEntity entity = videoData.get(0);
-        VideoEntity pojoEntity = factory.manufacturePojo(VideoEntity.class);
-        BibliotecaEntity noExiste = factory.manufacturePojo(BibliotecaEntity.class);
-        pojoEntity.setBiblioteca(noExiste);
-        pojoEntity.setId(entity.getId());
-
-        VideoEntity resp = videoLogic.updateVideo(pojoEntity);
+    @Test
+    public void testUpdateVideo2() {
+        try {
+            VideoEntity entity = videoData.get(0);
+            VideoEntity pojoEntity = factory.manufacturePojo(VideoEntity.class);
+            pojoEntity.setNumEjemplares(-1);
+            entity.setEjemplaresDisponibles(-1);
+            pojoEntity.setId(entity.getId());
+            pojoEntity.setBiblioteca(fatherEntity);
+            VideoEntity resp = videoLogic.updateVideo(pojoEntity);
+            Assert.fail("Deberia fallar");
+        } catch (BibliotecaLogicException ex) {
+            Assert.assertEquals("Un video no puede tener un numero negativo de ejemplares", ex.getMessage());
+        }
+    }
+    
+    @Test
+    public void testUpdateVideo3() {
+        try {
+            VideoEntity entity = videoData.get(0);
+            VideoEntity pojoEntity = factory.manufacturePojo(VideoEntity.class);
+            pojoEntity.setNumEjemplares(Math.abs(pojoEntity.getNumEjemplares()));
+            entity.setEjemplaresDisponibles(entity.getNumEjemplares() + 1);
+            pojoEntity.setId(entity.getId());
+            pojoEntity.setBiblioteca(fatherEntity);
+            VideoEntity resp = videoLogic.updateVideo(pojoEntity);
+            Assert.fail("Deberia fallar");
+        } catch (BibliotecaLogicException ex) {
+            Assert.assertEquals("Un video no puede tener mas ejemplares disponibles que su cantidad total", ex.getMessage());
+        }
     }
 
-    @Test(expected = BibliotecaLogicException.class)
-    public void testUpdateVideo3() throws BibliotecaLogicException {
-        VideoEntity entity = videoData.get(0);
-        VideoEntity pojoEntity = factory.manufacturePojo(VideoEntity.class);
-        entity.setEjemplaresDisponibles(entity.getNumEjemplares() + 1);
-        pojoEntity.setId(entity.getId());
-        VideoEntity resp = videoLogic.updateVideo(pojoEntity);
-    }
-
+    
     /**
      * Test of getVideos method, of class VideoLogic.
      */

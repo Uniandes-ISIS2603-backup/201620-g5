@@ -40,25 +40,27 @@ public class VideoLogic implements IVideoLogic {
 
     @Override
     public VideoEntity createVideo(VideoEntity entity) throws BibliotecaLogicException {
-        VideoEntity alreadyExists = getVideoByName(entity.getName(), entity.getBiblioteca().getId());
-        BibliotecaEntity bibliotecaExiste = bibliotecaPersistence.find(entity.getBiblioteca().getId());
-        if (bibliotecaExiste == null) {
-            throw new BibliotecaLogicException("La biblioteca a la que el video pertenece no existe");
+        VideoEntity alreadyExists = getVideo(entity.getId());
+        BibliotecaEntity noExiste = bibliotecaPersistence.find(entity.getBiblioteca().getId());
+        if (noExiste == null) {
+            throw new BibliotecaLogicException("No existe la biblioteca");
         } else if (alreadyExists != null) {
-            throw new BibliotecaLogicException("Ya existe un video con el mismo nombre en la misma biblioteca");
+            throw new BibliotecaLogicException("Ya existe un video con el mismo id");
+        } else if (entity.getEjemplaresDisponibles() < 0 || entity.getNumEjemplares() < 0) {
+            throw new BibliotecaLogicException("Un video no puede tener un numero negativo de ejemplares");
         } else if (entity.getNumEjemplares() < entity.getEjemplaresDisponibles()) {
             throw new BibliotecaLogicException("Un video no puede tener mas ejemplares disponibles que su cantidad total");
-        } else {
-            persistence.create(entity);
         }
-        return entity;
+        return persistence.create(entity);
     }
 
     @Override
     public VideoEntity updateVideo(VideoEntity entity) throws BibliotecaLogicException {
-        BibliotecaEntity bibliotecaExiste = bibliotecaPersistence.find(entity.getBiblioteca().getId());
-        if (bibliotecaExiste == null) {
-            throw new BibliotecaLogicException("La biblioteca a la que el video pertenece no existe");
+        BibliotecaEntity noExiste = bibliotecaPersistence.find(entity.getBiblioteca().getId());
+        if (noExiste == null) {
+            throw new BibliotecaLogicException("No existe la biblioteca");
+        } else if (entity.getEjemplaresDisponibles() < 0 || entity.getNumEjemplares() < 0) {
+            throw new BibliotecaLogicException("Un video no puede tener un numero negativo de ejemplares");
         } else if (entity.getNumEjemplares() < entity.getEjemplaresDisponibles()) {
             throw new BibliotecaLogicException("Un video no puede tener mas ejemplares disponibles que su cantidad total");
         } else {
