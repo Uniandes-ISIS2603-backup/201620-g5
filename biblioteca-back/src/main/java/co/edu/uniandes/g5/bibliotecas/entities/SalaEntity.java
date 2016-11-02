@@ -11,12 +11,6 @@ package co.edu.uniandes.g5.bibliotecas.entities;
  */
 import java.io.Serializable;
 import javax.persistence.Entity;
-import java.util.ArrayList;
-import java.util.List;
-import javax.persistence.CascadeType;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import uk.co.jemos.podam.common.PodamExclude;
 
 @Entity
 public class SalaEntity extends RecursoEntity implements Serializable {

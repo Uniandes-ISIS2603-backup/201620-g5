@@ -37,7 +37,7 @@ public class PrestamoPersistence {
     public List<PrestamoEntity> getPrestamosByUsuario(Long bibliotecaId, Long usuarioId) {
         LOGGER.log(Level.INFO, "Consultando todos los prestamos con usuario = {0}", usuarioId);
         TypedQuery<PrestamoEntity> q
-                = em.createQuery("select u from PrestamoEntity u where u.usuario.id = :usuarioId and d.biblioteca.id = :bibliotecaId", PrestamoEntity.class);
+                = em.createQuery("select d from PrestamoEntity d where d.usuario.id = :usuarioId and d.biblioteca.id = :bibliotecaId", PrestamoEntity.class);
         q = q.setParameter("usuarioId", usuarioId); 
         q = q.setParameter("bibliotecaId", bibliotecaId);
         return q.getResultList();

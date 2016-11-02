@@ -35,11 +35,12 @@ public class ReservaPersistence {
         return em.find(ReservaEntity.class, id);
     }
 
-    public List<ReservaEntity> getReservasByUsuario(Long idBiblioteca, Long usuarioId) {
+    public List<ReservaEntity> getReservasByUsuario(Long bibliotecaId, Long usuarioId) {
         LOGGER.log(Level.INFO, "Consultando todas las reservas con usuario = {0}", usuarioId);
         TypedQuery<ReservaEntity> q
-                = em.createQuery("select u from ReservaEntity u where u.usuario.id = :usuarioId and d.biblioteca.id = :bibliotecaId", ReservaEntity.class);
+                = em.createQuery("select u from ReservaEntity u where u.usuario.id = :usuarioId and u.biblioteca.id = :bibliotecaId", ReservaEntity.class);
         q = q.setParameter("usuarioId", usuarioId); 
+        q = q.setParameter("bibliotecaId", bibliotecaId); 
         return q.getResultList();
     }
     
@@ -54,6 +55,7 @@ public class ReservaPersistence {
         LOGGER.log(Level.INFO, "Consultando todas las reservas del recurso con id={0}", recursoId);
         TypedQuery q = em.createQuery("select d from ReservaEntity d  where d.recurso.id = :recursoId and d.biblioteca.id = :bibliotecaId", PrestamoEntity.class);
         q = q.setParameter("recursoId", recursoId);
+        q = q.setParameter("bibliotecaId", bibliotecaId);
         return q.getResultList();
     }
       

@@ -40,6 +40,7 @@ public class SalaPersistenceTest {
         return ShrinkWrap.create(JavaArchive.class)
                 .addPackage(SalaEntity.class.getPackage())
                 .addPackage(SalaPersistence.class.getPackage())
+                .addPackage(BibliotecaEntity.class.getPackage())
                 .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
                 .addAsManifestResource("META-INF/beans.xml", "beans.xml");
     }
@@ -95,6 +96,7 @@ public class SalaPersistenceTest {
         PodamFactory factory = new PodamFactoryImpl();
         bibliotecaEntity = factory.manufacturePojo(BibliotecaEntity.class);
         bibliotecaEntity.setId(1L);
+        em.persist(bibliotecaEntity);
         for (int i = 0; i < 3; i++) {
             SalaEntity entity = factory.manufacturePojo(SalaEntity.class);
             entity.setBiblioteca(bibliotecaEntity);
@@ -137,7 +139,7 @@ public class SalaPersistenceTest {
     @Test
     public void testFindAllInBiblioteca() throws Exception {
         List<SalaEntity> list = salaPersistence.findAllInBiblioteca(bibliotecaEntity.getId());
-        Assert.assertEquals(0, list.size());
+        Assert.assertEquals(tuplas.size(), list.size());
         for (SalaEntity ent : list) {
             boolean found = false;
             for (SalaEntity entity : tuplas) {
