@@ -209,7 +209,7 @@ public class MultaPersistenceTest {
      */
     @Test
     public void testGetMultasByUsuario() throws Exception {
-        List<MultaEntity> list = multaPersistence.getByUsuario(usuarioEntity.getId());
+        List<MultaEntity> list = multaPersistence.getMultasByUsuario(bibliotecaEntity.getId(), usuarioEntity.getId());
         Assert.assertEquals(data.size(), list.size());
         for (MultaEntity ent : list) {
             boolean found = false;
@@ -251,7 +251,7 @@ public class MultaPersistenceTest {
     @Test
     public void testGetMultasByRecurso() throws Exception {
          
-       List<MultaEntity> list = multaPersistence.getMultasByRecurso(libroEntity.getId());
+       List<MultaEntity> list = multaPersistence.getMultasByRecurso(bibliotecaEntity.getId(), libroEntity.getId());
         Assert.assertEquals(data.size(), list.size());
         for (MultaEntity ent : list) {
             boolean found = false;

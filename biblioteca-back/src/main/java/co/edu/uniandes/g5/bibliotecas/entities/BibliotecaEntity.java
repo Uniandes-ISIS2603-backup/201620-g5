@@ -24,7 +24,6 @@ public class BibliotecaEntity extends BaseEntity implements Serializable {
     
     @OneToMany(mappedBy = "biblioteca", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<SalaEntity> salas = new ArrayList<>();
-     
     
     @OneToMany(mappedBy = "biblioteca")
     private List<RecursoEntity> recursos = new ArrayList<>();
@@ -34,6 +33,17 @@ public class BibliotecaEntity extends BaseEntity implements Serializable {
     @OneToMany(mappedBy = "biblioteca")
     private List<PrestamoEntity> prestamos = new ArrayList<>();
 
+    @PodamExclude
+    @OneToMany(mappedBy = "biblioteca")
+    private List<UsuarioEntity> usuarios = new ArrayList<>();
+
+    public List<UsuarioEntity> getUsuarios() {
+        return usuarios;
+    }
+
+    public void setUsuarios(List<UsuarioEntity> usuarios) {
+        this.usuarios = usuarios;
+    }
    
   
     

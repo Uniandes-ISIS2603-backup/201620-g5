@@ -36,10 +36,10 @@ public class MultaPersistence {
         return em.find(MultaEntity.class, id);
     }
 
-    public List<MultaEntity> getByUsuario(Long usuario) {
+    public List<MultaEntity> getMultasByUsuario(Long biblioteca, Long usuario) {
         LOGGER.log(Level.INFO, "Consultando la multa con el id  de usuario = {0}", usuario );
         TypedQuery<MultaEntity> q
-                = em.createQuery("select u from MultaEntity u where u.usuario.id = :idUsuario", MultaEntity.class);
+                = em.createQuery("select u from MultaEntity u where u.usuario.id = :idUsuario and d.biblioteca.id = :bibliotecaId", MultaEntity.class);
         q = q.setParameter("idUsuario", usuario); 
         return q.getResultList();
     }
@@ -52,10 +52,10 @@ public class MultaPersistence {
         return q.getResultList();
     }
     
-    public List<MultaEntity> getMultasByRecurso(Long recurso) {
+    public List<MultaEntity> getMultasByRecurso(Long biblioteca, Long recurso) {
         LOGGER.log(Level.INFO, "Consultando la multa con el id  de usuario = {0}", recurso);
         TypedQuery<MultaEntity> q
-                = em.createQuery("select u from MultaEntity u where u.recurso.id = :idRecurso", MultaEntity.class);
+                = em.createQuery("select u from MultaEntity u where u.recurso.id = :idRecurso and d.biblioteca.id = :bibliotecaId", MultaEntity.class);
         q = q.setParameter("idRecurso", recurso); 
         return q.getResultList();
     }

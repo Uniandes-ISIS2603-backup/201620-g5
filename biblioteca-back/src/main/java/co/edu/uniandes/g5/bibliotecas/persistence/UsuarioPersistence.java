@@ -40,6 +40,14 @@ public class UsuarioPersistence {
         q = q.setParameter("name", name); 
         return q.getSingleResult();
     }
+    
+     public List<UsuarioEntity> getUsuariosByBiblioteca(Long bibliotecaId) {
+        LOGGER.log(Level.INFO, "Consultando todos los usuarios de la biblioteca con id ={0}", bibliotecaId);
+        TypedQuery q = em.createQuery("select d from UsuarioEntity d  where d.biblioteca.id = :bibliotecaId", UsuarioEntity.class);
+        q = q.setParameter("bibliotecaId", bibliotecaId);
+        return q.getResultList();
+    }
+
 
     public List<UsuarioEntity> getUsuarios() {
         LOGGER.info("Consultando todos los usuarios");
