@@ -323,7 +323,7 @@ public class VideoLogicTest {
             VideoEntity entity = videoData.get(0);
             VideoEntity pojoEntity = factory.manufacturePojo(VideoEntity.class);
             pojoEntity.setNumEjemplares(-1);
-            entity.setEjemplaresDisponibles(-1);
+            pojoEntity.setEjemplaresDisponibles(-1);
             pojoEntity.setId(entity.getId());
             pojoEntity.setBiblioteca(fatherEntity);
             VideoEntity resp = videoLogic.updateVideo(pojoEntity);
@@ -338,9 +338,9 @@ public class VideoLogicTest {
         try {
             VideoEntity entity = videoData.get(0);
             VideoEntity pojoEntity = factory.manufacturePojo(VideoEntity.class);
-            pojoEntity.setNumEjemplares(Math.abs(pojoEntity.getNumEjemplares()));
-            entity.setEjemplaresDisponibles(entity.getNumEjemplares() + 1);
             pojoEntity.setId(entity.getId());
+            pojoEntity.setNumEjemplares(Math.abs(pojoEntity.getNumEjemplares()));
+            pojoEntity.setEjemplaresDisponibles(pojoEntity.getNumEjemplares() + 1);
             pojoEntity.setBiblioteca(fatherEntity);
             VideoEntity resp = videoLogic.updateVideo(pojoEntity);
             Assert.fail("Deberia fallar");
