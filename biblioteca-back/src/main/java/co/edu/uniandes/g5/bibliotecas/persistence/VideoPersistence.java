@@ -33,11 +33,16 @@ public class VideoPersistence {
 
     public VideoEntity findByName(String name, Long idBiblioteca) {
         LOGGER.log(Level.INFO, "Consultando video con name = {0}", name);
-        TypedQuery<VideoEntity> q
+        TypedQuery q
                 = em.createQuery("select u from VideoEntity u where u.name = :name and u.biblioteca.id = :idBiblioteca", VideoEntity.class);
         q = q.setParameter("name", name);
         q = q.setParameter("idBiblioteca", idBiblioteca);
-        return q.getSingleResult();
+        List<VideoEntity> similarName = q.getResultList();
+        if (similarName.isEmpty()) {
+            return null;
+        } else {
+            return similarName.get(0);
+        }
     }
 
     public List<VideoEntity> findAll() {

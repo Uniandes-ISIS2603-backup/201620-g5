@@ -34,19 +34,28 @@ public class LibroPersistence {
 
     public LibroEntity findByName(String name, Long idBiblioteca) {
         LOGGER.log(Level.INFO, "Consultando libro con name = {0}", name);
-        TypedQuery<LibroEntity> q
+        TypedQuery q
                 = em.createQuery("select u from LibroEntity u where u.name = :name and u.biblioteca.id = :idBiblioteca", LibroEntity.class);
         q = q.setParameter("name", name);
         q = q.setParameter("idBiblioteca", idBiblioteca);
-        return q.getSingleResult();
+        List<LibroEntity> similarName = q.getResultList();
+        if (similarName.isEmpty()) {
+            return null;
+        } else {
+            return similarName.get(0);
+        }
     }
 
     public LibroEntity findByISBN(Long isbn, Long idBiblioteca) {
-        LOGGER.log(Level.INFO, "Consultando libro con isbn = {0}", isbn);
-        TypedQuery<LibroEntity> q = em.createQuery("select u from LibroEntity u where u.isbn = :isbn and u.biblioteca.id = :idBiblioteca", LibroEntity.class);
+        TypedQuery q = em.createQuery("select u from LibroEntity u where u.isbn = :isbn and u.biblioteca.id = :idBiblioteca", LibroEntity.class);
         q = q.setParameter("isbn", isbn);
         q = q.setParameter("idBiblioteca", idBiblioteca);
-        return q.getSingleResult();
+        List<LibroEntity> similarName = q.getResultList();
+        if (similarName.isEmpty()) {
+            return null;
+        } else {
+            return similarName.get(0);
+        }
     }
 
     public List<LibroEntity> findAll() {
