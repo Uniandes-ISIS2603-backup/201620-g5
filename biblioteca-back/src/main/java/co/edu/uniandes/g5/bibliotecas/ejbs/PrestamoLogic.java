@@ -92,6 +92,11 @@ public class PrestamoLogic implements IPrestamoLogic {
         {
             throw new BibliotecaLogicException("Costo inválido. El costo no puede ser menor o igual a 0");
         }
+        
+        if(prestamo.getUsuario().getMultas().size() > 0)
+        {
+            throw new BibliotecaLogicException("El usuario tiene multas, no es posible hacer el préstamo hasta que se paguen las multas.");
+        }
 
         if(prestamo.getRecurso().getTipoRecurso() == RecursoEntity.LIBRO)
         {

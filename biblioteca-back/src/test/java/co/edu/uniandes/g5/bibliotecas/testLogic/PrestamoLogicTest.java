@@ -9,6 +9,7 @@ import co.edu.uniandes.g5.bibliotecas.persistence.PrestamoPersistence;
 import co.edu.uniandes.g5.bibliotecas.entities.UsuarioEntity;
 import co.edu.uniandes.g5.bibliotecas.entities.BibliotecaEntity;
 import co.edu.uniandes.g5.bibliotecas.entities.LibroEntity;
+import co.edu.uniandes.g5.bibliotecas.entities.MultaEntity;
 import co.edu.uniandes.g5.bibliotecas.entities.VideoEntity;
 import co.edu.uniandes.g5.bibliotecas.entities.SalaEntity;
 import co.edu.uniandes.g5.bibliotecas.exceptions.BibliotecaLogicException;
@@ -199,6 +200,24 @@ public class PrestamoLogicTest {
         libroEntity.setTipoRecurso(LibroEntity.LIBRO);
         libroEntity.setEjemplaresDisponibles(0);
         prest.setRecurso(libroEntity);
+        prest.setUsuario(usuarioEntity);
+
+
+        PrestamoEntity result = prestamoLogic.createPrestamo(prest);
+    }
+    
+    /**
+     * Prueba para crear un Prestamo con un usuario con multas
+     * @throws co.edu.uniandes.g5.bibliotecas.exceptions.BibliotecaLogicException
+     */
+    @Test(expected = BibliotecaLogicException.class)
+    public void createPrestamoTest4() throws BibliotecaLogicException {
+        PrestamoEntity prest = factory.manufacturePojo(PrestamoEntity.class);
+        prest.setBiblioteca(bibliotecaEntity);
+        prest.setRecurso(libroEntity);
+        ArrayList<MultaEntity> multas = new ArrayList();
+        multas.add(factory.manufacturePojo(MultaEntity.class));
+        usuarioEntity.setMultas(multas);
         prest.setUsuario(usuarioEntity);
 
 
