@@ -181,12 +181,14 @@ public class SalaLogicTest {
         Assert.assertEquals(newEntity.getId(), entity.getId());
     }
     
+    /**
+     * Test of createSala method, of class SalaLogic. Debe lanzar excepción si
+     * se intenta crear una sala ya existente
+     */
     @Test(expected = BibliotecaLogicException.class)
-    public void testCreateSala2() throws Exception {
-        SalaEntity dept = factory.manufacturePojo(SalaEntity.class);
-        dept.setBiblioteca(bibliotecaEntity);
-        dept.setName(salaData.get(0).getName());
-        SalaEntity result = salaLogic.createSala(salaData.get(0).getBiblioteca().getId(), dept);
+    public void testCreateSala2() throws BibliotecaLogicException {
+        SalaEntity sala = salaData.get(0);
+        SalaEntity result = salaLogic.createSala(salaData.get(0).getBiblioteca().getId(), sala);
     }
 
     /**

@@ -5,13 +5,17 @@
  */
 package co.edu.uniandes.g5.bibliotecas.resources;
 
+import co.edu.uniandes.g5.bibliotecas.api.IBibliotecaLogic;
 import co.edu.uniandes.g5.bibliotecas.dtos.BiblioDTO;
+import co.edu.uniandes.g5.bibliotecas.dtos.BiblioDetailDTO;
+import co.edu.uniandes.g5.bibliotecas.entities.BibliotecaEntity;
 import co.edu.uniandes.g5.bibliotecas.exceptions.BibliotecaLogicException;
+import java.util.ArrayList;
 
 import java.util.List;
+import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
-
 
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -33,7 +37,24 @@ import javax.ws.rs.Produces;
 @Produces("application/json")
 public class BiblioResource {
 
-    BiblioLogicMock cityLogic = new BiblioLogicMock();
+    @Inject
+    private IBibliotecaLogic bibliotecaLogic;
+
+    /**
+     * Convierte una lista de BibliotecaEntity a una lista de
+     * BibliotecaDetailDTO.
+     *
+     * @param entityList Lista de BibliotecaEntity a convertir.
+     * @return Lista de BibliotecaDetailDTO convertida.
+     *
+     */
+    private List<BiblioDetailDTO> listEntity2DTO(List<BibliotecaEntity> entityList) {
+        List<BiblioDetailDTO> list = new ArrayList<>();
+        for (BibliotecaEntity entity : entityList) {
+            list.add(new BiblioDetailDTO(entity));
+        }
+        return list;
+    }
 
     /**
      * Obtiene el listado de bibliotecas.
@@ -43,39 +64,41 @@ public class BiblioResource {
      */
     @GET
     @Path("bibliotecas")
-    public List<BiblioDTO> getCities() throws BibliotecaLogicException {
-        return cityLogic.getCities();
+    public List<BiblioDetailDTO> getBibliotecas() throws BibliotecaLogicException {
+        return listEntity2DTO(bibliotecaLogic.getBibliotecas());
     }
-   
+
     /**
      * Agrega una biblioteca
      *
-     * @param city biblioteca a agregar
+     * @param biblioteca biblioteca a agregar
      * @return datos de la biblioteca a agregar
      * @throws BiblioLogicException cuando ya existe una biblioteca con el id
      * suministrado
      */
     @POST
     @Path("bibliotecas")
-    public BiblioDTO createCity(BiblioDTO city) throws BibliotecaLogicException {
-        return cityLogic.createCity(city);
+    public BiblioDetailDTO createBiblioteca(BiblioDTO biblioteca) throws BibliotecaLogicException {
+        return new BiblioDetailDTO(bibliotecaLogic.createBiblioteca(biblioteca.toEntity()));
     }
 
     @GET
     @Path("bibliotecas/{id: \\d+}")
-    public BiblioDTO getCity(@PathParam("id")int id) throws BibliotecaLogicException {
-        return cityLogic.getCity(id);
+    public BiblioDetailDTO getBiblioteca(@PathParam("id") Long id) throws BibliotecaLogicException {
+        return new BiblioDetailDTO(bibliotecaLogic.getBiblioteca(id));
     }
-    
+
     @PUT
     @Path("bibliotecas/{id: \\d+}")
-    public BiblioDTO updateCity(@PathParam("id")int id, BiblioDTO b)throws BibliotecaLogicException{
-        return cityLogic.updateCity(id, b);
+    public BiblioDetailDTO updateBiblioteca(@PathParam("id") Long id, BiblioDTO b) throws BibliotecaLogicException {
+        BibliotecaEntity entity = b.toEntity();
+        entity.setId(id);
+        return new BiblioDetailDTO(bibliotecaLogic.updateBiblioteca(entity));
     }
-    
+
     @DELETE
     @Path("bibliotecas/{id: \\d+}")
-    public void deleteCity(@PathParam("id") int id)throws BibliotecaLogicException{
-        cityLogic.deleteCity(id);
+    public void deleteBiblioteca(@PathParam("id") Long id) throws BibliotecaLogicException {
+        bibliotecaLogic.deleteBiblioteca(id);
     }
 }

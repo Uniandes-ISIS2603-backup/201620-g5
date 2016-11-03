@@ -28,6 +28,7 @@ import co.edu.uniandes.g5.bibliotecas.entities.SalaEntity;
 import co.edu.uniandes.g5.bibliotecas.persistence.SalaPersistence;
 import co.edu.uniandes.g5.bibliotecas.api.IBibliotecaLogic;
 import co.edu.uniandes.g5.bibliotecas.entities.BibliotecaEntity;
+import co.edu.uniandes.g5.bibliotecas.exceptions.BibliotecaLogicException;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -42,6 +43,10 @@ public class SalaLogic implements ISalaLogic {
     @Inject
     private IBibliotecaLogic bibliotecaLogic;
 
+    public List<SalaEntity> getAllSalas() {
+        return persistence.findAll();
+    }
+
     /**
      * Obtiene la lista de los registros de Sala que pertenecen a una
      * Biblioteca.
@@ -52,16 +57,14 @@ public class SalaLogic implements ISalaLogic {
      */
     @Override
     public List<SalaEntity> getSalas(Long bibliotecaId) {
-        BibliotecaEntity biblioteca = bibliotecaLogic.getBiblioteca(bibliotecaId);
-        return biblioteca.getSalas();
+        return persistence.findAllInBiblioteca(bibliotecaId);
     }
 
     /**
      * Obtiene los datos de una instancia de Sala a partir de su ID.
      *
      * @param salaId Identificador del Sala a consultar
-     * @return Instancia de SalaEntity con los datos del Sala
-     * consultado.
+     * @return Instancia de SalaEntity con los datos del Sala consultado.
      *
      */
     @Override
@@ -77,15 +80,27 @@ public class SalaLogic implements ISalaLogic {
      * Se encarga de crear una Sala en la base de datos.
      *
      * @param entity Objeto de SalaEntity con los datos nuevos
-     * @param bibliotecaId id del Biblioteca el cual sera padre de la nueva Sala.
+     * @param bibliotecaId id del Biblioteca el cual sera padre de la nueva
+     * Sala.
      * @return Objeto de SalaEntity con los datos nuevos y su ID.
+     * @throws
+     * co.edu.uniandes.g5.bibliotecas.exceptions.BibliotecaLogicException
      *
      */
     @Override
-    public SalaEntity createSala(Long bibliotecaId, SalaEntity entity) {
+    public SalaEntity createSala(Long bibliotecaId, SalaEntity entity) throws BibliotecaLogicException {
+        SalaEntity existe = getSala(entity.getId());
         BibliotecaEntity biblioteca = bibliotecaLogic.getBiblioteca(bibliotecaId);
         entity.setBiblioteca(biblioteca);
-        entity = persistence.create(entity);
+        if (existe != null) {
+            throw new BibliotecaLogicException("ya existe esa sala");
+        } 
+        else if(entity.getBiblioteca()== null){
+            throw new BibliotecaLogicException("No se puede crear la sala porque no existe la biblioteca");
+        }
+        else { 
+            entity = persistence.create(entity);
+        }
         return entity;
     }
 

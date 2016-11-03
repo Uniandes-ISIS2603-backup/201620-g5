@@ -10,7 +10,6 @@ import co.edu.uniandes.g5.bibliotecas.api.ISalaLogic;
 import co.edu.uniandes.g5.bibliotecas.ejbs.BibliotecaLogic;
 import co.edu.uniandes.g5.bibliotecas.ejbs.SalaLogic;
 import co.edu.uniandes.g5.bibliotecas.entities.BibliotecaEntity;
-import co.edu.uniandes.g5.bibliotecas.entities.RecursoEntity;
 import co.edu.uniandes.g5.bibliotecas.entities.SalaEntity;
 import co.edu.uniandes.g5.bibliotecas.exceptions.BibliotecaLogicException;
 import co.edu.uniandes.g5.bibliotecas.persistence.BibliotecaPersistence;
@@ -25,13 +24,9 @@ import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
 import org.junit.runner.RunWith;
 import uk.co.jemos.podam.api.PodamFactory;
 import uk.co.jemos.podam.api.PodamFactoryImpl;
@@ -47,11 +42,7 @@ public class BibliotecaLogicTest {
 
     @Inject
     private IBibliotecaLogic bibliotecaLogic;
-    /**
-     *
-     */
-    @Inject
-    private SalaPersistence salaPersistence;
+    
     /**
      *
      */
@@ -69,8 +60,6 @@ public class BibliotecaLogicTest {
      */
     private List<BibliotecaEntity> data = new ArrayList<BibliotecaEntity>();
 
-    private List<RecursoEntity> recursoData = new ArrayList<>();
-
     /**
      *
      */
@@ -84,7 +73,6 @@ public class BibliotecaLogicTest {
                 .addPackage(SalaPersistence.class.getPackage())
                 .addPackage(SalaEntity.class.getPackage())
                 .addPackage(SalaLogic.class.getPackage())
-                .addPackage(RecursoEntity.class.getPackage())
                 .addPackage(ISalaLogic.class.getPackage())
                 .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
                 .addAsManifestResource("META-INF/beans.xml", "beans.xml");
@@ -130,24 +118,11 @@ public class BibliotecaLogicTest {
      *
      */
     private void insertData() {
-
-        for (int i = 0; i < 3; i++) {
-            RecursoEntity employees = factory.manufacturePojo(RecursoEntity.class);
-            em.persist(employees);
-            recursoData.add(employees);
-        }
-
+        
         for (int i = 0; i < 3; i++) {
             BibliotecaEntity entity = factory.manufacturePojo(BibliotecaEntity.class);
-            for (SalaEntity d : entity.getSalas()) {
-                d.setBiblioteca(entity);
-            }
             em.persist(entity);
             data.add(entity);
-            
-            if (i == 0) {
-                recursoData.get(i).setBiblioteca(entity);
-            }
         }
     }
 
@@ -155,13 +130,13 @@ public class BibliotecaLogicTest {
      * Test of getBibliotecas method, of class BibliotecaLogic.
      */
     @Test
-    public void testGetBibliotecas() throws Exception {
+    public void testGetBibliotecas() throws BibliotecaLogicException {
         List<BibliotecaEntity> list = bibliotecaLogic.getBibliotecas();
         Assert.assertEquals(data.size(), list.size());
         for (BibliotecaEntity entity : list) {
             boolean found = false;
-            for (BibliotecaEntity storedEntity : data) {
-                if (entity.getId().equals(storedEntity.getId())) {
+            for (BibliotecaEntity b : data) {
+                if (entity.getId().equals(b.getId())) {
                     found = true;
                 }
             }
@@ -173,7 +148,7 @@ public class BibliotecaLogicTest {
      * Test of getBiblioteca method, of class BibliotecaLogic.
      */
     @Test
-    public void testGetBiblioteca() throws Exception {
+    public void testGetBiblioteca() throws BibliotecaLogicException {
         BibliotecaEntity entity = data.get(0);
         BibliotecaEntity resultEntity = bibliotecaLogic.getBiblioteca(entity.getId());
         Assert.assertNotNull(resultEntity);
@@ -185,7 +160,7 @@ public class BibliotecaLogicTest {
      * Test of createBiblioteca method, of class BibliotecaLogic.
      */
     @Test
-    public void testCreateBiblioteca() throws Exception {
+    public void testCreateBiblioteca() throws BibliotecaLogicException {
         BibliotecaEntity newEntity = factory.manufacturePojo(BibliotecaEntity.class);
         for (SalaEntity d : newEntity.getSalas()) {
             d.setBiblioteca(newEntity);
@@ -215,18 +190,21 @@ public class BibliotecaLogicTest {
 
     }
 
+    /**
+     * Test of createBiblioteca method, of class BibliotecaLogic.Debe lanzar excepción si 
+     * se intenta crear una biblioteca ya existente
+     */
     @Test(expected = BibliotecaLogicException.class)
-    public void testCreateBiblioteca2() {
-        BibliotecaEntity newEntity = factory.manufacturePojo(BibliotecaEntity.class);
-        newEntity.setName(data.get(0).getName());
-        BibliotecaEntity result = bibliotecaLogic.createBiblioteca(newEntity);
+    public void testCreateBiblioteca2() throws BibliotecaLogicException {
+        BibliotecaEntity entity = data.get(0);
+        BibliotecaEntity result = bibliotecaLogic.createBiblioteca(entity);
     }
 
     /**
      * Test of updateBiblioteca method, of class BibliotecaLogic.
      */
     @Test
-    public void testUpdateBiblioteca() throws Exception {
+    public void testUpdateBiblioteca() throws BibliotecaLogicException {
         BibliotecaEntity entity = data.get(0);
         BibliotecaEntity pojoEntity = factory.manufacturePojo(BibliotecaEntity.class);
 
@@ -244,71 +222,10 @@ public class BibliotecaLogicTest {
      * Test of deleteBiblioteca method, of class BibliotecaLogic.
      */
     @Test
-    public void testDeleteBiblioteca() throws Exception {
+    public void testDeleteBiblioteca() throws BibliotecaLogicException {
         BibliotecaEntity entity = data.get(1);
         bibliotecaLogic.deleteBiblioteca(entity.getId());
         BibliotecaEntity deleted = em.find(BibliotecaEntity.class, entity.getId());
         Assert.assertNull(deleted);
     }
-
-    /**
-     * Test of listRecursos method, of class BibliotecaLogic.
-     */
-    @Test
-    public void testListRecursos() throws Exception {
-        List<RecursoEntity> list = bibliotecaLogic.listRecursos(data.get(0).getId());
-        Assert.assertEquals(1, list.size());
-    }
-
-    /**
-     * Test of getRecurso method, of class BibliotecaLogic.
-     */
-    @Test
-    public void testGetRecurso() throws Exception {
-        BibliotecaEntity entity = data.get(0);
-        RecursoEntity employeeEntity = recursoData.get(0);
-        RecursoEntity response = bibliotecaLogic.getRecurso(entity.getId(), employeeEntity.getId());
-
-        Assert.assertEquals(employeeEntity.getName(), response.getName());
-        Assert.assertEquals(employeeEntity.getId(), response.getId());
-    }
-
-    /**
-     * Test of addRecurso method, of class BibliotecaLogic.
-     */
-    @Test
-    public void testAddRecurso() throws Exception {
-        BibliotecaEntity entity = data.get(0);
-        RecursoEntity employeeEntity = recursoData.get(1);
-        RecursoEntity response = bibliotecaLogic.addRecurso(entity.getId(), employeeEntity.getId());
-
-        Assert.assertNotNull(response);
-        Assert.assertEquals(employeeEntity.getId(), response.getId());
-    }
-
-    /**
-     * Test of replaceRecursos method, of class BibliotecaLogic.
-     */
-    @Test
-    public void testReplaceRecursos() throws Exception {
-        BibliotecaEntity entity = data.get(0);
-        List<RecursoEntity> list = recursoData.subList(1, 3);
-        bibliotecaLogic.replaceRecursos(entity.getId(), list);
-
-        entity = bibliotecaLogic.getBiblioteca(entity.getId());
-        Assert.assertFalse(entity.getRecursos().contains(recursoData.get(0)));
-        Assert.assertTrue(entity.getRecursos().contains(recursoData.get(1)));
-        Assert.assertTrue(entity.getRecursos().contains(recursoData.get(2)));
-    }
-
-    /**
-     * Test of removeRecurso method, of class BibliotecaLogic.
-     */
-    @Test
-    public void testRemoveRecurso() throws Exception {
-        bibliotecaLogic.removeRecurso(data.get(0).getId(), recursoData.get(0).getId());
-        RecursoEntity response = bibliotecaLogic.getRecurso(data.get(0).getId(), recursoData.get(0).getId());
-        Assert.assertNull(response);
-    }
-
 }

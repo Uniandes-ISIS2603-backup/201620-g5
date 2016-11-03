@@ -25,18 +25,14 @@ package co.edu.uniandes.g5.bibliotecas.api;
 
 import co.edu.uniandes.g5.bibliotecas.entities.BibliotecaEntity;
 import co.edu.uniandes.g5.bibliotecas.entities.RecursoEntity;
+import co.edu.uniandes.g5.bibliotecas.exceptions.BibliotecaLogicException;
 import java.util.List;
 
 public interface IBibliotecaLogic {
    
     public List<BibliotecaEntity> getBibliotecas();
     public BibliotecaEntity getBiblioteca(Long id);
-    public BibliotecaEntity createBiblioteca(BibliotecaEntity entity); 
+    public BibliotecaEntity createBiblioteca(BibliotecaEntity entity)throws BibliotecaLogicException; 
     public BibliotecaEntity updateBiblioteca(BibliotecaEntity entity);
     public void deleteBiblioteca(Long id);
-    public List<RecursoEntity> listRecursos(Long bibliotecaId);
-    public RecursoEntity getRecurso(Long bibliotecaId, Long recursoId);
-    public RecursoEntity addRecurso(Long bibliotecaId, Long recursoId);
-    public List<RecursoEntity> replaceRecursos(Long bibliotecaId, List<RecursoEntity> list);
-    public void removeRecurso(Long bibliotecaId, Long recursoId);
 }

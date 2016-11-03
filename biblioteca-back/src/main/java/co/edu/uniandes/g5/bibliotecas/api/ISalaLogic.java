@@ -24,13 +24,14 @@ SOFTWARE.
 package co.edu.uniandes.g5.bibliotecas.api;
 
 import co.edu.uniandes.g5.bibliotecas.entities.SalaEntity;
+import co.edu.uniandes.g5.bibliotecas.exceptions.BibliotecaLogicException;
 import java.util.List;
 
 public interface ISalaLogic {
   
     public List<SalaEntity> getSalas(Long bibliotecaId);
     public SalaEntity getSala(Long departmentid);
-    public SalaEntity createSala(Long bibliotecaid, SalaEntity entity);
+    public SalaEntity createSala(Long bibliotecaid, SalaEntity entity)throws BibliotecaLogicException;
     public SalaEntity updateSala(Long bibliotecaid, SalaEntity entity);
     public void deleteSala(Long id);
 }

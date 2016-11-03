@@ -5,15 +5,21 @@
  */
 package co.edu.uniandes.g5.bibliotecas.resources;
 
+import co.edu.uniandes.g5.bibliotecas.api.IBibliotecaLogic;
+import co.edu.uniandes.g5.bibliotecas.api.ISalaLogic;
+import co.edu.uniandes.g5.bibliotecas.dtos.SalaDetailDTO;
+import co.edu.uniandes.g5.bibliotecas.dtos.BiblioDetailDTO;
 import co.edu.uniandes.g5.bibliotecas.dtos.SalaDTO;
-import co.edu.uniandes.g5.bibliotecas.dtos.VideoDTO;
+import co.edu.uniandes.g5.bibliotecas.entities.SalaEntity;
 import co.edu.uniandes.g5.bibliotecas.exceptions.BibliotecaLogicException;
 import java.text.ParseException;
 import java.util.ArrayList;
 
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.inject.Inject;
 import javax.ws.rs.DELETE;
-
 
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -21,6 +27,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.WebApplicationException;
 
 /**
  * Clase que implementa el recurso REST correspondiente a "salas".
@@ -34,62 +41,93 @@ import javax.ws.rs.Produces;
 @Path("")
 @Produces("application/json")
 public class SalaResource {
-    
-   
-    SalaLogicMock salaLogic = new SalaLogicMock();
-   
+
+    private static final Logger LOGGER = Logger.getLogger(PrestamoResource.class.getName());
+
+    @Inject
+    private ISalaLogic salaLogic;
+
+    @Inject
+    private IBibliotecaLogic bibliotecaLogic;
+
+    private List<SalaDetailDTO> listEntity2DTO(List<SalaEntity> entityList) {
+        List<SalaDetailDTO> list = new ArrayList<>();
+        for (SalaEntity entity : entityList) {
+            list.add(new SalaDetailDTO(entity));
+        }
+        return list;
+    }
+
+    public void existsBiblioteca(Long bibliotecaId) {
+        BiblioDetailDTO biblioteca = new BiblioDetailDTO(bibliotecaLogic.getBiblioteca(bibliotecaId));
+        if (biblioteca == null) {
+            throw new WebApplicationException("La biblioteca no existe", 404);
+        }
+    }
+
+    public void existsSala(Long salaId) {
+        SalaDetailDTO sala = new SalaDetailDTO(salaLogic.getSala(salaId));
+        if (sala == null) {
+            throw new WebApplicationException("La sala no existe", 404);
+        }
+    }
+
     /**
-     * Obtiene el listado de salas.
+     * Obtiene el listado de salas de una biblioteca.
      *
      * @return lista de salas completa
      * @throws BiblioLogicException excepción retornada por la lógica
      */
     @GET
-    @Path("salas")
-    public List<SalaDTO> getAllSalas() throws BibliotecaLogicException {
-        return salaLogic.getAllSalas();
-    }
-    
-     @GET
     @Path("bibliotecas/{idBiblioteca: \\d+}/salas")
-    public ArrayList<SalaDTO> getSalasBiblioteca(@PathParam("idBiblioteca") Long idBiblioteca) throws BibliotecaLogicException, ParseException {
-        return salaLogic.getSalasBiblioteca(idBiblioteca);
+    public List<SalaDetailDTO> getSalasBiblioteca(@PathParam("idBiblioteca") Long idBiblioteca) throws BibliotecaLogicException, ParseException {
+        existsBiblioteca(idBiblioteca);
+        List<SalaEntity> salas = salaLogic.getSalas(idBiblioteca);
+        return listEntity2DTO(salas);
     }
 
-    @Path("salas/{id: \\d+}")
     @GET
-    public SalaDTO getSala(@PathParam("id")Long id) throws BibliotecaLogicException {
-        return salaLogic.getSala(id);
+    @Path("salas/{id: \\d+}")
+    public SalaDetailDTO getSala(@PathParam("id") Long id) throws BibliotecaLogicException {
+        SalaEntity entity = salaLogic.getSala(id);
+        LOGGER.log(Level.INFO, "Consultando sala con id = {0}", entity.getId());
+        return new SalaDetailDTO(entity);
     }
 
     @POST
-    @Path("bibliotecas/salas")
-    public SalaDTO createSala(SalaDTO sala) throws BibliotecaLogicException{
-        return salaLogic.createSala(sala);
+    @Path("bibliotecas/{idBiblioteca: \\d+}/salas")
+    public SalaDetailDTO createSala4Biblioteca(@PathParam("idBiblioteca") Long idBiblioteca, SalaDetailDTO sala) throws BibliotecaLogicException {
+        existsBiblioteca(idBiblioteca);
+        if (sala.getBiblioteca() != null && !idBiblioteca.equals(sala.getBiblioteca().getId())) {
+            throw new WebApplicationException(404);
+        }
+        return new SalaDetailDTO(salaLogic.createSala(idBiblioteca, sala.toEntity()));
     }
-    
 
-    
     @PUT
-    @Path("salas/{id: \\d+}")
-    public SalaDTO updateSala(@PathParam("id") Long id, SalaDTO newSala) throws BibliotecaLogicException 
-    {
-        return salaLogic.updateSala(id, newSala);
+    @Path("bibliotecas/{idBiblioteca: \\d+}/salas/{id: \\d+}")
+    public SalaDetailDTO updateSala4Biblioteca(@PathParam("idBiblioteca") Long idBiblioteca, @PathParam("id") Long id, SalaDetailDTO sala) throws BibliotecaLogicException {
+        existsBiblioteca(idBiblioteca);
+        existsSala(id);
+        SalaEntity entity = sala.toEntity();
+        entity.setId(id);
+        return new SalaDetailDTO(salaLogic.updateSala(idBiblioteca, entity));
     }
-    
 
     @DELETE
-    @Path("salas/{id: \\d+}")
-    public SalaDTO deleteSala(@PathParam("id") Long id) throws BibliotecaLogicException 
-    {
-        return salaLogic.deleteSala(id);
+    @Path("bibliotecas/salas/{id: \\d+}")
+    public void deleteSala(@PathParam("id") Long id) throws BibliotecaLogicException {
+        existsSala(id);
+        salaLogic.deleteSala(id);
     }
+
     /*
     R13
-    */
+     
     @GET
     @Path("salas/ {id: \\d+}")
-    public SalaDTO getDisponibilidadSala(@PathParam("id") Long idSala, String fecha){
+    public SalaDTO getDisponibilidadSala(@PathParam("id") Long idSala, String fecha) {
         return salaLogic.getDisponibilidadSala(idSala, fecha);
     }
+     */
 }
