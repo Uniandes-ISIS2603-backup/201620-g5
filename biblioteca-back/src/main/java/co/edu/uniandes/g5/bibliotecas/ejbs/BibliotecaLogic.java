@@ -34,7 +34,7 @@ public class BibliotecaLogic implements IBibliotecaLogic {
         BibliotecaEntity alreadyExist = getBiblioteca(entity.getId());
         if (alreadyExist != null) 
         {
-            throw new BibliotecaLogicException("Ya existe un prestamo con ese id");
+            throw new BibliotecaLogicException("Ya existe una biblioteca con ese id");
         }
         persistence.create(entity);
         return entity;
