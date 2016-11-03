@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.inject.Inject;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -27,6 +28,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.core.MediaType;
 
 /**
  *
@@ -153,6 +155,7 @@ public class PrestamoResource {
     
     
     @POST
+    @Consumes(MediaType.APPLICATION_JSON)
     public PrestamoDetailDTO createPrestamo(PrestamoDetailDTO dto) throws BibliotecaLogicException {
         existsBiblioteca(bibliotecaId);
         if (dto.getBiblioteca() != null && !bibliotecaId.equals(dto.getBiblioteca().getId())) {
@@ -162,6 +165,7 @@ public class PrestamoResource {
     }
     
     @PUT
+    @Consumes(MediaType.APPLICATION_JSON)
     @Path("{prestamoId: \\d+}")
     public PrestamoDetailDTO updatePrestamo(@PathParam("prestamoId") Long prestamoId, PrestamoDetailDTO dto) throws BibliotecaLogicException {
         existsBiblioteca(bibliotecaId);

@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.inject.Inject;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 
 import javax.ws.rs.GET;
@@ -28,6 +29,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.core.MediaType;
 
 /**
  * Clase que implementa el recurso REST correspondiente a "salas".
@@ -95,6 +97,7 @@ public class SalaResource {
     }
 
     @POST
+    @Consumes(MediaType.APPLICATION_JSON)
     @Path("bibliotecas/{idBiblioteca: \\d+}/salas")
     public SalaDetailDTO createSala4Biblioteca(@PathParam("idBiblioteca") Long idBiblioteca, SalaDetailDTO sala) throws BibliotecaLogicException {
         existsBiblioteca(idBiblioteca);
@@ -105,6 +108,7 @@ public class SalaResource {
     }
 
     @PUT
+    @Consumes(MediaType.APPLICATION_JSON)
     @Path("bibliotecas/{idBiblioteca: \\d+}/salas/{id: \\d+}")
     public SalaDetailDTO updateSala4Biblioteca(@PathParam("idBiblioteca") Long idBiblioteca, @PathParam("id") Long id, SalaDetailDTO sala) throws BibliotecaLogicException {
         existsBiblioteca(idBiblioteca);

@@ -23,6 +23,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 
 /**
  * Clase que implementa el recurso REST correspondiente a "cities".
@@ -77,6 +78,7 @@ public class BiblioResource {
      * suministrado
      */
     @POST
+    @Consumes(MediaType.APPLICATION_JSON)
     @Path("bibliotecas")
     public BiblioDetailDTO createBiblioteca(BiblioDTO biblioteca) throws BibliotecaLogicException {
         return new BiblioDetailDTO(bibliotecaLogic.createBiblioteca(biblioteca.toEntity()));
@@ -89,6 +91,7 @@ public class BiblioResource {
     }
 
     @PUT
+    @Consumes(MediaType.APPLICATION_JSON)
     @Path("bibliotecas/{id: \\d+}")
     public BiblioDetailDTO updateBiblioteca(@PathParam("id") Long id, BiblioDTO b) throws BibliotecaLogicException {
         BibliotecaEntity entity = b.toEntity();

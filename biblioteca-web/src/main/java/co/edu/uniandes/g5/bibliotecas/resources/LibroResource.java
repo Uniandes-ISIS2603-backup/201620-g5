@@ -35,7 +35,6 @@ import javax.ws.rs.core.MediaType;
  *
  * @author s.rojas19
  */
-@Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 @Path("")
 public class LibroResource {
@@ -122,6 +121,7 @@ public class LibroResource {
      * @return libtro agregado
      */
     @POST
+    @Consumes(MediaType.APPLICATION_JSON)
     @Path("libros")
     public LibroDTO createLibro(LibroDetailDTO libro) {
         try {
@@ -142,6 +142,7 @@ public class LibroResource {
      * @throws BibliotecaLogicException Si no es posible actualizar el libro
      */
     @PUT
+    @Consumes(MediaType.APPLICATION_JSON)
     @Path("libros/{id: \\d+}")
     public LibroDetailDTO updateLibro(@PathParam("id") Long id, LibroDetailDTO libro) throws BibliotecaLogicException {
         existsBiblioteca(libro.getBiblioteca().getId());

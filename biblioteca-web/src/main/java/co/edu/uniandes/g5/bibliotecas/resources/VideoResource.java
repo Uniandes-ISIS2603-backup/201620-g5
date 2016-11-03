@@ -33,7 +33,6 @@ import javax.ws.rs.core.MediaType;
  *
  * @author s.rojas19
  */
-@Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 @Path("")
 public class VideoResource {
@@ -120,6 +119,7 @@ public class VideoResource {
      * @return libtro agregado
      */
     @POST
+    @Consumes(MediaType.APPLICATION_JSON)
     @Path("videos")
     public VideoDTO createVideo(VideoDetailDTO video) {
         try {
@@ -140,6 +140,7 @@ public class VideoResource {
      * @throws BibliotecaLogicException Si no es posible actualizar el video
      */
     @PUT
+    @Consumes(MediaType.APPLICATION_JSON)
     @Path("videos/{id: \\d+}")
     public VideoDetailDTO updateVideo(@PathParam("id") Long id, VideoDetailDTO video) throws BibliotecaLogicException {
         existsBiblioteca(video.getBiblioteca().getId());

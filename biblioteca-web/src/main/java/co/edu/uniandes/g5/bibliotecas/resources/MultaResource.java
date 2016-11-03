@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.inject.Inject;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 
 
@@ -29,6 +30,8 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.WebApplicationException;
 
 /**
@@ -117,6 +120,7 @@ public class MultaResource {
     
     
     @POST
+    @Consumes(MediaType.APPLICATION_JSON)
     public MultaDetailDTO createMulta(MultaDetailDTO dto) throws BibliotecaLogicException {
         existsUsuario(usuarioId);
         if (dto.getUsuario() != null && !usuarioId.equals(dto.getUsuario().getId())) {
@@ -126,6 +130,7 @@ public class MultaResource {
     }
     
     @PUT
+    @Consumes(MediaType.APPLICATION_JSON)
     @Path("{multaId: \\d+}")
     public MultaDetailDTO updateMulta(@PathParam("multaId") Long multaId, MultaDetailDTO dto) throws BibliotecaLogicException {
         existsUsuario(usuarioId);

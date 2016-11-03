@@ -30,6 +30,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.core.MediaType;
 
 /**
  * Clase que implementa el recurso REST correspondiente a "cities".
@@ -113,6 +114,7 @@ public class ReservaResource {
     }
 
      @POST
+     @Consumes(MediaType.APPLICATION_JSON)
     public ReservaDetailDTO createReserva(ReservaDetailDTO dto) throws BibliotecaLogicException {
         existsBiblioteca(bibliotecaId);
         if (dto.getBiblioteca() != null && !bibliotecaId.equals(dto.getBiblioteca().getId())) {
@@ -122,6 +124,7 @@ public class ReservaResource {
     }
     
     @PUT
+    @Consumes(MediaType.APPLICATION_JSON)
     @Path("{reservaId: \\d+}")
     public ReservaDetailDTO updateReserva(@PathParam("reservaId") Long reservaId, ReservaDetailDTO dto) throws BibliotecaLogicException {
         existsBiblioteca(bibliotecaId);

@@ -16,6 +16,7 @@ import co.edu.uniandes.g5.bibliotecas.exceptions.BibliotecaLogicException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -24,6 +25,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.core.MediaType;
 
 /**
  *
@@ -114,6 +116,7 @@ public class UsuarioResource {
      * @return libtro agregado
      */
     @POST
+    @Consumes(MediaType.APPLICATION_JSON)
     @Path("usuarios")
     public UsuarioDTO createUsuario(UsuarioDetailDTO usuario) {
         try {
@@ -134,6 +137,7 @@ public class UsuarioResource {
      * @throws BibliotecaLogicException Si no es posible actualizar el usuario
      */
     @PUT
+    @Consumes(MediaType.APPLICATION_JSON)
     @Path("usuarios/{id: \\d+}")
     public UsuarioDetailDTO updateUsuario(@PathParam("id") Long id, UsuarioDetailDTO usuario) throws BibliotecaLogicException {
         existsBiblioteca(usuario.getBiblioteca().getId());

@@ -28,7 +28,6 @@ import javax.ws.rs.core.MediaType;
  */
     
 @Path("")
-@Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class BlogResource
 {
@@ -73,11 +72,13 @@ public class BlogResource
     {
         return listEntity2DTO(blogLogic.getBlogsLibro(idLibro));
     }
+    @Consumes(MediaType.APPLICATION_JSON)
     @POST
     @Path("libros/{idLibro: \\d+}/blogs")
     public BlogDetailDTO createLibro(BlogDetailDTO blog) throws BibliotecaLogicException {
             return new BlogDetailDTO(blogLogic.createBlog(blog.toEntity()));
     }
+    @Consumes(MediaType.APPLICATION_JSON)
     @PUT
     @Path("libros/{idLibro: \\d+}/blogs/{id: \\d+}")
     public BlogDTO updateBlog(@PathParam("idLibro") Long id, BlogDTO blog) throws BibliotecaLogicException {
