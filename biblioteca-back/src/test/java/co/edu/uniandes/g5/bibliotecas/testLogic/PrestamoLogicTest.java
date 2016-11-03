@@ -171,6 +171,7 @@ public class PrestamoLogicTest {
     public void createPrestamoTest1() throws BibliotecaLogicException{
         PrestamoEntity newEntity = factory.manufacturePojo(PrestamoEntity.class);
         newEntity.setRecurso(libroEntity);
+        newEntity.setUsuario(usuarioEntity);
         PrestamoEntity result = prestamoLogic.createPrestamo(newEntity);
         Assert.assertNotNull(result);
         PrestamoEntity entity = em.find(PrestamoEntity.class, result.getId());
