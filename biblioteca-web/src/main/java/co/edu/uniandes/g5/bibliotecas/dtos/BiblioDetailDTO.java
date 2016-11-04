@@ -24,8 +24,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class BiblioDetailDTO extends BiblioDTO{
     
-    private List<SalaDTO> salas = new ArrayList<>();
-    
     private List<RecursoDTO> recursos = new ArrayList<>();
     
     private List<PrestamoDTO> prestamos = new ArrayList<>();
@@ -48,14 +46,11 @@ public class BiblioDetailDTO extends BiblioDTO{
      */
     public BiblioDetailDTO(BibliotecaEntity entity) {
         super(entity);
-        List<SalaEntity> salasList = entity.getSalas();
         List<RecursoEntity> recursosList = entity.getRecursos();
         List<PrestamoEntity> prestamosList = entity.getPrestamos();
         List<MultaEntity> multasList = entity.getMultas();
         List<ReservaEntity> reservasList = entity.getReservas();
-        for (SalaEntity dept : salasList) {
-            this.salas.add(new SalaDTO(dept));
-        }
+
         for (RecursoEntity dept : recursosList) {
             
             if(dept.getTipoRecurso() == RecursoDTO.LIBRO)
@@ -95,14 +90,10 @@ public class BiblioDetailDTO extends BiblioDTO{
     @Override
     public BibliotecaEntity toEntity() {
         BibliotecaEntity entity = super.toEntity();
-         List<SalaDTO> salas = this.getSalas();
          List<RecursoDTO> recursos = this.getRecursos();
          List<PrestamoDTO> prestamos = this.getPrestamos();
          List<MultaDTO> multas = this.getMultas();
          List<ReservaDTO> reservas = this.getReservas();
-        for (SalaDTO dept : this.getSalas()) {         
-            entity.getSalas().add(dept.toEntity());
-        }
         for (RecursoDTO dept : this.getRecursos()) {
              if(dept.getTipoRecurso() == RecursoDTO.LIBRO)
                 {
@@ -130,20 +121,6 @@ public class BiblioDetailDTO extends BiblioDTO{
             entity.getReservas().add(dept.toEntity());
         }
         return entity;
-    }
-
-    /**
-     * @return the salas
-     */
-    public List<SalaDTO> getSalas() {
-        return salas;
-    }
-
-    /**
-     * @param salas the salas to set
-     */
-    public void setSalas(List<SalaDTO> salas) {
-        this.salas = salas;
     }
 
     /**

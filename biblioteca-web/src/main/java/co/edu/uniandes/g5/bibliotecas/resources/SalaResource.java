@@ -83,13 +83,12 @@ public class SalaResource {
     @GET
     @Path("bibliotecas/{idBiblioteca: \\d+}/salas")
     public List<SalaDetailDTO> getSalasBiblioteca(@PathParam("idBiblioteca") Long idBiblioteca) throws BibliotecaLogicException, ParseException {
-        existsBiblioteca(idBiblioteca);
         List<SalaEntity> salas = salaLogic.getSalas(idBiblioteca);
         return listEntity2DTO(salas);
     }
 
     @GET
-    @Path("salas/{id: \\d+}")
+    @Path("bibliotecas/salas/{id: \\d+}")
     public SalaDetailDTO getSala(@PathParam("id") Long id) throws BibliotecaLogicException {
         SalaEntity entity = salaLogic.getSala(id);
         LOGGER.log(Level.INFO, "Consultando sala con id = {0}", entity.getId());
