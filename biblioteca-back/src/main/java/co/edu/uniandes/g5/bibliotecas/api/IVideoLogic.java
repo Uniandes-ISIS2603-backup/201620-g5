@@ -22,9 +22,9 @@ public interface IVideoLogic {
         
     public VideoEntity getVideoByName(String name, Long idBiblioteca);
     
-    public VideoEntity createVideo(VideoEntity entity) throws BibliotecaLogicException; 
+    public VideoEntity createVideo(VideoEntity entity, Long idBiblioteca) throws BibliotecaLogicException; 
     
-    public VideoEntity updateVideo(VideoEntity entity) throws BibliotecaLogicException;
+    public VideoEntity updateVideo(VideoEntity entity, Long idBiblioteca) throws BibliotecaLogicException;
     
     public void deleteVideo(Long id);
      

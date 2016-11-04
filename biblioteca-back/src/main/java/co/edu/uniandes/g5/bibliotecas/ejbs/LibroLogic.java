@@ -7,7 +7,6 @@ package co.edu.uniandes.g5.bibliotecas.ejbs;
 
 import co.edu.uniandes.g5.bibliotecas.api.ILibroLogic;
 import co.edu.uniandes.g5.bibliotecas.entities.BibliotecaEntity;
-import co.edu.uniandes.g5.bibliotecas.entities.BlogEntity;
 import co.edu.uniandes.g5.bibliotecas.entities.LibroEntity;
 import co.edu.uniandes.g5.bibliotecas.exceptions.BibliotecaLogicException;
 import co.edu.uniandes.g5.bibliotecas.persistence.BibliotecaPersistence;
@@ -40,10 +39,10 @@ public class LibroLogic implements ILibroLogic {
     }
 
     @Override
-    public LibroEntity createLibro(LibroEntity entity) throws BibliotecaLogicException {
+    public LibroEntity createLibro(LibroEntity entity, Long idBiblioteca) throws BibliotecaLogicException {
         LibroEntity alreadyExists = persistence.findByISBN(entity.getIsbn(), entity.getBiblioteca().getId());
-        BibliotecaEntity bibliotecaExiste = bibliotecaPersistence.find(entity.getBiblioteca().getId());
-        if (bibliotecaExiste == null) {
+        BibliotecaEntity biblioteca = bibliotecaPersistence.find(idBiblioteca);
+        if (biblioteca == null) {
             throw new BibliotecaLogicException("La biblioteca a la que el libro pertenece no existe");
         } else if (alreadyExists != null) {
             throw new BibliotecaLogicException("Ya existe un libro con el mismo isbn en la misma biblioteca");
@@ -54,15 +53,16 @@ public class LibroLogic implements ILibroLogic {
         } else if (entity.getIsbn() > 9790000000000L || entity.getIsbn() < 9780000000000L) {
             throw new BibliotecaLogicException("ISBN invalido");
         } else {
+            entity.setBiblioteca(biblioteca);
             persistence.create(entity);
         }
         return entity;
     }
 
     @Override
-    public LibroEntity updateLibro(LibroEntity entity) throws BibliotecaLogicException {
+    public LibroEntity updateLibro(LibroEntity entity, Long idBiblioteca) throws BibliotecaLogicException {
         LibroEntity alreadyExists = persistence.findByISBN(entity.getIsbn(), entity.getBiblioteca().getId());
-        BibliotecaEntity bibliotecaExiste = bibliotecaPersistence.find(entity.getBiblioteca().getId());
+        BibliotecaEntity bibliotecaExiste = bibliotecaPersistence.find(idBiblioteca);
         if (bibliotecaExiste == null) {
             throw new BibliotecaLogicException("La biblioteca a la que el libro pertenece no existe");
         } else if (alreadyExists != null && alreadyExists.getId() != entity.getId()) {

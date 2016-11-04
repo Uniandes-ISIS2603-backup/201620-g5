@@ -39,10 +39,10 @@ public class VideoLogic implements IVideoLogic {
     }
 
     @Override
-    public VideoEntity createVideo(VideoEntity entity) throws BibliotecaLogicException {
+    public VideoEntity createVideo(VideoEntity entity, Long idBiblioteca) throws BibliotecaLogicException {
         VideoEntity alreadyExists = getVideo(entity.getId());
-        BibliotecaEntity noExiste = bibliotecaPersistence.find(entity.getBiblioteca().getId());
-        if (noExiste == null) {
+        BibliotecaEntity biblioteca = bibliotecaPersistence.find(idBiblioteca);
+        if (biblioteca == null) {
             throw new BibliotecaLogicException("No existe la biblioteca");
         } else if (alreadyExists != null) {
             throw new BibliotecaLogicException("Ya existe un video con el mismo id");
@@ -50,14 +50,16 @@ public class VideoLogic implements IVideoLogic {
             throw new BibliotecaLogicException("Un video no puede tener un numero negativo de ejemplares");
         } else if (entity.getNumEjemplares() < entity.getEjemplaresDisponibles()) {
             throw new BibliotecaLogicException("Un video no puede tener mas ejemplares disponibles que su cantidad total");
+        } else {
+            entity.setBiblioteca(biblioteca);
+            return persistence.create(entity);
         }
-        return persistence.create(entity);
     }
 
     @Override
-    public VideoEntity updateVideo(VideoEntity entity) throws BibliotecaLogicException {
-        BibliotecaEntity noExiste = bibliotecaPersistence.find(entity.getBiblioteca().getId());
-        if (noExiste == null) {
+    public VideoEntity updateVideo(VideoEntity entity, Long idBiblioteca) throws BibliotecaLogicException {
+        BibliotecaEntity biblioteca = bibliotecaPersistence.find(idBiblioteca);
+        if (biblioteca == null) {
             throw new BibliotecaLogicException("No existe la biblioteca");
         } else if (entity.getEjemplaresDisponibles() < 0 || entity.getNumEjemplares() < 0) {
             throw new BibliotecaLogicException("Un video no puede tener un numero negativo de ejemplares");

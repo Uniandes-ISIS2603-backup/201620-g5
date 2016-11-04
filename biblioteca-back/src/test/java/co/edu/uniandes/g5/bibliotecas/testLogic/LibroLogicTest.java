@@ -179,7 +179,7 @@ public class LibroLogicTest {
     public void testCreateLibro1() {
         try {
             LibroEntity newEntity = crearEntity();
-            LibroEntity result = libroLogic.createLibro(newEntity);
+            LibroEntity result = libroLogic.createLibro(newEntity,fatherEntity.getId());
             Assert.assertNotNull(result);
             LibroEntity entity = em.find(LibroEntity.class, result.getId());
             Assert.assertEquals(newEntity.getName(), entity.getName());
@@ -198,7 +198,7 @@ public class LibroLogicTest {
             LibroEntity entity = crearEntity();
             BibliotecaEntity noExiste = factory.manufacturePojo(BibliotecaEntity.class);
             entity.setBiblioteca(noExiste);
-            LibroEntity result = libroLogic.createLibro(entity);
+            LibroEntity result = libroLogic.createLibro(entity,noExiste.getId());
             Assert.fail("Deberia fallar");
         } catch (BibliotecaLogicException ex) {
             Assert.assertEquals("La biblioteca a la que el libro pertenece no existe", ex.getMessage());
@@ -213,7 +213,7 @@ public class LibroLogicTest {
         try {
             LibroEntity entity = crearEntity();
             entity.setIsbn(libroData.get(0).getIsbn());
-            LibroEntity result = libroLogic.createLibro(entity);
+            LibroEntity result = libroLogic.createLibro(entity,fatherEntity.getId());
             Assert.fail("Deberia fallar");
         } catch (BibliotecaLogicException ex) {
             Assert.assertEquals("Ya existe un libro con el mismo isbn en la misma biblioteca", ex.getMessage());
@@ -230,7 +230,7 @@ public class LibroLogicTest {
             LibroEntity entity = crearEntity();
             entity.setNumEjemplares(-1);
             entity.setEjemplaresDisponibles(-1);
-            LibroEntity result = libroLogic.createLibro(entity);
+            LibroEntity result = libroLogic.createLibro(entity,fatherEntity.getId());
             Assert.fail("Deberia fallar");
         } catch (BibliotecaLogicException ex) {
             Assert.assertEquals("Un libro no puede tener un numero negativo de ejemplares", ex.getMessage());
@@ -242,7 +242,7 @@ public class LibroLogicTest {
         try {
             LibroEntity entity = crearEntity();
             entity.setEjemplaresDisponibles(entity.getNumEjemplares() + 1);
-            LibroEntity result = libroLogic.createLibro(entity);
+            LibroEntity result = libroLogic.createLibro(entity,fatherEntity.getId());
             Assert.fail("Deberia fallar");
         } catch (BibliotecaLogicException ex) {
             Assert.assertEquals("Un libro no puede tener mas ejemplares disponibles que su cantidad total", ex.getMessage());
@@ -257,7 +257,7 @@ public class LibroLogicTest {
         try {
             LibroEntity entity = crearEntity();
             entity.setIsbn(ThreadLocalRandom.current().nextLong(9770000000000L));
-            LibroEntity result = libroLogic.createLibro(entity);
+            LibroEntity result = libroLogic.createLibro(entity,fatherEntity.getId());
             Assert.fail("Deberia fallar");
         } catch (BibliotecaLogicException ex) {
             Assert.assertEquals("ISBN invalido", ex.getMessage());
@@ -323,7 +323,7 @@ public class LibroLogicTest {
             LibroEntity entity = libroData.get(0);
             LibroEntity pojoEntity = crearEntity();
             pojoEntity.setId(entity.getId());
-            libroLogic.updateLibro(pojoEntity);
+            libroLogic.updateLibro(pojoEntity, fatherEntity.getId());
             LibroEntity resp = em.find(LibroEntity.class, entity.getId());
             Assert.assertEquals(pojoEntity.getId(), resp.getId());
         } catch (BibliotecaLogicException ex) {
@@ -339,7 +339,7 @@ public class LibroLogicTest {
             pojoEntity.setId(entity.getId());
             BibliotecaEntity noExiste = factory.manufacturePojo(BibliotecaEntity.class);
             pojoEntity.setBiblioteca(noExiste);
-            LibroEntity resp = libroLogic.updateLibro(pojoEntity);
+            LibroEntity resp = libroLogic.updateLibro(pojoEntity, noExiste.getId());
             Assert.fail("No deberia fallar");
         } catch (BibliotecaLogicException ex) {
             Assert.assertEquals("La biblioteca a la que el libro pertenece no existe", ex.getMessage());
@@ -353,7 +353,7 @@ public class LibroLogicTest {
             LibroEntity pojoEntity = crearEntity();
             pojoEntity.setId(entity.getId());
             pojoEntity.setIsbn(libroData.get(1).getIsbn());
-            LibroEntity resp = libroLogic.updateLibro(pojoEntity);
+            LibroEntity resp = libroLogic.updateLibro(pojoEntity, fatherEntity.getId());
             Assert.fail("No deberia fallar");
         } catch (BibliotecaLogicException ex) {
             Assert.assertEquals("Ya existe un libro con el nuevo isbn en la biblioteca", ex.getMessage());
@@ -368,7 +368,7 @@ public class LibroLogicTest {
             pojoEntity.setId(entity.getId());
             pojoEntity.setNumEjemplares(-1);
             pojoEntity.setEjemplaresDisponibles(-1);
-            LibroEntity resp = libroLogic.updateLibro(pojoEntity);
+            LibroEntity resp = libroLogic.updateLibro(pojoEntity, fatherEntity.getId());
             Assert.fail("No deberia fallar");
         } catch (BibliotecaLogicException ex) {
             Assert.assertEquals("Un libro no puede tener un numero negativo de ejemplares", ex.getMessage());
@@ -382,7 +382,7 @@ public class LibroLogicTest {
             LibroEntity pojoEntity = crearEntity();
             pojoEntity.setId(entity.getId());
             pojoEntity.setEjemplaresDisponibles(pojoEntity.getNumEjemplares()+1);
-            LibroEntity resp = libroLogic.updateLibro(pojoEntity);
+            LibroEntity resp = libroLogic.updateLibro(pojoEntity, fatherEntity.getId());
             Assert.fail("No deberia fallar");
         } catch (BibliotecaLogicException ex) {
             Assert.assertEquals("Un libro no puede tener mas ejemplares disponibles que su cantidad total", ex.getMessage());
@@ -396,7 +396,7 @@ public class LibroLogicTest {
             LibroEntity pojoEntity = crearEntity();
             pojoEntity.setId(entity.getId());
             pojoEntity.setIsbn(ThreadLocalRandom.current().nextLong(9770000000000L));
-            LibroEntity resp = libroLogic.updateLibro(pojoEntity);
+            LibroEntity resp = libroLogic.updateLibro(pojoEntity, fatherEntity.getId());
             Assert.fail("No deberia fallar");
         } catch (BibliotecaLogicException ex) {
             Assert.assertEquals("ISBN invalido", ex.getMessage());
