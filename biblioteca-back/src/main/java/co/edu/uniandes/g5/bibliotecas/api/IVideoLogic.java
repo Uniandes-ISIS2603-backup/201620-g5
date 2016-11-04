@@ -5,8 +5,6 @@
  */
 package co.edu.uniandes.g5.bibliotecas.api;
 
-import co.edu.uniandes.g5.bibliotecas.entities.BlogEntity;
-import co.edu.uniandes.g5.bibliotecas.entities.VideoEntity;
 import co.edu.uniandes.g5.bibliotecas.entities.VideoEntity;
 import co.edu.uniandes.g5.bibliotecas.exceptions.BibliotecaLogicException;
 import java.util.List;

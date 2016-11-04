@@ -23,6 +23,8 @@ import co.edu.uniandes.g5.bibliotecas.dtos.VideoDetailDTO;
 import co.edu.uniandes.g5.bibliotecas.entities.VideoEntity;
 import co.edu.uniandes.g5.bibliotecas.exceptions.BibliotecaLogicException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.WebApplicationException;
@@ -34,6 +36,7 @@ import javax.ws.rs.core.MediaType;
  * @author s.rojas19
  */
 @Produces(MediaType.APPLICATION_JSON)
+@Consumes(MediaType.APPLICATION_JSON)
 @Path("")
 public class VideoResource {
 
@@ -91,7 +94,7 @@ public class VideoResource {
 
     @GET
     @Path("bibliotecas/{idBiblioteca: \\d+}/videos")
-    public List<VideoDTO> getVideosBiblioteca(@PathParam("idBiblioteca") Long idBiblioteca) {
+    public List<VideoDTO> getVideosByBiblioteca(@PathParam("idBiblioteca") Long idBiblioteca) {
         List<VideoEntity> videos = videoLogic.getVideosByBiblioteca(idBiblioteca);
         return listEntity2DTO(videos);
     }
@@ -112,14 +115,23 @@ public class VideoResource {
         return new VideoDetailDTO(resultado);
     }
 
+    @GET
+    @Path("bibliotecas/{idBiblioteca: \\d+}/videos/name/{name}")
+    public VideoDetailDTO getVideoByName(@PathParam("id") Long id, @PathParam("name") String name) {
+        VideoEntity resultado = videoLogic.getVideoByName(name, id);
+        if (resultado == null) {
+            throw new WebApplicationException(404);
+        }
+        return new VideoDetailDTO(resultado);
+    }
+
     /**
      * Crea un video
      *
      * @param video video a agregar
-     * @return libtro agregado
+     * @return video agregado
      */
     @POST
-    @Consumes(MediaType.APPLICATION_JSON)
     @Path("videos")
     public VideoDTO createVideo(VideoDetailDTO video) {
         try {
@@ -127,7 +139,7 @@ public class VideoResource {
             VideoEntity respuesta = videoLogic.createVideo(entity);
             return new VideoDetailDTO(respuesta);
         } catch (BibliotecaLogicException e) {
-            throw new WebApplicationException(404);
+            throw new WebApplicationException(e.getMessage(), 404);
         }
     }
 
@@ -140,15 +152,18 @@ public class VideoResource {
      * @throws BibliotecaLogicException Si no es posible actualizar el video
      */
     @PUT
-    @Consumes(MediaType.APPLICATION_JSON)
     @Path("videos/{id: \\d+}")
-    public VideoDetailDTO updateVideo(@PathParam("id") Long id, VideoDetailDTO video) throws BibliotecaLogicException {
-        existsBiblioteca(video.getBiblioteca().getId());
-        existsVideo(id);
-        VideoEntity entity = video.toEntity();
-        entity.setId(id);
-        return new VideoDetailDTO(videoLogic.updateVideo(entity));
-        
+    public VideoDetailDTO updateVideo(@PathParam("id") Long id, VideoDetailDTO video) {
+        try {
+            existsBiblioteca(video.getBiblioteca().getId());
+            existsVideo(id);
+            VideoEntity entity = video.toEntity();
+            entity.setId(id);
+            return new VideoDetailDTO(videoLogic.updateVideo(entity));
+        } catch (BibliotecaLogicException ex) {
+            throw new WebApplicationException(ex.getMessage(), 404);
+        }
+
     }
 
     /**
@@ -158,7 +173,7 @@ public class VideoResource {
      */
     @DELETE
     @Path("videos/{id: \\d+}")
-    public void deleteVideo(@PathParam("id") Long id){
+    public void deleteVideo(@PathParam("id") Long id) {
         existsVideo(id);
         videoLogic.deleteVideo(id);
     }

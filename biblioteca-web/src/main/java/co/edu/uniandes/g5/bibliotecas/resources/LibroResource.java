@@ -6,7 +6,6 @@
 package co.edu.uniandes.g5.bibliotecas.resources;
 
 import co.edu.uniandes.g5.bibliotecas.api.IBibliotecaLogic;
-import co.edu.uniandes.g5.bibliotecas.api.IBlogLogic;
 import co.edu.uniandes.g5.bibliotecas.api.ILibroLogic;
 import co.edu.uniandes.g5.bibliotecas.dtos.BiblioDetailDTO;
 import java.util.List;
@@ -23,7 +22,6 @@ import co.edu.uniandes.g5.bibliotecas.dtos.LibroDTO;
 import co.edu.uniandes.g5.bibliotecas.dtos.LibroDetailDTO;
 import co.edu.uniandes.g5.bibliotecas.entities.LibroEntity;
 import co.edu.uniandes.g5.bibliotecas.exceptions.BibliotecaLogicException;
-import java.text.ParseException;
 import java.util.ArrayList;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -36,6 +34,7 @@ import javax.ws.rs.core.MediaType;
  * @author s.rojas19
  */
 @Produces(MediaType.APPLICATION_JSON)
+@Consumes(MediaType.APPLICATION_JSON)
 @Path("")
 public class LibroResource {
 
@@ -72,8 +71,8 @@ public class LibroResource {
     }
 
     public void existsLibro(Long libroId) {
-        LibroDetailDTO libro = new LibroDetailDTO(libroLogic.getLibro(libroId));
-        if (libro == null) {
+        LibroEntity entity = libroLogic.getLibro(libroId);
+        if (entity == null) {
             throw new WebApplicationException("El libro no existe", 404);
         }
     }
@@ -93,7 +92,7 @@ public class LibroResource {
 
     @GET
     @Path("bibliotecas/{idBiblioteca: \\d+}/libros")
-    public List<LibroDTO> getLibrosBiblioteca(@PathParam("idBiblioteca") Long idBiblioteca) {
+    public List<LibroDTO> getLibrosByBiblioteca(@PathParam("idBiblioteca") Long idBiblioteca) {
         List<LibroEntity> libros = libroLogic.getLibrosByBiblioteca(idBiblioteca);
         return listEntity2DTO(libros);
     }
@@ -113,15 +112,35 @@ public class LibroResource {
         }
         return new LibroDetailDTO(resultado);
     }
+    
+    @GET
+    @Path("bibliotecas/{idBiblioteca: \\d+}/libros/isbn/{isbn: \\d+}")
+    public LibroDetailDTO getLibroByISBN(@PathParam("id") Long id, @PathParam("isbn") Long isbn) {
+        LibroEntity resultado = libroLogic.getLibroByISBN(isbn, id);
+        if (resultado == null) {
+            throw new WebApplicationException(404);
+        }
+        return new LibroDetailDTO(resultado);
+    }
+
+
+    @GET
+    @Path("bibliotecas/{idBiblioteca: \\d+}/libros/name/{name}")
+    public LibroDetailDTO getLibroByName(@PathParam("id") Long id, @PathParam("name") String name) {
+        LibroEntity resultado = libroLogic.getLibroByName(name, id);
+        if (resultado == null) {
+            throw new WebApplicationException(404);
+        }
+        return new LibroDetailDTO(resultado);
+    }
 
     /**
      * Crea un libro
      *
      * @param libro libro a agregar
-     * @return libtro agregado
+     * @return libro agregado
      */
     @POST
-    @Consumes(MediaType.APPLICATION_JSON)
     @Path("libros")
     public LibroDTO createLibro(LibroDetailDTO libro) {
         try {
@@ -129,7 +148,7 @@ public class LibroResource {
             LibroEntity respuesta = libroLogic.createLibro(entity);
             return new LibroDetailDTO(respuesta);
         } catch (BibliotecaLogicException e) {
-            throw new WebApplicationException(404);
+            throw new WebApplicationException(e.getMessage(), 404);
         }
     }
 
@@ -142,15 +161,18 @@ public class LibroResource {
      * @throws BibliotecaLogicException Si no es posible actualizar el libro
      */
     @PUT
-    @Consumes(MediaType.APPLICATION_JSON)
     @Path("libros/{id: \\d+}")
-    public LibroDetailDTO updateLibro(@PathParam("id") Long id, LibroDetailDTO libro) throws BibliotecaLogicException {
-        existsBiblioteca(libro.getBiblioteca().getId());
-        existsLibro(id);
-        LibroEntity entity = libro.toEntity();
-        entity.setId(id);
-        return new LibroDetailDTO(libroLogic.updateLibro(entity));
-        
+    public LibroDetailDTO updateLibro(@PathParam("id") Long id, LibroDetailDTO libro) {
+        try {
+            existsBiblioteca(libro.getBiblioteca().getId());
+            existsLibro(id);
+            LibroEntity entity = libro.toEntity();
+            entity.setId(id);
+            return new LibroDetailDTO(libroLogic.updateLibro(entity));
+        } catch (BibliotecaLogicException ex) {
+            throw new WebApplicationException(ex.getMessage(), 404);
+        }
+
     }
 
     /**
@@ -160,7 +182,7 @@ public class LibroResource {
      */
     @DELETE
     @Path("libros/{id: \\d+}")
-    public void deleteLibro(@PathParam("id") Long id){
+    public void deleteLibro(@PathParam("id") Long id) {
         existsLibro(id);
         libroLogic.deleteLibro(id);
     }
