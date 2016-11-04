@@ -142,7 +142,34 @@ public class ReservaResource {
     }
 
     
+        /**
+     * Obtiene el listado de reservas de la biblioteca.
+     *
+     * @return lista de reservas
+     * @throws BibliotecaLogicException excepción retornada por la lógica
+     */
+    @GET
+    @Path("reservas")
+    public List<ReservaDetailDTO> getReservasBiblioteca() throws BibliotecaLogicException, ParseException {
+        existsBiblioteca(bibliotecaId);
+        List<ReservaEntity> reservas = reservaLogic.getReservasByBiblioteca(bibliotecaId);
+        return listEntity2DTO(reservas);
+    }
     
+     @GET
+    @Path("reservas/{reservaId: \\d+}")
+    public ReservaDetailDTO getReserva(@PathParam("reservaId") Long reservaId) throws BibliotecaLogicException, ParseException {
+       existsBiblioteca(bibliotecaId);
+        LOGGER.log(Level.INFO, "Consultando biblioteca con bibliotecaId = {0}", bibliotecaId);
+        ReservaEntity entity = reservaLogic.getReserva(reservaId);
+        LOGGER.log(Level.INFO, "Consultando biblioteca con id = {0}", entity.getBiblioteca().getId());
+        if (entity.getBiblioteca() != null && !bibliotecaId.equals(entity.getBiblioteca().getId())) {
+            throw new WebApplicationException(404);
+        }
+
+        return new ReservaDetailDTO(entity);
+    }
+
     
     @POST
     @Path("recurso/{tipoRecurso}/{recursoId: \\d+}/usuario/{idUsuario: \\d+}/reservas")
