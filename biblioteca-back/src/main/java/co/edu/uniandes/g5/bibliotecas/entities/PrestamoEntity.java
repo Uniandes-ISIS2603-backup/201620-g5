@@ -13,6 +13,7 @@ import java.io.Serializable;
 import javax.persistence.Entity;
 import java.util.Date;
 import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
 import uk.co.jemos.podam.common.PodamExclude;
 
 
@@ -46,9 +47,11 @@ public class PrestamoEntity extends BaseEntity implements Serializable {
     private String medioPago;
     
     //@PodamStrategyValue(DateStrategy.class)
+    @Temporal(javax.persistence.TemporalType.DATE)
     private Date fechaInicial;
     
    // @PodamStrategyValue(DateStrategy.class)
+    @Temporal(javax.persistence.TemporalType.DATE)
     private Date fechaFinal;
     private boolean estaActivo;
 

@@ -17,6 +17,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.OneToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
 import uk.co.jemos.podam.common.PodamExclude;
 
 
@@ -46,6 +47,7 @@ public class ReservaEntity extends BaseEntity implements Serializable {
     @ManyToOne
     private co.edu.uniandes.g5.bibliotecas.entities.RecursoEntity   recurso;
 
+    @Temporal(javax.persistence.TemporalType.DATE)
     private Date fecha;
 
     public Date getFecha() {

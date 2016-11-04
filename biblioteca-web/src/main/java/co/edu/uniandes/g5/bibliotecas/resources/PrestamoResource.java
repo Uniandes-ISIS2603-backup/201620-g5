@@ -85,7 +85,6 @@ public class PrestamoResource {
      * @throws BibliotecaLogicException excepción retornada por la lógica
      */
     @GET
-    @Path("")
     public List<PrestamoDetailDTO> getPrestamosBiblioteca() throws BibliotecaLogicException, ParseException {
         existsBiblioteca(bibliotecaId);
         List<PrestamoEntity> prestamos = prestamoLogic.getPrestamosByBiblioteca(bibliotecaId);

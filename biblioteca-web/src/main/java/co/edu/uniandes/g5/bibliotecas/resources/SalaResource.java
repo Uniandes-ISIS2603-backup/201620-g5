@@ -125,13 +125,5 @@ public class SalaResource {
         salaLogic.deleteSala(id);
     }
 
-    /*
-    R13
-     
-    @GET
-    @Path("salas/ {id: \\d+}")
-    public SalaDTO getDisponibilidadSala(@PathParam("id") Long idSala, String fecha) {
-        return salaLogic.getDisponibilidadSala(idSala, fecha);
-    }
-     */
+   
 }

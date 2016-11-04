@@ -11,12 +11,9 @@ package co.edu.uniandes.g5.bibliotecas.entities;
  */
 import java.io.Serializable;
 import javax.persistence.Entity;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
-import javax.persistence.CascadeType;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
 import uk.co.jemos.podam.common.PodamExclude;
 
 @Entity
@@ -35,6 +32,7 @@ public class MultaEntity extends BaseEntity implements Serializable {
     
     private double costo;
     
+    @Temporal(javax.persistence.TemporalType.DATE)
     private Date fecha;
 
     /**

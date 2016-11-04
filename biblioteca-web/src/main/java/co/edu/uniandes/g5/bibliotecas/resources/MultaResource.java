@@ -94,7 +94,6 @@ public class MultaResource {
      * @throws BibliotecaLogicException excepción retornada por la lógica
      */
     @GET
-    @Path("")
     public List<MultaDetailDTO> getMultasUsuario() throws BibliotecaLogicException {
         existsUsuario(usuarioId);
         List<MultaEntity> multas = multaLogic.getMultasByUsuario(usuarioId);
@@ -141,8 +140,6 @@ public class MultaResource {
     }
     
     /**
-    @PUT
-    @Path("multas/{id: \\d+}/usuarios/idUsuario/fecha")
     public MultaDetailDTO regresarLibro(@PathParam("id") Long id, MultaDTO m) throws BibliotecaLogicException, ParseException {
         return multaLogic.updateMulta1(id,m);
     }
@@ -157,22 +154,16 @@ public class MultaResource {
     }
     
     /*
-    @GET
-    @Path("{id: \\d+}/{idUsuario: \\d+}")
     public MultaDTO getMultaDeUsuario(@PathParam("id")int id,@PathParam("idUsuario")int idUsuario) throws BibliotecaLogicException {
         MultaLogicMock multaLogic = new MultaLogicMock();
         return multaLogic.getMultaDeUsuario(id, idUsuario);
     }
-    
-    @PUT
-    @Path("{id: \\d+}/{idUsuario: \\d+}")
+   
     public MultaDTO updateMultaUsuario(@PathParam("id")int id, MultaDTO m,@PathParam("idUsuario")int idUsuario)throws BibliotecaLogicException{
         MultaLogicMock multaLogic = new MultaLogicMock();
         return multaLogic.updateMultaDeUsuario(id, m, idUsuario);
     }
     
-    @DELETE
-    @Path("{id: \\d+}/{idUsuario: \\d+}")
     public void deleteMultaUsuario(@PathParam("id") int id,@PathParam("idUsuario")int idUsuario )throws BibliotecaLogicException{
         MultaLogicMock multaLogic = new MultaLogicMock();
         multaLogic.deleteMultaDeBiblioteca(id, idUsuario);
