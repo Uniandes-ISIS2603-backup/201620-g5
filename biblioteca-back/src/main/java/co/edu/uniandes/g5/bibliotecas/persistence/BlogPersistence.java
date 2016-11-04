@@ -6,6 +6,7 @@
 package co.edu.uniandes.g5.bibliotecas.persistence;
 
 import co.edu.uniandes.g5.bibliotecas.entities.BlogEntity;
+import co.edu.uniandes.g5.bibliotecas.entities.PrestamoEntity;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -59,6 +60,18 @@ public class BlogPersistence {
         TypedQuery q = em.createQuery("select u from BlogEntity u where u.libro.id = :libroId", BlogEntity.class);
         q = q.setParameter("libroId", libroId);
         return q.getResultList();
+    }
+    
+    public boolean usuarioPrestoLibro(Long idUsuario, Long idLibro)
+    {
+        TypedQuery q = em.createQuery("select u from PrestamoEntity u where u.libro.id = :libroId and u.usuario.id = :usuarioId", PrestamoEntity.class);
+        q = q.setParameter("libroId", idLibro);
+        q = q.setParameter("usuarioId", idUsuario);
+        List<PrestamoEntity> lista = q.getResultList();
+        if (lista == null)
+        return false;
+        
+        return false;
     }
     
     

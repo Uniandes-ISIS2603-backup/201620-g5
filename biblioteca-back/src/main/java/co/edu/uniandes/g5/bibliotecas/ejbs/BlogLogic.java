@@ -35,7 +35,6 @@ public class BlogLogic implements IBlogLogic {
 
     @Override
     public BlogEntity createBlog(BlogEntity entity) {
-        
         return persistence.create(entity);
     }
 

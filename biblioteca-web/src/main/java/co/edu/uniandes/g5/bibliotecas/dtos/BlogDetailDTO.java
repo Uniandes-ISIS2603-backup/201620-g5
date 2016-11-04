@@ -20,6 +20,10 @@ public class BlogDetailDTO extends BlogDTO{
     private LibroDTO libro;
     
     
+    @PodamExclude
+    private UsuarioDTO usuario;
+    
+    
     public BlogDetailDTO()
     {
         super();
@@ -30,6 +34,8 @@ public class BlogDetailDTO extends BlogDTO{
         super(entity);
         if (entity.getLibro() != null)
             this.libro = new LibroDTO(entity.getLibro());
+        if (entity.getUsuario() != null)
+            this.usuario = new UsuarioDTO(entity.getUsuario());
     }
     
     
@@ -38,6 +44,8 @@ public class BlogDetailDTO extends BlogDTO{
         BlogEntity entity = super.toEntity();
         if (this.getLibro() != null)
             entity.setLibro(this.getLibro().toEntity());
+        if (this.getUsuario() != null)
+            entity.setUsuario(this.getUsuario().toEntity());
         return entity;
     }
     
@@ -50,6 +58,17 @@ public class BlogDetailDTO extends BlogDTO{
     public void setLibro(LibroDTO libro)
     {
         this.libro = libro;
+    }
+    
+    
+    public UsuarioDTO getUsuario()
+    {
+        return usuario;
+    }
+    
+    public void setUsuario(UsuarioDTO usuario)
+    {
+        this.usuario = usuario;
     }
     
 }
