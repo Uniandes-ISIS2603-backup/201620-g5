@@ -34,7 +34,7 @@ public interface IReservaLogic {
     public List<ReservaEntity> getReservasByRecurso(Long idBiblioteca, Long idRecurso);
     public List<ReservaEntity> getReservasByBiblioteca(Long idBiblioteca);
     
-    public ReservaEntity createReserva(ReservaEntity prestamo) throws BibliotecaLogicException; 
-    public ReservaEntity updateReserva(ReservaEntity prestamo) throws BibliotecaLogicException;
+    public ReservaEntity createReserva(ReservaEntity reserva, Long idBiblioteca, Long tipoRecurso, Long idRecurso, Long idUsuario) throws BibliotecaLogicException; 
+    public ReservaEntity updateReserva(ReservaEntity reserva, Long idBiblioteca, Long tipoRecurso, Long idRecurso, Long idUsuario) throws BibliotecaLogicException;
     public ReservaEntity deleteReserva(Long id) throws BibliotecaLogicException;
 }

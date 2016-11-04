@@ -5,14 +5,22 @@
  */
 package co.edu.uniandes.g5.bibliotecas.ejbs;
 
+import co.edu.uniandes.g5.bibliotecas.api.IBibliotecaLogic;
+import co.edu.uniandes.g5.bibliotecas.api.ILibroLogic;
 import co.edu.uniandes.g5.bibliotecas.api.IPrestamoLogic;
+import co.edu.uniandes.g5.bibliotecas.api.ISalaLogic;
+import co.edu.uniandes.g5.bibliotecas.api.IUsuarioLogic;
+import co.edu.uniandes.g5.bibliotecas.api.IVideoLogic;
 import co.edu.uniandes.g5.bibliotecas.entities.LibroEntity;
 import co.edu.uniandes.g5.bibliotecas.entities.PrestamoEntity;
 import co.edu.uniandes.g5.bibliotecas.entities.RecursoEntity;
+import co.edu.uniandes.g5.bibliotecas.entities.SalaEntity;
+import co.edu.uniandes.g5.bibliotecas.entities.UsuarioEntity;
 import co.edu.uniandes.g5.bibliotecas.entities.VideoEntity;
 import co.edu.uniandes.g5.bibliotecas.exceptions.BibliotecaLogicException;
 import co.edu.uniandes.g5.bibliotecas.persistence.PrestamoPersistence;
 import java.util.List;
+import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.inject.Inject;
@@ -29,6 +37,21 @@ public class PrestamoLogic implements IPrestamoLogic {
     
     @Inject
     private PrestamoPersistence persistence;
+    
+    @Inject
+    private IUsuarioLogic usuarioLogic;
+    
+    @Inject
+    private ILibroLogic libroLogic;
+    
+    @Inject
+    private IVideoLogic videoLogic;
+    
+    @Inject
+    private ISalaLogic salaLogic;
+    
+    @Inject
+    private IBibliotecaLogic bibliotecaLogic;
 
     @Override
     public List<PrestamoEntity> getPrestamos() {
@@ -81,9 +104,11 @@ public class PrestamoLogic implements IPrestamoLogic {
      * @throws co.edu.uniandes.g5.bibliotecas.exceptions.BibliotecaLogicException
      */
     @Override
-    public PrestamoEntity createPrestamo(PrestamoEntity prestamo) throws BibliotecaLogicException {
+    public PrestamoEntity createPrestamo(PrestamoEntity prestamo,Long idBiblioteca, Long tipoRecurso, Long idRecurso, Long idUsuario) throws BibliotecaLogicException {
          
      PrestamoEntity alreadyExist = getPrestamo(prestamo.getId());
+      UsuarioEntity usuario = usuarioLogic.getUsuario(idUsuario);
+         prestamo.setUsuario(usuario);
         if (alreadyExist != null) 
         {
             throw new BibliotecaLogicException("Ya existe un prestamo con ese id");
@@ -93,29 +118,39 @@ public class PrestamoLogic implements IPrestamoLogic {
             throw new BibliotecaLogicException("Costo inválido. El costo no puede ser menor o igual a 0");
         }
         
-        if(prestamo.getUsuario().getMultas().size() > 0)
+        if(usuario.getMultas().size() > 0)
         {
             throw new BibliotecaLogicException("El usuario tiene multas, no es posible hacer el préstamo hasta que se paguen las multas.");
         }
 
-        if(prestamo.getRecurso().getTipoRecurso() == RecursoEntity.LIBRO)
+        if(Objects.equals(tipoRecurso, RecursoEntity.LIBRO))
         {
-            LibroEntity libro = (LibroEntity) prestamo.getRecurso();
+            LibroEntity libro = libroLogic.getLibro(idRecurso);
             if(libro.getEjemplaresDisponibles() <= 0)
             {
             throw new BibliotecaLogicException("No hay libros disponibles para prestar.");
             }
+            prestamo.setRecurso(libro);
         }
-        else if(prestamo.getRecurso().getTipoRecurso() == RecursoEntity.VIDEO)
+        else if(Objects.equals(tipoRecurso, RecursoEntity.VIDEO))
         {
-            VideoEntity video = (VideoEntity) prestamo.getRecurso();
+            VideoEntity video = videoLogic.getVideo(idRecurso);
             if(video.getEjemplaresDisponibles() == 0)
+            {
             throw new BibliotecaLogicException("No hay videos disponibles para prestar.");
+            }
+            prestamo.setRecurso(video);
         }
+        else if(Objects.equals(tipoRecurso, RecursoEntity.SALA))
+        {
+            SalaEntity sala = salaLogic.getSala(idRecurso);
+            prestamo.setRecurso(sala);
+        }
+       
+
+        prestamo.setBiblioteca(bibliotecaLogic.getBiblioteca(idBiblioteca));
         
         prestamo = persistence.create(prestamo);
-
-        
         return prestamo;
         
         
@@ -125,25 +160,56 @@ public class PrestamoLogic implements IPrestamoLogic {
     
 
     @Override
-    public PrestamoEntity updatePrestamo(PrestamoEntity prestamo) throws BibliotecaLogicException {
+    public PrestamoEntity updatePrestamo(PrestamoEntity prestamo,Long idBiblioteca, Long tipoRecurso, Long idRecurso, Long idUsuario) throws BibliotecaLogicException {
        
-         if(prestamo.getCosto() <= 0 )
+        PrestamoEntity oldPrestamo = getPrestamo(prestamo.getId());
+        if(prestamo.getCosto() == null)
+        {
+            prestamo.setCosto(oldPrestamo.getCosto());
+        }
+        else if(prestamo.getCosto() <= 0 )
         {
             throw new BibliotecaLogicException("Costo inválido");
         }
-       if(prestamo.getRecurso().getTipoRecurso() == RecursoEntity.LIBRO)
+       if(tipoRecurso == RecursoEntity.LIBRO)
         {
-            LibroEntity libro = (LibroEntity) prestamo.getRecurso();
+            LibroEntity libro = libroLogic.getLibro(idRecurso);
             if(libro.getEjemplaresDisponibles() == 0)
+            {
             throw new BibliotecaLogicException("No hay libros disponibles para prestar.");
+            }
+            prestamo.setRecurso(libro);
         }
-        else if(prestamo.getRecurso().getTipoRecurso() == RecursoEntity.VIDEO)
+        else if(tipoRecurso == RecursoEntity.VIDEO)
         {
-            VideoEntity video = (VideoEntity) prestamo.getRecurso();
+            VideoEntity video = videoLogic.getVideo(idRecurso);
             if(video.getEjemplaresDisponibles() == 0)
+            {
             throw new BibliotecaLogicException("No hay videos disponibles para prestar.");
+            }
+            prestamo.setRecurso(video);
         }
+        else if(tipoRecurso == RecursoEntity.SALA)
+        {
+            SalaEntity sala =  salaLogic.getSala(idRecurso);
+            prestamo.setRecurso(sala);
+        }
+        if(prestamo.getFechaInicial() == null)
+        {
+            prestamo.setFechaInicial(oldPrestamo.getFechaInicial());
+        }
+        if(prestamo.getFechaFinal() == null)
+        {
+            prestamo.setFechaFinal(oldPrestamo.getFechaFinal());
+        }
+        if(prestamo.getMedioPago() == null)
+        {
+            prestamo.setMedioPago(oldPrestamo.getMedioPago());
+        }
+        UsuarioEntity usuario = usuarioLogic.getUsuario(idUsuario);
+        prestamo.setUsuario(usuario);
         
+        prestamo.setBiblioteca(bibliotecaLogic.getBiblioteca(idBiblioteca));
         return persistence.update(prestamo);
         
     }

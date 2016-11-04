@@ -8,6 +8,7 @@ import co.edu.uniandes.g5.bibliotecas.entities.PrestamoEntity;
 import co.edu.uniandes.g5.bibliotecas.persistence.PrestamoPersistence;
 import co.edu.uniandes.g5.bibliotecas.entities.UsuarioEntity;
 import co.edu.uniandes.g5.bibliotecas.entities.BibliotecaEntity;
+import co.edu.uniandes.g5.bibliotecas.entities.BlogEntity;
 import co.edu.uniandes.g5.bibliotecas.entities.LibroEntity;
 import co.edu.uniandes.g5.bibliotecas.entities.MultaEntity;
 import co.edu.uniandes.g5.bibliotecas.entities.VideoEntity;
@@ -42,9 +43,15 @@ public class PrestamoLogicTest {
 
     UsuarioEntity usuarioEntity;
 
+    UsuarioEntity usuarioEntityFail;
     BibliotecaEntity bibliotecaEntity;
 
     LibroEntity libroEntity;
+    LibroEntity libroEntityFail;
+    
+    MultaEntity multaEntity;
+    
+    ArrayList<MultaEntity> multas = new ArrayList<>();
 
 
     /**
@@ -98,6 +105,9 @@ public class PrestamoLogicTest {
                 .addAsManifestResource("META-INF/beans.xml", "beans.xml");
     }
 
+    public PrestamoLogicTest() {
+    }
+
     /**
      * Configuración inicial de la prueba.
      *
@@ -142,14 +152,30 @@ public class PrestamoLogicTest {
     private void insertData() {
 
         usuarioEntity = factory.manufacturePojo(UsuarioEntity.class);
-        usuarioEntity.setId(1L);
         em.persist(usuarioEntity);
+        
+        multaEntity = factory.manufacturePojo(MultaEntity.class);
+        em.persist(multaEntity);
+        multas.add(multaEntity);
+        
+        usuarioEntityFail = factory.manufacturePojo(UsuarioEntity.class);
+        usuarioEntityFail.setMultas(multas);
+        em.persist(usuarioEntityFail);
+        
+        em.flush();
+        UsuarioEntity usuario = em.find(UsuarioEntity.class, usuarioEntityFail.getId());
+        usuarioEntityFail = usuario;
+        
         bibliotecaEntity = factory.manufacturePojo(BibliotecaEntity.class);
-        bibliotecaEntity.setId(1L);
         em.persist(bibliotecaEntity);
+        
         libroEntity = factory.manufacturePojo(LibroEntity.class);
-        libroEntity.setId(1L);
         em.persist(libroEntity);
+        
+        libroEntityFail = factory.manufacturePojo(LibroEntity.class);
+        libroEntityFail.setEjemplaresDisponibles(0);
+        libroEntityFail.setTipoRecurso(LibroEntity.LIBRO);
+        em.persist(libroEntityFail);
         for (int i = 0; i < 3; i++) {
             PrestamoEntity entity = factory.manufacturePojo(PrestamoEntity.class);
             entity.setBiblioteca(bibliotecaEntity);
@@ -170,9 +196,7 @@ public class PrestamoLogicTest {
     @Test
     public void createPrestamoTest1() throws BibliotecaLogicException{
         PrestamoEntity newEntity = factory.manufacturePojo(PrestamoEntity.class);
-        newEntity.setRecurso(libroEntity);
-        newEntity.setUsuario(usuarioEntity);
-        PrestamoEntity result = prestamoLogic.createPrestamo(newEntity);
+        PrestamoEntity result = prestamoLogic.createPrestamo(newEntity, bibliotecaEntity.getId(), libroEntity.getTipoRecurso(), libroEntity.getId(), usuarioEntity.getId());
         Assert.assertNotNull(result);
         PrestamoEntity entity = em.find(PrestamoEntity.class, result.getId());
         Assert.assertEquals(newEntity.getName(), entity.getName());
@@ -184,11 +208,8 @@ public class PrestamoLogicTest {
     @Test(expected = BibliotecaLogicException.class)
     public void createPrestamoTest2() throws BibliotecaLogicException {
         PrestamoEntity prest = factory.manufacturePojo(PrestamoEntity.class);
-        prest.setBiblioteca(bibliotecaEntity);
-        prest.setRecurso(libroEntity);
-        prest.setUsuario(usuarioEntity);
         prest.setCosto(-2.0);
-        PrestamoEntity result = prestamoLogic.createPrestamo(prest);
+        PrestamoEntity result = prestamoLogic.createPrestamo(prest,bibliotecaEntity.getId(), libroEntity.getTipoRecurso(), libroEntity.getId(), usuarioEntity.getId());
     }
     /**
      * Prueba para crear un Prestamo con un recurso con 0 unidades disponibles.
@@ -197,32 +218,20 @@ public class PrestamoLogicTest {
     @Test(expected = BibliotecaLogicException.class)
     public void createPrestamoTest3() throws BibliotecaLogicException {
         PrestamoEntity prest = factory.manufacturePojo(PrestamoEntity.class);
-        prest.setBiblioteca(bibliotecaEntity);
-        libroEntity.setTipoRecurso(LibroEntity.LIBRO);
-        libroEntity.setEjemplaresDisponibles(0);
-        prest.setRecurso(libroEntity);
-        prest.setUsuario(usuarioEntity);
 
 
-        PrestamoEntity result = prestamoLogic.createPrestamo(prest);
+        PrestamoEntity result = prestamoLogic.createPrestamo(prest,bibliotecaEntity.getId(), libroEntityFail.getTipoRecurso(), libroEntityFail.getId(), usuarioEntity.getId());
     }
     
     /**
      * Prueba para crear un Prestamo con un usuario con multas
      * @throws co.edu.uniandes.g5.bibliotecas.exceptions.BibliotecaLogicException
-     */
+     
     @Test(expected = BibliotecaLogicException.class)
     public void createPrestamoTest4() throws BibliotecaLogicException {
         PrestamoEntity prest = factory.manufacturePojo(PrestamoEntity.class);
-        prest.setBiblioteca(bibliotecaEntity);
-        prest.setRecurso(libroEntity);
-        ArrayList<MultaEntity> multas = new ArrayList();
-        multas.add(factory.manufacturePojo(MultaEntity.class));
-        usuarioEntity.setMultas(multas);
-        prest.setUsuario(usuarioEntity);
 
-
-        PrestamoEntity result = prestamoLogic.createPrestamo(prest);
+        PrestamoEntity result = prestamoLogic.createPrestamo(prest,bibliotecaEntity.getId(), libroEntity.getTipoRecurso(), libroEntity.getId(), usuarioEntityFail.getId());
     }
    
     /**
@@ -287,7 +296,7 @@ public class PrestamoLogicTest {
         pojoEntity.setBiblioteca(bibliotecaEntity);
         pojoEntity.setUsuario(usuarioEntity);
 
-        prestamoLogic.updatePrestamo(pojoEntity);
+        prestamoLogic.updatePrestamo(pojoEntity,bibliotecaEntity.getId(), libroEntity.getTipoRecurso(), libroEntity.getId(), usuarioEntity.getId());
 
         PrestamoEntity resp = em.find(PrestamoEntity.class, entity.getId());
 

@@ -1,6 +1,7 @@
 
 package co.edu.uniandes.g5.bibliotecas.testLogic;
 
+import co.edu.uniandes.g5.bibliotecas.api.ILibroLogic;
 import co.edu.uniandes.g5.bibliotecas.ejbs.ReservaLogic;
 import co.edu.uniandes.g5.bibliotecas.api.IReservaLogic;
 import co.edu.uniandes.g5.bibliotecas.ejbs.ReservaLogic;
@@ -40,10 +41,12 @@ public class ReservaLogicTest {
 
 
     UsuarioEntity usuarioEntity;
+    
 
     BibliotecaEntity bibliotecaEntity;
 
     LibroEntity libroEntity;
+    LibroEntity libroEntityFail;
     
     VideoEntity videoEntity;
     
@@ -59,6 +62,9 @@ public class ReservaLogicTest {
      */
     @Inject
     private IReservaLogic reservaLogic;
+    
+    @Inject
+    private ILibroLogic libroLogic;
 
     /**
      *
@@ -153,8 +159,14 @@ public class ReservaLogicTest {
         usuarioEntity = factory.manufacturePojo(UsuarioEntity.class);
         usuarioEntity.setId(1L);
         em.persist(usuarioEntity);
+        libroEntityFail = factory.manufacturePojo(LibroEntity.class);
+        libroEntityFail.setEjemplaresDisponibles(0);
+        libroEntityFail.setId(2L);
+        libroEntityFail.setTipoRecurso(LibroEntity.LIBRO);
+        em.persist(libroEntityFail);
         bibliotecaEntity = factory.manufacturePojo(BibliotecaEntity.class);
         bibliotecaEntity.setId(1L);
+
         em.persist(bibliotecaEntity);
         libroEntity = factory.manufacturePojo(LibroEntity.class);
         libroEntity.setId(1L);
@@ -179,11 +191,9 @@ public class ReservaLogicTest {
     @Test
     public void createReservaTest1() throws BibliotecaLogicException{
         ReservaEntity newEntity = factory.manufacturePojo(ReservaEntity.class);
-        newEntity.setRecurso(libroEntity);
-        ReservaEntity result = reservaLogic.createReserva(newEntity);
+        ReservaEntity result = reservaLogic.createReserva(newEntity,bibliotecaEntity.getId(), libroEntity.getTipoRecurso(), libroEntity.getId(), usuarioEntity.getId());
         Assert.assertNotNull(result);
         ReservaEntity entity = em.find(ReservaEntity.class, result.getId());
-        Assert.assertEquals(newEntity.getName(), entity.getName());
         Assert.assertEquals(newEntity.getId(), entity.getId());
     }
     /**
@@ -193,14 +203,8 @@ public class ReservaLogicTest {
     @Test(expected = BibliotecaLogicException.class)
     public void createReservaTest2() throws BibliotecaLogicException {
         ReservaEntity prest = factory.manufacturePojo(ReservaEntity.class);
-        prest.setBiblioteca(bibliotecaEntity);
-        libroEntity.setTipoRecurso(LibroEntity.LIBRO);
-        libroEntity.setEjemplaresDisponibles(0);
-        prest.setRecurso(libroEntity);
-        prest.setUsuario(usuarioEntity);
-
-
-        ReservaEntity result = reservaLogic.createReserva(prest);
+        
+        ReservaEntity result = reservaLogic.createReserva(prest,bibliotecaEntity.getId(), libroEntityFail.getTipoRecurso(), libroEntityFail.getId(), usuarioEntity.getId());
     }
    
     /**
@@ -265,7 +269,7 @@ public class ReservaLogicTest {
         pojoEntity.setBiblioteca(bibliotecaEntity);
         pojoEntity.setUsuario(usuarioEntity);
 
-        reservaLogic.updateReserva(pojoEntity);
+        reservaLogic.updateReserva(pojoEntity,bibliotecaEntity.getId(), libroEntity.getTipoRecurso(), libroEntity.getId(), usuarioEntity.getId());
 
         ReservaEntity resp = em.find(ReservaEntity.class, entity.getId());
 

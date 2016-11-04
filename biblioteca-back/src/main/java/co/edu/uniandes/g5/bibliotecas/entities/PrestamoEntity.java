@@ -22,9 +22,9 @@ public class PrestamoEntity extends BaseEntity implements Serializable {
 
     
     
-    public static final int VIDEO = 1;
-    public static final int LIBRO = 2;
-    public static final int SALA = 3;
+    public static final Long VIDEO = 1L;
+    public static final Long LIBRO = 2L;
+    public static final Long SALA = 3L;
 
     
     
@@ -37,7 +37,7 @@ public class PrestamoEntity extends BaseEntity implements Serializable {
     @ManyToOne
     private co.edu.uniandes.g5.bibliotecas.entities.BibliotecaEntity biblioteca;
     
-    private int tipoRecurso;
+    private Long tipoRecurso;
 
      @PodamExclude
     @ManyToOne
@@ -76,11 +76,11 @@ public class PrestamoEntity extends BaseEntity implements Serializable {
         this.biblioteca = biblioteca;
     }
 
-    public int getTipoRecurso() {
+    public Long getTipoRecurso() {
         return tipoRecurso;
     }
 
-    public void setTipoRecurso(int tipoRecurso) {
+    public void setTipoRecurso(Long tipoRecurso) {
         this.tipoRecurso = tipoRecurso;
     }
 

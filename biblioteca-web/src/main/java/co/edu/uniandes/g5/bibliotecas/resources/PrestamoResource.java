@@ -6,10 +6,19 @@
 package co.edu.uniandes.g5.bibliotecas.resources;
 
 import co.edu.uniandes.g5.bibliotecas.api.IBibliotecaLogic;
+import co.edu.uniandes.g5.bibliotecas.api.ILibroLogic;
 import co.edu.uniandes.g5.bibliotecas.api.IPrestamoLogic;
+import co.edu.uniandes.g5.bibliotecas.api.ISalaLogic;
+import co.edu.uniandes.g5.bibliotecas.api.IUsuarioLogic;
+import co.edu.uniandes.g5.bibliotecas.api.IVideoLogic;
 import co.edu.uniandes.g5.bibliotecas.dtos.BiblioDetailDTO;
+import co.edu.uniandes.g5.bibliotecas.dtos.LibroDetailDTO;
 import co.edu.uniandes.g5.bibliotecas.dtos.PrestamoDTO;
 import co.edu.uniandes.g5.bibliotecas.dtos.PrestamoDetailDTO;
+import co.edu.uniandes.g5.bibliotecas.dtos.RecursoDTO;
+import co.edu.uniandes.g5.bibliotecas.dtos.SalaDetailDTO;
+import co.edu.uniandes.g5.bibliotecas.dtos.UsuarioDetailDTO;
+import co.edu.uniandes.g5.bibliotecas.dtos.VideoDetailDTO;
 import co.edu.uniandes.g5.bibliotecas.entities.PrestamoEntity;
 import co.edu.uniandes.g5.bibliotecas.exceptions.BibliotecaLogicException;
 import java.text.ParseException;
@@ -34,7 +43,7 @@ import javax.ws.rs.core.MediaType;
  *
  * @author sf.munera10
  */
-@Path("/bibliotecas/{bibliotecaId: \\d+}/prestamos")
+@Path("/bibliotecas/{bibliotecaId: \\d+}")
 @Produces("application/json")
 public class PrestamoResource {
 
@@ -45,6 +54,18 @@ public class PrestamoResource {
 
     @Inject
     private IBibliotecaLogic bibliotecaLogic;
+    
+    @Inject
+    private IUsuarioLogic usuarioLogic;
+    
+    @Inject
+    private ILibroLogic libroLogic;
+    
+    @Inject
+    private IVideoLogic videoLogic;
+    
+    @Inject 
+    private ISalaLogic salaLogic;
 
     @PathParam("bibliotecaId")
     private Long bibliotecaId;
@@ -71,6 +92,47 @@ public class PrestamoResource {
             throw new WebApplicationException("La biblioteca no existe", 404);
         }
     }
+    
+    public void existsUsuario(Long usuarioId) {
+        UsuarioDetailDTO usuario = new UsuarioDetailDTO(usuarioLogic.getUsuario(usuarioId));
+        if (usuario == null) {
+            throw new WebApplicationException("El usuario no existe", 404);
+        }
+    }
+    
+    public void existsRecurso(Long recursoId, String tipoRecurso)
+    {
+        if(tipoRecurso.equals(RecursoDTO.LIBRO))
+        {
+            LibroDetailDTO libro = new LibroDetailDTO(libroLogic.getLibro(recursoId));
+            if(libro == null)
+            {
+            throw new WebApplicationException("El libro no existe", 404);
+            }
+            
+              
+        }
+        else if(tipoRecurso.equals(RecursoDTO.VIDEO))
+        {
+            VideoDetailDTO video = new VideoDetailDTO(videoLogic.getVideo(recursoId));
+            if(video == null)
+            {
+            throw new WebApplicationException("El video no existe", 404);
+            }
+            
+              
+        }
+        else if(tipoRecurso.equals(RecursoDTO.SALA))
+        {
+            SalaDetailDTO sala = new SalaDetailDTO(salaLogic.getSala(recursoId));
+            if(sala == null)
+            {
+            throw new WebApplicationException("La sala no existe", 404);
+            }
+            
+              
+        }
+    }
 
     public void existsPrestamo(Long prestamoId) {
         PrestamoDetailDTO prestamo = new PrestamoDetailDTO(prestamoLogic.getPrestamo(prestamoId));
@@ -85,6 +147,7 @@ public class PrestamoResource {
      * @throws BibliotecaLogicException excepción retornada por la lógica
      */
     @GET
+    @Path("prestamos")
     public List<PrestamoDetailDTO> getPrestamosBiblioteca() throws BibliotecaLogicException, ParseException {
         existsBiblioteca(bibliotecaId);
         List<PrestamoEntity> prestamos = prestamoLogic.getPrestamosByBiblioteca(bibliotecaId);
@@ -92,7 +155,7 @@ public class PrestamoResource {
     }
     
      @GET
-    @Path("{prestamoId: \\d+}")
+    @Path("prestamos/{prestamoId: \\d+}")
     public PrestamoDetailDTO getPrestamo(@PathParam("prestamoId") Long prestamoId) throws BibliotecaLogicException, ParseException {
        existsBiblioteca(bibliotecaId);
         LOGGER.log(Level.INFO, "Consultando biblioteca con bibliotecaId = {0}", bibliotecaId);
@@ -154,24 +217,63 @@ public class PrestamoResource {
     
     
     @POST
+    @Path("recurso/{tipoRecurso}/{recursoId: \\d+}/usuario/{idUsuario: \\d+}/prestamos")
     @Consumes(MediaType.APPLICATION_JSON)
-    public PrestamoDetailDTO createPrestamo(PrestamoDetailDTO dto) throws BibliotecaLogicException {
+    public PrestamoDetailDTO createPrestamo(@PathParam("tipoRecurso") String tipoRecurso, @PathParam("recursoId") Long recursoId,@PathParam("idUsuario") Long idUsuario, PrestamoDTO dto) throws BibliotecaLogicException {
         existsBiblioteca(bibliotecaId);
-        if (dto.getBiblioteca() != null && !bibliotecaId.equals(dto.getBiblioteca().getId())) {
-            throw new WebApplicationException(404);
+        existsUsuario(idUsuario);
+        
+        existsRecurso(recursoId, tipoRecurso);
+        Long tipoRecursoo;
+        if (tipoRecurso.equals("Libro")) {
+            tipoRecursoo = 2L;
+            
         }
-        return new PrestamoDetailDTO(prestamoLogic.createPrestamo(dto.toEntity()));
+        else if(tipoRecurso.equals("Video"))
+        {
+            tipoRecursoo = 1L;
+        }
+        else if(tipoRecurso.equals("Sala"))
+        {
+            tipoRecursoo = 3L;
+        }
+        else
+        {
+            throw new WebApplicationException("El tipo de recurso tiene que ser 'Video', 'Libro' o 'Sala'", 404);
+        }
+        
+        return new PrestamoDetailDTO(prestamoLogic.createPrestamo(dto.toEntity(),bibliotecaId, tipoRecursoo, recursoId, idUsuario));
     }
     
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
-    @Path("{prestamoId: \\d+}")
-    public PrestamoDetailDTO updatePrestamo(@PathParam("prestamoId") Long prestamoId, PrestamoDetailDTO dto) throws BibliotecaLogicException {
+    @Path("recurso/{tipoRecurso}/{recursoId: \\d+}/usuario/{idUsuario: \\d+}/prestamos{prestamoId: \\d+}")
+    public PrestamoDetailDTO updatePrestamo(@PathParam("prestamoId") Long prestamoId,@PathParam("tipoRecurso") String tipoRecurso, @PathParam("recursoId") Long recursoId,@PathParam("idUsuario") Long idUsuario, PrestamoDTO dto) throws BibliotecaLogicException {
         existsBiblioteca(bibliotecaId);
         existsPrestamo(prestamoId);
+        existsUsuario(idUsuario);
+        existsRecurso(recursoId, tipoRecurso);
         PrestamoEntity entity = dto.toEntity();
         entity.setId(prestamoId);
-        return new PrestamoDetailDTO(prestamoLogic.updatePrestamo(entity));
+        Long tipoRecursoo;
+        if (tipoRecurso.equals("Libro")) {
+            tipoRecursoo = 2L;
+            
+        }
+        else if(tipoRecurso.equals("Video"))
+        {
+            tipoRecursoo = 1L;
+        }
+        else if(tipoRecurso.equals("Sala"))
+        {
+            tipoRecursoo = 3L;
+        }
+        else
+        {
+            throw new WebApplicationException("El tipo de recurso tiene que ser 'Video', 'Libro' o 'Sala'", 404);
+        }
+        
+        return new PrestamoDetailDTO(prestamoLogic.updatePrestamo(entity, bibliotecaId,tipoRecursoo, recursoId, idUsuario ));
     }
     
     /**
@@ -183,7 +285,7 @@ public class PrestamoResource {
     */
     
     @DELETE
-    @Path("{prestamoId: \\d+}")
+    @Path("prestamos/{prestamoId: \\d+}")
     public void deletePrestamo(@PathParam("prestamoId") Long prestamoId) throws BibliotecaLogicException  {
         existsBiblioteca(bibliotecaId);
         existsPrestamo(prestamoId);

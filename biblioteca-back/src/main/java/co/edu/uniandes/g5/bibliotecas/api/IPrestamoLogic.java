@@ -34,7 +34,7 @@ public interface IPrestamoLogic {
     public List<PrestamoEntity> getPrestamosByRecurso(Long idBiblioteca, Long idRecurso);
     public List<PrestamoEntity> getPrestamosByBiblioteca(Long idBiblioteca);
     
-    public PrestamoEntity createPrestamo(PrestamoEntity prestamo) throws BibliotecaLogicException; 
-    public PrestamoEntity updatePrestamo(PrestamoEntity prestamo) throws BibliotecaLogicException;
+    public PrestamoEntity createPrestamo(PrestamoEntity prestamo, Long idBiblioteca, Long tipoRecurso, Long idRecurso, Long idUsuario) throws BibliotecaLogicException; 
+    public PrestamoEntity updatePrestamo(PrestamoEntity prestamo, Long idBiblioteca, Long tipoRecurso, Long idRecurso, Long idUsuario) throws BibliotecaLogicException;
     public PrestamoEntity deletePrestamo(Long id) throws BibliotecaLogicException;
 }

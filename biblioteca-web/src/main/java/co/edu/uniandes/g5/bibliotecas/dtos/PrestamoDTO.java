@@ -21,7 +21,7 @@ public class PrestamoDTO {
     
     
     private Long id;
-    private int tipoRecurso;
+    private Long tipoRecurso;
     private Double costo;
     private String medioPago;
     private Date fechaInicial;
@@ -85,11 +85,11 @@ public class PrestamoDTO {
         this.id = id;
     }
 
-public void setTipoRecurso(int tipoRecurso) {
+public void setTipoRecurso(Long tipoRecurso) {
         this.tipoRecurso = tipoRecurso;
     }
 
-    public int getTipoRecurso() {
+    public Long getTipoRecurso() {
         return tipoRecurso;
     }
     
