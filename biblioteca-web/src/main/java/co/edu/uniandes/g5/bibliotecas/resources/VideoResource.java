@@ -23,8 +23,6 @@ import co.edu.uniandes.g5.bibliotecas.dtos.VideoDetailDTO;
 import co.edu.uniandes.g5.bibliotecas.entities.VideoEntity;
 import co.edu.uniandes.g5.bibliotecas.exceptions.BibliotecaLogicException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.WebApplicationException;
@@ -132,11 +130,11 @@ public class VideoResource {
      * @return video agregado
      */
     @POST
-    @Path("videos")
-    public VideoDTO createVideo(VideoDetailDTO video) {
+    @Path("bibliotecas/{idBiblioteca: \\d+}/videos")
+    public VideoDTO createVideo(VideoDTO video, @PathParam("idBiblioteca") Long idBiblioteca) {
         try {
             VideoEntity entity = video.toEntity();
-            VideoEntity respuesta = videoLogic.createVideo(entity);
+            VideoEntity respuesta = videoLogic.createVideo(entity, idBiblioteca);
             return new VideoDetailDTO(respuesta);
         } catch (BibliotecaLogicException e) {
             throw new WebApplicationException(e.getMessage(), 404);
@@ -149,17 +147,16 @@ public class VideoResource {
      * @param id id del video a actualizar
      * @param video objeto con atributos a cambiar del video
      * @return video actualizado
-     * @throws BibliotecaLogicException Si no es posible actualizar el video
      */
     @PUT
-    @Path("videos/{id: \\d+}")
-    public VideoDetailDTO updateVideo(@PathParam("id") Long id, VideoDetailDTO video) {
+    @Path("bibliotecas/{idBiblioteca: \\d+}/videos/{id: \\d+}")
+    public VideoDetailDTO updateVideo(@PathParam("id") Long id, @PathParam("idBiblioteca") Long idBiblioteca, VideoDTO video) {
         try {
-            existsBiblioteca(video.getBiblioteca().getId());
+            existsBiblioteca(idBiblioteca);
             existsVideo(id);
             VideoEntity entity = video.toEntity();
             entity.setId(id);
-            return new VideoDetailDTO(videoLogic.updateVideo(entity));
+            return new VideoDetailDTO(videoLogic.updateVideo(entity, idBiblioteca));
         } catch (BibliotecaLogicException ex) {
             throw new WebApplicationException(ex.getMessage(), 404);
         }

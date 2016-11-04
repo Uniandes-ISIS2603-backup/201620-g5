@@ -6,7 +6,6 @@
 package co.edu.uniandes.g5.bibliotecas.dtos;
 
 import co.edu.uniandes.g5.bibliotecas.entities.LibroEntity;
-import java.util.ArrayList;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**

@@ -112,7 +112,7 @@ public class LibroResource {
         }
         return new LibroDetailDTO(resultado);
     }
-    
+
     @GET
     @Path("bibliotecas/{idBiblioteca: \\d+}/libros/isbn/{isbn: \\d+}")
     public LibroDetailDTO getLibroByISBN(@PathParam("id") Long id, @PathParam("isbn") Long isbn) {
@@ -122,7 +122,6 @@ public class LibroResource {
         }
         return new LibroDetailDTO(resultado);
     }
-
 
     @GET
     @Path("bibliotecas/{idBiblioteca: \\d+}/libros/name/{name}")
@@ -141,11 +140,11 @@ public class LibroResource {
      * @return libro agregado
      */
     @POST
-    @Path("libros")
-    public LibroDTO createLibro(LibroDetailDTO libro) {
+    @Path("bibliotecas/{idBiblioteca: \\d+}/libros")
+    public LibroDTO createLibro(LibroDTO libro, @PathParam("idBiblioteca") Long idBiblioteca) {
         try {
             LibroEntity entity = libro.toEntity();
-            LibroEntity respuesta = libroLogic.createLibro(entity);
+            LibroEntity respuesta = libroLogic.createLibro(entity, idBiblioteca);
             return new LibroDetailDTO(respuesta);
         } catch (BibliotecaLogicException e) {
             throw new WebApplicationException(e.getMessage(), 404);
@@ -158,21 +157,19 @@ public class LibroResource {
      * @param id id del libro a actualizar
      * @param libro objeto con atributos a cambiar del libro
      * @return libro actualizado
-     * @throws BibliotecaLogicException Si no es posible actualizar el libro
      */
     @PUT
-    @Path("libros/{id: \\d+}")
-    public LibroDetailDTO updateLibro(@PathParam("id") Long id, LibroDetailDTO libro) {
+    @Path("bibliotecas/{idBiblioteca: \\d+}/libros/{id: \\d+}")
+    public LibroDetailDTO updateLibro(@PathParam("id") Long id, @PathParam("idBiblioteca") Long idBiblioteca, LibroDTO libro) {
         try {
-            existsBiblioteca(libro.getBiblioteca().getId());
+            existsBiblioteca(idBiblioteca);
             existsLibro(id);
             LibroEntity entity = libro.toEntity();
             entity.setId(id);
-            return new LibroDetailDTO(libroLogic.updateLibro(entity));
+            return new LibroDetailDTO(libroLogic.updateLibro(entity, idBiblioteca));
         } catch (BibliotecaLogicException ex) {
             throw new WebApplicationException(ex.getMessage(), 404);
         }
-
     }
 
     /**
