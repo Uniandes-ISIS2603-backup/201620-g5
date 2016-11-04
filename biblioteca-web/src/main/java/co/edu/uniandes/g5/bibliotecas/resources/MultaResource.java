@@ -6,11 +6,19 @@
 package co.edu.uniandes.g5.bibliotecas.resources;
 
 
+import co.edu.uniandes.g5.bibliotecas.api.IBibliotecaLogic;
+import co.edu.uniandes.g5.bibliotecas.api.ILibroLogic;
 import co.edu.uniandes.g5.bibliotecas.api.IMultaLogic;
+import co.edu.uniandes.g5.bibliotecas.api.ISalaLogic;
 import co.edu.uniandes.g5.bibliotecas.api.IUsuarioLogic;
+import co.edu.uniandes.g5.bibliotecas.api.IVideoLogic;
+import co.edu.uniandes.g5.bibliotecas.dtos.BiblioDetailDTO;
+import co.edu.uniandes.g5.bibliotecas.dtos.LibroDetailDTO;
 import co.edu.uniandes.g5.bibliotecas.dtos.MultaDTO;
 import co.edu.uniandes.g5.bibliotecas.dtos.MultaDetailDTO;
+import co.edu.uniandes.g5.bibliotecas.dtos.SalaDetailDTO;
 import co.edu.uniandes.g5.bibliotecas.dtos.UsuarioDetailDTO;
+import co.edu.uniandes.g5.bibliotecas.dtos.VideoDetailDTO;
 import co.edu.uniandes.g5.bibliotecas.entities.MultaEntity;
 
 import co.edu.uniandes.g5.bibliotecas.exceptions.BibliotecaLogicException;
@@ -54,6 +62,18 @@ public class MultaResource {
 
     @Inject
     private IUsuarioLogic usuarioLogic;
+    
+    @Inject
+    private IBibliotecaLogic bibliotecaLogic;
+    
+    @Inject
+    private IVideoLogic videoLogic;
+    
+    @Inject
+    private ISalaLogic salaLogic;
+    
+    @Inject
+    private ILibroLogic libroLogic;
 
     @PathParam("usuarioId")
     private Long usuarioId;
@@ -77,16 +97,43 @@ public class MultaResource {
     public void existsUsuario(Long usuarioId) {
         UsuarioDetailDTO usuario = new UsuarioDetailDTO(usuarioLogic.getUsuario(usuarioId));
         if (usuario == null) {
-            throw new WebApplicationException("La biblioteca no existe", 404);
+            throw new WebApplicationException("El usuario no existe", 404);
+        }
+    }
+    public void existsBiblioteca(Long bibliotecaId) {
+        BiblioDetailDTO biblioteca = new BiblioDetailDTO(bibliotecaLogic.getBiblioteca(bibliotecaId));
+        if (biblioteca == null) {
+            throw new WebApplicationException("La bilioteca no existe", 404);
+        }
+    }
+    public void existMulta(Long multaId ){
+        MultaDetailDTO multa= new MultaDetailDTO(multaLogic.getMulta(multaId));
+        if(multa==null){
+            throw new WebApplicationException("La multa no existe", 404);
+        }
+    }
+    public void existLibro(Long libroId ){
+        LibroDetailDTO libro= new LibroDetailDTO(libroLogic.getLibro(libroId));
+        if(libro==null){
+            throw new WebApplicationException("El libro no existe", 404);
+        }
+    }
+    public void existSala(Long libroId ){
+        SalaDetailDTO libro= new SalaDetailDTO(salaLogic.getSala(libroId));
+        if(libro==null){
+            throw new WebApplicationException("El libro no existe", 404);
+        }
+    }
+    public void existVideo(Long libroId ){
+        VideoDetailDTO libro= new VideoDetailDTO(videoLogic.getVideo(libroId));
+        if(libro==null){
+            throw new WebApplicationException("El libro no existe", 404);
         }
     }
 
-    public void existsMulta(Long multaId) {
-        MultaDetailDTO multa = new MultaDetailDTO(multaLogic.getMulta(multaId));
-        if (multa == null) {
-            throw new WebApplicationException("El Departamento no existe", 404);
-        }
-    }
+
+
+    
     /**
      * Obtiene el listado de multas de la biblioteca.
      *
@@ -120,12 +167,21 @@ public class MultaResource {
     
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    public MultaDetailDTO createMulta(MultaDetailDTO dto) throws BibliotecaLogicException {
+    @Path("idRecurso/{idRecurso: \\d+}/{tipoR: \\d+}/idBiblioteca/{idBiblioteca: \\d+}")
+    public MultaDetailDTO createMulta(MultaDetailDTO dto , @PathParam("idRecurso") Long idRecurso, @PathParam("idBiblioteca") Long idBiblioteca, @PathParam("tipoR") int tipoR) throws BibliotecaLogicException {
         existsUsuario(usuarioId);
-        if (dto.getUsuario() != null && !usuarioId.equals(dto.getUsuario().getId())) {
-            throw new WebApplicationException(404);
+        existsBiblioteca(idBiblioteca);
+        if(tipoR==VideoDetailDTO.LIBRO){
+            existLibro(idRecurso);
         }
-        return new MultaDetailDTO(multaLogic.createMulta(dto.toEntity()));
+        else if(tipoR==VideoDetailDTO.VIDEO){
+            existVideo(idRecurso);
+        }
+        else if(tipoR==VideoDetailDTO.SALA){
+            existSala(idRecurso);
+        }
+        
+        return new MultaDetailDTO(multaLogic.createMulta(dto.toEntity(),usuarioId,idRecurso,idBiblioteca,tipoR));
     }
     
     @PUT
@@ -133,7 +189,7 @@ public class MultaResource {
     @Path("{multaId: \\d+}")
     public MultaDetailDTO updateMulta(@PathParam("multaId") Long multaId, MultaDetailDTO dto) throws BibliotecaLogicException {
         existsUsuario(usuarioId);
-        existsMulta(multaId);
+        existMulta(multaId);
         MultaEntity entity = dto.toEntity();
         entity.setId(multaId);
         return new MultaDetailDTO(multaLogic.updateMulta(entity));
@@ -149,7 +205,7 @@ public class MultaResource {
     @Path("{multaId: \\d+}")
     public void deleteMulta(@PathParam("multaId") Long multaId) throws BibliotecaLogicException  {
         existsUsuario(usuarioId);
-        existsMulta(multaId);
+        existMulta(multaId);
         multaLogic.deleteMulta(multaId);
     }
     

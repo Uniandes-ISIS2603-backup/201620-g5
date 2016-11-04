@@ -34,7 +34,7 @@ public interface IMultaLogic {
     public List<MultaEntity> getMultasByRecurso(Long idUsuario, Long idRecurso);
     public List<MultaEntity> getMultasByBiblioteca(Long idUsuario, Long idBiblioteca);
     
-    public MultaEntity createMulta(MultaEntity multa) throws BibliotecaLogicException; 
+    public MultaEntity createMulta(MultaEntity multa, Long idUsuario, Long idRecurso, Long idBiblioteca, int tRecurso) throws BibliotecaLogicException; 
     public MultaEntity updateMulta(MultaEntity multa) throws BibliotecaLogicException;
     public MultaEntity deleteMulta(Long id) throws BibliotecaLogicException;
 }

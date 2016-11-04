@@ -5,10 +5,18 @@
  */
 package co.edu.uniandes.g5.bibliotecas.ejbs;
 
+import co.edu.uniandes.g5.bibliotecas.api.IBibliotecaLogic;
+import co.edu.uniandes.g5.bibliotecas.api.ILibroLogic;
 import co.edu.uniandes.g5.bibliotecas.api.IMultaLogic;
+import co.edu.uniandes.g5.bibliotecas.api.ISalaLogic;
+import co.edu.uniandes.g5.bibliotecas.api.IUsuarioLogic;
+import co.edu.uniandes.g5.bibliotecas.api.IVideoLogic;
+import co.edu.uniandes.g5.bibliotecas.entities.BibliotecaEntity;
 import co.edu.uniandes.g5.bibliotecas.entities.LibroEntity;
 import co.edu.uniandes.g5.bibliotecas.entities.MultaEntity;
 import co.edu.uniandes.g5.bibliotecas.entities.RecursoEntity;
+import co.edu.uniandes.g5.bibliotecas.entities.SalaEntity;
+import co.edu.uniandes.g5.bibliotecas.entities.UsuarioEntity;
 import co.edu.uniandes.g5.bibliotecas.entities.VideoEntity;
 import co.edu.uniandes.g5.bibliotecas.exceptions.BibliotecaLogicException;
 import co.edu.uniandes.g5.bibliotecas.persistence.MultaPersistence;
@@ -30,6 +38,16 @@ public class MultaLogic implements IMultaLogic {
     @Inject
     private MultaPersistence persistence;
 
+    @Inject
+    private IUsuarioLogic usuarioLogic;
+    @Inject
+    private ISalaLogic salaLogic;
+    @Inject
+    private ILibroLogic libroLogic;
+    @Inject
+    private IVideoLogic videoLogic;
+    @Inject
+    private IBibliotecaLogic biblioLogic;
     @Override
     public List<MultaEntity> getMultas() {
         return persistence.getMultas();
@@ -81,7 +99,7 @@ public class MultaLogic implements IMultaLogic {
      * @throws co.edu.uniandes.g5.bibliotecas.exceptions.BibliotecaLogicException
      */
     @Override
-    public MultaEntity createMulta(MultaEntity multa) throws BibliotecaLogicException {
+    public MultaEntity createMulta(MultaEntity multa,Long idUsuario, Long idRecurso, Long idBiblioteca, int tRecurso) throws BibliotecaLogicException {
          
      MultaEntity alreadyExist = getMulta(multa.getId());
         if (alreadyExist != null) 
@@ -109,6 +127,22 @@ public class MultaLogic implements IMultaLogic {
         }
         
         multa = persistence.create(multa);
+        BibliotecaEntity biblio=biblioLogic.getBiblioteca(idBiblioteca);
+        multa.setBiblioteca(biblio);
+        UsuarioEntity usuario=usuarioLogic.getUsuario(idUsuario);
+        multa.setUsuario(usuario);
+        if(tRecurso==LibroEntity.LIBRO){
+            LibroEntity libro=libroLogic.getLibro(idRecurso);
+            multa.setRecurso(libro);  
+        }
+        else if(tRecurso==SalaEntity.SALA){
+            SalaEntity sala=salaLogic.getSala(idRecurso);
+            multa.setRecurso(sala);  
+        }
+        else if(tRecurso==VideoEntity.VIDEO){
+            VideoEntity video=videoLogic.getVideo(idRecurso);
+            multa.setRecurso(video);  
+        }
 
         
         return multa;

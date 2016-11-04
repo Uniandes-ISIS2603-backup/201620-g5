@@ -114,7 +114,8 @@ public class UsuarioResource {
      *
      * @param usuario usuario a agregar
      * @return libtro agregado
-     */
+     
+    
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("usuarios")
@@ -127,6 +128,7 @@ public class UsuarioResource {
             throw new WebApplicationException(404);
         }
     }
+    */
 
     /**
      * Actualiza un usuario

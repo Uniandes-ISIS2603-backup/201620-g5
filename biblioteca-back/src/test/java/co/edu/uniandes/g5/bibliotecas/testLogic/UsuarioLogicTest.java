@@ -151,7 +151,7 @@ public class UsuarioLogicTest {
     @Test
     public void createUsuarioTest1() throws BibliotecaLogicException{
         UsuarioEntity newEntity = factory.manufacturePojo(UsuarioEntity.class);
-        UsuarioEntity result = usuarioLogic.createUsuario(newEntity);
+        UsuarioEntity result = usuarioLogic.createUsuario(newEntity,1L);
         Assert.assertNotNull(result);
         UsuarioEntity entity = em.find(UsuarioEntity.class, result.getId());
         Assert.assertEquals(newEntity.getName(), entity.getName());
@@ -163,9 +163,8 @@ public class UsuarioLogicTest {
     @Test(expected = BibliotecaLogicException.class)
     public void createUsuarioTest2() throws BibliotecaLogicException {
         UsuarioEntity prest = factory.manufacturePojo(UsuarioEntity.class);
-        prest.setBiblioteca(bibliotecaEntity);
         prest.setId(usuarioData.get(0).getId());
-        UsuarioEntity result = usuarioLogic.createUsuario(prest);
+        UsuarioEntity result = usuarioLogic.createUsuario(prest,1L);
     }
    
     /**

@@ -170,7 +170,7 @@ public class MultaLogicTest {
     public void createMultaTest1() throws BibliotecaLogicException{
         MultaEntity newEntity = factory.manufacturePojo(MultaEntity.class);
         newEntity.setRecurso(libroEntity);
-        MultaEntity result = multaLogic.createMulta(newEntity);
+        MultaEntity result = multaLogic.createMulta(newEntity,1L,1L,1L,1);
         Assert.assertNotNull(result);
         MultaEntity entity = em.find(MultaEntity.class, result.getId());
         Assert.assertEquals(newEntity.getName(), entity.getName());
@@ -182,28 +182,25 @@ public class MultaLogicTest {
     @Test(expected = BibliotecaLogicException.class)
     public void createMultaTest2() throws BibliotecaLogicException {
         MultaEntity prest = factory.manufacturePojo(MultaEntity.class);
-        prest.setBiblioteca(bibliotecaEntity);
-        prest.setRecurso(libroEntity);
-        prest.setUsuario(usuarioEntity);
         prest.setCosto(-2.0);
-        MultaEntity result = multaLogic.createMulta(prest);
+        MultaEntity result = multaLogic.createMulta(prest,1L,1L,1L,2);
     }
     /**
      * Prueba para crear un Multa con un recurso con 0 unidades disponibles.
      * @throws co.edu.uniandes.g5.bibliotecas.exceptions.BibliotecaLogicException
-     */
+     
     @Test(expected = BibliotecaLogicException.class)
     public void createMultaTest3() throws BibliotecaLogicException {
         MultaEntity prest = factory.manufacturePojo(MultaEntity.class);
-        prest.setBiblioteca(bibliotecaEntity);
+      
         libroEntity.setTipoRecurso(LibroEntity.LIBRO);
         libroEntity.setEjemplaresDisponibles(0);
-        prest.setRecurso(libroEntity);
-        prest.setUsuario(usuarioEntity);
+        
 
 
-        MultaEntity result = multaLogic.createMulta(prest);
+        MultaEntity result = multaLogic.createMulta(prest,1L,1L,1L,2);
     }
+    */
    
     /**
      * Prueba para consultar la lista de Departments

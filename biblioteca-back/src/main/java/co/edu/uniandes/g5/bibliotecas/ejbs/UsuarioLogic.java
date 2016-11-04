@@ -1,6 +1,8 @@
 package co.edu.uniandes.g5.bibliotecas.ejbs;
 
+import co.edu.uniandes.g5.bibliotecas.api.IBibliotecaLogic;
 import co.edu.uniandes.g5.bibliotecas.api.IUsuarioLogic;
+import co.edu.uniandes.g5.bibliotecas.entities.BibliotecaEntity;
 import co.edu.uniandes.g5.bibliotecas.entities.UsuarioEntity;
 import co.edu.uniandes.g5.bibliotecas.exceptions.BibliotecaLogicException;
 import co.edu.uniandes.g5.bibliotecas.persistence.UsuarioPersistence;
@@ -13,6 +15,8 @@ public class UsuarioLogic implements IUsuarioLogic {
 
     @Inject
     private UsuarioPersistence persistence;
+    @Inject
+    private IBibliotecaLogic biblioLogic;
     
 
     @Override
@@ -33,7 +37,7 @@ public class UsuarioLogic implements IUsuarioLogic {
     
 
     @Override
-    public UsuarioEntity createUsuario(UsuarioEntity entity) throws BibliotecaLogicException {
+    public UsuarioEntity createUsuario(UsuarioEntity entity, Long BibliotecaId) throws BibliotecaLogicException {
         UsuarioEntity alreadyExist = getUsuario(entity.getId());
         if (alreadyExist != null) 
         {
@@ -55,8 +59,11 @@ public class UsuarioLogic implements IUsuarioLogic {
         {
             throw new BibliotecaLogicException("Nombre y/o Apellido inválido(s). No deben contener números ni ser de menor longitud que 2");
         }
+       
         
         UsuarioEntity usuario = persistence.create(entity);
+        BibliotecaEntity biblioteca=biblioLogic.getBiblioteca(BibliotecaId);
+        usuario.setBiblioteca(biblioteca);
 
         
         return usuario;

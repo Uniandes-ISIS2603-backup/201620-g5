@@ -11,7 +11,7 @@ public interface IUsuarioLogic {
     public List<UsuarioEntity> getUsuarios();
     public UsuarioEntity getUsuario(Long id);
     public List<UsuarioEntity> getUsuariosByBiblioteca(Long bibliotecaId);
-    public UsuarioEntity createUsuario(UsuarioEntity entity) throws BibliotecaLogicException; 
+    public UsuarioEntity createUsuario(UsuarioEntity entity,Long idBiblioteca) throws BibliotecaLogicException; 
     public UsuarioEntity updateUsuario(UsuarioEntity entity) throws BibliotecaLogicException;
     public UsuarioEntity deleteUsuario(Long id) throws BibliotecaLogicException;
 
