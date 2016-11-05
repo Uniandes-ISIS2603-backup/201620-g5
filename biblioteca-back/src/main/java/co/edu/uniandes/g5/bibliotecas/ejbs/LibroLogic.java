@@ -40,7 +40,7 @@ public class LibroLogic implements ILibroLogic {
 
     @Override
     public LibroEntity createLibro(LibroEntity entity, Long idBiblioteca) throws BibliotecaLogicException {
-        LibroEntity alreadyExists = persistence.findByISBN(entity.getIsbn(), entity.getBiblioteca().getId());
+        LibroEntity alreadyExists = persistence.findByISBN(entity.getIsbn(), idBiblioteca);
         BibliotecaEntity biblioteca = bibliotecaPersistence.find(idBiblioteca);
         if (biblioteca == null) {
             throw new BibliotecaLogicException("La biblioteca a la que el libro pertenece no existe");
@@ -61,7 +61,7 @@ public class LibroLogic implements ILibroLogic {
 
     @Override
     public LibroEntity updateLibro(LibroEntity entity, Long idBiblioteca) throws BibliotecaLogicException {
-        LibroEntity alreadyExists = persistence.findByISBN(entity.getIsbn(), entity.getBiblioteca().getId());
+        LibroEntity alreadyExists = persistence.findByISBN(entity.getIsbn(), idBiblioteca);
         BibliotecaEntity bibliotecaExiste = bibliotecaPersistence.find(idBiblioteca);
         if (bibliotecaExiste == null) {
             throw new BibliotecaLogicException("La biblioteca a la que el libro pertenece no existe");

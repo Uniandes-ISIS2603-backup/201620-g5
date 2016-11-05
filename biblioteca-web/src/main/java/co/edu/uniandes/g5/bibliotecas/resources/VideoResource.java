@@ -114,8 +114,8 @@ public class VideoResource {
     }
 
     @GET
-    @Path("bibliotecas/{idBiblioteca: \\d+}/videos/name/{name}")
-    public VideoDetailDTO getVideoByName(@PathParam("id") Long id, @PathParam("name") String name) {
+    @Path("bibliotecas/{idBiblioteca: \\d+}/videos/name/{titulo}")
+    public VideoDetailDTO getVideoByName(@PathParam("id") Long id, @PathParam("titulo") String name) {
         VideoEntity resultado = videoLogic.getVideoByName(name, id);
         if (resultado == null) {
             throw new WebApplicationException(404);
@@ -131,14 +131,10 @@ public class VideoResource {
      */
     @POST
     @Path("bibliotecas/{idBiblioteca: \\d+}/videos")
-    public VideoDTO createVideo(VideoDTO video, @PathParam("idBiblioteca") Long idBiblioteca) {
-        try {
+    public VideoDetailDTO createVideo(VideoDTO video, @PathParam("idBiblioteca") Long idBiblioteca) throws BibliotecaLogicException {
             VideoEntity entity = video.toEntity();
             VideoEntity respuesta = videoLogic.createVideo(entity, idBiblioteca);
             return new VideoDetailDTO(respuesta);
-        } catch (BibliotecaLogicException e) {
-            throw new WebApplicationException(e.getMessage(), 404);
-        }
     }
 
     /**
@@ -150,17 +146,12 @@ public class VideoResource {
      */
     @PUT
     @Path("bibliotecas/{idBiblioteca: \\d+}/videos/{id: \\d+}")
-    public VideoDetailDTO updateVideo(@PathParam("id") Long id, @PathParam("idBiblioteca") Long idBiblioteca, VideoDTO video) {
-        try {
+    public VideoDetailDTO updateVideo(@PathParam("id") Long id, @PathParam("idBiblioteca") Long idBiblioteca, VideoDTO video) throws BibliotecaLogicException {
             existsBiblioteca(idBiblioteca);
             existsVideo(id);
             VideoEntity entity = video.toEntity();
             entity.setId(id);
             return new VideoDetailDTO(videoLogic.updateVideo(entity, idBiblioteca));
-        } catch (BibliotecaLogicException ex) {
-            throw new WebApplicationException(ex.getMessage(), 404);
-        }
-
     }
 
     /**

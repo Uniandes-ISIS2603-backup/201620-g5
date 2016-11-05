@@ -141,14 +141,10 @@ public class LibroResource {
      */
     @POST
     @Path("bibliotecas/{idBiblioteca: \\d+}/libros")
-    public LibroDTO createLibro(LibroDTO libro, @PathParam("idBiblioteca") Long idBiblioteca) {
-        try {
+    public LibroDetailDTO createLibro(LibroDTO libro, @PathParam("idBiblioteca") Long idBiblioteca) throws BibliotecaLogicException {
             LibroEntity entity = libro.toEntity();
             LibroEntity respuesta = libroLogic.createLibro(entity, idBiblioteca);
             return new LibroDetailDTO(respuesta);
-        } catch (BibliotecaLogicException e) {
-            throw new WebApplicationException(e.getMessage(), 404);
-        }
     }
 
     /**
@@ -160,16 +156,12 @@ public class LibroResource {
      */
     @PUT
     @Path("bibliotecas/{idBiblioteca: \\d+}/libros/{id: \\d+}")
-    public LibroDetailDTO updateLibro(@PathParam("id") Long id, @PathParam("idBiblioteca") Long idBiblioteca, LibroDTO libro) {
-        try {
+    public LibroDetailDTO updateLibro(@PathParam("id") Long id, @PathParam("idBiblioteca") Long idBiblioteca, LibroDTO libro) throws BibliotecaLogicException {
             existsBiblioteca(idBiblioteca);
             existsLibro(id);
             LibroEntity entity = libro.toEntity();
             entity.setId(id);
             return new LibroDetailDTO(libroLogic.updateLibro(entity, idBiblioteca));
-        } catch (BibliotecaLogicException ex) {
-            throw new WebApplicationException(ex.getMessage(), 404);
-        }
     }
 
     /**
