@@ -68,15 +68,15 @@ public class PrestamoDetailDTO extends PrestamoDTO {
         }
         if(entity.getRecurso() != null)
         {
-             if (entity.getRecurso().getTipoRecurso() == RecursoDTO.VIDEO)
+             if (entity.getTipoRecurso() == RecursoDTO.VIDEO)
             {
                 this.recurso = new VideoDTO((VideoEntity)entity.getRecurso());
             }
-            else if (entity.getRecurso().getTipoRecurso() == RecursoDTO.LIBRO)
+            else if (entity.getTipoRecurso() == RecursoDTO.LIBRO)
             {
                 this.recurso = new LibroDTO((LibroEntity)entity.getRecurso());
             }
-            else if (entity.getRecurso().getTipoRecurso() == RecursoDTO.SALA)
+            else if (entity.getTipoRecurso() == RecursoDTO.SALA)
             {
                 this.recurso = new SalaDTO((SalaEntity)entity.getRecurso());
             }

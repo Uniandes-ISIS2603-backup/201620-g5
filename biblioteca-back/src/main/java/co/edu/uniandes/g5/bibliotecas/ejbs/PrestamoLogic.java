@@ -130,6 +130,7 @@ public class PrestamoLogic implements IPrestamoLogic {
             {
             throw new BibliotecaLogicException("No hay libros disponibles para prestar.");
             }
+            prestamo.setTipoRecurso(RecursoEntity.LIBRO);
             prestamo.setRecurso(libro);
         }
         else if(Objects.equals(tipoRecurso, RecursoEntity.VIDEO))
@@ -139,11 +140,13 @@ public class PrestamoLogic implements IPrestamoLogic {
             {
             throw new BibliotecaLogicException("No hay videos disponibles para prestar.");
             }
+            prestamo.setTipoRecurso(RecursoEntity.VIDEO);
             prestamo.setRecurso(video);
         }
         else if(Objects.equals(tipoRecurso, RecursoEntity.SALA))
         {
             SalaEntity sala = salaLogic.getSala(idRecurso);
+            prestamo.setTipoRecurso(RecursoEntity.SALA);
             prestamo.setRecurso(sala);
         }
        
@@ -171,29 +174,33 @@ public class PrestamoLogic implements IPrestamoLogic {
         {
             throw new BibliotecaLogicException("Costo inválido");
         }
-       if(tipoRecurso == RecursoEntity.LIBRO)
+       if(Objects.equals(tipoRecurso, RecursoEntity.LIBRO))
         {
             LibroEntity libro = libroLogic.getLibro(idRecurso);
-            if(libro.getEjemplaresDisponibles() == 0)
+            if(libro.getEjemplaresDisponibles() <= 0)
             {
             throw new BibliotecaLogicException("No hay libros disponibles para prestar.");
             }
+            prestamo.setTipoRecurso(RecursoEntity.LIBRO);
             prestamo.setRecurso(libro);
         }
-        else if(tipoRecurso == RecursoEntity.VIDEO)
+        else if(Objects.equals(tipoRecurso, RecursoEntity.VIDEO))
         {
             VideoEntity video = videoLogic.getVideo(idRecurso);
             if(video.getEjemplaresDisponibles() == 0)
             {
             throw new BibliotecaLogicException("No hay videos disponibles para prestar.");
             }
+            prestamo.setTipoRecurso(RecursoEntity.VIDEO);
             prestamo.setRecurso(video);
         }
-        else if(tipoRecurso == RecursoEntity.SALA)
+        else if(Objects.equals(tipoRecurso, RecursoEntity.SALA))
         {
-            SalaEntity sala =  salaLogic.getSala(idRecurso);
+            SalaEntity sala = salaLogic.getSala(idRecurso);
+            prestamo.setTipoRecurso(RecursoEntity.SALA);
             prestamo.setRecurso(sala);
         }
+       
         if(prestamo.getFechaInicial() == null)
         {
             prestamo.setFechaInicial(oldPrestamo.getFechaInicial());

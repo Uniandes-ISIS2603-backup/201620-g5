@@ -26,9 +26,9 @@ public class ReservaEntity extends BaseEntity implements Serializable {
 
     
     
-    public static final String LIBRO = "Libro";
-    public static final String VIDEO = "Video";
-    public static final String SALA = "Sala";
+    public static final Long LIBRO = 2L;
+    public static final Long VIDEO = 1L;
+    public static final Long SALA = 3L;
 
     
     
@@ -41,7 +41,7 @@ public class ReservaEntity extends BaseEntity implements Serializable {
     @ManyToOne
     private co.edu.uniandes.g5.bibliotecas.entities.BibliotecaEntity biblioteca;
     
-    private String tipoRecurso;
+    private Long tipoRecurso;
 
      @PodamExclude
     @ManyToOne
@@ -85,11 +85,11 @@ public class ReservaEntity extends BaseEntity implements Serializable {
         this.biblioteca = biblioteca;
     }
 
-    public String getTipoRecurso() {
+    public Long getTipoRecurso() {
         return tipoRecurso;
     }
 
-    public void setTipoRecurso(String tipoRecurso) {
+    public void setTipoRecurso(Long tipoRecurso) {
         this.tipoRecurso = tipoRecurso;
     }
 

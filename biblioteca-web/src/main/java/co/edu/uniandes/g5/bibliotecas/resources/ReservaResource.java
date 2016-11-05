@@ -11,14 +11,14 @@ import co.edu.uniandes.g5.bibliotecas.api.IReservaLogic;
 import co.edu.uniandes.g5.bibliotecas.api.ISalaLogic;
 import co.edu.uniandes.g5.bibliotecas.api.IUsuarioLogic;
 import co.edu.uniandes.g5.bibliotecas.api.IVideoLogic;
-import co.edu.uniandes.g5.bibliotecas.dtos.BiblioDetailDTO;
-import co.edu.uniandes.g5.bibliotecas.dtos.LibroDetailDTO;
+import co.edu.uniandes.g5.bibliotecas.dtos.BiblioDTO;
+import co.edu.uniandes.g5.bibliotecas.dtos.LibroDTO;
 import co.edu.uniandes.g5.bibliotecas.dtos.ReservaDTO;
 import co.edu.uniandes.g5.bibliotecas.dtos.ReservaDetailDTO;
 import co.edu.uniandes.g5.bibliotecas.dtos.RecursoDTO;
-import co.edu.uniandes.g5.bibliotecas.dtos.SalaDetailDTO;
-import co.edu.uniandes.g5.bibliotecas.dtos.UsuarioDetailDTO;
-import co.edu.uniandes.g5.bibliotecas.dtos.VideoDetailDTO;
+import co.edu.uniandes.g5.bibliotecas.dtos.SalaDTO;
+import co.edu.uniandes.g5.bibliotecas.dtos.UsuarioDTO;
+import co.edu.uniandes.g5.bibliotecas.dtos.VideoDTO;
 import co.edu.uniandes.g5.bibliotecas.entities.ReservaEntity;
 import co.edu.uniandes.g5.bibliotecas.exceptions.BibliotecaLogicException;
 import java.text.ParseException;
@@ -68,7 +68,6 @@ public class ReservaResource {
     private ISalaLogic salaLogic;
 
    
-
     /**
      * Convierte una lista de ReservaEntity a una lista de
      * ReservaDetailDTO
@@ -77,23 +76,23 @@ public class ReservaResource {
      * @return Lista de ReservaDetailDTO convertida
      *
      */
-    private List<ReservaDetailDTO> listEntity2DTO(List<ReservaEntity> entityList) {
-        List<ReservaDetailDTO> list = new ArrayList<>();
+    private List<ReservaDTO> listEntity2DTO(List<ReservaEntity> entityList) {
+        List<ReservaDTO> list = new ArrayList<>();
         for (ReservaEntity entity : entityList) {
-            list.add(new ReservaDetailDTO(entity));
+            list.add(new ReservaDTO(entity));
         }
         return list;
     }
 
     public void existsBiblioteca(Long bibliotecaId) {
-        BiblioDetailDTO biblioteca = new BiblioDetailDTO(bibliotecaLogic.getBiblioteca(bibliotecaId));
+        BiblioDTO biblioteca = new BiblioDTO(bibliotecaLogic.getBiblioteca(bibliotecaId));
         if (biblioteca == null) {
             throw new WebApplicationException("La biblioteca no existe", 404);
         }
     }
     
     public void existsUsuario(Long usuarioId) {
-        UsuarioDetailDTO usuario = new UsuarioDetailDTO(usuarioLogic.getUsuario(usuarioId));
+        UsuarioDTO usuario = new UsuarioDTO(usuarioLogic.getUsuario(usuarioId));
         if (usuario == null) {
             throw new WebApplicationException("El usuario no existe", 404);
         }
@@ -103,7 +102,7 @@ public class ReservaResource {
     {
         if(tipoRecurso.equals(RecursoDTO.LIBRO))
         {
-            LibroDetailDTO libro = new LibroDetailDTO(libroLogic.getLibro(recursoId));
+            LibroDTO libro = new LibroDTO(libroLogic.getLibro(recursoId));
             if(libro == null)
             {
             throw new WebApplicationException("El libro no existe", 404);
@@ -113,7 +112,7 @@ public class ReservaResource {
         }
         else if(tipoRecurso.equals(RecursoDTO.VIDEO))
         {
-            VideoDetailDTO video = new VideoDetailDTO(videoLogic.getVideo(recursoId));
+            VideoDTO video = new VideoDTO(videoLogic.getVideo(recursoId));
             if(video == null)
             {
             throw new WebApplicationException("El video no existe", 404);
@@ -123,7 +122,7 @@ public class ReservaResource {
         }
         else if(tipoRecurso.equals(RecursoDTO.SALA))
         {
-            SalaDetailDTO sala = new SalaDetailDTO(salaLogic.getSala(recursoId));
+            SalaDTO sala = new SalaDTO(salaLogic.getSala(recursoId));
             if(sala == null)
             {
             throw new WebApplicationException("La sala no existe", 404);
@@ -134,31 +133,54 @@ public class ReservaResource {
     }
 
     public void existsReserva(Long reservaId) {
-        ReservaDetailDTO reserva = new ReservaDetailDTO(reservaLogic.getReserva(reservaId));
+        ReservaDTO reserva = new ReservaDTO(reservaLogic.getReserva(reservaId));
         if (reserva == null) {
             throw new WebApplicationException("El Departamento no existe", 404);
         }
     }
-
-    
-        /**
+    /**
      * Obtiene el listado de reservas de la biblioteca.
      *
      * @return lista de reservas
      * @throws BibliotecaLogicException excepción retornada por la lógica
      */
+    
+    @GET
+    @Path("reservas")
+    public List<ReservaDTO> getReservas()throws BibliotecaLogicException
+    {
+        List<ReservaEntity> reservas = reservaLogic.getReservas();
+        return listEntity2DTO(reservas);
+    }
+     @GET
+    @Path("bibliotecas/{bibliotecaId: \\d+}/tipoRecurso/{tipoRecurso}/recurso/{recursoId: \\d+}/reservas")
+    public List<ReservaDTO> getReservasByRecurso(@PathParam("bibliotecaId") Long bibliotecaId,@PathParam("recursoId") Long recursoId, @PathParam("tipoRecurso") String tipoRecurso)throws BibliotecaLogicException
+    {       
+        existsBiblioteca(bibliotecaId);
+        existsRecurso(recursoId, tipoRecurso);
+        List<ReservaEntity> reservas = reservaLogic.getReservasByRecurso(bibliotecaId, recursoId);
+        return listEntity2DTO(reservas);
+    }
+    
+    @GET
+    @Path("bibliotecas/{bibliotecaId: \\d+}/usuario/{idUsuario: \\d+}/reservas")
+    public List<ReservaDTO> getReservasByUsuario(@PathParam("bibliotecaId") Long bibliotecaId, @PathParam("idUsuario") Long usuarioId) throws BibliotecaLogicException, ParseException {
+        existsBiblioteca(bibliotecaId);
+        existsUsuario(usuarioId);
+        List<ReservaEntity> reservas = reservaLogic.getReservasByUsuario(bibliotecaId, usuarioId);
+        return listEntity2DTO(reservas);
+    }
     @GET
     @Path("bibliotecas/{bibliotecaId: \\d+}/reservas")
-    public List<ReservaDetailDTO> getReservasBiblioteca(@PathParam("bibliotecaId") Long bibliotecaId) throws BibliotecaLogicException, ParseException {
-        
+    public List<ReservaDTO> getReservasBiblioteca(@PathParam("bibliotecaId") Long bibliotecaId) throws BibliotecaLogicException, ParseException {
         existsBiblioteca(bibliotecaId);
         List<ReservaEntity> reservas = reservaLogic.getReservasByBiblioteca(bibliotecaId);
         return listEntity2DTO(reservas);
     }
     
      @GET
-    @Path("bibliotecas/{bibliotecaId: \\d+}/reservas/{reservaId: \\d+}")
-    public ReservaDetailDTO getReserva(@PathParam("bibliotecaId") Long bibliotecaId, @PathParam("reservaId") Long reservaId) throws BibliotecaLogicException, ParseException {
+    @Path("/bibliotecas/{bibliotecaId: \\d+}/reservas/{reservaId: \\d+}")
+    public ReservaDTO getReserva(@PathParam("bibliotecaId") Long bibliotecaId,@PathParam("reservaId") Long reservaId) throws BibliotecaLogicException, ParseException {
        existsBiblioteca(bibliotecaId);
         LOGGER.log(Level.INFO, "Consultando biblioteca con bibliotecaId = {0}", bibliotecaId);
         ReservaEntity entity = reservaLogic.getReserva(reservaId);
@@ -167,12 +189,59 @@ public class ReservaResource {
             throw new WebApplicationException(404);
         }
 
-        return new ReservaDetailDTO(entity);
+        return new ReservaDTO(entity);
     }
 
+   
+    /**
+     * R12
+     * @param id id del libro a consultar
+     * @return lista de reservas activos del libro
+     
+    @GET
+    @Path("libros/{idLibro: \\d+}/reservas")
+    public List<ReservaDetailDTO> getReservasLibro(@PathParam("idLibro") Long id){
+        return reservaLogic.getReservasLibro(id);
+    }
+    
+    /**
+     * Agrega un reserva a un usuario
+     *
+     * @param reserva reserva a agregar
+     * @param idUsuario id del usuario para agregarle una multa
+     * @return datos de la multa a agregar suministrado
+     
+
+    @POST
+    @Path("usuarios/{idUsuario: \\d+}/reservas")
+    public ReservaDetailDTO createReserva(ReservaDTO reserva, @PathParam("idUsuario") Long idUsuario) throws ParseException, BibliotecaLogicException {
+        return reservaLogic.createReserva(reserva, idUsuario);
+    }
+
+    @GET
+    @Path("usuarios/{idUsuario: \\d+}/reservas/{id: \\d+}")
+    public ReservaDetailDTO getReservaDeUsuario(@PathParam("id") int id, @PathParam("idUsuario") Long idUsuario) throws BibliotecaLogicException, ParseException {
+        return reservaLogic.getReservaDeUsuario(id, idUsuario);
+    }
+    @PUT
+    @Path("reservas/{id: \\d+}/{idUsuario: \\d+}")
+    public ReservaDetailDTO updateReserva(@PathParam("id") Long id, ReservaDTO m, @PathParam("idUsuario") Long idUsuario) throws BibliotecaLogicException, ParseException {
+        return reservaLogic.updateReservaDeUsuario(id, m, idUsuario);
+    }
+    
+
+    @DELETE
+    @Path("reservas/{id: \\d+}/{idUsuario: \\d+}")
+    public void deleteMulta(@PathParam("id") int id, @PathParam("idUsuario") int idUsuario) throws BibliotecaLogicException, ParseException {
+        reservaLogic.deleteReservaDeUsuario(id, idUsuario);
+    }
+    
+    */
+    
+    
     
     @POST
-    @Path("bibliotecas/{bibliotecaId: \\d+}/recurso/{tipoRecurso}/{recursoId: \\d+}/usuario/{idUsuario: \\d+}/reservas")
+    @Path("/bibliotecas/{bibliotecaId: \\d+}/tipoRecurso/{tipoRecurso}/recurso/{recursoId: \\d+}/usuario/{idUsuario: \\d+}/reservas")
     @Consumes(MediaType.APPLICATION_JSON)
     public ReservaDetailDTO createReserva(@PathParam("bibliotecaId") Long bibliotecaId,@PathParam("tipoRecurso") String tipoRecurso, @PathParam("recursoId") Long recursoId,@PathParam("idUsuario") Long idUsuario, ReservaDTO dto) throws BibliotecaLogicException {
         existsBiblioteca(bibliotecaId);
@@ -202,8 +271,8 @@ public class ReservaResource {
     
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
-    @Path("bibliotecas/{bibliotecaId: \\d+}/recurso/{tipoRecurso}/{recursoId: \\d+}/usuario/{idUsuario: \\d+}/reservas{reservaId: \\d+}")
-    public ReservaDetailDTO updateReserva(@PathParam("bibliotecaId") Long bibliotecaId,@PathParam("reservaId") Long reservaId,@PathParam("tipoRecurso") String tipoRecurso, @PathParam("recursoId") Long recursoId,@PathParam("idUsuario") Long idUsuario, ReservaDTO dto) throws BibliotecaLogicException {
+    @Path("/bibliotecas/{bibliotecaId: \\d+}/tipoRecurso/{tipoRecurso}/recurso/{recursoId: \\d+}/usuario/{idUsuario: \\d+}/reservas/{reservaId: \\d+}")
+    public ReservaDetailDTO updateReserva(@PathParam("bibliotecaId") Long bibliotecaId,@PathParam("reservaId") Long reservaId,@PathParam("tipoRecurso") String tipoRecurso, @PathParam("recursoId") Long recursoId,@PathParam("idUsuario") Long idUsuario, ReservaDetailDTO dto) throws BibliotecaLogicException {
         existsBiblioteca(bibliotecaId);
         existsReserva(reservaId);
         existsUsuario(idUsuario);
@@ -240,8 +309,8 @@ public class ReservaResource {
     */
     
     @DELETE
-    @Path("bibliotecas/{bibliotecaId: \\d+}/reservas/{reservaId: \\d+}")
-    public void deleteReserva(@PathParam("bibliotecaId") Long bibliotecaId, @PathParam("reservaId") Long reservaId) throws BibliotecaLogicException  {
+    @Path("/bibliotecas/{bibliotecaId: \\d+}/reservas/{reservaId: \\d+}")
+    public void deleteReserva(@PathParam("bibliotecaId") Long bibliotecaId,@PathParam("reservaId") Long reservaId) throws BibliotecaLogicException  {
         existsBiblioteca(bibliotecaId);
         existsReserva(reservaId);
         reservaLogic.deleteReserva(reservaId);

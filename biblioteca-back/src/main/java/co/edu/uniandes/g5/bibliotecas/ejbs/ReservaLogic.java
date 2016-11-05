@@ -114,16 +114,17 @@ public class ReservaLogic implements IReservaLogic {
         reserva.setUsuario(usuario);
         if(reserva.getUsuario().getMultas().size() > 0)
         {
-            throw new BibliotecaLogicException("El usuario tiene multas, no es posible hacer el préstamo hasta que se paguen las multas.");
+            throw new BibliotecaLogicException("El usuario tiene multas, no es posible hacer la reserva hasta que se paguen las multas.");
         }
 
-        if(Objects.equals(tipoRecurso, RecursoEntity.LIBRO))
+       if(Objects.equals(tipoRecurso, RecursoEntity.LIBRO))
         {
             LibroEntity libro = libroLogic.getLibro(idRecurso);
             if(libro.getEjemplaresDisponibles() <= 0)
             {
             throw new BibliotecaLogicException("No hay libros disponibles para prestar.");
             }
+            reserva.setTipoRecurso(RecursoEntity.LIBRO);
             reserva.setRecurso(libro);
         }
         else if(Objects.equals(tipoRecurso, RecursoEntity.VIDEO))
@@ -133,11 +134,13 @@ public class ReservaLogic implements IReservaLogic {
             {
             throw new BibliotecaLogicException("No hay videos disponibles para prestar.");
             }
+            reserva.setTipoRecurso(RecursoEntity.VIDEO);
             reserva.setRecurso(video);
         }
         else if(Objects.equals(tipoRecurso, RecursoEntity.SALA))
         {
             SalaEntity sala = salaLogic.getSala(idRecurso);
+            reserva.setTipoRecurso(RecursoEntity.SALA);
             reserva.setRecurso(sala);
         }
         
@@ -158,27 +161,30 @@ public class ReservaLogic implements IReservaLogic {
        
         ReservaEntity oldReserva = getReserva(reserva.getId());
         
-       if(tipoRecurso == RecursoEntity.LIBRO)
+       if(Objects.equals(tipoRecurso, RecursoEntity.LIBRO))
         {
             LibroEntity libro = libroLogic.getLibro(idRecurso);
-            if(libro.getEjemplaresDisponibles() == 0)
+            if(libro.getEjemplaresDisponibles() <= 0)
             {
             throw new BibliotecaLogicException("No hay libros disponibles para prestar.");
             }
+            reserva.setTipoRecurso(RecursoEntity.LIBRO);
             reserva.setRecurso(libro);
         }
-        else if(tipoRecurso == RecursoEntity.VIDEO)
+        else if(Objects.equals(tipoRecurso, RecursoEntity.VIDEO))
         {
             VideoEntity video = videoLogic.getVideo(idRecurso);
             if(video.getEjemplaresDisponibles() == 0)
             {
             throw new BibliotecaLogicException("No hay videos disponibles para prestar.");
             }
+            reserva.setTipoRecurso(RecursoEntity.VIDEO);
             reserva.setRecurso(video);
         }
-        else if(tipoRecurso == RecursoEntity.SALA)
+        else if(Objects.equals(tipoRecurso, RecursoEntity.SALA))
         {
-            SalaEntity sala =  salaLogic.getSala(idRecurso);
+            SalaEntity sala = salaLogic.getSala(idRecurso);
+            reserva.setTipoRecurso(RecursoEntity.SALA);
             reserva.setRecurso(sala);
         }
         if(reserva.getFecha()== null)

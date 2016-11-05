@@ -90,7 +90,6 @@ public class PrestamoEntity extends BaseEntity implements Serializable {
 
     public void setRecurso(RecursoEntity recurso) {
         this.recurso = recurso;
-        this.tipoRecurso = recurso.getTipoRecurso();
     }
 
     public Double getCosto() {

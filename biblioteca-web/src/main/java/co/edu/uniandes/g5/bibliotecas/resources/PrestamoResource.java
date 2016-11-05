@@ -14,6 +14,7 @@ import co.edu.uniandes.g5.bibliotecas.api.IVideoLogic;
 import co.edu.uniandes.g5.bibliotecas.dtos.BiblioDTO;
 import co.edu.uniandes.g5.bibliotecas.dtos.LibroDTO;
 import co.edu.uniandes.g5.bibliotecas.dtos.PrestamoDTO;
+import co.edu.uniandes.g5.bibliotecas.dtos.PrestamoDetailDTO;
 import co.edu.uniandes.g5.bibliotecas.dtos.RecursoDTO;
 import co.edu.uniandes.g5.bibliotecas.dtos.SalaDTO;
 import co.edu.uniandes.g5.bibliotecas.dtos.UsuarioDTO;
@@ -143,6 +144,32 @@ public class PrestamoResource {
      * @return lista de prestamos
      * @throws BibliotecaLogicException excepción retornada por la lógica
      */
+    
+    @GET
+    @Path("prestamos")
+    public List<PrestamoDTO> getPrestamos()throws BibliotecaLogicException
+    {
+        List<PrestamoEntity> prestamos = prestamoLogic.getPrestamos();
+        return listEntity2DTO(prestamos);
+    }
+     @GET
+    @Path("bibliotecas/{bibliotecaId: \\d+}/tipoRecurso/{tipoRecurso}/recurso/{recursoId: \\d+}/prestamos")
+    public List<PrestamoDTO> getPrestamosByRecurso(@PathParam("bibliotecaId") Long bibliotecaId,@PathParam("recursoId") Long recursoId, @PathParam("tipoRecurso") String tipoRecurso)throws BibliotecaLogicException
+    {       
+        existsBiblioteca(bibliotecaId);
+        existsRecurso(recursoId, tipoRecurso);
+        List<PrestamoEntity> prestamos = prestamoLogic.getPrestamosByRecurso(bibliotecaId, recursoId);
+        return listEntity2DTO(prestamos);
+    }
+    
+    @GET
+    @Path("bibliotecas/{bibliotecaId: \\d+}/usuario/{idUsuario: \\d+}/prestamos")
+    public List<PrestamoDTO> getPrestamosByUsuario(@PathParam("bibliotecaId") Long bibliotecaId, @PathParam("idUsuario") Long usuarioId) throws BibliotecaLogicException, ParseException {
+        existsBiblioteca(bibliotecaId);
+        existsUsuario(usuarioId);
+        List<PrestamoEntity> prestamos = prestamoLogic.getPrestamosByUsuario(bibliotecaId, usuarioId);
+        return listEntity2DTO(prestamos);
+    }
     @GET
     @Path("bibliotecas/{bibliotecaId: \\d+}/prestamos")
     public List<PrestamoDTO> getPrestamosBiblioteca(@PathParam("bibliotecaId") Long bibliotecaId) throws BibliotecaLogicException, ParseException {
@@ -214,9 +241,9 @@ public class PrestamoResource {
     
     
     @POST
-    @Path("/bibliotecas/{bibliotecaId: \\d+}/recurso/{tipoRecurso}/{recursoId: \\d+}/usuario/{idUsuario: \\d+}/prestamos")
+    @Path("/bibliotecas/{bibliotecaId: \\d+}/tipoRecurso/{tipoRecurso}/recurso/{recursoId: \\d+}/usuario/{idUsuario: \\d+}/prestamos")
     @Consumes(MediaType.APPLICATION_JSON)
-    public PrestamoDTO createPrestamo(@PathParam("bibliotecaId") Long bibliotecaId,@PathParam("tipoRecurso") String tipoRecurso, @PathParam("recursoId") Long recursoId,@PathParam("idUsuario") Long idUsuario, PrestamoDTO dto) throws BibliotecaLogicException {
+    public PrestamoDetailDTO createPrestamo(@PathParam("bibliotecaId") Long bibliotecaId,@PathParam("tipoRecurso") String tipoRecurso, @PathParam("recursoId") Long recursoId,@PathParam("idUsuario") Long idUsuario, PrestamoDTO dto) throws BibliotecaLogicException {
         existsBiblioteca(bibliotecaId);
         existsUsuario(idUsuario);
         
@@ -239,13 +266,13 @@ public class PrestamoResource {
             throw new WebApplicationException("El tipo de recurso tiene que ser 'Video', 'Libro' o 'Sala'", 404);
         }
         
-        return new PrestamoDTO(prestamoLogic.createPrestamo(dto.toEntity(),bibliotecaId, tipoRecursoo, recursoId, idUsuario));
+        return new PrestamoDetailDTO(prestamoLogic.createPrestamo(dto.toEntity(),bibliotecaId, tipoRecursoo, recursoId, idUsuario));
     }
     
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
-    @Path("/bibliotecas/{bibliotecaId: \\d+}/recurso/{tipoRecurso}/{recursoId: \\d+}/usuario/{idUsuario: \\d+}/prestamos{prestamoId: \\d+}")
-    public PrestamoDTO updatePrestamo(@PathParam("bibliotecaId") Long bibliotecaId,@PathParam("prestamoId") Long prestamoId,@PathParam("tipoRecurso") String tipoRecurso, @PathParam("recursoId") Long recursoId,@PathParam("idUsuario") Long idUsuario, PrestamoDTO dto) throws BibliotecaLogicException {
+    @Path("/bibliotecas/{bibliotecaId: \\d+}/tipoRecurso/{tipoRecurso}/recurso/{recursoId: \\d+}/usuario/{idUsuario: \\d+}/prestamos/{prestamoId: \\d+}")
+    public PrestamoDetailDTO updatePrestamo(@PathParam("bibliotecaId") Long bibliotecaId,@PathParam("prestamoId") Long prestamoId,@PathParam("tipoRecurso") String tipoRecurso, @PathParam("recursoId") Long recursoId,@PathParam("idUsuario") Long idUsuario, PrestamoDetailDTO dto) throws BibliotecaLogicException {
         existsBiblioteca(bibliotecaId);
         existsPrestamo(prestamoId);
         existsUsuario(idUsuario);
@@ -270,7 +297,7 @@ public class PrestamoResource {
             throw new WebApplicationException("El tipo de recurso tiene que ser 'Video', 'Libro' o 'Sala'", 404);
         }
         
-        return new PrestamoDTO(prestamoLogic.updatePrestamo(entity, bibliotecaId,tipoRecursoo, recursoId, idUsuario ));
+        return new PrestamoDetailDTO(prestamoLogic.updatePrestamo(entity, bibliotecaId,tipoRecursoo, recursoId, idUsuario ));
     }
     
     /**
