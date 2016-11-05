@@ -43,7 +43,7 @@ import javax.ws.rs.core.MediaType;
  *
  * @author sf.munera10
  */
-@Path("/bibliotecas/{bibliotecaId: \\d+}")
+@Path("")
 @Produces("application/json")
 public class ReservaResource {
 
@@ -67,8 +67,7 @@ public class ReservaResource {
     @Inject 
     private ISalaLogic salaLogic;
 
-    @PathParam("bibliotecaId")
-    private Long bibliotecaId;
+   
 
     /**
      * Convierte una lista de ReservaEntity a una lista de
@@ -149,16 +148,17 @@ public class ReservaResource {
      * @throws BibliotecaLogicException excepción retornada por la lógica
      */
     @GET
-    @Path("reservas")
-    public List<ReservaDetailDTO> getReservasBiblioteca() throws BibliotecaLogicException, ParseException {
+    @Path("bibliotecas/{bibliotecaId: \\d+}/reservas")
+    public List<ReservaDetailDTO> getReservasBiblioteca(@PathParam("bibliotecaId") Long bibliotecaId) throws BibliotecaLogicException, ParseException {
+        
         existsBiblioteca(bibliotecaId);
         List<ReservaEntity> reservas = reservaLogic.getReservasByBiblioteca(bibliotecaId);
         return listEntity2DTO(reservas);
     }
     
      @GET
-    @Path("reservas/{reservaId: \\d+}")
-    public ReservaDetailDTO getReserva(@PathParam("reservaId") Long reservaId) throws BibliotecaLogicException, ParseException {
+    @Path("bibliotecas/{bibliotecaId: \\d+}/reservas/{reservaId: \\d+}")
+    public ReservaDetailDTO getReserva(@PathParam("bibliotecaId") Long bibliotecaId, @PathParam("reservaId") Long reservaId) throws BibliotecaLogicException, ParseException {
        existsBiblioteca(bibliotecaId);
         LOGGER.log(Level.INFO, "Consultando biblioteca con bibliotecaId = {0}", bibliotecaId);
         ReservaEntity entity = reservaLogic.getReserva(reservaId);
@@ -172,9 +172,9 @@ public class ReservaResource {
 
     
     @POST
-    @Path("recurso/{tipoRecurso}/{recursoId: \\d+}/usuario/{idUsuario: \\d+}/reservas")
+    @Path("bibliotecas/{bibliotecaId: \\d+}/recurso/{tipoRecurso}/{recursoId: \\d+}/usuario/{idUsuario: \\d+}/reservas")
     @Consumes(MediaType.APPLICATION_JSON)
-    public ReservaDetailDTO createReserva(@PathParam("tipoRecurso") String tipoRecurso, @PathParam("recursoId") Long recursoId,@PathParam("idUsuario") Long idUsuario, ReservaDTO dto) throws BibliotecaLogicException {
+    public ReservaDetailDTO createReserva(@PathParam("bibliotecaId") Long bibliotecaId,@PathParam("tipoRecurso") String tipoRecurso, @PathParam("recursoId") Long recursoId,@PathParam("idUsuario") Long idUsuario, ReservaDTO dto) throws BibliotecaLogicException {
         existsBiblioteca(bibliotecaId);
         existsUsuario(idUsuario);
         
@@ -202,8 +202,8 @@ public class ReservaResource {
     
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
-    @Path("recurso/{tipoRecurso}/{recursoId: \\d+}/usuario/{idUsuario: \\d+}/reservas{reservaId: \\d+}")
-    public ReservaDetailDTO updateReserva(@PathParam("reservaId") Long reservaId,@PathParam("tipoRecurso") String tipoRecurso, @PathParam("recursoId") Long recursoId,@PathParam("idUsuario") Long idUsuario, ReservaDTO dto) throws BibliotecaLogicException {
+    @Path("bibliotecas/{bibliotecaId: \\d+}/recurso/{tipoRecurso}/{recursoId: \\d+}/usuario/{idUsuario: \\d+}/reservas{reservaId: \\d+}")
+    public ReservaDetailDTO updateReserva(@PathParam("bibliotecaId") Long bibliotecaId,@PathParam("reservaId") Long reservaId,@PathParam("tipoRecurso") String tipoRecurso, @PathParam("recursoId") Long recursoId,@PathParam("idUsuario") Long idUsuario, ReservaDTO dto) throws BibliotecaLogicException {
         existsBiblioteca(bibliotecaId);
         existsReserva(reservaId);
         existsUsuario(idUsuario);
@@ -240,8 +240,8 @@ public class ReservaResource {
     */
     
     @DELETE
-    @Path("reservas/{reservaId: \\d+}")
-    public void deleteReserva(@PathParam("reservaId") Long reservaId) throws BibliotecaLogicException  {
+    @Path("bibliotecas/{bibliotecaId: \\d+}/reservas/{reservaId: \\d+}")
+    public void deleteReserva(@PathParam("bibliotecaId") Long bibliotecaId, @PathParam("reservaId") Long reservaId) throws BibliotecaLogicException  {
         existsBiblioteca(bibliotecaId);
         existsReserva(reservaId);
         reservaLogic.deleteReserva(reservaId);

@@ -51,7 +51,7 @@ import javax.ws.rs.WebApplicationException;
  *
  * @author sf.munera10
  */
-@Path("/usuarios/{usuarioId: \\d+}/multas")
+@Path("")
 @Produces("application/json")
 public class MultaResource {
 
@@ -75,8 +75,7 @@ public class MultaResource {
     @Inject
     private ILibroLogic libroLogic;
 
-    @PathParam("usuarioId")
-    private Long usuarioId;
+  
 
     /**
      * Convierte una lista de MultaEntity a una lista de
@@ -141,15 +140,16 @@ public class MultaResource {
      * @throws BibliotecaLogicException excepción retornada por la lógica
      */
     @GET
-    public List<MultaDetailDTO> getMultasUsuario() throws BibliotecaLogicException {
+    @Path("usuarios/{usuarioId: \\d+}/multas")
+    public List<MultaDetailDTO> getMultasUsuario(@PathParam("usuarioId") Long usuarioId) throws BibliotecaLogicException {
         existsUsuario(usuarioId);
         List<MultaEntity> multas = multaLogic.getMultasByUsuario(usuarioId);
         return listEntity2DTO(multas);
     }
     
      @GET
-    @Path("{multaId: \\d+}")
-    public MultaDetailDTO getMulta(@PathParam("multaId") Long multaId) throws BibliotecaLogicException {
+    @Path("usuarios/{usuarioId: \\d+}/multas/{multaId: \\d+}")
+    public MultaDetailDTO getMulta(@PathParam("usuarioId") Long usuarioId,@PathParam("multaId") Long multaId) throws BibliotecaLogicException {
        existsUsuario(usuarioId);
         LOGGER.log(Level.INFO, "Consultando biblioteca con usuarioId = {0}", usuarioId);
         MultaEntity entity = multaLogic.getMulta(multaId);
@@ -167,8 +167,8 @@ public class MultaResource {
     
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    @Path("idRecurso/{idRecurso: \\d+}/{tipoR: \\d+}/idBiblioteca/{idBiblioteca: \\d+}")
-    public MultaDetailDTO createMulta(MultaDetailDTO dto , @PathParam("idRecurso") Long idRecurso, @PathParam("idBiblioteca") Long idBiblioteca, @PathParam("tipoR") int tipoR) throws BibliotecaLogicException {
+    @Path("usuarios/{usuarioId: \\d+}/multas/idRecurso/{idRecurso: \\d+}/{tipoR: \\d+}/idBiblioteca/{idBiblioteca: \\d+}")
+    public MultaDetailDTO createMulta(@PathParam("usuarioId") Long usuarioId,MultaDetailDTO dto , @PathParam("idRecurso") Long idRecurso, @PathParam("idBiblioteca") Long idBiblioteca, @PathParam("tipoR") int tipoR) throws BibliotecaLogicException {
         existsUsuario(usuarioId);
         existsBiblioteca(idBiblioteca);
         if(tipoR==VideoDetailDTO.LIBRO){
@@ -186,8 +186,8 @@ public class MultaResource {
     
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
-    @Path("{multaId: \\d+}")
-    public MultaDetailDTO updateMulta(@PathParam("multaId") Long multaId, MultaDetailDTO dto) throws BibliotecaLogicException {
+    @Path("usuarios/{usuarioId: \\d+}/multas/{multaId: \\d+}")
+    public MultaDetailDTO updateMulta(@PathParam("usuarioId") Long usuarioId,@PathParam("multaId") Long multaId, MultaDetailDTO dto) throws BibliotecaLogicException {
         existsUsuario(usuarioId);
         existMulta(multaId);
         MultaEntity entity = dto.toEntity();
@@ -202,8 +202,8 @@ public class MultaResource {
     */
     
     @DELETE
-    @Path("{multaId: \\d+}")
-    public void deleteMulta(@PathParam("multaId") Long multaId) throws BibliotecaLogicException  {
+    @Path("usuarios/{usuarioId: \\d+}/multas/{multaId: \\d+}")
+    public void deleteMulta(@PathParam("usuarioId") Long usuarioId,@PathParam("multaId") Long multaId) throws BibliotecaLogicException  {
         existsUsuario(usuarioId);
         existMulta(multaId);
         multaLogic.deleteMulta(multaId);

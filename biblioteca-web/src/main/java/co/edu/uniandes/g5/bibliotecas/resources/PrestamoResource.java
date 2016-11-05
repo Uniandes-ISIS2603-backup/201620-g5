@@ -43,7 +43,7 @@ import javax.ws.rs.core.MediaType;
  *
  * @author sf.munera10
  */
-@Path("/bibliotecas/{bibliotecaId: \\d+}")
+@Path("")
 @Produces("application/json")
 public class PrestamoResource {
 
@@ -67,9 +67,7 @@ public class PrestamoResource {
     @Inject 
     private ISalaLogic salaLogic;
 
-    @PathParam("bibliotecaId")
-    private Long bibliotecaId;
-
+   
     /**
      * Convierte una lista de PrestamoEntity a una lista de
      * PrestamoDetailDTO
@@ -147,16 +145,16 @@ public class PrestamoResource {
      * @throws BibliotecaLogicException excepción retornada por la lógica
      */
     @GET
-    @Path("prestamos")
-    public List<PrestamoDetailDTO> getPrestamosBiblioteca() throws BibliotecaLogicException, ParseException {
+    @Path("bibliotecas/{bibliotecaId: \\d+}/prestamos")
+    public List<PrestamoDetailDTO> getPrestamosBiblioteca(@PathParam("bibliotecaId") Long bibliotecaId) throws BibliotecaLogicException, ParseException {
         existsBiblioteca(bibliotecaId);
         List<PrestamoEntity> prestamos = prestamoLogic.getPrestamosByBiblioteca(bibliotecaId);
         return listEntity2DTO(prestamos);
     }
     
      @GET
-    @Path("prestamos/{prestamoId: \\d+}")
-    public PrestamoDetailDTO getPrestamo(@PathParam("prestamoId") Long prestamoId) throws BibliotecaLogicException, ParseException {
+    @Path("/bibliotecas/{bibliotecaId: \\d+}/prestamos/{prestamoId: \\d+}")
+    public PrestamoDetailDTO getPrestamo(@PathParam("bibliotecaId") Long bibliotecaId,@PathParam("prestamoId") Long prestamoId) throws BibliotecaLogicException, ParseException {
        existsBiblioteca(bibliotecaId);
         LOGGER.log(Level.INFO, "Consultando biblioteca con bibliotecaId = {0}", bibliotecaId);
         PrestamoEntity entity = prestamoLogic.getPrestamo(prestamoId);
@@ -217,9 +215,9 @@ public class PrestamoResource {
     
     
     @POST
-    @Path("recurso/{tipoRecurso}/{recursoId: \\d+}/usuario/{idUsuario: \\d+}/prestamos")
+    @Path("/bibliotecas/{bibliotecaId: \\d+}/recurso/{tipoRecurso}/{recursoId: \\d+}/usuario/{idUsuario: \\d+}/prestamos")
     @Consumes(MediaType.APPLICATION_JSON)
-    public PrestamoDetailDTO createPrestamo(@PathParam("tipoRecurso") String tipoRecurso, @PathParam("recursoId") Long recursoId,@PathParam("idUsuario") Long idUsuario, PrestamoDTO dto) throws BibliotecaLogicException {
+    public PrestamoDetailDTO createPrestamo(@PathParam("bibliotecaId") Long bibliotecaId,@PathParam("tipoRecurso") String tipoRecurso, @PathParam("recursoId") Long recursoId,@PathParam("idUsuario") Long idUsuario, PrestamoDTO dto) throws BibliotecaLogicException {
         existsBiblioteca(bibliotecaId);
         existsUsuario(idUsuario);
         
@@ -247,8 +245,8 @@ public class PrestamoResource {
     
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
-    @Path("recurso/{tipoRecurso}/{recursoId: \\d+}/usuario/{idUsuario: \\d+}/prestamos{prestamoId: \\d+}")
-    public PrestamoDetailDTO updatePrestamo(@PathParam("prestamoId") Long prestamoId,@PathParam("tipoRecurso") String tipoRecurso, @PathParam("recursoId") Long recursoId,@PathParam("idUsuario") Long idUsuario, PrestamoDTO dto) throws BibliotecaLogicException {
+    @Path("/bibliotecas/{bibliotecaId: \\d+}/recurso/{tipoRecurso}/{recursoId: \\d+}/usuario/{idUsuario: \\d+}/prestamos{prestamoId: \\d+}")
+    public PrestamoDetailDTO updatePrestamo(@PathParam("bibliotecaId") Long bibliotecaId,@PathParam("prestamoId") Long prestamoId,@PathParam("tipoRecurso") String tipoRecurso, @PathParam("recursoId") Long recursoId,@PathParam("idUsuario") Long idUsuario, PrestamoDTO dto) throws BibliotecaLogicException {
         existsBiblioteca(bibliotecaId);
         existsPrestamo(prestamoId);
         existsUsuario(idUsuario);
@@ -285,8 +283,8 @@ public class PrestamoResource {
     */
     
     @DELETE
-    @Path("prestamos/{prestamoId: \\d+}")
-    public void deletePrestamo(@PathParam("prestamoId") Long prestamoId) throws BibliotecaLogicException  {
+    @Path("/bibliotecas/{bibliotecaId: \\d+}/prestamos/{prestamoId: \\d+}")
+    public void deletePrestamo(@PathParam("bibliotecaId") Long bibliotecaId,@PathParam("prestamoId") Long prestamoId) throws BibliotecaLogicException  {
         existsBiblioteca(bibliotecaId);
         existsPrestamo(prestamoId);
         prestamoLogic.deletePrestamo(prestamoId);
