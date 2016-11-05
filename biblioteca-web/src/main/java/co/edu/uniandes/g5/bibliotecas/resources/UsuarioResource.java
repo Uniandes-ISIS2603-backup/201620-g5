@@ -114,21 +114,21 @@ public class UsuarioResource {
      *
      * @param usuario usuario a agregar
      * @return libtro agregado
-     
+     */
     
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    @Path("usuarios")
-    public UsuarioDTO createUsuario(UsuarioDetailDTO usuario) {
+    @Path("bibliotecas/{idBiblioteca: \\d+}/usuarios")
+    public UsuarioDTO createUsuario(UsuarioDetailDTO usuario, @PathParam("idBiblioteca")Long idBiblioteca) {
         try {
             UsuarioEntity entity = usuario.toEntity();
-            UsuarioEntity respuesta = usuarioLogic.createUsuario(entity);
+            UsuarioEntity respuesta = usuarioLogic.createUsuario(entity, idBiblioteca);
             return new UsuarioDetailDTO(respuesta);
         } catch (BibliotecaLogicException e) {
             throw new WebApplicationException(404);
         }
     }
-    */
+    
 
     /**
      * Actualiza un usuario

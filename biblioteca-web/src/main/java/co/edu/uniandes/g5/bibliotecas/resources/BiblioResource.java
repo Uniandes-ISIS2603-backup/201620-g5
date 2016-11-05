@@ -49,10 +49,10 @@ public class BiblioResource {
      * @return Lista de BibliotecaDetailDTO convertida.
      *
      */
-    private List<BiblioDetailDTO> listEntity2DTO(List<BibliotecaEntity> entityList) {
-        List<BiblioDetailDTO> list = new ArrayList<>();
+    private List<BiblioDTO> listEntity2DTO(List<BibliotecaEntity> entityList) {
+        List<BiblioDTO> list = new ArrayList<>();
         for (BibliotecaEntity entity : entityList) {
-            list.add(new BiblioDetailDTO(entity));
+            list.add(new BiblioDTO(entity));
         }
         return list;
     }
@@ -65,7 +65,7 @@ public class BiblioResource {
      */
     @GET
     @Path("bibliotecas")
-    public List<BiblioDetailDTO> getBibliotecas() throws BibliotecaLogicException {
+    public List<BiblioDTO> getBibliotecas() throws BibliotecaLogicException {
         return listEntity2DTO(bibliotecaLogic.getBibliotecas());
     }
 
@@ -80,23 +80,23 @@ public class BiblioResource {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("bibliotecas")
-    public BiblioDetailDTO createBiblioteca(BiblioDTO biblioteca) throws BibliotecaLogicException {
-        return new BiblioDetailDTO(bibliotecaLogic.createBiblioteca(biblioteca.toEntity()));
+    public BiblioDTO createBiblioteca(BiblioDTO biblioteca) throws BibliotecaLogicException {
+        return new BiblioDTO(bibliotecaLogic.createBiblioteca(biblioteca.toEntity()));
     }
 
     @GET
     @Path("bibliotecas/{id: \\d+}")
-    public BiblioDetailDTO getBiblioteca(@PathParam("id") Long id) throws BibliotecaLogicException {
-        return new BiblioDetailDTO(bibliotecaLogic.getBiblioteca(id));
+    public BiblioDTO getBiblioteca(@PathParam("id") Long id) throws BibliotecaLogicException {
+        return new BiblioDTO(bibliotecaLogic.getBiblioteca(id));
     }
 
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("bibliotecas/{id: \\d+}")
-    public BiblioDetailDTO updateBiblioteca(@PathParam("id") Long id, BiblioDTO b) throws BibliotecaLogicException {
+    public BiblioDTO updateBiblioteca(@PathParam("id") Long id, BiblioDTO b) throws BibliotecaLogicException {
         BibliotecaEntity entity = b.toEntity();
         entity.setId(id);
-        return new BiblioDetailDTO(bibliotecaLogic.updateBiblioteca(entity));
+        return new BiblioDTO(bibliotecaLogic.updateBiblioteca(entity));
     }
 
     @DELETE
