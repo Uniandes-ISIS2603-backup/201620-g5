@@ -9,10 +9,12 @@ import co.edu.uniandes.g5.bibliotecas.api.IBlogLogic;
 import co.edu.uniandes.g5.bibliotecas.ejbs.BlogLogic;
 import co.edu.uniandes.g5.bibliotecas.entities.BlogEntity;
 import co.edu.uniandes.g5.bibliotecas.entities.LibroEntity;
+import co.edu.uniandes.g5.bibliotecas.entities.UsuarioEntity;
 import co.edu.uniandes.g5.bibliotecas.exceptions.BibliotecaLogicException;
 import co.edu.uniandes.g5.bibliotecas.persistence.BlogPersistence;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -36,6 +38,7 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
 @RunWith(Arquillian.class)
 public class BlogLogicTest {
     
+    private Random random;
     
     private PodamFactory factory = new PodamFactoryImpl();
     
@@ -52,6 +55,8 @@ public class BlogLogicTest {
     
     private List<LibroEntity> librosData = new ArrayList<LibroEntity>();
     
+    private List<UsuarioEntity> usuariosData = new ArrayList<UsuarioEntity>();
+    
     
     @Deployment
     public static JavaArchive createDeployment() {
@@ -60,6 +65,8 @@ public class BlogLogicTest {
                 .addPackage(BlogLogic.class.getPackage())
                 .addPackage(IBlogLogic.class.getPackage())
                 .addPackage(BlogPersistence.class.getPackage())
+                .addPackage(LibroEntity.class.getPackage())
+                .addPackage(UsuarioEntity.class.getPackage())
                 .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
                 .addAsManifestResource("META-INF/beans.xml", "beans.xml");
     }
@@ -87,19 +94,24 @@ public class BlogLogicTest {
     private void clearData() {
         em.createQuery("delete from BlogEntity").executeUpdate();
         em.createQuery("delete from LibroEntity").executeUpdate();
+        em.createQuery("delete from UsuarioEntity").executeUpdate();
     }
     
    private void insertData() {
         
-        
         for (int i = 0; i < 3; i++) {
+            UsuarioEntity usuario = factory.manufacturePojo(UsuarioEntity.class);
             LibroEntity libro = factory.manufacturePojo(LibroEntity.class);
+            em.persist(usuario);
             em.persist(libro);
+            usuariosData.add(usuario);
             librosData.add(libro);
+            
         }
         for (int i = 0; i < 3; i++) {
             BlogEntity entity = factory.manufacturePojo(BlogEntity.class);
-            entity.setLibro(librosData.get(0));
+            entity.setLibro(librosData.get(i));
+            entity.setUsuario(usuariosData.get(i));
             em.persist(entity);
             data.add(entity);
         }
@@ -108,8 +120,13 @@ public class BlogLogicTest {
    @Test
     public void createBlogTest() throws BibliotecaLogicException
     {
+        random = new Random();
         BlogEntity newEntity = factory.manufacturePojo(BlogEntity.class);
-        BlogEntity result = blogLogic.createBlog(newEntity);
+        int usuarioSize = usuariosData.size();
+        Long usuarioId = usuariosData.get(random.nextInt(usuarioSize)).getId();
+        int libroSize = librosData.size();
+        Long libroId = librosData.get(random.nextInt(libroSize)).getId();
+        BlogEntity result = blogLogic.createBlog(newEntity, usuarioId, libroId);
         Assert.assertNotNull(result);
         BlogEntity entity = em.find(BlogEntity.class, result.getId());
         Assert.assertEquals(newEntity.getName(), entity.getName());

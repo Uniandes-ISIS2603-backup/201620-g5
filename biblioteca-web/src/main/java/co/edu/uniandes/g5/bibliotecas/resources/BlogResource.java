@@ -75,8 +75,8 @@ public class BlogResource
     @Consumes(MediaType.APPLICATION_JSON)
     @POST
     @Path("libros/{idLibro: \\d+}/blogs")
-    public BlogDetailDTO createLibro(BlogDetailDTO blog) throws BibliotecaLogicException {
-            return new BlogDetailDTO(blogLogic.createBlog(blog.toEntity()));
+    public BlogDetailDTO createLibro(@PathParam("idLibro") Long idLibro, BlogDetailDTO blog) throws BibliotecaLogicException {
+            return new BlogDetailDTO(blogLogic.createBlog(blog.toEntity(),blog.getUsuario().getId(), idLibro));
     }
     @Consumes(MediaType.APPLICATION_JSON)
     @PUT
