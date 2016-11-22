@@ -7,6 +7,7 @@ package co.edu.uniandes.g5.bibliotecas.resources;
 
 import co.edu.uniandes.g5.bibliotecas.api.IBibliotecaLogic;
 import co.edu.uniandes.g5.bibliotecas.api.ISalaLogic;
+import co.edu.uniandes.g5.bibliotecas.dtos.BiblioDTO;
 import co.edu.uniandes.g5.bibliotecas.dtos.SalaDetailDTO;
 import co.edu.uniandes.g5.bibliotecas.dtos.BiblioDetailDTO;
 import co.edu.uniandes.g5.bibliotecas.dtos.SalaDTO;
@@ -61,7 +62,7 @@ public class SalaResource {
     }
 
     public void existsBiblioteca(Long bibliotecaId) {
-        BiblioDetailDTO biblioteca = new BiblioDetailDTO(bibliotecaLogic.getBiblioteca(bibliotecaId));
+         BiblioDTO biblioteca = new BiblioDTO(bibliotecaLogic.getBiblioteca(bibliotecaId));
         if (biblioteca == null) {
             throw new WebApplicationException("La biblioteca no existe", 404);
         }
@@ -73,7 +74,7 @@ public class SalaResource {
             throw new WebApplicationException("La sala no existe", 404);
         }
     }
-
+   
     /**
      * Obtiene el listado de salas de una biblioteca.
      *
