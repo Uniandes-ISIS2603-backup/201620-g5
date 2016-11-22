@@ -61,6 +61,11 @@ public class BlogPersistence {
         q = q.setParameter("libroId", libroId);
         return q.getResultList();
     }
+    public List<BlogEntity> getBlogsUsuario(Long usuarioId) {
+        TypedQuery q = em.createQuery("select u from BlogEntity u where u.usuario.id = :usuarioId", BlogEntity.class);
+        q = q.setParameter("libroId", usuarioId);
+        return q.getResultList();
+    }
     
     public boolean usuarioPrestoLibro(Long idUsuario, Long idLibro)
     {

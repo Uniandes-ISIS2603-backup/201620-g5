@@ -6,7 +6,6 @@
         <thead>
             <tr>
                 <th>Id</th>
-                <th>Titulo</th>
                 <th>Nombre</th>
                 <th>Autor</th>
             </tr>
@@ -16,7 +15,7 @@
                 <td id="{{$index}}-id">{{blog.id}}</td>
                 <td id="{{$index}}-titulo">{{blog.titulo}}</td>
                 <td id="{{$index}}-nombre">{{blog.nombre}}</td>
-                <td id="{{$index}}-nombreAutor">{{blog.nombreAutor}}</td>
+                <td id="{{$index}}-nombreAutor">{{blog.autor}}</td>
                 <td>
                     <button id="{{$index}}-edit-btn" class="btn btn-default btn-sm" data-ui-sref="blogEdit({id: blog.id})"><span class="glyphicon glyphicon-edit"></span> Editar</button>
                     <button id="{{$index}}-delete-btn" class="btn btn-default btn-sm" data-ui-sref="blogGet({id: blog.id})"><span class="glyphicon glyphicon-minus"></span> Ver</button>

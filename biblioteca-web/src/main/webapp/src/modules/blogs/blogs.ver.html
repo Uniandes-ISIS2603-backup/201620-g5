@@ -15,15 +15,11 @@
                 </div>
                 <label for="nombreAutor" class="col-md-2 control-label">Autor</label>
                 <div class="col-md-10">
-                    <input readonly id="nombreAutor" name="nombreAutor" class="form-control" type="text" ng-model="currentBlog.nombreAutor" ng-init="currentBlog.nombreAutor" required />
+                    <input readonly id="autor" name="autor" class="form-control" type="text" ng-model="currentBlog.autor" ng-init="currentBlog.autor" required />
                 </div>
                 <label for="texto" class="col-md-2 control-label">Texto</label>
                 <div class="col-md-10">
                     <textarea  readonly rows="5" cols="50" id="texto" name="titulo" class="form-control" type="text" ng-model="currentBlog.texto" ng-init="currentBlog.texto" required></textarea>
-                </div>
-                <label for="titulo" class="col-md-2 control-label">Titulo</label>
-                <div class="col-md-10">
-                    <input readonly id="titulo" name="titulo" class="form-control" type="text" ng-model="currentBlog.titulo" ng-init="currentBlog.titulo" required />
                 </div>
             </div>
             <button type="button" data-ui-sref='blogsList'>Volver</button>   

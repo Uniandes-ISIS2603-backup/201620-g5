@@ -17,7 +17,7 @@ public class BlogDTO {
     
     private String nombre;
     private String texto;
-    private String nombreAutor;
+    private String autor;
     private Long id;
 
     public BlogDTO()
@@ -27,7 +27,7 @@ public class BlogDTO {
     {
         this.nombre = entity.getName();
         this.texto = entity.getTexto();
-        this.nombreAutor = entity.getNombreAutor();
+        this.autor = entity.getNombreAutor();
         this.id = entity.getId();    
     }
     
@@ -36,7 +36,7 @@ public class BlogDTO {
         BlogEntity entity = new BlogEntity();
         entity.setId(this.id);
         entity.setName(this.nombre);
-        entity.setNombreAutor(this.nombreAutor);
+        entity.setNombreAutor(this.autor);
         entity.setTexto(this.texto);
         return entity;
     }
@@ -58,11 +58,11 @@ public class BlogDTO {
     }
 
     public String getNombreAutor() {
-        return nombreAutor;
+        return autor;
     }
 
     public void setNombreAutor(String nombreAutor) {
-        this.nombreAutor = nombreAutor;
+        this.autor = nombreAutor;
     }
 
     public Long getId() {
