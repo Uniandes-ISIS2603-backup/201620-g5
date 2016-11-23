@@ -14,14 +14,14 @@ import java.util.Date;
  */
 public class PrestamoDTO {
     
-    public static final int VIDEO = 1;
-    public static final int LIBRO = 2;
-    public static final int SALA = 3;
+    public static final String VIDEO = "Video";
+    public static final String LIBRO = "Libro";
+    public static final String SALA = "Sala";
 
     
     
     private Long id;
-    private Long tipoRecurso;
+    private String tipoRecurso;
     private Double costo;
     private String medioPago;
     private Date fechaInicial;
@@ -44,7 +44,19 @@ public class PrestamoDTO {
     public PrestamoDTO(PrestamoEntity entity) {
         if (entity != null) {
             this.id = entity.getId();
-            this.tipoRecurso = entity.getTipoRecurso();
+            if(entity.getTipoRecurso().equals(1L))
+            {
+                this.tipoRecurso = PrestamoDTO.VIDEO;
+            }
+            else if(entity.getTipoRecurso().equals(2L))
+            {
+                this.tipoRecurso = PrestamoDTO.LIBRO;
+            }
+            else if(entity.getTipoRecurso().equals(3L))
+            {
+                this.tipoRecurso = PrestamoDTO.SALA;
+            }
+          
             this.costo = entity.getCosto();
             this.medioPago = entity.getMedioPago();
             this.fechaInicial = entity.getFechaInicial();
@@ -62,7 +74,19 @@ public class PrestamoDTO {
     public PrestamoEntity toEntity() {
         PrestamoEntity entity = new PrestamoEntity();
         entity.setId(this.id);
-        entity.setTipoRecurso(this.tipoRecurso);
+        switch (this.tipoRecurso) {
+            case PrestamoDTO.VIDEO:
+                entity.setTipoRecurso(1L);
+                break;
+            case PrestamoDTO.LIBRO:
+                entity.setTipoRecurso(2L);
+                break;
+            case PrestamoDTO.SALA:
+                entity.setTipoRecurso(3L);
+                break;
+            default:
+                break;
+        }
         entity.setCosto(this.costo);
         entity.setMedioPago(this.medioPago);
         entity.setFechaFinal(this.fechaFinal);
@@ -85,11 +109,11 @@ public class PrestamoDTO {
         this.id = id;
     }
 
-public void setTipoRecurso(Long tipoRecurso) {
+public void setTipoRecurso(String tipoRecurso) {
         this.tipoRecurso = tipoRecurso;
     }
 
-    public Long getTipoRecurso() {
+    public String getTipoRecurso() {
         return tipoRecurso;
     }
     

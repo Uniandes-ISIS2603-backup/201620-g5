@@ -37,6 +37,7 @@ public class PrestamoEntity extends BaseEntity implements Serializable {
     @ManyToOne
     private co.edu.uniandes.g5.bibliotecas.entities.BibliotecaEntity biblioteca;
     
+    @PodamExclude
     private Long tipoRecurso;
 
      @PodamExclude

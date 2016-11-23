@@ -8,6 +8,9 @@
             // inicialmente el listado de prestamos
             //  está vacio
             $scope.prestamosContext = '/prestamos';
+            librosContext = '/libros';
+            videosContext = '/videos';
+            salasContext = '/salas';
             $scope.prestamos = {};
             // carga las prestamos
             $http.get(bibliotecasContext + "/" + $stateParams.bibliotecaId + $scope.prestamosContext).then(function (response) {
@@ -44,10 +47,10 @@
             $http.get(bibliotecasContext + "/" + $stateParams.bibliotecaId + videosContext).then(function (response) {
                 $scope.videos = response.data;
             });
-            $http.get(bibliotecasContext + "/" + $stateParams.bibliotecaId + librosContext).then(function (response) {
+            $http.get(bibliotecasContext + "/" + $stateParams.bibliotecaId +librosContext).then(function (response) {
                 $scope.libros = response.data;
             });
-            $http.get(bibliotecasContext + "/" + $stateParams.bibliotecaId + salasContext).then(function (response) {
+            $http.get(bibliotecasContext + "/" + $stateParams.bibliotecaId +salasContext).then(function (response) {
                 $scope.salas = response.data;
             });
             
@@ -60,10 +63,10 @@
                 console.log($scope.currentPrestamo);
                 currentPrestamo = $scope.currentPrestamo;
                 // si el id es null, es un registro nuevo, entonces lo crea
-                if (id == null) {
+                if (id == undefined) {
 
                     // ejecuta POST en el recurso REST
-                    return $http.post(bibliotecasContext + "/" + $stateParams.bibliotecaId + $scope.prestamosContext, currentPrestamo)
+                    return $http.post(bibliotecasContext + "/" + $stateParams.bibliotecaId + "/tipoRecurso/"+ currentPrestamo.tipoRecurso + "/recurso/"+ currentPrestamo.idRecurso.id + "/usuario/ "+ currentPrestamo.usuario.id +  $scope.prestamosContext, currentPrestamo)
                             .then(function () {
                                 // $http.post es una promesa
                                 // cuando termine bien, cambie de estado
@@ -114,28 +117,28 @@
 
              $scope.dateOptions2 = {
                 dateDisabled: false,
-                formatYear: 'yy',
+                formatYear: 'yyyy',
                 maxDate: new Date(2020, 5, 22),
                 minDate: new Date(),
                 startingDay: 1
             };
 
-            this.today = function () {
+            $scope.today = function () {
                 $scope.dt = new Date();
             };
-            this.today();
+            $scope.today();
 
-            this.clear = function () {
+            $scope.clear = function () {
                 $scope.dt = null;
             };
-            this.setDate = function (year, month, day) {
+            $scope.setDate = function (year, month, day) {
                 $scope.dt = new Date(year, month, day);
             };
 
-            this.open = function (fechaFinal) {
+            $scope.open = function (fechaFinal) {
                 
                 $scope.popup.opened = true;
-                if(fechaFinal != null)
+                if(fechaFinal !== null)
                 {
                     $scope.dateOptions.maxDate = fechaFinal;
                 }
@@ -144,14 +147,12 @@
             
              this.open2 = function (fechaInicial) {
                 $scope.popup2.opened = true;
-                if(fechaInicial != null)
+                if(fechaInicial !== null)
                 {
                     $scope.dateOptions2.minDate = fechaInicial;
                 }
                 
             };
-
-
 
 
             // Funciones para manejar los mensajes en la aplicación
@@ -207,7 +208,7 @@
             }
          }
       }
-   }
+   };
 
    $httpProvider.defaults.transformResponse.push(function (data) {
       if (typeof (data) === 'object') {

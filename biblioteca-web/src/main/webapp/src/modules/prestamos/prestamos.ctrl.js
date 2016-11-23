@@ -119,7 +119,7 @@
             this.open = function (fechaFinal) {
                 
                 $scope.popup.opened = true;
-                if(fechaFinal != null)
+                if(fechaFinal !== null)
                 {
                     $scope.dateOptions.maxDate = fechaFinal;
                 }
@@ -128,7 +128,7 @@
             
              this.open2 = function (fechaInicial) {
                 $scope.popup2.opened = true;
-                if(fechaInicial != null)
+                if(fechaInicial !== null)
                 {
                     $scope.dateOptions2.minDate = fechaInicial;
                 }
