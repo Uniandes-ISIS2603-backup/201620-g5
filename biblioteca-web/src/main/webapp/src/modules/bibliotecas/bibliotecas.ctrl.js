@@ -30,9 +30,11 @@
                 // el registro actual debe estar vacio
                 $scope.currentBiblioteca = {
                     id: undefined /*Tipo Long. El valor se asigna en el backend*/,
-                    idAdmin: undefined /*Tipo Long. El valor se asigna en el backend*/,
                     name: '' /*Tipo String*/,
-                    zona: '' /*Tipo String*/
+                    recursos: undefined /*Tipo Recurso*/,
+                    prestamos: undefined /*Tipo Prestamo*/,
+                    multas: undefined /*Tipo Multa*/,
+                    reservas: undefined /*Tipo Recurso*/
                 };
               
                 $scope.alerts = [];

@@ -74,7 +74,14 @@ public class SalaResource {
             throw new WebApplicationException("La sala no existe", 404);
         }
     }
-   
+
+    @GET
+    @Path("bibliotecas/salas")
+    public List<SalaDetailDTO> getSalas(){
+        List<SalaEntity> salas = salaLogic.getAllSalas();
+        return listEntity2DTO(salas);
+    }
+    
     /**
      * Obtiene el listado de salas de una biblioteca.
      *
@@ -100,7 +107,6 @@ public class SalaResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("bibliotecas/{idBiblioteca: \\d+}/salas")
     public SalaDetailDTO createSala4Biblioteca(@PathParam("idBiblioteca") Long idBiblioteca, SalaDetailDTO sala) throws BibliotecaLogicException {
-        existsBiblioteca(idBiblioteca);
         if (sala.getBiblioteca() != null && !idBiblioteca.equals(sala.getBiblioteca().getId())) {
             throw new WebApplicationException(404);
         }
@@ -111,7 +117,6 @@ public class SalaResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("bibliotecas/{idBiblioteca: \\d+}/salas/{id: \\d+}")
     public SalaDetailDTO updateSala4Biblioteca(@PathParam("idBiblioteca") Long idBiblioteca, @PathParam("id") Long id, SalaDetailDTO sala) throws BibliotecaLogicException {
-        existsBiblioteca(idBiblioteca);
         existsSala(id);
         SalaEntity entity = sala.toEntity();
         entity.setId(id);

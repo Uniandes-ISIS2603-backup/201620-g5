@@ -24,7 +24,6 @@ SOFTWARE.
 package co.edu.uniandes.g5.bibliotecas.api;
 
 import co.edu.uniandes.g5.bibliotecas.entities.BibliotecaEntity;
-import co.edu.uniandes.g5.bibliotecas.entities.RecursoEntity;
 import co.edu.uniandes.g5.bibliotecas.exceptions.BibliotecaLogicException;
 import java.util.List;
 

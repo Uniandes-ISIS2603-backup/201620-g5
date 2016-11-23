@@ -7,21 +7,25 @@
         </div>
    
         <fieldset>
-            <input id="id" class="form-control" type="hidden" ng-model="currentSala.id"/>
+            <!--<input id="id" class="form-control" type="hidden" ng-model="currentSala.id"/>-->
             <div class="form-group col-md-12" ng-class="{'has-success': form.name.$valid && form.name.$dirty, 'has-error': form.name.$invalid && (form.name.$dirty || form.$submitted)}" >
+                <label for="id" class="col-md-2 control-label">Id</label>
+                <div class="col-md-10">
+                    <input id="id" name="id" class="form-control" type="number" ng-model="currentSala.id" ng-init="currentSala.id" required />
+                </div>
                 <label for="name" class="col-md-3 control-label">Nombre de la sala</label>
                 <div class="col-md-9">
                     <input id="name" name="name" class="form-control" type="text" ng-model="currentSala.name" ng-init="currentSala.name" required />
                 </div>
-                
-                <label for="idBiblioteca" class="col-md-3 control-label">Id Biblioteca</label>
-                <div class="col-md-9">
-                    <input id="idBiblioteca" name="idBiblioteca" class="form-control" type="number" ng-model="currentSala.idBiblioteca" ng-init="currentSala.idBiblioteca" required />
-                </div>
-               
+              
                 <label for="capacidad" class="col-md-3 control-label">Capacidad</label>
                 <div class="col-md-9">
                     <input id="capacidad" name="capacidad" class="form-control" type="number" ng-model="currentSala.capacidad" ng-init="currentSala.capacidad" required />
+                </div>
+                
+                <label for="estaOcupada" class="col-md-2 control-label">¿Está Ocupada?</label>
+                <div class="col-md-10">
+                    <input id="online" name="estaOcupada" class="form-control" type="checkbox" ng-model="currentSala.estaOcupada" ng-init="currentSala.estaOcupada" />
                 </div>
            
             </div>
