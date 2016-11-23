@@ -13,6 +13,9 @@ import co.edu.uniandes.g5.bibliotecas.entities.SalaEntity;
  */
 public class SalaDTO extends RecursoDTO {
     
+    private Long id;
+    private String name;
+    
     private boolean estaOcupada;
     
     private Integer capacidad;
@@ -46,10 +49,10 @@ public class SalaDTO extends RecursoDTO {
      */
     public SalaEntity toEntity() {
         SalaEntity entity = new SalaEntity();
-        entity.setId(this.id);
-        entity.setName(this.name);
-        entity.setEstaOcupada(this.estaOcupada);
-        entity.setCapacidad(this.capacidad);
+        entity.setId(this.getId());
+        entity.setName(this.getName());
+        entity.setEstaOcupada(this.isEstaOcupada());
+        entity.setCapacidad(this.getCapacidad());
         return entity;
     }
     
@@ -57,7 +60,7 @@ public class SalaDTO extends RecursoDTO {
      * @return the capacidad
      */
     public Integer getCapacidad() {
-        return capacidad;
+        return capacidad;   
     }
 
     /**
@@ -79,5 +82,33 @@ public class SalaDTO extends RecursoDTO {
      */
     public void setEstaOcupada(boolean estaOcupada) {
         this.estaOcupada = estaOcupada;
+    }
+
+    /**
+     * @return the id
+     */
+    public Long getId() {
+        return id;
+    }
+
+    /**
+     * @param id the id to set
+     */
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    /**
+     * @return the name
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * @param name the name to set
+     */
+    public void setName(String name) {
+        this.name = name;
     }
 }

@@ -9,7 +9,7 @@
                         <th> Id </th>
                         <th>Nombre</th>
                         <th>Capacidad</th>
-                        <th>Id Biblioteca</th>
+                        <th>¿Está Ocupada?</th>
                         <th>Acciones</th>
 
                     </tr>
@@ -19,7 +19,7 @@
                         <td id="{{$index}}-id">{{sala.id}}</td>
                         <td id="{{$index}}-name">{{sala.name}}</td>
                         <td id="{{$index}}-capacidad">{{sala.capacidad}}</td>
-                        <td id="{{$index}}-idBiblioteca">{{sala.idBiblioteca}}</td>
+                        <td id="{{$index}}-idBiblioteca">{{sala.estaOcupada}}</td>
                         <td>
                             <button id="{{$index}}-edit-btn" class="btn btn-default btn-sm" data-ui-sref="salaEdit({salaId: sala.id})"><span class="glyphicon glyphicon-edit"></span> Editar</button>
                             <button id="{{$index}}-delete-btn" class="btn btn-default btn-sm" ng-click="ctrl.deleteSala({salaId: sala.id})"><span class="glyphicon glyphicon-minus"></span> Eliminar</button>

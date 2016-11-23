@@ -29,6 +29,7 @@ import java.util.List;
 
 public interface ISalaLogic {
   
+    public List<SalaEntity> getAllSalas();
     public List<SalaEntity> getSalas(Long bibliotecaId);
     public SalaEntity getSala(Long departmentid);
     public SalaEntity createSala(Long bibliotecaid, SalaEntity entity)throws BibliotecaLogicException;

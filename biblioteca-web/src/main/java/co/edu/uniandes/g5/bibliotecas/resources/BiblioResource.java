@@ -74,8 +74,8 @@ public class BiblioResource {
      *
      * @param biblioteca biblioteca a agregar
      * @return datos de la biblioteca a agregar
-     * @throws BiblioLogicException cuando ya existe una biblioteca con el id
-     * suministrado
+     * @throws co.edu.uniandes.g5.bibliotecas.exceptions.BibliotecaLogicException
+     * 
      */
     @POST
     @Consumes(MediaType.APPLICATION_JSON)

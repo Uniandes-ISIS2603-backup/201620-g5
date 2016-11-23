@@ -4,7 +4,7 @@
     mod.controller("salasCtrl", ['$scope', '$state', '$stateParams', '$http', 'salasContext', function ($scope, $state, $stateParams, $http, context) {
 
             $scope.salas = {};
-            $http.get(context).then(function(response){
+            $http.get("api/bibliotecas/" + $stateParams.bibliotecaId + context).then(function(response){
                 $scope.salas = response.data;    
             }, responseError);
 
@@ -15,7 +15,7 @@
                 // toma el id del parámetro
                 id = $stateParams.salaId;
                 // obtiene el dato del recurso REST
-                $http.get(context + "/" + id)
+                $http.get("api/bibliotecas" + context + "/" + id)
                     .then(function (response) {
                         // $http.get es una promesa
                         // cuando llegue el dato, actualice currentRecord
@@ -29,7 +29,7 @@
                 $scope.currentSala = {
                     id: undefined /*Tipo Long. El valor se asigna en el backend*/,
                     name: '' /*Tipo String*/,
-                    idBiblioteca: undefined,
+                    estaOcupada: undefined,
                     capacidad: undefined
                 };
               
@@ -37,14 +37,13 @@
             }
 
 
-            this.saveSala = function (id) {
+            this.saveSala = function (sala) {
                 currentSala = $scope.currentSala;
-                
                 // si el id es null, es un registro nuevo, entonces lo crea
-                if (id == null) {
+                if (sala.name == null) {
 
                     // ejecuta POST en el recurso REST
-                    return $http.post("api/bibliotecas" + "/salas", currentSala)
+                    return $http.post("api/bibliotecas/" + $stateParams.bibliotecaId + context, currentSala)
                         .then(function () {
                             // $http.post es una promesa
                             // cuando termine bien, cambie de estado
@@ -55,7 +54,7 @@
                 } else {
                     
                     // ejecuta PUT en el recurso REST
-                    return $http.put(context + "/" + currentSala.id, currentSala)
+                    return $http.put("api/bibliotecas/" + $stateParams.bibliotecaId + "/salas/" + currentSala.id, currentSala)
                         .then(function () {
                             // $http.put es una promesa
                             // cuando termine bien, cambie de estado
@@ -65,7 +64,7 @@
             };
             
             this.deleteSala = function( sala) {
-                return $http.delete(context + "/" + sala.salaId)
+                return $http.delete("api/bibliotecas" + context + "/" + sala.salaId)
                     .then(function () {
                         // cuando termine bien, cambie de estado
                         $state.reload();
