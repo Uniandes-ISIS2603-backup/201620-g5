@@ -43,14 +43,17 @@
             </div>
                 
                
-            <!-- Fecha inicial -->
-                <label for="fechaInicial" class="col-md-4 control-label">Fecha</label>
-                <div class="col-md-10">
-                    <p class="input-group">
-                        <input  id="fecha" name="fecha"  type="text" class="form-control" uib-datepicker-popup ng-model="currentReserva.fecha" is-open="popup.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
-                    </p>
+             <label for="fechaInicial" class="col-md-4 control-label">Fecha Inicial</label>
+        <div class='col-md-10'>
+            <div class="form-group">
+                <div class='input-group' id="fechaInicial" datetimepicker on-change="ctrl.update(dateFrom, dateTo)" ng-model="dateFrom" options= "optionsFrom">
+                    <input class="form-control" name="fechaInicial"/>
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
                 </div>
-                
+            </div>
+        </div>
 
                 
             </div>
