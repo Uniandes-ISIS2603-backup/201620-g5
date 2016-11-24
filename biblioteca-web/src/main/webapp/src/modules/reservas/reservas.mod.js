@@ -26,14 +26,38 @@
                 }
             }).state('reservaCreate', {
                 url: '/reservas/create',
+                parent: 'bibliotecaPrestar',
                 views: {
-                    'mainView': {
-                        controller: 'reservasCtrl',
+                    'bibliotecaInstanceView': {
+                        controller: 'reservasBiblioCtrl',
                         controllerAs: 'ctrl',
-                        templateUrl: basePath + 'reservas.create.html'
+                        templateUrl: basePath + 'reservasBiblio.create.html'
+                    }
+                }
+            }).state('reservasBiblioList', {
+                url: '/reservas',
+                parent: 'bibliotecaPrestar',
+                views: {
+                    'bibliotecaInstanceView': {
+                        controller: 'reservasBiblioCtrl',
+                        controllerAs: 'ctrl',
+                        templateUrl: basePath + 'reservasBiblio.list.html'
                     }
                 }
 
+            }).state('reservaBiblioEdit', {
+                url: '/reservas/edit/:reservaId',
+                parent: 'bibliotecaPrestar',
+                param: {
+                    reservaId: null
+                },
+                views: {
+                    'bibliotecaInstanceView': {
+                        controller: 'reservasBiblioCtrl',
+                        controllerAs: 'ctrl',
+                        templateUrl: basePath + 'reservasBiblio.create.html'
+                    }
+                }
             }).state('reservaEdit', {
                 url: '/reservas/:reservaId',
                 param: {
