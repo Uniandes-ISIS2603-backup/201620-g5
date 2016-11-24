@@ -80,7 +80,7 @@
                 } else {
 
                     // ejecuta PUT en el recurso REST
-                    return $http.put(bibliotecasContext + "/" + $stateParams.bibliotecaId + $scope.prestamosContext + "/" + currentPrestamo.id, currentPrestamo)
+                    return $http.put(bibliotecasContext + "/" + $stateParams.bibliotecaId + "/tipoRecurso/"+ currentPrestamo.tipoRecurso + "/recurso/"+ currentPrestamo.recurso.id + "/usuario/" + currentPrestamo.usuario.id +  $scope.prestamosContext +   "/" + currentPrestamo.id, currentPrestamo)
                             .then(function () {
                                 // $http.put es una promesa
                                 // cuando termine bien, cambie de estado
