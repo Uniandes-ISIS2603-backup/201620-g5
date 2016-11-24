@@ -37,7 +37,6 @@ public class LibroDTO extends RecursoDTO {
         if (entity != null) {
             this.id = entity.getId();
             this.biblioteca = new BiblioDTO(entity.getBiblioteca());
-
             this.name = entity.getName();
             this.isbn = entity.getIsbn();
             this.autor = entity.getAutor();
@@ -65,6 +64,14 @@ public class LibroDTO extends RecursoDTO {
         entity.setEjemplaresDisponibles(ejemplaresDisponibles);
         entity.setOnline(online);
         return entity;
+    }
+    
+    public BiblioDTO getBiblioteca() {
+        return biblioteca;
+    }
+
+    public void setBiblioteca(BiblioDTO biblioteca) {
+        this.biblioteca = biblioteca;
     }
 
 
