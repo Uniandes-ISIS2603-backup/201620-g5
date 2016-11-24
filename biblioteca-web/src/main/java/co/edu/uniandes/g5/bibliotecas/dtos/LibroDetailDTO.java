@@ -89,14 +89,6 @@ public class LibroDetailDTO extends LibroDTO {
         return entity;
     }
 
-    public BiblioDTO getBiblioteca() {
-        return biblioteca;
-    }
-
-    public void setBiblioteca(BiblioDTO biblioteca) {
-        this.biblioteca = biblioteca;
-    }
-
     public List<BlogDTO> getBlogs() {
         return blogs;
     }

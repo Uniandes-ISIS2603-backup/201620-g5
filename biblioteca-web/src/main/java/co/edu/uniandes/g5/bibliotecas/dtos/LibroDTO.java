@@ -13,27 +13,27 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author s.rojas19
  */
 @XmlRootElement
-public class LibroDTO extends RecursoDTO{
+public class LibroDTO extends RecursoDTO {
 
     private Long id;
     private String name;
-    
-    
+
     private Long isbn;
     private String autor;
     private Integer numEjemplares;
-    private Integer ejemplaresDisponibles; 
+    private Integer ejemplaresDisponibles;
     private boolean online;
 
     /**
      * Crea un libroDTO vacio.
      */
     public LibroDTO() {
-        
+
     }
-    
+
     public LibroDTO(LibroEntity entity) {
-        if(entity!=null){
+        if (entity != null) {
+            biblioteca = new BiblioDTO(entity.getBiblioteca());
             this.id = entity.getId();
             this.name = entity.getName();
             this.isbn = entity.getIsbn();
@@ -51,6 +51,9 @@ public class LibroDTO extends RecursoDTO{
 
     public LibroEntity toEntity() {
         LibroEntity entity = new LibroEntity();
+        if (biblioteca != null) {
+            entity.setBiblioteca(biblioteca.toEntity());
+        }
         entity.setId(id);
         entity.setName(name);
         entity.setIsbn(isbn);
@@ -59,6 +62,14 @@ public class LibroDTO extends RecursoDTO{
         entity.setEjemplaresDisponibles(ejemplaresDisponibles);
         entity.setOnline(online);
         return entity;
+    }
+
+    public BiblioDTO getBiblioteca() {
+        return biblioteca;
+    }
+
+    public void setBiblioteca(BiblioDTO biblioteca) {
+        this.biblioteca = biblioteca;
     }
 
     public Long getId() {
@@ -117,6 +128,4 @@ public class LibroDTO extends RecursoDTO{
         this.autor = autor;
     }
 
-    
-    
 }
