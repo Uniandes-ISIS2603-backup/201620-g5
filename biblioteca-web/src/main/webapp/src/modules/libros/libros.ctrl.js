@@ -1,74 +1,80 @@
 (function (ng) {
     var mod = ng.module("librosModule");
 
-    mod.controller("librosCtrl", ['$scope', '$state', '$stateParams', '$http', 'librosContext', function ($scope, $state, $stateParams, $http, context) {
+    mod.controller("librosCtrl", ['$scope', '$state', '$stateParams', '$http', 'librosContext', 'bibliotecasContext', function ($scope, $state, $stateParams, $http, context, bibliotecasContext) {
 
             $scope.libros = {};
-            $http.get(context).then(function(response){
-                $scope.libros = response.data;    
+            $http.get(context).then(function (response) {
+                $scope.libros = response.data;
             }, responseError);
 
             // el controlador recibió un libroId ??
             // revisa los parámetros (ver el :libroId en la definición de la ruta)
             if ($stateParams.libroId !== null && $stateParams.libroId !== undefined) {
-                
+
                 // toma el id del parámetro
                 id = $stateParams.libroId;
                 console.log(id);
                 // obtiene el dato del recurso REST
                 $http.get(context + "/" + id)
-                    .then(function (response) {
-                        // $http.get es una promesa
-                        // cuando llegue el dato, actualice currentRecord
-                        $scope.currentLibro = response.data;
-                    }, responseError);
+                        .then(function (response) {
+                            // $http.get es una promesa
+                            // cuando llegue el dato, actualice currentRecord
+                            $scope.currentLibro = response.data;
+                        }, responseError);
 
-            // el controlador no recibió un libroId
+                // el controlador no recibió un libroId
             } else
             {
                 // el registro actual debe estar vacio
                 $scope.currentLibro = {
                     id: undefined /*Tipo Long. El valor se asigna en el backend*/,
                     name: '',
+                    biblioteca: {}
                 };
-              
+
                 $scope.alerts = [];
             }
 
+            $http.get(bibliotecasContext).then(function (response) {
+                $scope.bibliotecas = response.data;
+            });
 
             this.saveLibro = function (id) {
                 currentLibro = $scope.currentLibro;
-                
+
                 // si el id es null, es un registro nuevo, entonces lo crea
                 if (id == null) {
 
                     // ejecuta POST en el recurso REST
-                    return $http.post(context, currentLibro)
-                        .then(function () {
-                            // $http.post es una promesa
-                            // cuando termine bien, cambie de estado
-                            $state.go('librosList');
-                        }, responseError);
-                        
-                // si el id no es null, es un registro existente entonces lo actualiza
+//                    return $http.post(context, currentLibro)
+                    return $http.post(bibliotecasContext + "/" + currentLibro.biblioteca.id + "/libros", currentLibro)
+                            .then(function () {
+                                // $http.post es una promesa
+                                // cuando termine bien, cambie de estado
+                                $state.go('librosList');
+                            }, responseError);
+
+                    // si el id no es null, es un registro existente entonces lo actualiza
                 } else {
-                    
+
                     // ejecuta PUT en el recurso REST
-                    return $http.put(context + "/" + currentLibro.id, currentLibro)
-                        .then(function () {
-                            // $http.put es una promesa
-                            // cuando termine bien, cambie de estado
-                            $state.go('librosList');
-                        }, responseError);
-                };
+                    return $http.put(bibliotecasContext + "/" + currentLibro.biblioteca.id + "/libros/" + currentLibro.id, currentLibro)
+                            .then(function () {
+                                // $http.put es una promesa
+                                // cuando termine bien, cambie de estado
+                                $state.go('librosList');
+                            }, responseError);
+                }
+                ;
             };
-            
-            this.deleteLibro = function(libro) {
+
+            this.deleteLibro = function (libro) {
                 return $http.delete(context + "/" + libro.libroId)
-                    .then(function () {
-                        // cuando termine bien, cambie de estado
-                        $state.reload();
-                    }, responseError);
+                        .then(function () {
+                            // cuando termine bien, cambie de estado
+                            $state.reload();
+                        }, responseError);
             };
 
             // -----------------------------------------------------------------
