@@ -9,24 +9,30 @@
         <fieldset>
             <input id="id" class="form-control" type="hidden" ng-model="currentUsuario.id"/>
             <div class="form-group col-md-12" ng-class="{'has-success': form.nombre.$valid && form.nombre.$dirty, 'has-error': form.nombre.$invalid && (form.nombre.$dirty || form.$submitted)}" >
-                <label for="nombre" class="col-md-2 control-label">Nombre</label>
-                <div class="col-md-10">
+                
+                <label for="biblioteca" class="col-md-6 control-label">Biblioteca</label>
+                <div class="col-md-6">
+                    <select id="biblioteca" name="biblioteca" ng-options="rc.id for rc in bibliotecas track by rc.id" class="form-control" type="text" ng-model="currentUsuario.biblioteca" ng-init="currentUsuario.biblioteca" ></select>
+                </div>
+                
+                <label for="nombre" class="col-md-6 control-label">Nombre</label>
+                <div class="col-md-6">
                     <input id="nombre" name="nombre" class="form-control" type="text" ng-model="currentUsuario.nombre" ng-init="currentUsuario.nombre" required />
                 </div>
-                <label for="apellido" class="col-md-2 control-label">Apellido</label>
-                <div class="col-md-10">
+                <label for="apellido" class="col-md-6 control-label">Apellido</label>
+                <div class="col-md-6">
                     <input id="apellido" name="apellido" class="form-control" type="text" ng-model="currentUsuario.apellido" ng-init="currentUsuario.apellido" required />
                 </div>
-                <label for="login" class="col-md-2 control-label">Login</label>
-                <div class="col-md-10">
+                <label for="login" class="col-md-6 control-label">Login</label>
+                <div class="col-md-6">
                     <input id="login" name="login" class="form-control" type="text" ng-model="currentUsuario.login" ng-init="currentUsuario.login" required />
                 </div>
-                <label for="contrasenha" class="col-md-2 control-label">Contraseña</label>
-                <div class="col-md-10">
+                <label for="contrasenha" class="col-md-6 control-label">Contraseña</label>
+                <div class="col-md-6">
                     <input id="contrasenha" name="contrasenha" class="form-control" type="password" ng-model="currentUsuario.contrasenha" ng-init="currentUsuario.contrasenha" required />
                 </div>
-                <label for="direccion" class="col-md-2 control-label">Direccion</label>
-                <div class="col-md-10">
+                <label for="direccion" class="col-md-6 control-label">Direccion</label>
+                <div class="col-md-6">
                     <input id="direccion" name="direccion" class="form-control" type="text" ng-model="currentUsuario.direccion" ng-init="currentUsuario.direccion" required />
                 </div>
                 

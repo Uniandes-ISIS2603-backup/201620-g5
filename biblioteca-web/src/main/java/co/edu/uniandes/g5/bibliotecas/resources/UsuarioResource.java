@@ -119,7 +119,7 @@ public class UsuarioResource {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("bibliotecas/{idBiblioteca: \\d+}/usuarios")
-    public UsuarioDTO createUsuario(UsuarioDetailDTO usuario, @PathParam("idBiblioteca")Long idBiblioteca) {
+    public UsuarioDetailDTO createUsuario(UsuarioDTO usuario, @PathParam("idBiblioteca")Long idBiblioteca) {
         try {
             UsuarioEntity entity = usuario.toEntity();
             UsuarioEntity respuesta = usuarioLogic.createUsuario(entity, idBiblioteca);

@@ -1,7 +1,10 @@
 (function (ng) {
     var mod = ng.module("usuariosModule");
 
-    mod.controller("usuariosCtrl", ['$scope', '$state', '$stateParams', '$http', 'usuariosContext', function ($scope, $state, $stateParams, $http, context) {
+    mod.controller("usuariosCtrl", ['$scope', '$state', '$stateParams', '$http', 'usuariosContext','bibliotecasContext', function ($scope, $state, $stateParams, $http, context, bibliotecasContext) {
+           
+            
+            bibliotecasContext = 'api/bibliotecas';
 
             $scope.usuarios = {};
             $http.get(context).then(function(response){
@@ -28,7 +31,9 @@
               
                 $scope.alerts = [];
             }
-
+            $http.get(bibliotecasContext).then(function (response) {
+                $scope.bibliotecas = response.data;
+            });
 
             this.saveUsuario = function (id) {
                 currentUsuario = $scope.currentUsuario;
@@ -36,7 +41,7 @@
                 
                 if (id == null) {
 
-                    return $http.post(context, currentUsuario)
+                    return $http.post(bibliotecasContext + "/" +  currentUsuario.biblioteca.id + "/" + "usuarios", currentUsuario)
                         .then(function () {
                             $state.go('usuariosList');
                         }, responseError);

@@ -38,11 +38,14 @@ public class UsuarioLogic implements IUsuarioLogic {
 
     @Override
     public UsuarioEntity createUsuario(UsuarioEntity entity, Long BibliotecaId) throws BibliotecaLogicException {
+        if(entity.getId() != null)
+        {
         UsuarioEntity alreadyExist = getUsuario(entity.getId());
         if (alreadyExist != null) 
         {
             throw new BibliotecaLogicException("Ya existe un usuario con ese id");
         } 
+        }
         if(entity.getClave().length() < 5 )
         {
             throw new BibliotecaLogicException("Contraseña inválida. Debe contener más de 4 caracteres");
