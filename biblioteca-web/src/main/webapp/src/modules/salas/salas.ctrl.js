@@ -39,6 +39,7 @@
 
             this.saveSala = function (sala) {
                 currentSala = $scope.currentSala;
+                console.log(sala.name);
                 // si el id es null, es un registro nuevo, entonces lo crea
                 if (sala.name == null) {
 
