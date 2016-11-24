@@ -36,7 +36,7 @@ public class BlogDTO {
         BlogEntity entity = new BlogEntity();
         entity.setId(this.id);
         entity.setName(this.nombre);
-        entity.setNombreAutor(this.autor);
+        entity.setAutor(this.autor);
         entity.setTexto(this.texto);
         return entity;
     }

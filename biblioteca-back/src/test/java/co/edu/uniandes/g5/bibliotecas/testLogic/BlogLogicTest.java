@@ -55,7 +55,6 @@ public class BlogLogicTest {
     
     private List<LibroEntity> librosData = new ArrayList<LibroEntity>();
     
-    private List<UsuarioEntity> usuariosData = new ArrayList<UsuarioEntity>();
     
     
     @Deployment
@@ -66,7 +65,6 @@ public class BlogLogicTest {
                 .addPackage(IBlogLogic.class.getPackage())
                 .addPackage(BlogPersistence.class.getPackage())
                 .addPackage(LibroEntity.class.getPackage())
-                .addPackage(UsuarioEntity.class.getPackage())
                 .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
                 .addAsManifestResource("META-INF/beans.xml", "beans.xml");
     }
@@ -100,18 +98,14 @@ public class BlogLogicTest {
    private void insertData() {
         
         for (int i = 0; i < 3; i++) {
-            UsuarioEntity usuario = factory.manufacturePojo(UsuarioEntity.class);
             LibroEntity libro = factory.manufacturePojo(LibroEntity.class);
-            em.persist(usuario);
             em.persist(libro);
-            usuariosData.add(usuario);
             librosData.add(libro);
             
         }
         for (int i = 0; i < 3; i++) {
             BlogEntity entity = factory.manufacturePojo(BlogEntity.class);
             entity.setLibro(librosData.get(i));
-            entity.setUsuario(usuariosData.get(i));
             em.persist(entity);
             data.add(entity);
         }
@@ -122,11 +116,9 @@ public class BlogLogicTest {
     {
         random = new Random();
         BlogEntity newEntity = factory.manufacturePojo(BlogEntity.class);
-        int usuarioSize = usuariosData.size();
-        Long usuarioId = usuariosData.get(random.nextInt(usuarioSize)).getId();
         int libroSize = librosData.size();
         Long libroId = librosData.get(random.nextInt(libroSize)).getId();
-        BlogEntity result = blogLogic.createBlog(newEntity, usuarioId, libroId);
+        BlogEntity result = blogLogic.createBlog(newEntity, libroId);
         Assert.assertNotNull(result);
         BlogEntity entity = em.find(BlogEntity.class, result.getId());
         Assert.assertEquals(newEntity.getName(), entity.getName());
