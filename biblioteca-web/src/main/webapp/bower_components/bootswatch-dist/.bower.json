@@ -51,6 +51,6 @@
     "commit": "26502d075b82787a8e32889eae53c3170a33be5b"
   },
   "_source": "https://github.com/dbtek/bootswatch-dist.git",
-  "_target": "^3.3.5-sandstone",
+  "_target": "^3.3.4-sandstone",
   "_originalSource": "bootswatch-dist"
 }
