@@ -152,7 +152,7 @@ public class PrestamoResource {
         List<PrestamoEntity> prestamos = prestamoLogic.getPrestamos();
         return listEntity2DTO(prestamos);
     }
-     @GET
+    @GET
     @Path("bibliotecas/{bibliotecaId: \\d+}/tipoRecurso/{tipoRecurso}/recurso/{recursoId: \\d+}/prestamos")
     public List<PrestamoDTO> getPrestamosByRecurso(@PathParam("bibliotecaId") Long bibliotecaId,@PathParam("recursoId") Long recursoId, @PathParam("tipoRecurso") String tipoRecurso)throws BibliotecaLogicException
     {       
@@ -161,6 +161,25 @@ public class PrestamoResource {
         List<PrestamoEntity> prestamos = prestamoLogic.getPrestamosByRecurso(bibliotecaId, recursoId);
         return listEntity2DTO(prestamos);
     }
+    
+    @GET
+    @Path("bibliotecas/{bibliotecaId: \\d+}/libros/{libroId: \\d+}/prestamos")
+    public List<PrestamoDTO> getPrestamosByLibro(@PathParam("bibliotecaId") Long bibliotecaId,@PathParam("libroId") Long libroId)throws BibliotecaLogicException
+    {       
+        existsBiblioteca(bibliotecaId);
+        List<PrestamoEntity> prestamos = prestamoLogic.getPrestamosByRecurso(bibliotecaId, libroId);
+        return listEntity2DTO(prestamos);
+    }
+    
+    @GET
+    @Path("bibliotecas/{bibliotecaId: \\d+}/videos/{videoId: \\d+}/prestamos")
+    public List<PrestamoDTO> getPrestamosByVideo(@PathParam("bibliotecaId") Long bibliotecaId,@PathParam("videoId") Long videoId)throws BibliotecaLogicException
+    {       
+        existsBiblioteca(bibliotecaId);
+        List<PrestamoEntity> prestamos = prestamoLogic.getPrestamosByRecurso(bibliotecaId, videoId);
+        return listEntity2DTO(prestamos);
+    }
+    
     
     @GET
     @Path("bibliotecas/{bibliotecaId: \\d+}/usuario/{idUsuario: \\d+}/prestamos")

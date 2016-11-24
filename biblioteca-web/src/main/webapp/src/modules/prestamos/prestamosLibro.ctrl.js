@@ -1,15 +1,15 @@
 (function (ng) {
     var mod = ng.module("librosModule");
 
-    mod.controller("prestamosLibroCtrl", ['$scope', '$state', '$stateParams', '$http','librosContext',  
-        function ($scope, $state, $stateParams, $http, librosContext ) {
+    mod.controller("prestamosLibroCtrl", ['$scope', '$state', '$stateParams', '$http', 'librosContext', 'bibliotecasContext',
+        function ($scope, $state, $stateParams, $http, librosContext, bibliotecasContext) {
 
             // inicialmente el listado de prestamos
-            //  está vacio
+            //  está vacioF
             $scope.prestamosContext = '/prestamos';
             $scope.prestamos = {};
             // carga las prestamos
-            $http.get(librosContext + "/" + $stateParams.libroId + $scope.prestamosContext).then(function (response) {
+            $http.get(bibliotecasContext + "/" + $stateParams.bibliotecaId + "/libros/" + $stateParams.libroId + $scope.prestamosContext).then(function (response) {
                 $scope.prestamos = response.data;
             }, responseError);
 
@@ -20,7 +20,7 @@
                 // toma el id del parámetro
                 id = $stateParams.prestamoId;
                 // obtiene el dato del recurso REST
-                $http.get(librosContext + "/" + $stateParams.libroId +$scope.prestamosContext + "/" + id)
+                $http.get(librosContext + "/" + $stateParams.libroId + $scope.prestamosContext + "/" + id)
                         .then(function (response) {
                             // $http.get es una promesa
                             // cuando llegue el dato, actualice currentPrestamo
@@ -33,13 +33,11 @@
                 // el registro actual debe estar vacio
                 $scope.currentPrestamo = {
                     id: undefined /*Tipo Long. El valor se asigna en el backend*/,
-               
-                   
                 };
 
                 $scope.alerts = [];
             }
-            
+
             this.savePrestamo = function (id) {
                 currentPrestamo = $scope.currentPrestamo;
 
@@ -67,36 +65,36 @@
                 }
                 ;
             };
-            
-             this.deletePrestamo = function (prestamo) {
+
+            this.deletePrestamo = function (prestamo) {
                 return $http.delete($scope.prestamosContext + "/" + prestamo.prestamoId)
-                    .then(function () {
-                        // cuando termine bien, cambie de estado
-                        $state.reload();
-                    }, responseError);
+                        .then(function () {
+                            // cuando termine bien, cambie de estado
+                            $state.reload();
+                        }, responseError);
             };
-            
 
 
-           // -----------------------------------------------------------------
+
+            // -----------------------------------------------------------------
             // Funciones para manejar las fechas
 
             $scope.popup = {
                 opened: false
             };
-             $scope.popup2 = {
+            $scope.popup2 = {
                 opened: false
             };
-           
+
             $scope.dateOptions = {
                 dateDisabled: false,
                 formatYear: 'yy',
-                maxDate: new Date(2020,5,22),
+                maxDate: new Date(2020, 5, 22),
                 minDate: new Date(),
                 startingDay: 1
             };
 
-             $scope.dateOptions2 = {
+            $scope.dateOptions2 = {
                 dateDisabled: false,
                 formatYear: 'yy',
                 maxDate: new Date(2020, 5, 22),
@@ -117,22 +115,22 @@
             };
 
             this.open = function (fechaFinal) {
-                
+
                 $scope.popup.opened = true;
-                if(fechaFinal != null)
+                if (fechaFinal != null)
                 {
                     $scope.dateOptions.maxDate = fechaFinal;
                 }
-                
+
             };
-            
-             this.open2 = function (fechaInicial) {
+
+            this.open2 = function (fechaInicial) {
                 $scope.popup2.opened = true;
-                if(fechaInicial != null)
+                if (fechaInicial != null)
                 {
                     $scope.dateOptions2.minDate = fechaInicial;
                 }
-                
+
             };
 
 

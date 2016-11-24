@@ -4,11 +4,11 @@
     mod.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
             var basePath = 'src/modules/libros/';
             $urlRouterProvider.otherwise("/librosList");
-     
-            $stateProvider.state('libros',{
-                url:'/libros',
-                abstract:true,
-                views:{
+
+            $stateProvider.state('libros', {
+                url: '/libros',
+                abstract: true,
+                views: {
                     'mainView': {
                         controller: 'librosCtrl',
                         controllerAs: 'ctrl',
@@ -17,7 +17,7 @@
                 }
             }).state('librosList', {
                 url: '/list',
-                parent:'libros',
+                parent: 'libros',
                 views: {
                     'libroView': {
                         controller: 'librosCtrl',
@@ -26,7 +26,7 @@
                     }
                 }
             }).state('libroCreate', {
-                parent:'libros',
+                parent: 'libros',
                 url: '/create',
                 views: {
                     'libroView': {
@@ -35,12 +35,12 @@
                         templateUrl: basePath + 'libros.create.html'
                     }
                 }
-
             }).state('libroEdit', {
-                parent:'libros',
+                parent: 'libros',
                 url: '/:libroId',
-                param: {
-                    libroId: null
+                params: {
+                    libroId: null,
+                    bibliotecaId: null
                 },
                 views: {
                     'libroView': {

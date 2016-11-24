@@ -1,15 +1,15 @@
 (function (ng) {
     var mod = ng.module("librosModule");
 
-    mod.controller("reservasLibroCtrl", ['$scope', '$state', '$stateParams', '$http','librosContext',  
-        function ($scope, $state, $stateParams, $http, librosContext ) {
+    mod.controller("reservasLibroCtrl", ['$scope', '$state', '$stateParams', '$http','librosContext', 'bibliotecasContext',  
+        function ($scope, $state, $stateParams, $http, librosContext, bibliotecasContext ) {
 
             // inicialmente el listado de prestamos
             //  está vacio
             $scope.reservasContext = '/reservas';
             $scope.reservas = {};
             // carga las prestamos
-            $http.get(librosContext + "/" + $stateParams.libroId + $scope.reservasContext).then(function (response) {
+            $http.get(bibliotecasContext + "/" + $stateParams.bibliotecaId + "/libros/" + $stateParams.libroId + $scope.reservasContext).then(function (response) {
                 $scope.reservas = response.data;
             }, responseError);
 

@@ -1,22 +1,17 @@
 <div id="childs" class="col-md-12">
     <div class="container-fluid">
- 
-            
-            <nav class="navbar navbar-default" role="navigation">
-                    <div class="container-fluid">
-                       
-                        <!-- Collect the nav links, forms, and other content for toggling -->
-                        <div class="collapse navbar-collapse" id="main-bar">
-                            <ul class="nav navbar-nav">
-                                <li><a data-ui-sref="blogsList">Blog</a></li>
-                                <li><a ui-sref="prestamosLibroList">Prestamos</a></li>
-                                <li><a ui-sref="reservasLibroList">Reservas</a></li>                         
-                            </ul>
-                        </div> <!-- /.navbar-collapse -->
-                    </div> <!-- /.container-fluid -->
-                </nav>
-
-       
-    <div  ui-view="libroInstanceView"></div>
+        <nav class="navbar navbar-default" role="navigation">
+            <div class="container-fluid">
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="main-bar">
+                    <ul class="nav navbar-nav">
+                        <li><a data-ui-sref="blogsList">Blog</a></li>
+                        <li><a data-ui-sref="prestamosLibroList">Prestamos</a></li>
+                        <li><a data-ui-sref="reservasLibroList">Reservas</a></li>                         
+                    </ul>
+                </div> <!-- /.navbar-collapse -->
+            </div> <!-- /.container-fluid -->
+        </nav>
+        <div  ui-view="libroInstanceView"></div>
     </div>
 </div>

@@ -22,7 +22,7 @@
                 <td id="{{$index}}-ejemplaresDisponibles">{{libro.ejemplaresDisponibles}}</td>
                 <td id="{{$index}}-online">{{libro.online}}</td>
                 <td>
-                    <button id="{{$index}}-edit-btn" class="btn btn-default btn-sm" data-ui-sref="libroEdit({libroId: libro.id})"><span class="glyphicon glyphicon-edit"></span> Editar</button>
+                    <button id="{{$index}}-edit-btn" class="btn btn-default btn-sm" data-ui-sref="libroEdit({libroId: libro.id, bibliotecaId: libro.biblioteca.id})"><span class="glyphicon glyphicon-edit"></span> Editar</button>
                     <button id="{{$index}}-delete-btn" class="btn btn-default btn-sm" ng-click="ctrl.deleteLibro({libroId: libro.id})"><span class="glyphicon glyphicon-minus"></span> Eliminar</button>
                 </td>
             </tr>
