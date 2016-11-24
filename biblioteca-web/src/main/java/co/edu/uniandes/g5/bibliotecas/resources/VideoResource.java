@@ -97,6 +97,9 @@ public class VideoResource {
         return listEntity2DTO(videos);
     }
 
+    
+
+
     /**
      * Obtiene el video con id por parametro
      *

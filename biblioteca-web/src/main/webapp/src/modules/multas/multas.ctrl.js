@@ -1,10 +1,12 @@
 (function (ng) {
     var mod = ng.module("multasModule");
 
-    mod.controller("multasCtrl", ['$scope', '$state', '$stateParams', '$http', 'multasContext', function ($scope, $state, $stateParams, $http, context) {
+    mod.controller("multasCtrl", ['$scope', '$state', '$stateParams', '$http', 'usuariosContext','multasContext', function ($scope, $state, $stateParams, $http,usuariosContext, context) {
+
+
 
             $scope.multas = {};
-            $http.get(context).then(function (response) {
+            $http.get("api/usuarios/"+$stateParams.usuarioId + "/multas").then(function (response) {
                 $scope.multas = response.data;
             }, responseError);
 
@@ -38,7 +40,16 @@
                 $scope.alerts = [];
             }
 
-
+            $http.get(usuariosContext + "/" + $stateParams.usuarioId + "/videos").then(function (response) {
+                $scope.videos = response.data;
+            });
+            $http.get(usuariosContext + "/" + $stateParams.usuarioId +"/libros").then(function (response) {
+                $scope.libros = response.data;
+            });
+            $http.get(usuariosContext + "/" + $stateParams.usuarioId +"/salas").then(function (response) {
+                $scope.salas = response.data;
+            });
+            
             this.saveMulta = function (id) {
                 currentMulta = $scope.currentMulta;
 

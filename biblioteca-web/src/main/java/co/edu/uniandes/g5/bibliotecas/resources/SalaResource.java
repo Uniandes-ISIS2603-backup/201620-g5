@@ -95,6 +95,7 @@ public class SalaResource {
         return listEntity2DTO(salas);
     }
 
+
     @GET
     @Path("bibliotecas/salas/{id: \\d+}")
     public SalaDetailDTO getSala(@PathParam("id") Long id) throws BibliotecaLogicException {

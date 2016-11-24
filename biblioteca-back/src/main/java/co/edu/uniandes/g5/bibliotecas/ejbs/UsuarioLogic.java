@@ -4,6 +4,10 @@ import co.edu.uniandes.g5.bibliotecas.api.IBibliotecaLogic;
 import co.edu.uniandes.g5.bibliotecas.api.IUsuarioLogic;
 import co.edu.uniandes.g5.bibliotecas.entities.BibliotecaEntity;
 import co.edu.uniandes.g5.bibliotecas.entities.UsuarioEntity;
+import co.edu.uniandes.g5.bibliotecas.entities.LibroEntity;
+import co.edu.uniandes.g5.bibliotecas.entities.VideoEntity;
+import co.edu.uniandes.g5.bibliotecas.entities.SalaEntity;
+
 import co.edu.uniandes.g5.bibliotecas.exceptions.BibliotecaLogicException;
 import co.edu.uniandes.g5.bibliotecas.persistence.UsuarioPersistence;
 import java.util.List;
@@ -110,6 +114,9 @@ public class UsuarioLogic implements IUsuarioLogic {
         persistence.delete(id);
         return usuario;
     }
+    
+   
+
 
 
 }

@@ -25,6 +25,7 @@ public interface ILibroLogic {
     
     public LibroEntity getLibroByName(String name, Long idBiblioteca);
     
+    
     public LibroEntity createLibro(LibroEntity entity, Long idBiblioteca) throws BibliotecaLogicException; 
     
     public LibroEntity updateLibro(LibroEntity entity, Long idBiblioteca) throws BibliotecaLogicException;

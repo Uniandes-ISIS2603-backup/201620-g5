@@ -6,6 +6,7 @@
 package co.edu.uniandes.g5.bibliotecas.persistence;
 
 
+import co.edu.uniandes.g5.bibliotecas.entities.LibroEntity;
 import co.edu.uniandes.g5.bibliotecas.entities.UsuarioEntity;
 import java.util.List;
 import java.util.logging.Level;
@@ -72,4 +73,7 @@ public class UsuarioPersistence {
         UsuarioEntity entity = em.find(UsuarioEntity.class, id);
         em.remove(entity);
     }
+    
+   
+
 }

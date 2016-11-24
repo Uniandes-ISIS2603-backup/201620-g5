@@ -5,6 +5,7 @@
  */
 package co.edu.uniandes.g5.bibliotecas.dtos;
 
+import co.edu.uniandes.g5.bibliotecas.entities.RecursoEntity;
 import java.util.ArrayList;
 import java.util.List;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -28,6 +29,8 @@ public class RecursoDTO {
     
     private int tipoRecurso;
 
+    
+   
     public int getTipoRecurso() {
         return tipoRecurso;
     }

@@ -72,6 +72,7 @@ public class LibroPersistence {
 
     }
 
+
     public LibroEntity create(LibroEntity entity) {
         LOGGER.info("Creando un libro nuevo");
         em.persist(entity);

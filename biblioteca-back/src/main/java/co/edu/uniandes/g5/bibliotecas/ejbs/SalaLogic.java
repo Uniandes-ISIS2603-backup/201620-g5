@@ -132,4 +132,5 @@ public class SalaLogic implements ISalaLogic {
         SalaEntity old = getSala(id);
         persistence.delete(old.getId());
     }
+
 }

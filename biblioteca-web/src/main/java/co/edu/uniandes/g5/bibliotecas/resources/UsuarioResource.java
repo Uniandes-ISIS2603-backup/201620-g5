@@ -9,8 +9,19 @@ package co.edu.uniandes.g5.bibliotecas.resources;
 import co.edu.uniandes.g5.bibliotecas.api.IBibliotecaLogic;
 import co.edu.uniandes.g5.bibliotecas.api.IUsuarioLogic;
 import co.edu.uniandes.g5.bibliotecas.dtos.BiblioDetailDTO;
+import co.edu.uniandes.g5.bibliotecas.dtos.SalaDTO;
+import co.edu.uniandes.g5.bibliotecas.dtos.LibroDTO;
+import co.edu.uniandes.g5.bibliotecas.dtos.LibroDetailDTO;
+import co.edu.uniandes.g5.bibliotecas.dtos.RecursoDTO;
+import co.edu.uniandes.g5.bibliotecas.dtos.VideoDTO;
+
 import co.edu.uniandes.g5.bibliotecas.dtos.UsuarioDTO;
 import co.edu.uniandes.g5.bibliotecas.dtos.UsuarioDetailDTO;
+import co.edu.uniandes.g5.bibliotecas.entities.SalaEntity;
+import co.edu.uniandes.g5.bibliotecas.entities.LibroEntity;
+import co.edu.uniandes.g5.bibliotecas.entities.PrestamoEntity;
+import co.edu.uniandes.g5.bibliotecas.entities.RecursoEntity;
+import co.edu.uniandes.g5.bibliotecas.entities.VideoEntity;
 import co.edu.uniandes.g5.bibliotecas.entities.UsuarioEntity;
 import co.edu.uniandes.g5.bibliotecas.exceptions.BibliotecaLogicException;
 import java.util.ArrayList;
@@ -58,6 +69,8 @@ public class UsuarioResource {
         }
         return list;
     }
+    
+
 
     public void existsBiblioteca(Long bibliotecaId) {
         BiblioDetailDTO biblioteca = new BiblioDetailDTO(bibliotecaLogic.getBiblioteca(bibliotecaId));
@@ -161,4 +174,7 @@ public class UsuarioResource {
         existsUsuario(id);
         usuarioLogic.deleteUsuario(id);
     }
+    
+
+    
 }
