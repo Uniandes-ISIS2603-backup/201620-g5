@@ -36,7 +36,7 @@ public class BlogEntity extends BaseEntity implements Serializable{
     
     private String texto;
     
-    private String nombreAutor;
+    private String autor;
 
     public LibroEntity getLibro()
     {
@@ -57,11 +57,11 @@ public class BlogEntity extends BaseEntity implements Serializable{
     }
 
     public String getNombreAutor() {
-        return nombreAutor;
+        return autor;
     }
 
-    public void setNombreAutor(String nombreAutor) {
-        this.nombreAutor = nombreAutor;
+    public void setAutor(String autor) {
+        this.autor= autor;
     }
 
     

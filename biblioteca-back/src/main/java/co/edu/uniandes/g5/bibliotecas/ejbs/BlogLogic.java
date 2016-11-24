@@ -44,18 +44,14 @@ public class BlogLogic implements IBlogLogic {
     }
     
     @Override
-    public BlogEntity createBlog(BlogEntity entity, Long idUsuario, Long idLibro) throws BibliotecaLogicException {
+    public BlogEntity createBlog(BlogEntity entity, Long idLibro) throws BibliotecaLogicException {
         BlogEntity existe = getBlog(entity.getId());
         
         if (existe != null)
             throw new BibliotecaLogicException("El blog con el id dado ya existe");
-        UsuarioEntity usuario = usuarioLogic.getUsuario(idUsuario);
-        if (usuario == null)
-            throw new BibliotecaLogicException("El usuario con el id dado no existe");
         LibroEntity libro = libroLogic.getLibro(idLibro);
         if (libro == null)
             throw new BibliotecaLogicException("El libro con el id dado no existe");
-        entity.setUsuario(usuario);
         entity.setLibro(libro);
         return persistence.create(entity);
     }
