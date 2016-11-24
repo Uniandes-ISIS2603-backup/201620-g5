@@ -8,7 +8,7 @@
     "bootstrap": "^3.3.7",
     "angular-ui-router": "~0.2.14",
     "angular-messages": "^1.5.8",
-    "bootswatch-dist": "^3.3.5-sandstone"
+    "bootswatch-dist": "^3.3.4-sandstone"
   },
   "devDependencies": {}
 }
