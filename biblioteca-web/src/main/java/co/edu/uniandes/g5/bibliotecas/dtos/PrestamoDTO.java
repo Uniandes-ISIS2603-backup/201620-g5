@@ -6,7 +6,11 @@
 package co.edu.uniandes.g5.bibliotecas.dtos;
 
 import co.edu.uniandes.g5.bibliotecas.entities.PrestamoEntity;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -24,8 +28,8 @@ public class PrestamoDTO {
     private String tipoRecurso;
     private Double costo;
     private String medioPago;
-    private Date fechaInicial;
-    private Date fechaFinal;
+    private String fechaInicial;
+    private String fechaFinal;
     private boolean estaActivo;
 
     /**
@@ -43,6 +47,7 @@ public class PrestamoDTO {
      */
     public PrestamoDTO(PrestamoEntity entity) {
         if (entity != null) {
+             SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy hh:mm aa");
             this.id = entity.getId();
             if(entity.getTipoRecurso().equals(1L))
             {
@@ -59,8 +64,10 @@ public class PrestamoDTO {
           
             this.costo = entity.getCosto();
             this.medioPago = entity.getMedioPago();
-            this.fechaInicial = entity.getFechaInicial();
-            this.fechaFinal = entity.getFechaFinal();
+            String fechaIni = format.format(entity.getFechaInicial());
+             String fechaFin = format.format(entity.getFechaFinal());           
+            this.fechaInicial = fechaIni;
+            this.fechaFinal = fechaFin;
             this.estaActivo = entity.isEstaActivo();
         }
     }
@@ -71,29 +78,38 @@ public class PrestamoDTO {
      * @return Nueva objeto PrestamoEntity.
      * 
      */
-    public PrestamoEntity toEntity() {
-        PrestamoEntity entity = new PrestamoEntity();
-        entity.setId(this.id);
-        switch (this.tipoRecurso) {
-            case PrestamoDTO.VIDEO:
-                entity.setTipoRecurso(1L);
-                break;
-            case PrestamoDTO.LIBRO:
-                entity.setTipoRecurso(2L);
-                break;
-            case PrestamoDTO.SALA:
-                entity.setTipoRecurso(3L);
-                break;
-            default:
-                break;
+    public PrestamoEntity toEntity(){
+                    PrestamoEntity entity = new PrestamoEntity();
+        try {
+            SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy hh:mm a");
+            entity.setId(this.id);
+            switch (this.tipoRecurso) {
+                case PrestamoDTO.VIDEO:
+                    entity.setTipoRecurso(1L);
+                    break;
+                case PrestamoDTO.LIBRO:
+                    entity.setTipoRecurso(2L);
+                    break;
+                case PrestamoDTO.SALA:
+                    entity.setTipoRecurso(3L);
+                    break;
+                default:
+                    break;
+            }
+            entity.setCosto(this.costo);
+            entity.setMedioPago(this.medioPago);
+            
+            Date fechaIni = format.parse(this.fechaInicial);
+            Date fechaFin = format.parse(this.fechaFinal);
+            entity.setFechaFinal(fechaFin);
+            entity.setFechaInicial(fechaIni);
+            entity.setEstaActivo(this.estaActivo);
+            
+        } catch (ParseException ex) {
+            Logger.getLogger(PrestamoDTO.class.getName()).log(Level.SEVERE, null, ex);
         }
-        entity.setCosto(this.costo);
-        entity.setMedioPago(this.medioPago);
-        entity.setFechaFinal(this.fechaFinal);
-        entity.setFechaInicial(this.fechaInicial);
-        entity.setEstaActivo(this.estaActivo);
-        
         return entity;
+
     }
     /**
      * @return the id
@@ -148,28 +164,28 @@ public void setTipoRecurso(String tipoRecurso) {
     /**
      * @return the fechaInicial
      */
-    public Date getFechaInicial() {
+    public String getFechaInicial() {
         return fechaInicial;
     }
 
     /**
      * @param fechaInicial the fechaInicial to set
      */
-    public void setFechaInicial(Date fechaInicial) {
+    public void setFechaInicial(String fechaInicial) {
         this.fechaInicial = fechaInicial;
     }
 
     /**
      * @return the fechaFinal
      */
-    public Date getFechaFinal() {
+    public String getFechaFinal() {
         return fechaFinal;
     }
 
     /**
      * @param fechaFinal the fechaFinal to set
      */
-    public void setFechaFinal(Date fechaFinal) {
+    public void setFechaFinal(String fechaFinal) {
         this.fechaFinal = fechaFinal;
     }
 

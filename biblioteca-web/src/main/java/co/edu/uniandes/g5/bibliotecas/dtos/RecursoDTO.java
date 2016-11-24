@@ -24,14 +24,7 @@ public class RecursoDTO {
     public static final int VIDEO = 1;
     public static final int LIBRO = 2;
     public static final  int SALA =3;
-    @PodamExclude
-    protected BiblioDTO biblioteca;
     
-    protected List<PrestamoDTO> prestamos = new ArrayList<>();
-    
-    protected List<MultaDTO> multas = new ArrayList<>();
-    
-    protected List<ReservaDTO> reservas = new ArrayList<>();
     
     private int tipoRecurso;
 
@@ -71,53 +64,5 @@ public class RecursoDTO {
         this.name = name;
     }
 
-    public BiblioDTO getBiblioteca() {
-        return biblioteca;
-    }
 
-    public void setBiblioteca(BiblioDTO biblioteca) {
-        this.biblioteca = biblioteca;
-    }
-
-    /**
-     * @return the prestamos
-     */
-    public List<PrestamoDTO> getPrestamos() {
-        return prestamos;
-    }
-
-    /**
-     * @param prestamos the prestamos to set
-     */
-    public void setPrestamos(List<PrestamoDTO> prestamos) {
-        this.prestamos = prestamos;
-    }
-
-    /**
-     * @return the multas
-     */
-    public List<MultaDTO> getMultas() {
-        return multas;
-    }
-
-    /**
-     * @param multas the multas to set
-     */
-    public void setMultas(List<MultaDTO> multas) {
-        this.multas = multas;
-    }
-
-    /**
-     * @return the reservas
-     */
-    public List<ReservaDTO> getReservas() {
-        return reservas;
-    }
-
-    /**
-     * @param reservas the reservas to set
-     */
-    public void setReservas(List<ReservaDTO> reservas) {
-        this.reservas = reservas;
-    }
 }

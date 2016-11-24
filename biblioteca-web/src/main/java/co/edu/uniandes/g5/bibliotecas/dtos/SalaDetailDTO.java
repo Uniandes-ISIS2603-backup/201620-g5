@@ -8,6 +8,9 @@ package co.edu.uniandes.g5.bibliotecas.dtos;
 import co.edu.uniandes.g5.bibliotecas.entities.SalaEntity;
 import javax.xml.bind.annotation.XmlRootElement;
 import uk.co.jemos.podam.common.PodamExclude;
+import java.util.ArrayList;
+import java.util.List;
+
 
 /**
  *
@@ -18,6 +21,17 @@ public class SalaDetailDTO extends SalaDTO{
     
     @PodamExclude
     private BiblioDTO biblioteca;
+    
+    @PodamExclude
+    private List<PrestamoDTO> prestamos = new ArrayList<>();
+    
+    @PodamExclude
+    private List<ReservaDTO> reservas = new ArrayList<>();
+    
+    @PodamExclude
+    private List<MultaDTO> multas = new ArrayList<>();
+    
+
     
     public SalaDetailDTO() {
         super();
@@ -58,7 +72,6 @@ public class SalaDetailDTO extends SalaDTO{
     /**
      * @return the biblioteca
      */
-    @Override
     public BiblioDTO getBiblioteca() {
         return biblioteca;
     }
@@ -66,7 +79,6 @@ public class SalaDetailDTO extends SalaDTO{
     /**
      * @param biblioteca the biblioteca to set
      */
-    @Override
     public void setBiblioteca(BiblioDTO biblioteca) {
         this.biblioteca = biblioteca;
     }

@@ -1,30 +1,28 @@
 
-
-    <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="ctrl.closeAlert($index)" dismiss-on-timeout="5000">{{alert.msg}} </alert>
+            <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="ctrl.closeAlert($index)" dismiss-on-timeout="5000">{{alert.msg}} </alert>
     <form novalidate name="form" id="prestamo-form" role="form" ng-submit="form.$valid && ctrl.savePrestamo(currentPrestamo.id)">
         
         <div ng-messages="form.$error">
             <div ng-message="required">Llene los espacios especificados:</div>
         </div>
-   
-        <fieldset>            
+        <fieldset>     
+            <input id="id" class="form-control" type="hidden" ng-model="currentPrestamo.id"/>
             <!-- idUsuario -->
             <div class="form-group col-md-6" ng-class="{'has-success': form.name.$valid && form.name.$dirty, 'has-error': form.name.$invalid && (form.name.$dirty || form.$submitted)}" >
                 <label for="usuario" class="col-md-4 control-label">Usuario</label>
                 <div class="col-md-10">
                     <select id="usuario" name="usuario" ng-options="rc.id for rc in usuarios track by rc.id" class="form-control" type="text" ng-model="currentPrestamo.usuario" ng-init="currentPrestamo.usuario" ></select>
                 </div>
+            
             <!-- tipoRecurso -->
                 <label for="tipoRecurso" class="col-md-4 control-label">Tipo de Recurso</label>
                 <div class="col-md-10">
-                    <form action = ""> 
                     <select id="tipoRecurso" name="tipoRecurso" class="form-control" ng-model="currentPrestamo.tipoRecurso" ng-init="currentPrestamo.tipoRecurso" required>
                     <option selected> ---</option>
                     <option value="Video">Video</option>
                     <option value="Libro">Libro</option>
                     <option value="Sala">Sala</option>
                 </select>
-                    </form>
                 </div>
             <!-- nombreRecurso -->
             <div>
@@ -59,24 +57,36 @@
                 </select>                
                 </div>
             <!-- Fecha inicial -->
-                <label for="fechaInicial" class="col-md-4 control-label">Fecha Inicial</label>
-                    <p class="input-group">
-                        <input  id="fechaInicial" name="fechaInicial"  type="text" class="form-control" uib-datepicker-popup ng-model="currentPrestamo.fechaInicial" is-open="popup.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
-                    <span class="input-group-btn">
-                            <button type="button" class="btn btn-default" ng-click="ctrl.open(currentPrestamo.fechaFinal)"><i class="glyphicon glyphicon-calendar"></i></button>
-                        </span>
-                    </p>
+                     
+               <label for="fechaInicial" class="col-md-4 control-label">Fecha Inicial</label>
+        <div class='col-md-10'>
+            <div class="form-group">
+                <div class='input-group' id="fechaInicial" datetimepicker on-change="ctrl.update(dateFrom, dateTo)" ng-model="dateFrom" options= "optionsFrom">
+                    <input class="form-control" name="fechaInicial"/>
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                </div>
+            </div>
+        </div>
+
                 <!-- Fecha final -->
-
-                <label for="fechaFinal" class="col-md-4 control-label">Fecha Final</label>
                 
-                <p class="input-group">
-                        <input  id="fechaFinal" name="fechaFinal"  type="text" class="form-control" uib-datepicker-popup ng-model="currentPrestamo.fechaFinal" is-open="popup2.opened" datepicker-options="dateOptions2" ng-required="true" close-text="Close" />
-                        <span class="input-group-btn">
-                            <button type="button" class="btn btn-default" ng-click="ctrl.open2(currentPrestamo.fechaInicial)"><i class="glyphicon glyphicon-calendar"></i></button>
-                        </span>
-                </p>
+                
+               <label for="fechaFinal" class="col-md-4 control-label">Fecha Final</label>
+        <div class='col-md-10'>
+            <div class="form-group">
+                <div class='input-group' id ="fechaFinal" datetimepicker on-change="ctrl.update(dateFrom, dateTo)" ng-model="dateTo" options = "optionsTo">
+                    <input class="form-control"/>
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                </div>
+            </div>
+            <p><b>Options:</b> {{optionsFrom}}</p>
+        </div>
 
+         
                 <label for="estaActivo" class="col-md-4 control-label">¿Está activo?</label>
                 <div class="col-md-9">
                     <input id="estaActivo" name="estaActivo" class="form-control" type="checkbox" ng-model="currentPrestamo.estaActivo" ng-init="currentPrestamo.estaActivo" novalidate />
@@ -89,4 +99,3 @@
         </fieldset>
        
     </form>
-

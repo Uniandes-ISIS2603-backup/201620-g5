@@ -24,6 +24,18 @@ public class LibroDetailDTO extends LibroDTO {
 
     @PodamExclude
     private List<BlogDTO> blogs = new ArrayList<>();
+    
+    @PodamExclude
+    private List<PrestamoDTO> prestamos = new ArrayList<>();
+    
+    @PodamExclude
+    private List<ReservaDTO> reservas = new ArrayList<>();
+    
+    @PodamExclude
+    private List<MultaDTO> multas = new ArrayList<>();
+    
+    @PodamExclude
+    private BiblioDTO biblioteca;
 
     public LibroDetailDTO() {
         super();

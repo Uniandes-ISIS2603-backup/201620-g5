@@ -106,13 +106,12 @@ public class PrestamoLogic implements IPrestamoLogic {
     @Override
     public PrestamoEntity createPrestamo(PrestamoEntity prestamo,Long idBiblioteca, Long tipoRecurso, Long idRecurso, Long idUsuario) throws BibliotecaLogicException {
          
-     PrestamoEntity alreadyExist = getPrestamo(prestamo.getId());
       UsuarioEntity usuario = usuarioLogic.getUsuario(idUsuario);
          prestamo.setUsuario(usuario);
-        if (alreadyExist != null) 
-        {
-            throw new BibliotecaLogicException("Ya existe un prestamo con ese id");
-        } 
+         if(prestamo.getFechaInicial() == null || prestamo.getFechaFinal() == null )
+         {
+             throw new BibliotecaLogicException("Formato de fecha inválido");
+         }
         if(prestamo.getCosto() <= 0 )
         {
             throw new BibliotecaLogicException("Costo inválido. El costo no puede ser menor o igual a 0");

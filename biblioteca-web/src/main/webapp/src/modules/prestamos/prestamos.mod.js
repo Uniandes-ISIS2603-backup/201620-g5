@@ -1,5 +1,5 @@
 (function () {
-    var mod = angular.module('prestamosModule',[]);
+    var mod = angular.module('prestamosModule',["ngMessages"]);
     mod.constant("prestamosContext", "/prestamos");
     mod.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
             var basePath = 'src/modules/prestamos/';

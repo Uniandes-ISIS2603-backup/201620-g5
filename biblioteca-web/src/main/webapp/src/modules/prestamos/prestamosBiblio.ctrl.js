@@ -4,7 +4,7 @@
     mod.controller("prestamosBiblioCtrl", ['$scope', '$state', '$stateParams', '$http','bibliotecasContext', 'usuariosContext', 'videosContext','librosContext','salasContext',
         function ($scope, $state, $stateParams, $http, bibliotecasContext, usuariosContext, videosContext, librosContext, salasContext ) {
             
-    
+           
             // inicialmente el listado de prestamos
             //  está vacio
             $scope.prestamosContext = '/prestamos';
@@ -37,9 +37,8 @@
             {
                 // el registro actual debe estar vacio
                 $scope.currentPrestamo = {
-                    id: undefined //Tipo Long. El valor se asigna en el backend,
-                    
-                   
+                    id: undefined,//Tipo Long. El valor se asigna en el backend,
+
                 };
 
                 $scope.alerts = [];
@@ -60,18 +59,22 @@
            
             
             this.savePrestamo = function (id) {
+                $scope.currentPrestamo.fechaInicial = $scope.dateTo.format('DD/MM/YYYY hh:mm A');
+                $scope.currentPrestamo.fechaFinal = $scope.dateFrom.format('DD/MM/YYYY hh:mm A');
                 console.log($scope.currentPrestamo);
                 currentPrestamo = $scope.currentPrestamo;
                 // si el id es null, es un registro nuevo, entonces lo crea
                 if (id == undefined) {
 
+          
                     // ejecuta POST en el recurso REST
-                    return $http.post(bibliotecasContext + "/" + $stateParams.bibliotecaId + "/tipoRecurso/"+ currentPrestamo.tipoRecurso + "/recurso/"+ currentPrestamo.idRecurso.id + "/usuario/ "+ currentPrestamo.usuario.id +  $scope.prestamosContext, currentPrestamo)
+                    return $http.post(bibliotecasContext + "/" + $stateParams.bibliotecaId + "/tipoRecurso/"+ currentPrestamo.tipoRecurso + "/recurso/"+ currentPrestamo.recurso.id + "/usuario/" + currentPrestamo.usuario.id +  $scope.prestamosContext, currentPrestamo)
                             .then(function () {
                                 // $http.post es una promesa
                                 // cuando termine bien, cambie de estado
                                 $state.go('prestamosBiblioList');
                             }, responseError);
+                      
 
                     // si el id no es null, es un registro existente entonces lo actualiza
                 } else {
@@ -95,65 +98,40 @@
                     }, responseError);
             };
             
-
-
             // -----------------------------------------------------------------
             // Funciones para manejar las fechas
 
-            $scope.popup = {
-                opened: false
-            };
-             $scope.popup2 = {
-                opened: false
-            };
            
-            $scope.dateOptions = {
-                dateDisabled: false,
-                formatYear: 'yyyy',
-                maxDate: new Date(2020,5,22),
-                minDate: new Date(),
-                startingDay: 1
-            };
-
-             $scope.dateOptions2 = {
-                dateDisabled: false,
-                formatYear: 'yyyy',
-                maxDate: new Date(2020, 5, 22),
-                minDate: new Date(),
-                startingDay: 1
-            };
-
-            $scope.today = function () {
-                $scope.dt = new Date();
-            };
-            $scope.today();
-
-            $scope.clear = function () {
-                $scope.dt = null;
-            };
-            $scope.setDate = function (year, month, day) {
-                $scope.dt = new Date(year, month, day);
-            };
-
-            $scope.open = function (fechaFinal) {
-                
-                $scope.popup.opened = true;
-                if(fechaFinal !== null)
-                {
-                    $scope.dateOptions.maxDate = fechaFinal;
-                }
-                
-            };
+             $scope.dateFrom = moment().add(-1, 'd');
+            $scope.dateTo = moment();
             
-             this.open2 = function (fechaInicial) {
-                $scope.popup2.opened = true;
-                if(fechaInicial !== null)
-                {
-                    $scope.dateOptions2.minDate = fechaInicial;
-                }
-                
-            };
+            $scope.optionsFrom = {format: 'DD/MM/YYYY hh:mm A'};
+            $scope.optionsTo = {format: 'DD/MM/YYYY hh:mm A'};
+           $(function () {
+            $('#fechaInicial').datetimepicker({
+                format: 'DD/MM/YYYY hh:mm A'
+                });
 
+              
+            });
+            
+            this.update = function (dateFromm, dateToo) {
+                $scope.optionsFrom.maxDate = dateToo;
+                $scope.optionsTo.minDate = dateFromm;
+            };
+            this.update($scope.dateFrom, $scope.dateTo);
+
+            
+
+            
+            $(function () {
+            $('#fechaFinal').datetimepicker({
+                format: 'DD/MM/YYYY hh:mm A'
+                });
+
+               
+            });
+        
 
             // Funciones para manejar los mensajes en la aplicación
 
@@ -187,35 +165,35 @@
                 self.showError(response.data);
             }
         }]);
-    mod.config(['$httpProvider', function ($httpProvider) {
+   // mod.config(['$httpProvider', function ($httpProvider) {
 
     // ISO 8601 Date Pattern: YYYY-mm-ddThh:MM:ss
-    var dateMatchPattern = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}/;
+   // var dateMatchPattern = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}/;
 
-   var convertDates = function (obj) {
-      for (var key in obj) {
-         if (!obj.hasOwnProperty(key)) continue;
+  // var convertDates = function (obj) {
+      //for (var key in obj) {
+       //  if (!obj.hasOwnProperty(key)) continue;
 
-         var value = obj[key];
-         var typeofValue = typeof (value);
+      //   var value = obj[key];
+      //   var typeofValue = typeof (value);
 
-         if (typeofValue === 'object') {
+      //   if (typeofValue === 'object') {
             // If it is an object, check within the object for dates.
-            convertDates(value);
-         } else if (typeofValue === 'string') {
-            if (dateMatchPattern.test(value)) {
-               obj[key] = new Date(value);
-            }
-         }
-      }
-   };
+      //      convertDates(value);
+     //    } else if (typeofValue === 'string') {
+      //      if (dateMatchPattern.test(value)) {
+      //         obj[key] = new Date(value);
+     //       }
+     //    }
+    //  }
+  // };
 
-   $httpProvider.defaults.transformResponse.push(function (data) {
-      if (typeof (data) === 'object') {
-         convertDates(data);
-      }
+  // $httpProvider.defaults.transformResponse.push(function (data) {
+  //    if (typeof (data) === 'object') {
+   //      convertDates(data);
+   //   }
 
-      return data;
-   });
-}]);
+  //    return data;
+  // });
+//}]);
 })(window.angular);

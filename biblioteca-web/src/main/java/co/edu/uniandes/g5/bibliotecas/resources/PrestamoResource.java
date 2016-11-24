@@ -313,7 +313,6 @@ public class PrestamoResource {
     @Path("/bibliotecas/{bibliotecaId: \\d+}/prestamos/{prestamoId: \\d+}")
     public void deletePrestamo(@PathParam("bibliotecaId") Long bibliotecaId,@PathParam("prestamoId") Long prestamoId) throws BibliotecaLogicException  {
         existsBiblioteca(bibliotecaId);
-        existsPrestamo(prestamoId);
         prestamoLogic.deletePrestamo(prestamoId);
     }
 }
