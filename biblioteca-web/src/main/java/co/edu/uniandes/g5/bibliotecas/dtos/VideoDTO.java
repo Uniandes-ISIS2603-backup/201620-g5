@@ -7,30 +7,35 @@ package co.edu.uniandes.g5.bibliotecas.dtos;
 
 import co.edu.uniandes.g5.bibliotecas.entities.VideoEntity;
 import javax.xml.bind.annotation.XmlRootElement;
+import uk.co.jemos.podam.common.PodamExclude;
 
 /**
  * Objeto de transferencia de datos de videos.
  */
 @XmlRootElement
-public class VideoDTO extends RecursoDTO{
+public class VideoDTO extends RecursoDTO {
+
     private Long id;
     private String name;
-    
-    
+
+    @PodamExclude
+    private BiblioDTO biblioteca;
+
     private String director;
     private Integer numEjemplares;
-    private Integer ejemplaresDisponibles; 
+    private Integer ejemplaresDisponibles;
     private boolean online;
 
     /**
      * Crea un libroDTO vacio.
      */
     public VideoDTO() {
-        
+
     }
-    
+
     public VideoDTO(VideoEntity entity) {
-        if(entity!=null){
+        if (entity != null) {
+            biblioteca = new BiblioDTO(entity.getBiblioteca());
             this.id = entity.getId();
             this.name = entity.getName();
             this.director = entity.getDirector();
@@ -47,6 +52,9 @@ public class VideoDTO extends RecursoDTO{
 
     public VideoEntity toEntity() {
         VideoEntity entity = new VideoEntity();
+        if (biblioteca != null) {
+            entity.setBiblioteca(biblioteca.toEntity());
+        }
         entity.setId(id);
         entity.setName(name);
         entity.setDirector(director);
@@ -54,6 +62,14 @@ public class VideoDTO extends RecursoDTO{
         entity.setEjemplaresDisponibles(ejemplaresDisponibles);
         entity.setOnline(online);
         return entity;
+    }
+
+    public BiblioDTO getBiblioteca() {
+        return biblioteca;
+    }
+
+    public void setBiblioteca(BiblioDTO biblioteca) {
+        this.biblioteca = biblioteca;
     }
 
     public Long getId() {
@@ -104,6 +120,4 @@ public class VideoDTO extends RecursoDTO{
         this.director = director;
     }
 
-    
-    
 }

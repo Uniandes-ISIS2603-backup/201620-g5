@@ -1,35 +1,29 @@
-    <div class="container-fluid" >
+<div class="container-fluid" >
     <table class="table table-striped col-md-4">
         <thead>
             <tr>
-                <th> Id </th>
-                <th>Video</th>
+                <th> Biblioteca </th>
+                <th>Titulo</th>
                 <th># Ejemplares</th>
+                <th>Ejemplares Disponibles</th>
                 <th>Director</th>
-                <th>Año de publicacion</th>
-                 <th>Duracion</th>
-                  <th>Genero</th>
-                <th>Sinopsis</th>
                 <th>Online</th>
             </tr>
         </thead>
         <tbody>
             <tr ng-repeat="video in videos">
-                <td id="{{$index}}-id">{{video.id}}</td>
+                <td id="{{$index}}-biblioteca">{{video.biblioteca.name}}</td>
                 <td id="{{$index}}-titulo">{{video.name}}</td>
                 <td id="{{$index}}-numEjemplares">{{video.numEjemplares}}</td>
+                <td id="{{$index}}-ejemplaresDisponibles">{{video.ejemplaresDisponibles}}</td>
                 <td id="{{$index}}-director">{{video.director}}</td>
-                <td id="{{$index}}-anioPublicacion">{{video.anioPublicacion}}</td>
-                <td id="{{$index}}-duracion">{{video.duracion}}</td>
-                <td id="{{$index}}-genero">{{video.genero}}</td>
-                <td id="{{$index}}-sinopsis">{{video.sinopsis}}</td>
-                <td id="{{$index}}-esOnline">{{video.esOnline}}</td>
+                <td id="{{$index}}-esOnline">{{video.online}}</td>
                 <td>
-                    <button id="{{$index}}-edit-btn" class="btn btn-default btn-sm" data-ui-sref="videoEdit({videoId: video.id})"><span class="glyphicon glyphicon-edit"></span> Editar</button>
+                    <button id="{{$index}}-edit-btn" class="btn btn-default btn-sm" data-ui-sref="videoEdit({videoId: video.id, bibliotecaId: video.biblioteca.id })"><span class="glyphicon glyphicon-edit"></span> Editar</button>
                     <button id="{{$index}}-delete-btn" class="btn btn-default btn-sm" ng-click="ctrl.deleteVideo({videoId: video.id})"><span class="glyphicon glyphicon-minus"></span> Eliminar</button>
                 </td>
             </tr>
         </tbody>
-        
+
     </table>
 </div>

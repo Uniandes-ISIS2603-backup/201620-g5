@@ -9,40 +9,40 @@
 
         <fieldset>
             <input id="id" class="form-control" type="hidden" ng-model="currentLibro.id"/>
-            <div class="form-group col-md-6" ng-class="{'has-success': form.titulo.$valid && form.titulo.$dirty, 'has-error': form.titulo.$invalid && (form.titulo.$dirty || form.$submitted)}" >
+            <div class="form-group col-md-18" ng-class="{'has-success': form.titulo.$valid && form.titulo.$dirty, 'has-error': form.titulo.$invalid && (form.titulo.$dirty || form.$submitted)}" >
                 <!-- biblioteca -->
-                <label for="biblioteca" class="col-lg-2 control-label">Biblioteca</label>
-                <div class="col-lg-10">
+                <label for="biblioteca" class="col-lg-4 control-label">Biblioteca</label>
+                <div class="col-lg-8">
                     <select id="biblioteca" name="biblioteca" ng-options="rc.name for rc in bibliotecas track by rc.id" class="form-control" type="text" ng-model="currentLibro.biblioteca" ng-init="currentLibro.biblioteca" required ></select>
                 </div>
                 <!-- name-->
-                <label for="name" class="col-lg-2 control-label">Titulo</label>
-                <div class="col-lg-10">
+                <label for="name" class="col-lg-4 control-label">Titulo</label>
+                <div class="col-lg-8">
                     <input id="titulo" name="name" class="form-control" type="text" ng-model="currentLibro.name" ng-init="currentLibro.name" required />
                 </div>
                 <!-- isbn-->
-                <label for="isbn" class="col-lg-2 control-label">ISBN</label>
-                <div class="col-lg-10">
+                <label for="isbn" class="col-lg-4 control-label">ISBN</label>
+                <div class="col-lg-8">
                     <input id="isbn" name="isbn" class="form-control" type="number" ng-model="currentLibro.isbn" ng-init="currentLibro.isbn" required />
                 </div>
                 <!-- autor-->
-                <label for="autor" class="col-lg-2 control-label">Autor</label>
-                <div class="col-lg-10">
+                <label for="autor" class="col-lg-4 control-label">Autor</label>
+                <div class="col-lg-8">
                     <input id="isbn" name="autor" class="form-control" type="text" ng-model="currentLibro.autor" ng-init="currentLibro.autor" required />
                 </div>
                 <!-- numEjemplares-->
-                <label for="numEjemplares" class="col-lg-2 control-label"># Ejemplares</label>
-                <div class="col-lg-10">
+                <label for="numEjemplares" class="col-lg-4 control-label"># Ejemplares</label>
+                <div class="col-lg-8">
                     <input id="numEjemplares" name="numEjemplares" class="form-control" type="number" ng-model="currentLibro.numEjemplares" ng-init="currentLibro.numEjemplares" required />
                 </div>
                 <!-- ejemplaresDisponibles-->
-                <label for="ejemplaresDisponibles" class="col-lg-2 control-label">Ejemplares Disponibles</label>
-                <div class="col-lg-10">
+                <label for="ejemplaresDisponibles" class="col-lg-4 control-label">Disponibles</label>
+                <div class="col-lg-8">
                     <input id="ejemplaresDisponibles" name="ejemplaresDisponibles" class="form-control" type="number" ng-model="currentLibro.ejemplaresDisponibles" ng-init="currentLibro.ejemplaresDisponibles" required />
                 </div>
                 <!-- online-->
-                <label for="online" class="col-lg-2 control-label"># ¿Online?</label>
-                <div class="col-lg-10">
+                <label for="online" class="col-lg-4 control-label"># ¿Online?</label>
+                <div class="col-lg-2">
                     <input id="online" name="online" class="form-control" type="checkbox" ng-model="currentLibro.online" ng-init="currentLibro.online" />
                 </div>
             </div>

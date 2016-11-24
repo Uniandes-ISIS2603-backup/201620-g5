@@ -22,9 +22,6 @@ import uk.co.jemos.podam.common.PodamExclude;
 public class VideoDetailDTO extends VideoDTO {
 
     @PodamExclude
-    private BiblioDTO biblioteca;
-
-    @PodamExclude
     private List<PrestamoDTO> prestamos = new ArrayList<>();
 
     @PodamExclude
@@ -40,13 +37,15 @@ public class VideoDetailDTO extends VideoDTO {
     public VideoDetailDTO(VideoEntity entity) {
         super(entity);
         if (entity != null) {
-            biblioteca = new BiblioDTO(entity.getBiblioteca());
-            for (PrestamoEntity prestamo : entity.getPrestamos())
+            for (PrestamoEntity prestamo : entity.getPrestamos()) {
                 prestamos.add(new PrestamoDTO(prestamo));
-            for (ReservaEntity reserva : entity.getReservas())
+            }
+            for (ReservaEntity reserva : entity.getReservas()) {
                 reservas.add(new ReservaDTO(reserva));
-            for (MultaEntity multa : entity.getMultas())
+            }
+            for (MultaEntity multa : entity.getMultas()) {
                 multas.add(new MultaDTO(multa));
+            }
         }
     }
 
@@ -56,8 +55,6 @@ public class VideoDetailDTO extends VideoDTO {
         List<PrestamoEntity> p = new ArrayList<>();
         List<ReservaEntity> r = new ArrayList<>();
         List<MultaEntity> m = new ArrayList<>();
-        if(biblioteca != null)
-            entity.setBiblioteca(biblioteca.toEntity());
         for (PrestamoDTO prestamo : prestamos) {
             p.add(prestamo.toEntity());
         }
@@ -70,17 +67,9 @@ public class VideoDetailDTO extends VideoDTO {
         entity.setPrestamos(p);
         entity.setReservas(r);
         entity.setMultas(m);
-        
+
         return entity;
-        
-    }
 
-    public BiblioDTO getBiblioteca() {
-        return biblioteca;
-    }
-
-    public void setBiblioteca(BiblioDTO biblioteca) {
-        this.biblioteca = biblioteca;
     }
 
     public List<PrestamoDTO> getPrestamos() {
