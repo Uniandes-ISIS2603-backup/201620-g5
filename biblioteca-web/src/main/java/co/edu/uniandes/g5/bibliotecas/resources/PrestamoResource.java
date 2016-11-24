@@ -164,7 +164,7 @@ public class PrestamoResource {
     
     @GET
     @Path("bibliotecas/{bibliotecaId: \\d+}/libros/{libroId: \\d+}/prestamos")
-    public List<PrestamoDTO> getPrestamosByLibro(@PathParam("bibliotecaId") Long bibliotecaId,@PathParam("libroId") Long libroId)throws BibliotecaLogicException
+    public List<PrestamoDetailDTO> getPrestamosByLibro(@PathParam("bibliotecaId") Long bibliotecaId,@PathParam("libroId") Long libroId)throws BibliotecaLogicException
     {       
         existsBiblioteca(bibliotecaId);
         List<PrestamoEntity> prestamos = prestamoLogic.getPrestamosByRecurso(bibliotecaId, libroId);
@@ -173,7 +173,7 @@ public class PrestamoResource {
     
     @GET
     @Path("bibliotecas/{bibliotecaId: \\d+}/videos/{videoId: \\d+}/prestamos")
-    public List<PrestamoDTO> getPrestamosByVideo(@PathParam("bibliotecaId") Long bibliotecaId,@PathParam("videoId") Long videoId)throws BibliotecaLogicException
+    public List<PrestamoDetailDTO> getPrestamosByVideo(@PathParam("bibliotecaId") Long bibliotecaId,@PathParam("videoId") Long videoId)throws BibliotecaLogicException
     {       
         existsBiblioteca(bibliotecaId);
         List<PrestamoEntity> prestamos = prestamoLogic.getPrestamosByRecurso(bibliotecaId, videoId);

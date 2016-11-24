@@ -33,7 +33,6 @@ public class LibroDTO extends RecursoDTO {
 
     public LibroDTO(LibroEntity entity) {
         if (entity != null) {
-            biblioteca = new BiblioDTO(entity.getBiblioteca());
             this.id = entity.getId();
             this.name = entity.getName();
             this.isbn = entity.getIsbn();
@@ -51,9 +50,6 @@ public class LibroDTO extends RecursoDTO {
 
     public LibroEntity toEntity() {
         LibroEntity entity = new LibroEntity();
-        if (biblioteca != null) {
-            entity.setBiblioteca(biblioteca.toEntity());
-        }
         entity.setId(id);
         entity.setName(name);
         entity.setIsbn(isbn);
@@ -64,13 +60,6 @@ public class LibroDTO extends RecursoDTO {
         return entity;
     }
 
-    public BiblioDTO getBiblioteca() {
-        return biblioteca;
-    }
-
-    public void setBiblioteca(BiblioDTO biblioteca) {
-        this.biblioteca = biblioteca;
-    }
 
     public Long getId() {
         return id;
