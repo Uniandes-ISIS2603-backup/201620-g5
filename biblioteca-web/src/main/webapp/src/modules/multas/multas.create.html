@@ -11,28 +11,28 @@
             <input id="id" class="form-control" type="hidden" ng-model="currentMulta.id"/>
             <div class="form-group col-md-12" ng-class="{'has-success': form.name.$valid && form.name.$dirty, 'has-error': form.name.$invalid && (form.name.$dirty || form.$submitted)}" >
                 
-                <label for="idUsuario" class="col-md-2 control-label">Id de Usuario</label>
-                <div class="col-md-10">
+                <label for="idUsuario" class="col-md-4 control-label">Id de Usuario</label>
+                <div class="col-md-8">
                     <input id="idUsuario" name="idUsuario" class="form-control" type="number" ng-model="currentMulta.idUsuario" ng-init="currentMulta.idUsuario" required />
                 </div>
                 
-                <label for="idBiblioteca" class="col-md-2 control-label">Id de Biblioteca</label>
-                <div class="col-md-10">
+                <label for="idBiblioteca" class="col-md-4 control-label">Id de Biblioteca</label>
+                <div class="col-md-8">
                     <input id="idBiblioteca" name="idBiblioteca" class="form-control" type="number" ng-model="currentMulta.idBiblioteca" ng-init="currentBiblioteca.idBiblioteca" required />
                 </div>
                 
-                <label for="idRecurso" class="col-md-2 control-label">Id de Recurso</label>
-                <div class="col-md-10">
+                <label for="idRecurso" class="col-md-4 control-label">Id de Recurso</label>
+                <div class="col-md-8">
                     <input id="idRecurso" name="idRecurso" class="form-control" type="number" ng-model="currentMulta.idRecurso" ng-init="currentBiblioteca.idRecurso" required />
                 </div>
                 
-                <label for="costo" class="col-md-2 control-label">Costo</label>
-                <div class="col-md-10">
+                <label for="costo" class="col-md-4 control-label">Costo</label>
+                <div class="col-md-8">
                     <input id="costo" name="costo" class="form-control" type="number" ng-model="currentMulta.costo" ng-init="currentMulta.costo" required />
                 </div>
                 
                 <label for="fecha" class="col-md-4 control-label">Fecha</label>
-                <div class="col-md-10">
+                <div class="col-md-8">
                     <p class="input-group">
                         <input  id="fecha" name="fecha"  type="text" class="form-control" uib-datepicker-popup ng-model="currentMulta.fecha" is-open="popup.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
                         <span class="input-group-btn">

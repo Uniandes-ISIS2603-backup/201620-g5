@@ -1,4 +1,4 @@
-/*
+ /*
  * CityResource.java
  * Clase que representa el recurso "/cities"
  * Implementa varios métodos para manipular las ciudades

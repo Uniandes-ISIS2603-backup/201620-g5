@@ -104,11 +104,19 @@ public class ReservaLogic implements IReservaLogic {
     @Override
     public ReservaEntity createReserva(ReservaEntity reserva,Long idBiblioteca, Long tipoRecurso, Long idRecurso, Long idUsuario) throws BibliotecaLogicException {
          
+        if(reserva.getId() != null)
+        {
      ReservaEntity alreadyExist = getReserva(reserva.getId());
         if (alreadyExist != null) 
         {
             throw new BibliotecaLogicException("Ya existe un reserva con ese id");
         } 
+        }
+        
+        if(reserva.getFecha() == null)
+        {
+             throw new BibliotecaLogicException("Fecha no valida");
+        }
         
         UsuarioEntity usuario = usuarioLogic.getUsuario(idUsuario);
         reserva.setUsuario(usuario);

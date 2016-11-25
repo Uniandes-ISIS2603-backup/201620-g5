@@ -6,7 +6,11 @@
 package co.edu.uniandes.g5.bibliotecas.dtos;
 
 import co.edu.uniandes.g5.bibliotecas.entities.ReservaEntity;
+import java.text.ParseException;
 import java.util.Date;
+import java.text.SimpleDateFormat;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 /**
@@ -22,15 +26,15 @@ public class ReservaDTO {
     private Long id;
     private boolean estaA;
     private Long tipoRecurso;
-    private Date fecha;
+    private String fecha;
 
     
 
-    public Date getFecha() {
+    public String getFecha() {
         return fecha;
     }
 
-    public void setFecha(Date fecha) {
+    public void setFecha(String fecha) {
         this.fecha = fecha;
     }
 
@@ -48,9 +52,13 @@ public class ReservaDTO {
     public ReservaDTO(ReservaEntity entity) {
 	if (entity != null) 
         {
+            SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy hh:mm aa");
+
+            String fechaI = format.format(entity.getFecha());
             this.id = entity.getId();
             this.tipoRecurso = entity.getTipoRecurso();
-            this.fecha = entity.getFecha();
+            this.fecha =  fechaI;
+            
             this.estaA = entity.isEstaActivo();
         }
 	}
@@ -62,13 +70,19 @@ public class ReservaDTO {
      * 
      */
     public ReservaEntity toEntity() {
-        ReservaEntity entity = new ReservaEntity();
-        entity.setId(this.id);
-        entity.setTipoRecurso(this.tipoRecurso);
-        entity.setFecha(this.fecha);
-        entity.setEstaActivo(this.estaA);
-        
-        return entity;
+        try {
+            ReservaEntity entity = new ReservaEntity();
+            entity.setId(this.id);
+            SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy hh:mm aa");
+            entity.setTipoRecurso(this.tipoRecurso);
+            entity.setFecha(format.parse(this.fecha));
+            entity.setEstaActivo(this.estaA);
+            
+            return entity;
+        } catch (ParseException ex) {
+            Logger.getLogger(ReservaDTO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
     public Long getId() {
         return id;

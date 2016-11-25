@@ -49,7 +49,7 @@
                 if (id == null) {
 
                     // ejecuta POST en el recurso REST
-                    return $http.post(bibliotecasContext+'/'+currentVideo.biblioteca.id+'/ videos', currentVideo)
+                    return $http.post(bibliotecasContext+'/'+currentVideo.biblioteca.id+'/videos', currentVideo)
                             .then(function () {
                                 // $http.post es una promesa
                                 // cuando termine bien, cambie de estado
@@ -60,7 +60,7 @@
                 } else {
 
                     // ejecuta PUT en el recurso REST
-                    return $http.put(bibliotecasContext+'/'+currentVideo.biblioteca.id+'/ videos'+ currentVideo.id, currentVideo)
+                    return $http.put(bibliotecasContext+'/'+currentVideo.biblioteca.id+'/videos/'+ currentVideo.id, currentVideo)
                             .then(function () {
                                 // $http.put es una promesa
                                 // cuando termine bien, cambie de estado

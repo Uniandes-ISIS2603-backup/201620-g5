@@ -15,8 +15,8 @@
         <tbody>
              <tr ng-repeat="reserva in reservas">
                 <td id="{{$index}}-idUsuario">{{reserva.idUsuario}}</td>
-                <td id="{{$index}}-idBiblioteca">{{reserva.idBiblioteca}}</td>
-                <td id="{{$index}}-idRecurso">{{reserva.idRecurso}}</td>
+                <td id="{{$index}}-idBiblioteca">{{reserva.biblioteca.id}}</td>
+                <td id="{{$index}}-idRecurso">{{reserva.recurso.id}}</td>
                 <td id="{{$index}}-estaA">{{reserva.estaA}}</td>
                 
                 <td>

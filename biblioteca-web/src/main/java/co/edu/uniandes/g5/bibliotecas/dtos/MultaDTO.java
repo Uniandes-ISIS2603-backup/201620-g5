@@ -54,7 +54,7 @@ public class MultaDTO {
     
     public MultaEntity toEntity()
     {
-         MultaEntity entity = new MultaEntity();
+        MultaEntity entity = new MultaEntity();
         entity.setId(this.id);
         entity.setName(this.name);
         entity.setCosto(this.costo);

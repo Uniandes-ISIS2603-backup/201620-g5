@@ -23,6 +23,8 @@ public class LibroDTO extends RecursoDTO {
     private Integer numEjemplares;
     private Integer ejemplaresDisponibles;
     private boolean online;
+    
+    private BiblioDTO biblioteca;
 
     /**
      * Crea un libroDTO vacio.
@@ -34,6 +36,8 @@ public class LibroDTO extends RecursoDTO {
     public LibroDTO(LibroEntity entity) {
         if (entity != null) {
             this.id = entity.getId();
+            this.biblioteca = new BiblioDTO(entity.getBiblioteca());
+
             this.name = entity.getName();
             this.isbn = entity.getIsbn();
             this.autor = entity.getAutor();
@@ -50,6 +54,9 @@ public class LibroDTO extends RecursoDTO {
 
     public LibroEntity toEntity() {
         LibroEntity entity = new LibroEntity();
+        if (biblioteca != null) {
+            entity.setBiblioteca(biblioteca.toEntity());
+        }
         entity.setId(id);
         entity.setName(name);
         entity.setIsbn(isbn);

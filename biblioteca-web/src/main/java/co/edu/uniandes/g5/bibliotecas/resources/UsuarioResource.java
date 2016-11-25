@@ -51,10 +51,10 @@ public class UsuarioResource {
         return list;
     }
 
-    private List<UsuarioDTO> listEntity2DTO(List<UsuarioEntity> entityList) {
-        List<UsuarioDTO> list = new ArrayList<>();
+    private List<UsuarioDetailDTO> listEntity2DTO(List<UsuarioEntity> entityList) {
+        List<UsuarioDetailDTO> list = new ArrayList<>();
         for (UsuarioEntity entity : entityList) {
-            list.add(new UsuarioDTO(entity));
+            list.add(new UsuarioDetailDTO(entity));
         }
         return list;
     }
@@ -81,14 +81,14 @@ public class UsuarioResource {
      */
     @GET
     @Path("usuarios")
-    public List<UsuarioDTO> getUsuarios() {
+    public List<UsuarioDetailDTO> getUsuarios() {
         List<UsuarioEntity> usuarios = usuarioLogic.getUsuarios();
         return listEntity2DTO(usuarios);
     }
 
     @GET
     @Path("bibliotecas/{idBiblioteca: \\d+}/usuarios")
-    public List<UsuarioDTO> getUsuariosBiblioteca(@PathParam("idBiblioteca") Long idBiblioteca) {
+    public List<UsuarioDetailDTO> getUsuariosBiblioteca(@PathParam("idBiblioteca") Long idBiblioteca) {
         List<UsuarioEntity> usuarios = usuarioLogic.getUsuariosByBiblioteca(idBiblioteca);
         return listEntity2DTO(usuarios);
     }

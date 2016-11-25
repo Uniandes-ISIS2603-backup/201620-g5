@@ -46,7 +46,7 @@
                 if (id == null) {
 
                     // ejecuta POST en el recurso REST
-                    return $http.post("api/usuarios" + "/multas", currentMulta)
+                    return $http.post("api/usuarios" + $stateParams.usuarioId + "/multas/idRecurso/" + currentMulta.recurso.id + "/" + currentMulta.tipoRecurso + "" , currentMulta)
                             .then(function () {
                                 // $http.post es una promesa
                                 // cuando termine bien, cambie de estado

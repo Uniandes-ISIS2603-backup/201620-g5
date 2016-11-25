@@ -74,10 +74,10 @@ public class ReservaResource {
      * @return Lista de ReservaDetailDTO convertida
      *
      */
-    private List<ReservaDTO> listEntity2DTO(List<ReservaEntity> entityList) {
-        List<ReservaDTO> list = new ArrayList<>();
+    private List<ReservaDetailDTO> listEntity2DTO(List<ReservaEntity> entityList) {
+        List<ReservaDetailDTO> list = new ArrayList<>();
         for (ReservaEntity entity : entityList) {
-            list.add(new ReservaDTO(entity));
+            list.add(new ReservaDetailDTO(entity));
         }
         return list;
     }
@@ -134,14 +134,14 @@ public class ReservaResource {
 
     @GET
     @Path("reservas")
-    public List<ReservaDTO> getReservas() throws BibliotecaLogicException {
+    public List<ReservaDetailDTO> getReservas() throws BibliotecaLogicException {
         List<ReservaEntity> reservas = reservaLogic.getReservas();
         return listEntity2DTO(reservas);
     }
 
     @GET
     @Path("bibliotecas/{bibliotecaId: \\d+}/tipoRecurso/{tipoRecurso}/recurso/{recursoId: \\d+}/reservas")
-    public List<ReservaDTO> getReservasByRecurso(@PathParam("bibliotecaId") Long bibliotecaId, @PathParam("recursoId") Long recursoId, @PathParam("tipoRecurso") String tipoRecurso) throws BibliotecaLogicException {
+    public List<ReservaDetailDTO> getReservasByRecurso(@PathParam("bibliotecaId") Long bibliotecaId, @PathParam("recursoId") Long recursoId, @PathParam("tipoRecurso") String tipoRecurso) throws BibliotecaLogicException {
         existsBiblioteca(bibliotecaId);
         existsRecurso(recursoId, tipoRecurso);
         List<ReservaEntity> reservas = reservaLogic.getReservasByRecurso(bibliotecaId, recursoId);
@@ -150,7 +150,7 @@ public class ReservaResource {
     
     @GET
     @Path("bibliotecas/{bibliotecaId: \\d+}/libros/{recursoId: \\d+}/reservas")
-    public List<ReservaDTO> getReservasByLibro(@PathParam("bibliotecaId") Long bibliotecaId, @PathParam("recursoId") Long recursoId) throws BibliotecaLogicException {
+    public List<ReservaDetailDTO> getReservasByLibro(@PathParam("bibliotecaId") Long bibliotecaId, @PathParam("recursoId") Long recursoId) throws BibliotecaLogicException {
         existsBiblioteca(bibliotecaId);
         List<ReservaEntity> reservas = reservaLogic.getReservasByRecurso(bibliotecaId, recursoId);
         return listEntity2DTO(reservas);
@@ -158,7 +158,7 @@ public class ReservaResource {
     
      @GET
     @Path("bibliotecas/{bibliotecaId: \\d+}/videos/{recursoId: \\d+}/reservas")
-    public List<ReservaDTO> getReservasByVideo(@PathParam("bibliotecaId") Long bibliotecaId, @PathParam("recursoId") Long recursoId) throws BibliotecaLogicException {
+    public List<ReservaDetailDTO> getReservasByVideo(@PathParam("bibliotecaId") Long bibliotecaId, @PathParam("recursoId") Long recursoId) throws BibliotecaLogicException {
         existsBiblioteca(bibliotecaId);
         List<ReservaEntity> reservas = reservaLogic.getReservasByRecurso(bibliotecaId, recursoId);
         return listEntity2DTO(reservas);
@@ -166,7 +166,7 @@ public class ReservaResource {
 
     @GET
     @Path("bibliotecas/{bibliotecaId: \\d+}/usuario/{idUsuario: \\d+}/reservas")
-    public List<ReservaDTO> getReservasByUsuario(@PathParam("bibliotecaId") Long bibliotecaId, @PathParam("idUsuario") Long usuarioId) throws BibliotecaLogicException, ParseException {
+    public List<ReservaDetailDTO> getReservasByUsuario(@PathParam("bibliotecaId") Long bibliotecaId, @PathParam("idUsuario") Long usuarioId) throws BibliotecaLogicException, ParseException {
         existsBiblioteca(bibliotecaId);
         existsUsuario(usuarioId);
         List<ReservaEntity> reservas = reservaLogic.getReservasByUsuario(bibliotecaId, usuarioId);
@@ -175,7 +175,7 @@ public class ReservaResource {
 
     @GET
     @Path("bibliotecas/{bibliotecaId: \\d+}/reservas")
-    public List<ReservaDTO> getReservasBiblioteca(@PathParam("bibliotecaId") Long bibliotecaId) throws BibliotecaLogicException, ParseException {
+    public List<ReservaDetailDTO> getReservasBiblioteca(@PathParam("bibliotecaId") Long bibliotecaId) throws BibliotecaLogicException, ParseException {
         existsBiblioteca(bibliotecaId);
         List<ReservaEntity> reservas = reservaLogic.getReservasByBiblioteca(bibliotecaId);
         return listEntity2DTO(reservas);

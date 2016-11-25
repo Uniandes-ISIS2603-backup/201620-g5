@@ -168,28 +168,17 @@
             $scope.optionsTo = {format: 'DD/MM/YYYY hh:mm A'};
            $(function () {
             $('#fechaInicial').datetimepicker({
-                format: 'DD/MM/YYYY hh:mm A'
+                format: 'DD/MM/YYYY hh:mm A',
+                minDate:moment()
                 });
 
               
             });
             
-            this.update = function (dateFromm, dateToo) {
-                $scope.optionsFrom.maxDate = dateToo;
-                $scope.optionsTo.minDate = dateFromm;
-            };
-            this.update($scope.dateFrom, $scope.dateTo);
+
 
             
-
-            
-            $(function () {
-            $('#fechaFinal').datetimepicker({
-                format: 'DD/MM/YYYY hh:mm A'
-                });
-
-               
-            });
+       
         
 
             // Funciones para manejar los mensajes en la aplicación

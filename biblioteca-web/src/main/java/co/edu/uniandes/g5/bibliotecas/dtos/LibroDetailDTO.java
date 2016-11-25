@@ -34,8 +34,6 @@ public class LibroDetailDTO extends LibroDTO {
     @PodamExclude
     private List<MultaDTO> multas = new ArrayList<>();
     
-    @PodamExclude
-    private BiblioDTO biblioteca;
 
     public LibroDetailDTO() {
         super();
@@ -44,7 +42,6 @@ public class LibroDetailDTO extends LibroDTO {
     public LibroDetailDTO(LibroEntity entity) {
         super(entity);
         if (entity != null) {
-            biblioteca = new BiblioDTO(entity.getBiblioteca());
             for (BlogEntity blog : entity.getBlogs()) {
                 blogs.add(new BlogDTO(blog));
             }
@@ -67,9 +64,7 @@ public class LibroDetailDTO extends LibroDTO {
         List<PrestamoEntity> p = new ArrayList<>();
         List<ReservaEntity> r = new ArrayList<>();
         List<MultaEntity> m = new ArrayList<>();
-        if (biblioteca != null) {
-            entity.setBiblioteca(biblioteca.toEntity());
-        }
+     
         for (BlogDTO blog : blogs) {
             b.add(blog.toEntity());
         }

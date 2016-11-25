@@ -19,10 +19,10 @@
             <tr ng-repeat="reserva in reservas">
                 <td id="{{$index}}-id">{{reserva.id}}</td>
                 <td id="{{$index}}-usuario">{{reserva.usuario.id}}</td>
-                <td id="{{$index}}-idBiblioteca">{reserva.biblioteca.id}}</td>
+                <td id="{{$index}}-idBiblioteca">{{reserva.biblioteca.id}}</td>
                 <td id="{{$index}}-tipoRecurso">{{reserva.tipoRecurso}}</td>
                 <td id="{{$index}}-recurso">{{reserva.recurso.id}}</td>
-                <td id="{{$index}}-fechaInicial">{reserva.fecha}}</td>
+                <td id="{{$index}}-fechaInicial">{{reserva.fecha}}</td>
                 
                 <td>
                     <button id="{{$index}}-edit-btn" class="btn btn-default btn-sm" data-ui-sref="reservaBiblioEdit({reservaId: reserva.id})"><span class="glyphicon glyphicon-edit"></span> Editar</button>
